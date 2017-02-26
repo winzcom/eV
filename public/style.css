@@ -1,0 +1,25 @@
+@charset "utf-8";
+/* CSS Document */
+
+@import url("https://fonts.googleapis.com/css?family=Lora:400italic|Montserrat:400,700|Raleway:400,100,200,300,500,600,700,800|Dancing+Script");
+@import url("css/bootstrap.css");
+@import url("css/icons.css");
+@import url("css/typography.css");
+@import url("css/scrollbar.css");
+@import url("css/animate.css");
+@import url("cloudslider/css/cloudslider.css");
+@import url("cubeportfolio/css/cubeportfolio.css");
+@import url("nivo-lightbox/nivo-lightbox.css");
+@import url("nivo-lightbox/themes/default/default.css");
+@import url("css/click-hover-effects.css");
+@import url("owl-carousel/assets/owl.carousel.css");
+@import url("owl-carousel/assets/owl.theme.default.min.css");
+@import url("css/theme.css");
+@import url("css/color.css");
+
+/* ==========================================================================
+   NOTE:
+   Please put your custom css styles after this line to make it easy
+   for you to manage your website whenever a new version of this template 
+   is available.
+   ========================================================================== */

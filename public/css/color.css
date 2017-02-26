@@ -1,0 +1,763 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/* ==========================================================================
+   NOTE:
+   This css file is very handy to change your template's accent colors. 
+   All skin related color classes are availalbe in this stylesheet and 
+   you can easily modify theme's skin from this stylesheet.
+   ========================================================================== */
+
+body,
+.tabs nav a:hover,
+.checkbox label,
+.radio label,
+.thumbnail .caption,
+.half-section .overlay.light,
+.cbp-l-grid-testimonials-body,
+.subscription-success,
+.subscription-error,
+.response,
+.cbp-l-filters-big .cbp-filter-item:hover{
+	color:#5a6a74;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+label{
+	color:#222;
+}
+.color-bg{
+	color:#fff;
+}
+a{
+	border-bottom-color:#000;
+	color:#000;
+}
+a:hover,
+a:focus,
+.base-color,
+.h1 .small, 
+.h1 small, 
+.h2 .small, 
+.h2 small, 
+.h3 .small, 
+.h3 small, 
+.h4 .small, 
+.h4 small, 
+.h5 .small, 
+.h5 small, 
+.h6 .small, 
+.h6 small, 
+h1 .small, 
+h1 small, 
+h2 .small, 
+h2 small, 
+h3 .small, 
+h3 small, 
+h4 .small, 
+h4 small, 
+h5 .small, 
+h5 small, 
+h6 .small, 
+h6 small,
+blockquote.style3:before,
+.page-title .breadcrumb a:hover,
+.cbp-l-grid-team-name:hover,
+.cbp-l-filters-buttonCenter .cbp-filter-item.cbp-filter-item-active,
+.cbp-l-grid-masonry-projects-title:hover,
+.price ins,
+.section-header > i{
+	color:#F62459 ;
+}
+.dark-color,
+.resp-tab-active{
+	color:#333;
+}
+.light-color{
+	color:#fff;
+}
+a:hover,
+a:focus{
+	border-bottom-color:#F62459;
+}
+.alt-color{
+	color:#5fcf80;
+}
+.alt-bg,
+.product .thumb-wrapper .sale,
+.backtotop:hover{
+	background:#F62459;
+}
+.section,
+.white-bg,
+.gray-bg .info-box{
+	background-color:#fff;
+}
+.gray-bg{
+	background-color:#f6f6f6;
+}
+.dark-bg,
+a.info-box:hover,
+a.info-box:focus{
+	background-color:#111 !important;
+}
+.color-bg,
+.search-cart .cart .items-in-cart,
+.play-btn,
+.icon-box.style3 > i,
+.team-member .details,
+.cbp-l-caption-buttonLeft, .cbp-l-caption-buttonRight,
+.cbp-l-filters-alignRight .cbp-filter-item.cbp-filter-item-active,
+.cbp-l-filters-work .cbp-filter-item.cbp-filter-item-active,
+.cbp-l-filters-text .cbp-filter-counter,
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover,
+.news-sticky-slider .carousel-control:focus,
+.news-sticky-slider .carousel-control:hover,
+.product .thumb-wrapper .controls a:hover,
+.color-bg .divider.cross:after{
+	background-color:#F62459 ;
+}
+.dark-bg,
+.img-bg,
+.img-bg-color-overlay,
+.dark-bg h1,
+.dark-bg h2,
+.dark-bg h3,
+.dark-bg h4,
+.dark-bg h5,
+.dark-bg h6,
+.dark-bg .h1,
+.dark-bg .h2,
+.dark-bg .h3,
+.dark-bg .h4,
+.dark-bg .h5,
+.dark-bg .h6,
+.img-bg h1,
+.img-bg h2,
+.img-bg h3,
+.img-bg h4,
+.img-bg h5,
+.img-bg h6,
+.img-bg .h1,
+.img-bg .h2,
+.img-bg .h3,
+.img-bg .h4,
+.img-bg .h5,
+.img-bg .h6,
+.video-bg h1,
+.video-bg h2,
+.video-bg h3,
+.video-bg h4,
+.video-bg h5,
+.video-bg h6,
+.video-bg .h1,
+.video-bg .h2,
+.video-bg .h3,
+.video-bg .h4,
+.video-bg .h5,
+.video-bg .h6,
+.footer h1,
+.footer h2,
+.footer h3,
+.footer h4,
+.footer h5,
+.footer h6,
+.footer .h1,
+.footer .h2,
+.footer .h3,
+.footer .h4,
+.footer .h5,
+.footer .h6,
+.img-bg-color-overlay h1,
+.img-bg-color-overlay h2,
+.img-bg-color-overlay h3,
+.img-bg-color-overlay h4,
+.img-bg-color-overlay h5,
+.img-bg-color-overlay h6,
+.img-bg-color-overlay .h1,
+.img-bg-color-overlay .h2,
+.img-bg-color-overlay .h3,
+.img-bg-color-overlay .h4,
+.img-bg-color-overlay .h5,
+.img-bg-color-overlay .h6,
+.color-bg h1,
+.color-bg h2,
+.color-bg h3,
+.color-bg h4,
+.color-bg h5,
+.color-bg h6,
+.color-bg .h1,
+.color-bg .h2,
+.color-bg .h3,
+.color-bg .h4,
+.color-bg .h5,
+.color-bg .h6,
+.color-bg em,
+.color-bg .text-primary,
+.color-bg .base-color,
+.color-bg .dropcap.default,
+.color-bg .alt-list li i:first-child,
+.dark-bg .alt-list li i:first-child,
+.img-bg .alt-list li i:first-child,
+.img-bg-color-overlay .alt-list li i:first-child,
+.dark-bg .dropcap.default,
+.img-bg .dropcap.default,
+.img-bg-color-overlay .dropcap.default,
+.kr-cloud em,
+.video-bg{
+	color:#fff;
+}
+.dark-bg a,
+.color-bg a,
+.img-bg a,
+.img-bg-color-overlay a,
+blockquote.style2 .small a,
+blockquote.style2 footer a,
+blockquote.style2 small a{
+	color:#fff;
+}
+.dark-bg a:hover,
+.dark-bg a:focus,
+.img-bg a:hover,
+.img-bg a:focus,
+.img-bg-color-overlay a:hover,
+.img-bg-color-overlay a:focus{
+	color:#F62459 ;
+}
+.color-bg a:hover,
+.color-bg a:focus,
+blockquote.style2 .small a:hover,
+blockquote.style2 footer a:hover,
+blockquote.style2 small a:hover,
+blockquote.style2 .small a:focus,
+blockquote.style2 footer a:focus,
+blockquote.style2 small a:focus{
+	color:#111;
+}
+.page-header{
+	border-bottom-color:rgba(0, 0, 0, 0.08);
+}
+.gray-bg .page-header{
+	border-bottom-color:rgba(0, 0, 0, 0.08);
+}
+em{
+	border-bottom:1px dotted rgba(0, 0, 0, 0.2);
+	color:#222;
+	font-size:110%;
+	line-height:0;
+}
+.dark-bg em,
+.img-bg-color-overlay em,
+.img-bg em{
+	color:#fff;
+}
+.dark-bg .page-header,
+.color-bg .page-header,
+.img-bg-color-overlay .page-header,
+.img-bg .page-header,
+.dark-bg em,
+.color-bg em,
+.img-bg-color-overlay em,
+.img-bg em{
+	border-color:rgba(255, 255, 255, 0.2);
+}
+.color-bg .h1 .small, 
+.color-bg .h1 small, 
+.color-bg .h2 .small, 
+.color-bg .h2 small, 
+.color-bg .h3 .small, 
+.color-bg .h3 small, 
+.color-bg .h4 .small, 
+.color-bg .h4 small, 
+.color-bg .h5 .small, 
+.color-bg .h5 small, 
+.color-bg .h6 .small, 
+.color-bg .h6 small, 
+.color-bg h1 .small, 
+.color-bg h1 small, 
+.color-bg h2 .small, 
+.color-bg h2 small, 
+.color-bg h3 .small, 
+.color-bg h3 small, 
+.color-bg h4 .small, 
+.color-bg h4 small, 
+.color-bg h5 .small, 
+.color-bg h5 small, 
+.color-bg h6 .small, 
+.color-bg h6 small{
+	color:#fff;
+}
+.page-header.style2,
+.page-header.style6{
+	border-bottom-color:#F62459 ;
+}
+.page-header.style3:after{
+	background-color:#333;
+}
+.img-bg .page-header.style3:after,
+.img-bg-color-overlay .page-header.style3:after,
+.color-bg .page-header.style3:after,
+.dark-bg .page-header.style3:after{
+	background-color:#fff;
+}
+.page-header.style4:after{
+	background-color:#F62459 ;
+}
+.page-header.style5{
+	border-color:#657782;
+}
+blockquote.style2{
+	background-color:#F62459 ;
+}
+.thumbnail.style1 blockquote{
+	background-color:#2ECC71;
+}
+.thumbnail.linkpost .link{
+	background-color:#3498DB;
+}
+.bg-primary,
+.progress-bar-primary{
+	background-color:#F62459 !important;
+}
+.bg-info,
+.progress-bar-info{
+	background-color:#3498DB !important;
+}
+.bg-success,
+.progress-bar-success{
+	background-color:#2ECC71 !important;
+}
+.bg-warning,
+.progress-bar-warning{
+	background-color:#F1C40F !important;
+}
+.bg-danger,
+.progress-bar-danger{
+	background-color:#E74C3C !important;
+}
+.text-primary,
+.icon-box.style3 .list.alt-list li a,
+label sup{
+	color:#F62459 ;
+}
+.text-info{
+	color:#3498DB !important;
+}
+.text-success,
+.subscription-success i,
+.success i{
+	color:#2ECC71 !important;
+}
+.text-warning{
+	color:#F1C40F !important;
+}
+.text-danger,
+.subscription-error i,
+.failure,
+.error{
+	color:#E74C3C !important;
+}
+blockquote p,
+.half-section .overlay.light h1,
+.half-section .overlay.light h2,
+.half-section .overlay.light h3,
+.half-section .overlay.light h4,
+.half-section .overlay.light h5,
+.half-section .overlay.light h6,
+.half-section .overlay.light .h1,
+.half-section .overlay.light .h2,
+.half-section .overlay.light .h3,
+.half-section .overlay.light .h4,
+.half-section .overlay.light .h5,
+.half-section .overlay.light .h6{
+	color:#333;
+}
+.img-bg blockquote p,
+.img-bg-color-overlay blockquote p,
+.dark-bg blockquote p,
+.color-bg blockquote p,
+.img-bg blockquote footer,
+.img-bg-color-overlay blockquote footer,
+.dark-bg blockquote footer,
+.color-bg blockquote footer,
+.img-bg blockquote small,
+.img-bg-color-overlay blockquote small,
+.dark-bg blockquote small,
+.color-bg blockquote small{
+	color:#fff;
+}
+blockquote.style2{
+	border-color:#333;
+}
+blockquote.style2 p{
+	color:#fff;
+}
+.color-bg blockquote.style2{
+	background-color:#f8f8f8;
+}
+.color-bg blockquote.style2 p,
+.color-bg .info-box p,
+.img-bg .info-box p,
+.img-bg-color-overlay .info-box p{
+	color:#333;
+}
+.color-bg blockquote.style2 small,
+.color-bg .info-box small,
+.img-bg blockquote.style2 small,
+.img-bg .info-box small,
+.img-bg-color-overlay blockquote.style2 small,
+.img-bg-color-overlay .info-box small,
+.color-bg blockquote.style2 .small, 
+.color-bg blockquote.style2 footer, 
+.color-bg blockquote.style2 small,
+.color-bg blockquote.style2 .small a, 
+.color-bg blockquote.style2 footer a, 
+.color-bg blockquote.style2 small a{
+	color:#999;
+}
+.color-bg blockquote.style2 .small a:hover, 
+.color-bg blockquote.style2 footer a:hover, 
+.color-bg blockquote.style2 small a:hover,
+.color-bg blockquote.style2 .small a:focus, 
+.color-bg blockquote.style2 footer a:focus, 
+.color-bg blockquote.style2 small a:focus{
+	color:#333;
+}
+blockquote.style2 .small, 
+blockquote.style2 footer, 
+blockquote.style2 small{
+	color:rgba(255, 255, 255, 0.8);
+}
+blockquote.style2 a:hover,
+blockquote.style2 a:focus{
+	color:#fff;
+}
+.color-bg blockquote.style3::before{
+	color:#fff;
+}
+.info-box small{
+	color:#999;
+}
+.info-box.bg-info p,
+.info-box.bg-primary p,
+.info-box.bg-success p,
+.info-box.bg-warning p,
+.info-box.bg-danger p,
+.info-box.bg-info small,
+.info-box.bg-primary small,
+.info-box.bg-success small,
+.info-box.bg-warning small,
+.info-box.bg-danger small{
+	color:#fff;
+}
+.btn-info{
+	background-color:#3498DB ;
+	border-color:#3498DB ;
+}
+.btn-success{
+	background-color:#2ECC71 ;
+	border-color:#2ECC71 ;
+}
+.btn-warning{
+	background-color:#F1C40F ;
+	border-color:#F1C40F ;
+}
+.btn-danger{
+	background-color:#E74C3C ;
+	border-color:#E74C3C ;
+}
+.btn:hover,
+.btn:focus,
+.btn-default,
+.btn.active{
+	background-color:#000;
+	border-color:#000;
+	color:#fff !important;
+}
+.btn-default:hover,
+.btn-default:focus,
+.btn-primary,
+.btn-default.active{
+	background-color:#F62459 ;
+	border-color:#F62459 ;
+}
+.cst-btn-two{
+	color:#333 !important;
+}
+.cst-btn-two:hover,
+.cst-btn-two:focus{
+	border-color:#333;
+	color:#fff !important;
+}
+.cst-btn-two::before{
+	background-color:#333;
+}
+.cst-btn-four::before {
+	background: rgba(255, 255, 255, 0.4);
+}
+.cst-btn-four::after {
+	background: #333;
+}
+.btn-default.cst-btn-four::after {
+	background: #F62459;
+}
+.btn-default.cst-btn-four:hover,
+.btn-default.cst-btn-four:focus{
+	background-color:#333;
+}
+.btn-primary.cst-btn-four:hover,
+.btn-primary.cst-btn-four:focus{
+	background-color:#F62459;
+}
+.btn-info.cst-btn-four:hover,
+.btn-info.cst-btn-four:focus{
+	background-color:#3498DB;
+}
+.btn-success.cst-btn-four:hover,
+.btn-success.cst-btn-four:focus{
+	background-color:#2ECC71;
+}
+.btn-warning.cst-btn-four:hover,
+.btn-warning.cst-btn-four:focus{
+	background-color:#F1C40F;
+}
+.btn-danger.cst-btn-four:hover,
+.btn-danger.cst-btn-four:focus{
+	background-color:#E74C3C;
+}
+.btn-primary.cst-btn-six::before{
+	border-color:#F62459;
+}
+.btn-info.cst-btn-six::before{
+	border-color:#3498DB;
+}
+.btn-success.cst-btn-six::before{
+	border-color:#2ECC71;
+}
+.btn-warning.cst-btn-six::before{
+	border-color:#F1C40F;
+}
+.btn-danger.cst-btn-six::before{
+	border-color:#E74C3C;
+}
+.color-bg .btn:hover,
+.color-bg .btn:focus{
+	color:#fff;
+}
+.color-bg a.info-box:hover,
+.color-bg a.info-box:focus{
+	background-color:#111;
+}
+.color-bg .page-header.style2,
+.color-bg .page-header.style6{
+	border-color:rgba(0, 0, 0, 0.2);
+}
+.color-bg .page-header.style4:after{
+	background-color:#333;
+}
+.color-bg .page-header.style5{
+	border-bottom-color:rgba(255, 255, 255, 0.3)
+}
+.dark-bg .info-box{
+	background:#282828;
+}
+.img-bg blockquote.style2,
+.img-bg-color-overlay blockquote.style2,
+.dark-bg blockquote.style2{
+	border-color:#fff;
+}
+.cst-btn-nine:hover{
+	color:#333 !important;
+}
+.dark-bg .cst-btn-two,
+.img-bg .cst-btn-two,
+.img-bg-color-overlay .cst-btn-two{
+	color:#fff !important;
+}
+.dark-bg .cst-btn-two:hover,
+.img-bg .cst-btn-two:hover,
+.img-bg-color-overlay .cst-btn-two:hover{
+	color:#333 !important;
+	border-color:#fff;
+}
+.dark-bg .cst-btn-two:before,
+.img-bg .cst-btn-two::before,
+.img-bg-color-overlay .cst-btn-two::before{
+	background-color:#fff;
+}
+.img-bg .cst-btn-nine:hover,
+.img-bg-color-overlay .cst-btn-nine:hover,
+.dark-bg .cst-btn-nine:hover{
+	color:#fff !important;
+}
+.img-bg .cst-btn-nine::before,
+.img-bg-color-overlay .cst-btn-nine::before,
+.dark-bg .cst-btn-nine::before{
+	border-color:#fff;
+}
+.img-bg .cst-btn-ten::before{
+	box-shadow:0 0 0 35px #fff inset;
+}
+.img-bg .cst-btn-ten{
+	color:#333;
+}
+.img-bg .cst-btn-ten:hover,
+.img-bg .cst-btn-ten:focus,
+.img-bg-color-overlay .cst-btn-ten:hover,
+.img-bg-color-overlay .cst-btn-ten:focus,
+.dark-bg .cst-btn-ten:hover,
+.dark-bg .cst-btn-ten:focus{
+	color:#fff;
+}
+.img-bg .cst-btn-ten:hover::before,
+.img-bg-color-overlay .cst-btn-ten:hover::before,
+.dark-bg .cst-btn-ten:hover::before{
+	box-shadow:0 0 0 2px #fff inset;
+}
+.toggle.style1 .panel .panel-title a.collapsed:hover,
+.accordion.style1 .panel .panel-title a.collapsed:hover,
+.resp-tabs-list .resp-tab-active,
+.resp-tabs-list .resp-tab-active:hover{
+	color:#333;
+}
+.resp-tabs-list li:hover{
+	color:#5a6a74;
+}
+.accordion.style1 .panel .panel-title a:hover:before,
+.accordion.style1 .panel .panel-title a:before,
+.accordion.style1 .panel .panel-title a,
+.toggle.style1 .panel .panel-title a:hover:before,
+.toggle.style1 .panel .panel-title a:before,
+.toggle.style1 .panel .panel-title a{
+	color:#F62459;
+}
+.toggle.style1 .panel .panel-title a.collapsed:before,
+.toggle.style1 .panel .panel-title a.collapsed,
+.accordion.style1 .panel .panel-title a.collapsed:before,
+.accordion.style1 .panel .panel-title a.collapsed,
+.tabs nav li.tab-current a{
+	color:#333;
+}
+.tabs nav li.tab-current {
+	border-color: #333;
+	box-shadow: inset 0 2px #333;
+}
+.tabs nav li.tab-current:before,
+.tabs nav li.tab-current:after{
+	background-color:#333;
+}
+.form-control:hover{
+	border-color:#ccc;
+}
+.form-control:focus{
+	border-color:#5a6a74;
+}
+.navbar-custom .nav li.active,
+.navbar-custom .nav li a:hover,
+.navbar-custom .nav li a:focus,
+.navbar-custom .nav li a.active,
+.nav .open > a,
+.nav .open > a:focus,
+.nav .open > a:hover{
+	color:#fff;
+	background-color:transparent;
+}
+.navbar-custom.top-nav-collapse .nav li.active a,
+.navbar-custom.top-nav-collapse .nav li a:hover,
+.navbar-custom.top-nav-collapse .nav li a:focus,
+.navbar-custom.top-nav-collapse .nav li a.active,
+.navbar-custom.top-nav-collapse .nav .open > a,
+.navbar-custom.top-nav-collapse .nav .open > a:focus,
+.navbar-custom.top-nav-collapse .nav .open > a:hover{
+	color:#F62459;
+}
+.top-nav-collapse .items-in-cart{
+	color:#fff;
+}
+.icon-box.style5:hover{
+	border-color:#333;
+}
+.cbp-l-filters-alignRight .cbp-filter-item.cbp-filter-item-active,
+.cbp-l-filters-buttonCenter .cbp-filter-item.cbp-filter-item-active,
+.cbp-l-filters-work .cbp-filter-item.cbp-filter-item-active,
+.news-sticky-slider .carousel-control:focus,
+.news-sticky-slider .carousel-control:hover,
+.divider.strip,
+.color-bg .featured-clients a,
+.color-bg .featured-clients a:hover,
+.color-bg .featured-clients a:focus{
+	border-color:#F62459;
+}
+.cbp-l-filters-text .cbp-filter-counter:before{
+	border-top-color:#F62459;
+}
+.author-box .media .profile-btn:hover,
+.cbp-l-filters-big .cbp-filter-item.cbp-filter-item-active{
+	background-color:#F62459;
+	border-color:#F62459;
+}
+.alert{
+	background-color:#f6f6f6;
+	border-color:#f6f6f6;
+}
+.gray-bg .alert{
+	background-color:#fff;
+	border-color:#fff;
+}
+.dark-bg .alert{
+	background-color:#333;
+	border-color:#333;
+}
+.alert-success{
+	color:#2ecc71;
+}
+.alert-info{
+	color:#3498db;
+}
+.alert-warning{
+	color:#f1c40f;
+}
+.alert-danger{
+	color:#e74c3c;
+}
+.dark-bg .close > span{
+	color:#fff;
+}
+.cbp-caption-zoom .cbp-caption-activeWrap.overlay-primary {
+  background-color: rgba(246, 36, 89, 0.8);
+}
+.cbp-caption-zoom .cbp-caption-activeWrap.overlay-info {
+  background-color: rgba(52, 152, 219, 0.8);
+}
+.cbp-caption-zoom .cbp-caption-activeWrap.overlay-warning {
+  background-color: rgba(241, 196, 15, 0.8);
+}
+.cbp-caption-zoom .cbp-caption-activeWrap.overlay-success {
+  background-color: rgba(46, 204, 113, 0.8);
+}
+.cbp-caption-zoom .cbp-caption-activeWrap.overlay-danger {
+  background-color: rgba(231, 76, 60, 0.8);
+}
+.cbp-caption-zoom .cbp-caption-activeWrap.overlay-primary .cbp-l-caption-desc,
+.cbp-caption-zoom .cbp-caption-activeWrap.overlay-info .cbp-l-caption-desc,
+.cbp-caption-zoom .cbp-caption-activeWrap.overlay-warning .cbp-l-caption-desc,
+.cbp-caption-zoom .cbp-caption-activeWrap.overlay-success .cbp-l-caption-desc,
+.cbp-caption-zoom .cbp-caption-activeWrap.overlay-danger .cbp-l-caption-desc{
+	color:#fff;
+}
