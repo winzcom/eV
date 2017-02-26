@@ -29,7 +29,7 @@ class GuestController extends Controller
      */
     public function index()
     {
-        dd($this->test());
+        
         $companies = Service::getFiveCompanies();
         return view('landing')->with(['companies'=>$companies]);
     }
@@ -49,14 +49,5 @@ class GuestController extends Controller
 
     public function test(){
 
-        $d = DB::select(DB::raw(
-            "select quotes_request.*,quotes.rid as rid,company_category.company_id, company_category.category_id from quotes_request 
-            inner join company_category on company_category.category_id = quotes_request.category_id 
-            inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 
-            and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 ) 
-            left join quotes on quotes.rid=quotes_request.id where companies.id =:user_id"
-        ),array('user_id'=>Auth::id()));
-        
-        return $d;
     }
 }
