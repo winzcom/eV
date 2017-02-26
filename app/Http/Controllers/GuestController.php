@@ -17,9 +17,13 @@ class GuestController extends Controller
      *
      * @return void
      */
+
+     private $com;
+
     public function __construct()
     {
-        
+        //Nothing H
+        $this->com = '';
     }
 
     /**
