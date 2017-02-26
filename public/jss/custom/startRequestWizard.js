@@ -34,6 +34,10 @@ $(document).ready(function(){
       $('#eventtype').change(function(){
         var event = $('#eventtype option:selected').text();
         //var cat = $('#eventtype option:selected').text();
+        if($('.themecolor')){
+              $('.themecolor').remove();
+        }
+
         var cat = 'Event Planner';
         var self = $(this);
         if(event == 'Wedding'){
@@ -42,6 +46,7 @@ $(document).ready(function(){
           }
         }
         else if(e = eventType[event]){
+
           addExtraFormElement(e);
         }
       })
@@ -84,7 +89,7 @@ $(document).ready(function(){
     function addThemeColorInputElements(element){
       var element = element.parent().parent();
 
-      var divContainer = $(`<div class="control-group divContainer">
+      var divContainer = $(`<div class="control-group themecolor">
                               <label class="control-label" for="inputCity">Please Select Theme and Color</label>
                              </div>
                           `);
