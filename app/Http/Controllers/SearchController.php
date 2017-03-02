@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Category;
 use App\Service\Service;
-use App\User;
+use App\Entities\User;
 
 class SearchController extends Controller
 {
@@ -19,11 +19,37 @@ class SearchController extends Controller
         $companies = User::with('reviews')->whereHas('categories',function($q) use ($request){
             $q->whereIn('categories.id',$request->input('category'));
         })->StateVicinity($request->state,$request->vicinity)->where('name','!=','null')->paginate(15);
-       return view('app_view.display_list')->with(['companies'=>$companies,'request'=>$request,
+       /*return view('app_view.browsevendors')->with(['companies'=>$companies,'request'=>$request,
                     'categories'=>$categories,
         'events'=>Service::getEvents()
-       ]);
+       ]);*/
+       return $companies;
     }
+
+    private function getVendors($cat){
+        $companies = User::with('reviews')->whereHas('categories',function($q) use ($cat){
+            $q->where('categories.id',$cat);
+        })->where('name','!=','null')->paginate(1);
+        return $companies;
+    }
+
+    public function browseByCategory($category = null){
+    
+        if($category){
+            $companies = $this->getVendors($category);
+            if(count($companies) > 0){
+                return view('app_view.browsevendors')->with([
+                    'companies'=>$companies,
+                    'category_id'=>$category,
+                    'cat_name'=>$companies->first()->categories()->where('categories.id',$category)->get()[0]->name
+                ]);
+            }
+            return view('app_view.browsevendors')->with('category_id',$category);
+        }
+        return view('app_view.browsevendors')->with('category_id',$category);   
+        
+    }
+
 
     public function search_by_typing(Request $request){
         $name = $request->name;

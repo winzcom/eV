@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Entities\User;
 use App\Service\Service;
 
 class DetailsController extends Controller
@@ -16,7 +16,7 @@ class DetailsController extends Controller
         $this->path = asset('storage/images/');
     }
 
-    public function details($slug){
+    public function details($slug,$id=null){
 
         $user = User::with(['reviews'=>function($q){
                     $q->orderBy('id','desc');
@@ -29,9 +29,11 @@ class DetailsController extends Controller
         
        // $directory = public_path("storage".DIRECTORY_SEPARATOR."images");
         //$files = Service::getImages($directory);
-        return view('app_view.item')->with(['userd'=>$user,'path'=>$this->path,
+        return view('app_view.details')->with(['company'=>$user,'path'=>$this->path,
                     'events'=>Service::getEvents(),
                     'similars'=>$similars,
-                    'request'=>$this->request]);
+                    'request'=>$this->request,
+                    'cat_id'=>$id != null ? $id:null
+                ]);
     }
 }

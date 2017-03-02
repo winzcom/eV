@@ -1,24 +1,28 @@
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
    <div class="modal-content">
-    <div class="modal-body">
+    <div class="modal-body my-space">
         <form id="myWizard" type="get" action="{{url('/quotes_request')}}" class="form-horizontal" method="post">
              {{ csrf_field() }}
-            <section class="step" data-step-title="The third">
+             <div class="row hide" data-step="1" data-title="This is the first step!">
                 <div class="control-group" >
                     <label class="control-label" for="inputCity">What are you looking for?</label>
                         <div class="controls">
                             <select class="form-control input-lg " name="category" id="category">
-                                
-                                {{$categories->display()}}
+                                @if(isset($category_id))
+                                    {{$categories->display($category_id)}}
+                                @else
+                                     {{$categories->display()}}
+                                @endif
                             </select>
                         </div>
                 </div>
-
-                <div class="control-group" id="event">
+            </div><!-- data-step="2" -->
+            <div class="row hide" data-step="2" data-title="This is the first step!">
+                <div class="control-group" id="eventtype">
                     <label class="control-label" for="inputCity">What type of Event?</label>
                         <div class="controls">
-                            <select class="form-control input-lg" name="event" id="eventtype">
+                            <select class="form-control input-lg" name="event" id="event">
                                 
                                 @foreach($events as $event)
                                     <option>{{$event->name}}</option>
@@ -42,36 +46,124 @@
                             <input type="number" name="duration" class="form-control input-lg"/>
                         </div>
                 </div>
+            </div><!--step-2-->
 
+            <div class="row hide" data-step="3" data-title="This is the first step!">
                 <div class="control-group" id="venue">
-                    <label class="control-label" for="inputCity">Venue (leave blank if you don't have a confirmed venue yet')</label>
+                    <label class="control-label" for="">Venue (leave blank if you don't have a confirmed venue yet')</label>
                         <div class="controls">
-                            <input type="text" name="venue" class="form-control input-lg" value=""/>
+                            <input id="pac-input" name="venue" type="text" class="form-control input-lg" placeholder="Enter a location"/>
+                        </div>
+                    <label class="control-label">Number of Guests</label>
+                        <div class="controls">
+                            <input type="text" class="form-control spin spinedit noSelect" id="spinMd" name="numberofguests">
+                            <!--<input type="number" name="numberofguests" class="form-control input-lg"/>-->
+
+                            <!--<div class="spinedit"><i class="fa fa-chevron-up"></i><i class="fa fa-chevron-down"></i></div>-->
                         </div>
                 </div>
+            </div><!--step-3-->
 
-                <div class="control-group" id="numberofguests">
-                    <label class="control-label" for="inputCity">Number of Guests</label>
-                        <div class="controls">
-                            <input type="number" name="numberofguests" class="form-control input-lg"/>
-                        </div>
+            <div class="row hide" data-step="4" data-title="This is the first step!" >
+                <div id="normalbudget">
+                    <label>What is Your Budget?</label>
+                    <div class="radio">
+                        <label class="">
+                            <div class="iradio_square">
+                                <input type="radio" name="radio1" id="optionsRadios2" value="I want a Premium Service"><ins class="iCheck-helper"></ins>
+                            </div>
+                        I want a Premium Service
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="">
+                            <div class="iradio_square">
+                                <input type="radio" name="radio1" id="optionsRadios2" value="Budget and Service are Important."><ins class="iCheck-helper"></ins>
+                            </div>
+                            Budget and Service are Important.
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="">
+                            <div class="iradio_square">
+                                <input type="radio" name="radio1" id="optionsRadios2" value=" Budget is My Concern"><ins class="iCheck-helper"></ins>
+                            </div>
+                        Budget is My Concern
+                        </label>
+                    </div>
                 </div>
 
-                <div class="control-group" id="numberofguests">
+
+                <div id="publicbudget">
+                    <label>How do You Want to Work With Vendors?</label>
+                    <div class="radio">
+                        <label class="">
+                            <div class="iradio_square">
+                                <input type="radio" name="radio1" id="optionsRadios2" value="We will pay vendors"><ins class="iCheck-helper"></ins>
+                            </div>
+                        We will pay vendors
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="">
+                            <div class="iradio_square">
+                                <input type="radio" name="radio1" id="optionsRadios2" value="free to attend and send to guests"><ins class="iCheck-helper"></ins>
+                            </div>
+                            Free to attend and sell to guests
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="">
+                            <div class="iradio_square">
+                                <input type="radio" name="radio1" id="optionsRadios2" value="free to attend"><ins class="iCheck-helper"></ins>
+                            </div>
+                        Free to attend and sell to Guest
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="">
+                            <div class="iradio_square">
+                                <input type="radio" name="radio1" id="optionsRadios2" value="there is a fee to attend"><ins class="iCheck-helper"></ins>
+                            </div>
+                        There is a fee to attend
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="">
+                            <div class="iradio_square">
+                                <input type="radio" name="radio1" id="optionsRadios2" value="we are open to how it will work"><ins class="iCheck-helper"></ins>
+                            </div>
+                        We are open to how this will work
+                        </label>
+                    </div>
+                </div>
+
+                
+         </div>
+
+          <!--step-4-->
+
+            <div class="row hide" data-step="5" data-title="This is the first step!">
+                <div class="control-group" id="personalmessagae">
                     <label class="control-label" for="inputCity">Personal Message</label>
                         <div class="controls">
                             <textarea name="personalmessage" class="form-control" row=4></textarea>
                         </div>
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label" for="inputCity"></label>
-                        <div class="controls">
-                            <input type="submit" id="inputCity" class="btn btn-default" value="submit">
-                        </div>
-                </div>
-            </section>
+                <!-- State and Locality-->
+                <!--<input type="text" id="administrative_area_level_1" value="" name="state"/>
+                <input type="text" id="locality" value="" name="vicinity"/>-->
+                <!-- End of State and Locality-->
+            </div><!--step-5-->
+            <input type="submit"/>
+           
         </form>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default js-btn-step pull-left" data-orientation="cancel" data-dismiss="modal"></button>
+            <button type="button" class="btn btn-warning js-btn-step" data-orientation="previous"></button>
+            <button type="button" class="btn btn-success js-btn-step" data-orientation="next"></button>
+        </div>
       </div><!-- Modal Body-->
    </div><!--Modal content-->
   </div><!--modal-dialog-->

@@ -5655,3 +5655,8 @@ aside .widget .cbp-panel{
 		display:none;
 	}
 }
+/** Custom CSS **/
+
+.my-space{
+	padding: 30px 30px 20px 30px !important;
+}

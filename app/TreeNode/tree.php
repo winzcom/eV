@@ -23,22 +23,33 @@ class CategoryTree{
         }
     }
 
-    public function display(){
-
+    public function display($cat = null){
         if($this->depth > 0){
 
             for($i = 0; $i < $this->depth; $i++)  {
-                echo "<option value='".$this->id."'>- ".$this->name."</option>";
+                if($cat !== null){
+                    
+                    if((int)$this->id == $cat)
+                        echo "<option value='".$this->id."' selected>- ".$this->name."</option>";
+                    else
+                        echo "<option value='".$this->id."'>- ".$this->name."</option>";
+                }
+                else{
+                    echo "<option value='".$this->id."'>- ".$this->name."</option>";
+                }
             }
         }
         else{
-            echo  "<option>".$this->name."</option>";
+            echo  "<option disabled>".$this->name."</option>";
         }
         $num_children = sizeof($this->childlist);
         for($i = 0; $i<$num_children; $i++) {
-             $this->childlist[$i]->display();
+             $this->childlist[$i]->display($cat);
         }
     }
 }
+
+
+
 
 ?>

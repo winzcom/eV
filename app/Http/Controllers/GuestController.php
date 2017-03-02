@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Entities\Category;
 use App\Service\Service;
-use App\Entities\User;
+use App\Entities\Customer;
 use App\Entities\Review;
+use App\Entities\QuotesRequest;
 use Illuminate\Support\Facades\DB;
 use App\TreeNode\CategoryTree;
 
@@ -47,11 +47,19 @@ class GuestController extends Controller
 
 
     public function quotesRequest(Request $request){
-
-        dd(json_encode($request->all()));
+        
+        $client = $request->only(['first_name','last_name','email','password']);
+        $category = $request->only(['category']);
+        $request = $request->except(['category','firstname','lastname','email','password','_token']);
+        dd($request);
+        /*$customer = Customer::create([
+            'firstname'=>$client->first_name,
+            'lastname'=>$client->last_name,
+            'email'=>$client->email,
+            'password'=>bcrypt($client->password)
+        ]);*/
+    
     }
 
-    public function test(){
-
-    }
+    
 }

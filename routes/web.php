@@ -47,16 +47,14 @@ Route::group(['middleware'=>'auth'],function(){
 
 
 
-Route::get('/detail/{company}','DetailsController@details');
+Route::get('/detail/{company}/{id?}','DetailsController@details');
 
 Route::post('/quotes_request','GuestController@quotesRequest');
 
 
 Route::post('/write_review','GuestController@writeReview');
 
-Route::get('/browse_vendors',function(){
-    return view('app_view.browse_vendors');
-});
+Route::get('/browse_vendors/{category?}','SearchController@browseByCategory');
 
 Route::get('/category/{category}',function($category){
 

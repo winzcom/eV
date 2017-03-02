@@ -28,13 +28,6 @@ class Service{
 
     public static function getCategories(){
 
-        /*$expiresAt = Carbon::now()->addMinutes(10);
-
-         return  $value = Cache::remember('categories',$expiresAt, function () {
-                    return Category::OrderBy('name')->get();
-          });*/
-
-           //return  Category::OrderBy('name')->get();
            return new CategoryTree(0,'',-1);
 
     }
@@ -72,19 +65,6 @@ class Service{
     public static function getEvents(){
         return DB::table('events')->select('name','id')->OrderBy('name')->get();
     }
-
-    /*public static function createNewUser($data){
-
-        $filtered =  array_except($data,['password_confirm','category','_token']);
-        $filtered['password'] = bcrypt($filtered['password']);
-        //$filtered['description'] = htmlentities($filtered['description']);
-        $name_slug =  ['name_slug'=>str_slug($filtered['name'])];
-        $filtered = array_merge($filtered,$name_slug);
-        $user =  User::create($filtered);
-
-        $user->categories()->attach($data['category']);
-        return $user;
-    }*/
 
     public static function createNewUser($data){
          $filtered =  array_except($data,['password_confirm','_token']);
