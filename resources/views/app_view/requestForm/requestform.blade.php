@@ -147,16 +147,42 @@
                 <div class="control-group" id="personalmessagae">
                     <label class="control-label" for="inputCity">Personal Message</label>
                         <div class="controls">
-                            <textarea name="personalmessage" class="form-control" row=4></textarea>
+                            <textarea name="personalmessage" class="form-control"  required></textarea>
+                        </div>
+
+                        <label class="control-label" for="inputCity">First Name</label>
+                        <div class="controls">
+                            <input name="first_name" class="form-control" type="text" required/>
+                        </div>
+
+                        <label class="control-label" for="inputCity">Last Name</label>
+                        <div class="controls">
+                            <input name="last_name" class="form-control" type="text" required/>
+                        </div>
+
+                        <label class="control-label" for="inputCity">Email</label>
+                        <div class="controls">
+                            <input name="email" class="form-control" type="email" required/>
+                        </div>
+
+                        <label class="control-label" for="inputCity" id="step5password">Password</label>
+                        <div class="controls">
+                            <input name="password" class="form-control" type="password" id="step5password" required/>
+                        </div>
+
+                        <label class="control-label" for="inputCity" id="step5password">Confirm Password</label>
+                        <div class="controls">
+                            <input name="password" class="form-control" type="password" id="step5confirm_password" required/>
                         </div>
                 </div>
+
+
 
                 <!-- State and Locality-->
                 <!--<input type="text" id="administrative_area_level_1" value="" name="state"/>
                 <input type="text" id="locality" value="" name="vicinity"/>-->
                 <!-- End of State and Locality-->
             </div><!--step-5-->
-            <input type="submit"/>
            
         </form>
         <div class="modal-footer">

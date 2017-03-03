@@ -170,7 +170,7 @@
 	<!-- section END -->
 	
 	<!-- section START -->
-		<section class="section img-bg half-section" data-path="img/shop/big-offer.jpg">
+		<!--<section class="section img-bg half-section" data-path="img/shop/big-offer.jpg">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-6 col-sm-8 col-lg-offset-6 col-sm-offset-4">
@@ -191,7 +191,7 @@
 					</div>
 				</div>
 			</div>
-		</section>
+		</section>-->
 	<!-- section END -->
 	
 	<!-- section START -->

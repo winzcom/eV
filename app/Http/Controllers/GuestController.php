@@ -47,18 +47,48 @@ class GuestController extends Controller
 
 
     public function quotesRequest(Request $request){
-        
+
+        $users = null; $customer= null;
+
+
+        $state = $request->state;
+        $vicinity = $request->vicinity;
         $client = $request->only(['first_name','last_name','email','password']);
         $category = $request->only(['category']);
-        $request = $request->except(['category','firstname','lastname','email','password','_token']);
-        dd($request);
-        /*$customer = Customer::create([
-            'firstname'=>$client->first_name,
-            'lastname'=>$client->last_name,
-            'email'=>$client->email,
-            'password'=>bcrypt($client->password)
-        ]);*/
+
+        $request = $request->except(['category','firstname','lastname','email','password','_token','state','vicinity']);
+
+        
+        DB::transaction(function() use ($users,$request,$customer){
+
+            /*$customer = Customer::create([
+                'first_name'=>$client['first_name'],
+                'last_name'=>$client['last_name'],
+                'email'=>$client['email'],
+                'password'=>bcrypt($client['password'])
+            ]);*/
+
+            $request = QuotesRequest::create([
+                'category_id'=>$category['category'],
+                'client_id'=>'1',
+                'state'=>$state,
+                'vicinity_id'=>$vicinity,
+                'request'=>json_encode($request)
+            ]);
+
+            $users = User::whereHas('categories',function($q) use ($category){
+                 $q->where('categories.id',$category['category']);
+            })->get();
+
+        });
+
+        
+
+        
+
+        //sendMail($users);
     
+        dd($request);
     }
 
     

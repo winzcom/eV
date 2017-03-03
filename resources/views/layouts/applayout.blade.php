@@ -36,9 +36,13 @@
 <script>
 
 	/***Google Maps and Autocomplete Starts */
+	/*** */
+	window.Laravel = {!! json_encode([
+		'csrfToken' => csrf_token(),
+	]) 
+!!};
 
-
-	</script>
+</script>
 
 <body data-spy="scroll" data-target=".navscroll">
 
@@ -228,21 +232,53 @@
 <script>
 	$(document).ready(function(){
 
+		
+		function confirmPasswordCheck(){
+			$('#step5confirm_password').blur(function(){
+			var password = $('#step5password').val();
+			if($(this).val() !== password){
+				$('#myModal').modalSteps({
+					disableNextButton: true
+				})
+			}
+		})	
+	}
+
+			confirmPasswordCheck();
+
 		$('#myModal').modalSteps({
 			btnCancelHtml: 'Cancel',
 			btnPreviousHtml: 'Previous',
 			btnNextHtml: 'Next',
 			btnLastStepHtml: 'Complete',
+			callbacks:{'*':confirmPasswordCheck},
 			disableNextButton: false,
 			completeCallback: function(){
 				/*** Ajax Call To Submit Form **/
 
-				$.post("quotes_request",$('#myWizard').serialize())
+				/*$.post("quotes_request",$('#myWizard').serialize())
 				.done(function(){
 					/** post successful */
-				}).fail(function(){
+				/*}).fail(function(){
 					/** Failed to post **/
+				/*})*/
+
+				$.ajax({
+					url:"../quotes_request",
+					type:"POST",
+					data:$('#myWizard').serialize(),
+					contentType:"application/x-www-form-urlencoded",
+					headers:{
+						'X-CSRF-TOKEN':Laravel.csrfToken
+					}
 				})
+				.done(function(){
+					return false;
+				})
+				.fail(function(){
+
+				})
+
 			}
 		});
 

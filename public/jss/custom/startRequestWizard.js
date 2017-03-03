@@ -56,7 +56,8 @@ $(document).ready(function(){
 
 
     $('#myModal').on('shown.bs.modal',function(){
-      //addStateLocality();
+      addStateLocality();
+
       $('#venue').show();
       toggleBudgetFields(false);
 
@@ -125,7 +126,7 @@ $(document).ready(function(){
 
       var state,locality,stateInput,localityInput, inputs
       inputs = $('#start_request :input');
-      if( inputs !== undefined && inputs !== null && inputs !=={} && inputs !== ''){
+      if( inputs !== undefined && inputs !== null && inputs !=={} ){
           state = inputs[0].value;
           locality = inputs[1].value;
 

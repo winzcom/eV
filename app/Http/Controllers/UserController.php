@@ -35,6 +35,10 @@ class UserController extends Controller
     }
 
     public function home(){
+
+        $u = $this->getRequestNotYetAnswered();
+        //dd(collect($u)->pluck('client_name'));
+
         $user =  User::with([
                  'galleries',
                  'categories',
@@ -43,7 +47,7 @@ class UserController extends Controller
                  },
                  'offdays'
         ]) ->find(Auth::id());
-        return view('app_view.d')->with([
+        return view('user.home')->with([
                 'user'=>$user,'path'=>$this->path,
                 'requests'=>$this->getRequests(),
                 'unreplied_request'=>$this->getRequestNotYetAnswered()
@@ -240,21 +244,23 @@ class UserController extends Controller
             inner join company_category on company_category.category_id = quotes_request.category_id 
             inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 
             and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 ) 
-            left join quotes on quotes.rid=quotes_request.id where companies.id =:user_id"
-        ),array('user_id'=>Auth::id()));
+            left join quotes on quotes.rid=quotes_request.id where companies.id =:vendor_id"
+        ),array('vendor_id'=>Auth::id()));
         
         return $d;
     }
 
     public function getRequestNotYetAnswered(){
        $d = DB::select(DB::raw(
-                "select quotes_request.*,company_category.company_id, company_category.category_id from quotes_request 
+                "select quotes_request.*,users.first_name as client_name,company_category.company_id, company_category.category_id from quotes_request 
                 inner join company_category on company_category.category_id = quotes_request.category_id 
                 inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 
-                and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 ) 
-                inner join quotes on quotes.rid != quotes_request.id and companies.id = quotes.uid where companies.id =:user_id"
+                and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 )
+                inner join users on users.id = quotes_request.client_id 
+                inner join quotes on quotes.rid != quotes_request.id and companies.id = quotes.uid where companies.id =:user_id
+                order by quotes_request.id desc"
             ),array('user_id'=>Auth::id()));
         
-         return $d;
+         return collect($d);
     }
 }

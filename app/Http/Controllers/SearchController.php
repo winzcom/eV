@@ -29,7 +29,7 @@ class SearchController extends Controller
     private function getVendors($cat){
         $companies = User::with('reviews')->whereHas('categories',function($q) use ($cat){
             $q->where('categories.id',$cat);
-        })->where('name','!=','null')->paginate(1);
+        })->where('name','!=','null')->paginate(5);
         return $companies;
     }
 
@@ -38,15 +38,15 @@ class SearchController extends Controller
         if($category){
             $companies = $this->getVendors($category);
             if(count($companies) > 0){
-                return view('app_view.browsevendors')->with([
+                return view('app_view.vendorbrowse')->with([
                     'companies'=>$companies,
                     'category_id'=>$category,
                     'cat_name'=>$companies->first()->categories()->where('categories.id',$category)->get()[0]->name
                 ]);
             }
-            return view('app_view.browsevendors')->with('category_id',$category);
+            return view('app_view.vendorbrowse')->with('category_id',$category);
         }
-        return view('app_view.browsevendors')->with('category_id',$category);   
+        return view('app_view.vendorbrowse')->with('category_id',$category);   
         
     }
 

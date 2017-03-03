@@ -17,4 +17,9 @@ class QuotesRequest extends Model
         'vicinity_id',
         'request'
     ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
 }
