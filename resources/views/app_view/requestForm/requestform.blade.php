@@ -9,6 +9,7 @@
                     <label class="control-label" for="inputCity">What are you looking for?</label>
                         <div class="controls">
                             <select class="form-control input-lg " name="category" id="category">
+                                <option></option>
                                 @if(isset($category_id))
                                     {{$categories->display($category_id)}}
                                 @else
@@ -70,7 +71,7 @@
                     <div class="radio">
                         <label class="">
                             <div class="iradio_square">
-                                <input type="radio" name="radio1" id="optionsRadios2" value="I want a Premium Service"><ins class="iCheck-helper"></ins>
+                                <input type="radio" name="budget" id="optionsRadios2" value="I want a Premium Service"><ins class="iCheck-helper"></ins>
                             </div>
                         I want a Premium Service
                         </label>
@@ -78,7 +79,7 @@
                     <div class="radio">
                         <label class="">
                             <div class="iradio_square">
-                                <input type="radio" name="radio1" id="optionsRadios2" value="Budget and Service are Important."><ins class="iCheck-helper"></ins>
+                                <input type="radio" name="budget" id="optionsRadios2" value="Budget and Service are Important."><ins class="iCheck-helper"></ins>
                             </div>
                             Budget and Service are Important.
                         </label>
@@ -86,7 +87,7 @@
                     <div class="radio">
                         <label class="">
                             <div class="iradio_square">
-                                <input type="radio" name="radio1" id="optionsRadios2" value=" Budget is My Concern"><ins class="iCheck-helper"></ins>
+                                <input type="radio" name="budget" id="optionsRadios2" value=" Budget is My Concern"><ins class="iCheck-helper"></ins>
                             </div>
                         Budget is My Concern
                         </label>
@@ -99,7 +100,7 @@
                     <div class="radio">
                         <label class="">
                             <div class="iradio_square">
-                                <input type="radio" name="radio1" id="optionsRadios2" value="We will pay vendors"><ins class="iCheck-helper"></ins>
+                                <input type="radio" name="budget" id="optionsRadios2" value="We will pay vendors"><ins class="iCheck-helper"></ins>
                             </div>
                         We will pay vendors
                         </label>
@@ -107,7 +108,7 @@
                     <div class="radio">
                         <label class="">
                             <div class="iradio_square">
-                                <input type="radio" name="radio1" id="optionsRadios2" value="free to attend and send to guests"><ins class="iCheck-helper"></ins>
+                                <input type="radio" name="budget" id="optionsRadios2" value="free to attend and send to guests"><ins class="iCheck-helper"></ins>
                             </div>
                             Free to attend and sell to guests
                         </label>
@@ -115,7 +116,7 @@
                     <div class="radio">
                         <label class="">
                             <div class="iradio_square">
-                                <input type="radio" name="radio1" id="optionsRadios2" value="free to attend"><ins class="iCheck-helper"></ins>
+                                <input type="radio" name="budget" id="optionsRadios2" value="free to attend"><ins class="iCheck-helper"></ins>
                             </div>
                         Free to attend and sell to Guest
                         </label>
@@ -123,7 +124,7 @@
                     <div class="radio">
                         <label class="">
                             <div class="iradio_square">
-                                <input type="radio" name="radio1" id="optionsRadios2" value="there is a fee to attend"><ins class="iCheck-helper"></ins>
+                                <input type="radio" name="budget" id="optionsRadios2" value="there is a fee to attend"><ins class="iCheck-helper"></ins>
                             </div>
                         There is a fee to attend
                         </label>
@@ -131,7 +132,7 @@
                     <div class="radio">
                         <label class="">
                             <div class="iradio_square">
-                                <input type="radio" name="radio1" id="optionsRadios2" value="we are open to how it will work"><ins class="iCheck-helper"></ins>
+                                <input type="radio" name="budget" id="optionsRadios2" value="we are open to how it will work"><ins class="iCheck-helper"></ins>
                             </div>
                         We are open to how this will work
                         </label>

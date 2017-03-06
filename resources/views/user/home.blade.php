@@ -23,18 +23,58 @@
 
 	<!-- section START -->
 		<section class="section half-section-right">
-			<div class="section-bg bg2 hidden-xs">&nbsp;</div>
+			
 			<div class="container">
-				<div class="row">
-					<div class="col-sm-6">
-						<!--<div class="overlay">
-							<h2>Hello how are you!</h2>
-							<p class="lead alt-font">Etiam placerat commodo feugiat. Proin in quam erat. Duis sed porttitor magna, a laoreet enim.</p>
-							<p>Morbi pulvinar sagittis ipsum sed posuere. Sed et interdum nibh. Duis tristique massa non est hendrerit vehicula. Fusce rutrum lorem luctus blandit ultricies. Aliquam auctor mi ac odio sollicitudin sollicitudin. </p>
-							<a class="btn btn-primary btn-icon"><i class="livicon" data-name="car" data-color="#fff" data-hovercolor="false" data-size="20"></i> Learn More</a>
-						</div>-->				
+
+				<div class="work-process style1">
+						<div class="process-wrap">
+							<div class="icon-wrap">
+								<span class="step">{{count($replied_request)}}</span>
+								<i class="icon icon-coffee"></i>
+							</div>
+							<h3 class="title">Answered Requests</h3>
+						</div>
+						<div class="process-wrap">
+							<div class="icon-wrap">
+								<span class="step">{{count($unreplied_request)}}</span>
+								<i class="icon icon-web text-info"></i>
+							</div>
+							<h3 class="title">Unanswered Requests</h3>
+						</div>
+						<div class="process-wrap">
+							<div class="icon-wrap">
+								<span class="step">{{count($requests)}}</span>
+								<i class="icon icon-coding text-danger"></i>
+							</div>
+							<h3 class="title">Total Requests</h3>
+						</div>
+
+					</div>
+							<div class="row">
+				<div class="col-lg-12">
+					<h5 class="page-header"></h5>
+					<div id="horizontalTab1">
+						<ul class="resp-tabs-list hor_1">
+							<li>Reviews (5)</li>
+							<li>Requests (2)</li>
+							<li>Horizontal 3</li>
+						</ul>
+						<div class="resp-tabs-container hor_1">
+							<div>
+								@include('app_view.shared.display_review',['reviews'=>$reviews])
+							</div>
+							<div>
+								@include('app_view.shared.showfewrequests',['all_requests'=>$requests])
+							</div>
+							<div>
+								
+							</div>
+						</div>
 					</div>
 				</div>
+			</div>
+
+
 			</div>
 		</section>
 	<!-- section END -->

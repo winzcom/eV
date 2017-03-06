@@ -36,21 +36,17 @@ class UserController extends Controller
 
     public function home(){
 
-        $u = $this->getRequestNotYetAnswered();
-        //dd(collect($u)->pluck('client_name'));
-
         $user =  User::with([
                  'galleries',
                  'categories',
-                 'reviews'=>function($q){
-                     $q->orderBy('id','desc');
-                 },
                  'offdays'
         ]) ->find(Auth::id());
+
+       // $all_requests = $this->getRequests();
+
         return view('user.home')->with([
                 'user'=>$user,'path'=>$this->path,
-                'requests'=>$this->getRequests(),
-                'unreplied_request'=>$this->getRequestNotYetAnswered()
+                'reviews'=>$this->getFiveReviews()
             ]);
     }
 
@@ -93,10 +89,11 @@ class UserController extends Controller
             $user = User::with(['categories','vicinity'])->where(['id'=>Auth::id()])
             ->get()->first();
 
-        return view('app_view.user')
+        return view('user.profile')
                 ->with(['user'=>$user,'formInputs'=>User::getFormInputs(),
                         'states'=>Service::getStates(),
-                        'categories'=>Service::getCategories()]);
+                        'categories'=>Service::getCategories()
+                    ]);
     }
 
 
@@ -140,10 +137,15 @@ class UserController extends Controller
 
     public function deletePhotos(Request $request){
 
-        if(count($request->images))
+        if(count($request->images) > 0)
             Service::deletePhotos($this->gallery_implementation,$request->images);
         
         return back();
+    }
+
+    public function getFiveReviews(){
+        $reviews = Review::where('review_for',Auth::id())->orderBy('id','desc')->take(5)->get();
+        return $reviews;
     }
 
     public function getReviews(Request $request,$filter = null){
@@ -240,14 +242,15 @@ class UserController extends Controller
     public function getRequests(){
 
         $d = DB::select(DB::raw(
-            "select quotes_request.*,quotes.rid,company_category.company_id, company_category.category_id from quotes_request 
+            "select quotes_request.*,users.first_name as client_name,quotes.rid as rid,company_category.company_id, company_category.category_id from quotes_request 
             inner join company_category on company_category.category_id = quotes_request.category_id 
             inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 
-            and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 ) 
+            and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 )
+            inner join users on users.id = quotes_request.client_id  
             left join quotes on quotes.rid=quotes_request.id where companies.id =:vendor_id"
         ),array('vendor_id'=>Auth::id()));
         
-        return $d;
+        return collect($d);
     }
 
     public function getRequestNotYetAnswered(){
@@ -263,4 +266,22 @@ class UserController extends Controller
         
          return collect($d);
     }
+
+    public function getAnsweredRequests(){
+        $d = DB::select(DB::raw(
+                "select quotes_request.*,users.first_name as client_name,company_category.company_id, company_category.category_id from quotes_request 
+                inner join company_category on company_category.category_id = quotes_request.category_id 
+                inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 
+                and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 )
+                inner join users on users.id = quotes_request.client_id 
+                inner join quotes on quotes.rid = quotes_request.id and companies.id = quotes.uid where companies.id =:user_id
+                order by quotes_request.id desc"
+            ),array('user_id'=>Auth::id()));
+        
+         return collect($d);
+    }
+
+    public function replyRequest($request_id){}
+
+    public function dismissRequest($request_id){}
 }

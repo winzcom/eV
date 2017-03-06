@@ -55,7 +55,7 @@
 	
 		<!-- brand (compnay logo) -->
 		<div class="navbar-header">
-			<a class="navbar-brand" href="javascript:void(0);"><img src="{{asset('img/logos/tempo-light.png')}}" alt="tempo"></a>
+			<a class="navbar-brand" href="{{url('/')}}"><img src="{{asset('img/logos/tempo-light.png')}}" alt="tempo"></a>
 		</div>		
 		
 		<ul class="nav navbar-nav navbar-right search-cart">
@@ -82,13 +82,13 @@
                                         @foreach($unreplied_request as $ur)
                                             <li>
                                                 <a href="javascript:void(0);" class="product" title="link title">
-                                                    <img src="{{asset('img/request.jfif')}}" alt="Product One"> Request From {{$ur->client_name}}
+                                                    <img src="{{asset('img/defaultRequest.jpg')}}" alt="Product One"> Request From {{$ur->client_name}}
                                                 </a>
                                                 <span class="quantity">
 													On @if(isset($ur->created_at))
 														{{date('d M Y H:i:s',strtotime($ur->created_at))}}
 														for @php 
-															 echo ((json_decode($unreplied_request[1]->request)->event))
+															 echo ((json_decode($ur->request)->event))
 														  @endphp
 													@endif
 												</span>
@@ -100,12 +100,12 @@
 								</ul>
 							</div>
 							<div class="sub-total">
-								<h4>Subtotal: <span>$345.00</span></h4>
+
 							</div>
-							<div class="shop-controls clearfix">
+							<!--<div class="shop-controls clearfix">
 								<a href="javascript:void(0);" class="btn btn-primary btn-xs" title="View Cart">View Cart</a>
 								<a href="javascript:void(0);" class="btn btn-success btn-xs" title="Checkout">Checkout</a>
-							</div>
+							</div>-->
 						</li>
 					</ul>					
 				</li>
@@ -120,10 +120,10 @@
 			</div>
 			<ul>
 				<li class="dropdown">
-					<a href="javascript:void(0);" title="Home page default">Home</a>
+					<a href="{{url('/home')}}" title="Home page default">Home</a>
 				</li>
 				<li class="dropdown">
-					<a href="javascript:void(0);" title="Template Features">Profile</a>
+					<a href="{{url('/profile/edit')}}" title="Template Features">Profile</a>
 				</li>
 
 				<li class="dropdown">
@@ -132,6 +132,10 @@
 
 				<li class="dropdown">
 					<a href="javascript:void(0);" title="Home page default">Quotes</a>
+                </li>
+
+				<li class="">
+					<a href="{{url('/')}}" title="Home page default">Eventing</a>
                 </li>
 					
 			</ul>
@@ -261,7 +265,8 @@
 <script src="js/form.js"></script>
 <script src="js/validate.js"></script>
 <script src="js/tempo.js"></script>
-<script src="js/main.js"></script>		
+<script src="js/main.js"></script>	
+<script src="{{asset('jss/custom/profile.js')}}"></script>	
 	
 </body>
 </html>

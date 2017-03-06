@@ -24,6 +24,7 @@ class CategoryTree{
     }
 
     public function display($cat = null){
+       // echo "<option value=>"."</option>";
         if($this->depth > 0){
 
             for($i = 0; $i < $this->depth; $i++)  {

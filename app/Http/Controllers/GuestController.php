@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Service\Service;
 use App\Entities\Customer;
+use App\Entities\User;
 use App\Entities\Review;
 use App\Entities\QuotesRequest;
 use Illuminate\Support\Facades\DB;
@@ -51,6 +52,7 @@ class GuestController extends Controller
         $users = null; $customer= null;
 
 
+
         $state = $request->state;
         $vicinity = $request->vicinity;
         $client = $request->only(['first_name','last_name','email','password']);
@@ -59,18 +61,18 @@ class GuestController extends Controller
         $request = $request->except(['category','firstname','lastname','email','password','_token','state','vicinity']);
 
         
-        DB::transaction(function() use ($users,$request,$customer){
+        DB::transaction(function() use ($users,$request,$customer,$client,$category,$state,$vicinity){
 
-            /*$customer = Customer::create([
+            $customer = Customer::create([
                 'first_name'=>$client['first_name'],
                 'last_name'=>$client['last_name'],
                 'email'=>$client['email'],
                 'password'=>bcrypt($client['password'])
-            ]);*/
+            ]);
 
             $request = QuotesRequest::create([
                 'category_id'=>$category['category'],
-                'client_id'=>'1',
+                'client_id'=>$customer->id,
                 'state'=>$state,
                 'vicinity_id'=>$vicinity,
                 'request'=>json_encode($request)
@@ -88,7 +90,7 @@ class GuestController extends Controller
 
         //sendMail($users);
     
-        dd($request);
+        dd($users);
     }
 
     

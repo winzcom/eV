@@ -232,7 +232,7 @@
 <script>
 	$(document).ready(function(){
 
-		
+		var url =  "{!! route('requests')!!}";
 		function confirmPasswordCheck(){
 			$('#step5confirm_password').blur(function(){
 			var password = $('#step5password').val();
@@ -244,8 +244,8 @@
 		})	
 	}
 
-			confirmPasswordCheck();
-
+		confirmPasswordCheck();
+		
 		$('#myModal').modalSteps({
 			btnCancelHtml: 'Cancel',
 			btnPreviousHtml: 'Previous',
@@ -256,15 +256,10 @@
 			completeCallback: function(){
 				/*** Ajax Call To Submit Form **/
 
-				/*$.post("quotes_request",$('#myWizard').serialize())
-				.done(function(){
-					/** post successful */
-				/*}).fail(function(){
-					/** Failed to post **/
-				/*})*/
+					console.log($('#myWizard').serialize())
 
 				$.ajax({
-					url:"../quotes_request",
+					url:url,
 					type:"POST",
 					data:$('#myWizard').serialize(),
 					contentType:"application/x-www-form-urlencoded",

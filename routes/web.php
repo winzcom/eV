@@ -38,6 +38,10 @@ Route::group(['middleware'=>'auth'],function(){
 
     Route::post('/add/offdays','UserController@addOffDays');
 
+    Route::get('/reply_request/{id}','UserController@replyRequest');
+
+    Route::get('/dismiss_request/{id}','UserController@dismissRequest');
+
     Route::get('/remove/offdays','UserController@removeOffDays');
 
     Route::post('/reply_review','UserController@reply');
@@ -49,7 +53,7 @@ Route::group(['middleware'=>'auth'],function(){
 
 Route::get('/detail/{company}/{id?}','DetailsController@details');
 
-Route::post('/quotes_request','GuestController@quotesRequest');
+Route::post('/quotes_request','GuestController@quotesRequest')->name('requests');
 
 
 Route::post('/write_review','GuestController@writeReview');

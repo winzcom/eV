@@ -27,14 +27,36 @@ $(document).ready(function(){
       '- Bell Tents': {
                           'additional':[
                             {name:'Catering Equipment',id:27,type:'checkbox',formname:'cateringadditions[]'},
-                            {name:'TableWare',id:19,type:'checkbox',formname:'cateringadditions[]'},
+                            {name:'Generator Hire',id:19,type:'checkbox',formname:'cateringadditions[]'},
                             {name:'Waiting Staffs',id:3,type:'checkbox',formname:'cateringadditions[]'}
                           ],
                           'extras':[
                                     {name:'Tent Color',formname:'tentcolor',type:'text'},
                                     {name:'Tent Liner',formname:'tentliner',type:'text'}
                                   ]
-                      }
+                      },
+      '- Party Tents':{
+                        'additional':[
+                            {name:'Catering Equipment',id:27,type:'checkbox',formname:'cateringadditions[]'},
+                            {name:'Generator Hire',id:19,type:'checkbox',formname:'cateringadditions[]'},
+                            {name:'Waiting Staffs',id:3,type:'checkbox',formname:'cateringadditions[]'}
+                          ],
+                          'extras':[
+                                    {name:'Tent Color',formname:'tentcolor',type:'text'},
+                                    {name:'Tent Liner',formname:'tentliner',type:'text'}
+                                  ]
+                    },
+        '- Tipi Hire':{
+                          'additional':[
+                              {name:'Catering Equipment',id:27,type:'checkbox',formname:'cateringadditions[]'},
+                              {name:'Generator Hire',id:19,type:'checkbox',formname:'cateringadditions[]'},
+                              {name:'Waiting Staffs',id:3,type:'checkbox',formname:'cateringadditions[]'}
+                            ],
+                            'extras':[
+                                      {name:'Tent Color',formname:'tentcolor',type:'text'},
+                                      {name:'Tent Liner',formname:'tentliner',type:'text'}
+                                    ]
+                   }
 
     }
 
@@ -67,6 +89,7 @@ $(document).ready(function(){
           $('.divContainer').remove();
         }
         var category = $('#category option:selected').text();
+      
         var self = $(this);
         var data = formElements[category];
         if(data){
@@ -93,7 +116,7 @@ $(document).ready(function(){
        var event = $('#event option:selected').text();
        var exists = eventType[event] || null;
 
-       if(event == 'Wedding'){
+       if(event == 'Wedding' && 'Event Planner'=='Event Planner'){
          addThemeColorInputElements(self);
        }
        else if(exists != null ){
