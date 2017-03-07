@@ -34,12 +34,11 @@
 							<h3 class="pull-left">Featured Items</h3>
 							<div id="filters-container" class="cbp-l-filters-dropdown">
 								<div class="cbp-l-filters-dropdownWrap">
-									<div class="">Sort Gallery</div>
+									
 									<select class="form-control input-lg " name="category" id="browsevendor">
-                                    
+                                    	<option></option>
                                         @if(isset($category_id))
                                             {{$categories->display($category_id)}}
-                                            {{$category_id}}
                                         @else
                                             {{$categories->display()}}
                                         @endif

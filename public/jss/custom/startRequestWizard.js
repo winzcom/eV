@@ -9,22 +9,22 @@ $(document).ready(function(){
                             {name:'Waiting Staffs',id:3,type:'checkbox',formname:'cateringadditions[]'}
                           ]
                 },
-      '- Canapes':{
+      'Canapes':{
                      'additional':[{name:'Waiting Staffs',id:1}]
                   },
-      '- Vegetarian and Vegan Catering':{
+      'Vegetarian and Vegan Catering':{
                      'additional':[{name:'Waiting Staffs',id:1}]
                   },
-      '- TableWare':{
+      'TableWare':{
                      'additional':[{name:'Catering Equipment',id:27}]
                   },
-      '- Corporate Event Catering':{
+      'Corporate Event Catering':{
                      'additional':[{name:'Waiting Staffs',id:1}]
                   },
-      '- Buffet':{
+      'Buffet':{
                      'additional':[{name:'Waiting Staffs',id:1}]
                   },
-      '- Bell Tents': {
+      'Bell Tents': {
                           'additional':[
                             {name:'Catering Equipment',id:27,type:'checkbox',formname:'cateringadditions[]'},
                             {name:'Generator Hire',id:19,type:'checkbox',formname:'cateringadditions[]'},
@@ -35,7 +35,7 @@ $(document).ready(function(){
                                     {name:'Tent Liner',formname:'tentliner',type:'text'}
                                   ]
                       },
-      '- Party Tents':{
+      'Party Tents':{
                         'additional':[
                             {name:'Catering Equipment',id:27,type:'checkbox',formname:'cateringadditions[]'},
                             {name:'Generator Hire',id:19,type:'checkbox',formname:'cateringadditions[]'},
@@ -46,7 +46,7 @@ $(document).ready(function(){
                                     {name:'Tent Liner',formname:'tentliner',type:'text'}
                                   ]
                     },
-        '- Tipi Hire':{
+        'Tipi Hire':{
                           'additional':[
                               {name:'Catering Equipment',id:27,type:'checkbox',formname:'cateringadditions[]'},
                               {name:'Generator Hire',id:19,type:'checkbox',formname:'cateringadditions[]'},
@@ -77,31 +77,18 @@ $(document).ready(function(){
     }
 
 
-    $('#myModal').on('shown.bs.modal',function(){
-      addStateLocality();
+    $('#myModal').on('shown.bs.modal',function(event){
 
+      var modal = $(this);
+
+      addStateLocality();
+      var cate = $('#category');
       $('#venue').show();
       toggleBudgetFields(false);
-
       /***Start of Category event Operation */
-      $('#category').change(function(){
-        if($('.divContainer')){
-          $('.divContainer').remove();
-        }
-        var category = $('#category option:selected').text();
-      
-        var self = $(this);
-        var data = formElements[category];
-        if(data){
-          addAdditionalService(data,self);
-        }
-        else if(category == 'Event Planner'){
-
-        }
-        else if(category == 'Transport'){
-          addTransportInputs();
-          $('#venue').hide();
-        }
+      cate.change(function(){
+        
+        categoryChange($(this));
       })/***End of Category event Operation */
 
 
@@ -114,6 +101,7 @@ $(document).ready(function(){
       $('.pP').remove();
 
        var event = $('#event option:selected').text();
+    
        var exists = eventType[event] || null;
 
        if(event == 'Wedding' && 'Event Planner'=='Event Planner'){
@@ -122,8 +110,8 @@ $(document).ready(function(){
        else if(exists != null ){
          addExtraFormElement(exists,self)
        }
-    })
-  })/***End of event Change Event */
+    })/***End of event Change Event */
+  })
 
     $('#browsevendor').change(function(){
       var cat = $(this).val();
@@ -140,11 +128,27 @@ $(document).ready(function(){
 
   /***Start of vanilla functions */
 
-   function addBudgetInputs(){
+    function categoryChange(self){
 
+        if($('.divContainer')){
+          $('.divContainer').remove();
+        }
+        var category = $('#category option:selected').text();
+        category = category.replace('- ','');
+      
+        //var self = $(this);
+        var data = formElements[category];
+        if(data){
+          addAdditionalService(data,self);
+        }
+        else if(category == 'Event Planner'){
 
-    }
-
+        }
+        else if(category == 'Transport'){
+          addTransportInputs();
+          $('#venue').hide();
+        }
+    } 
     function addStateLocality(){
 
       var state,locality,stateInput,localityInput, inputs
@@ -155,11 +159,10 @@ $(document).ready(function(){
 
           stateInput = $('<input type="hidden" name="state" value="'+state+'" ></input>');
           localityInput = $('<input type="hidden" name="vicinity" value="'+locality+'"></input>');
+           $('#myWizard').append(stateInput);
+           $('#myWizard').append(localityInput);
       }
       
-
-      $('#myWizard').append(stateInput);
-      $('#myWizard').append(localityInput);
     }
 
     function addAdditionalService(data,ele){

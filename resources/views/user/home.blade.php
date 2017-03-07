@@ -2,7 +2,7 @@
 
 @section('content')
 
-
+@include('app_view.requestForm.replyrequest')
 <!-- page title style6 START -->
 <section class="page-title style2 " data-path="{{asset('img/headers/header4.jpg')}}">
 	<div class="middle-align">
@@ -57,7 +57,6 @@
 						<ul class="resp-tabs-list hor_1">
 							<li>Reviews (5)</li>
 							<li>Requests (2)</li>
-							<li>Horizontal 3</li>
 						</ul>
 						<div class="resp-tabs-container hor_1">
 							<div>

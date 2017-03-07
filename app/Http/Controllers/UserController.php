@@ -46,7 +46,8 @@ class UserController extends Controller
 
         return view('user.home')->with([
                 'user'=>$user,'path'=>$this->path,
-                'reviews'=>$this->getFiveReviews()
+                'reviews'=>$this->getFiveReviews(),
+                'cate'=>Auth::user()->categories()->get()
             ]);
     }
 
@@ -242,29 +243,24 @@ class UserController extends Controller
     public function getRequests(){
 
         $d = DB::select(DB::raw(
-            "select quotes_request.*,users.first_name as client_name,quotes.rid as rid,company_category.company_id, company_category.category_id from quotes_request 
+            "select quotes_request.*,users.first_name as client_name,quotes.rid as rid,quotes.dismissed as dismissed,company_category.company_id, company_category.category_id from quotes_request 
             inner join company_category on company_category.category_id = quotes_request.category_id 
             inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 
             and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 )
             inner join users on users.id = quotes_request.client_id  
-            left join quotes on quotes.rid=quotes_request.id where companies.id =:vendor_id"
+            left join quotes on quotes.rid=quotes_request.id 
+            inner join dismiss on dismiss.rid != quotes_request.id
+            where companies.id =:vendor_id"
         ),array('vendor_id'=>Auth::id()));
         
         return collect($d);
     }
 
     public function getRequestNotYetAnswered(){
-       $d = DB::select(DB::raw(
-                "select quotes_request.*,users.first_name as client_name,company_category.company_id, company_category.category_id from quotes_request 
-                inner join company_category on company_category.category_id = quotes_request.category_id 
-                inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 
-                and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 )
-                inner join users on users.id = quotes_request.client_id 
-                inner join quotes on quotes.rid != quotes_request.id and companies.id = quotes.uid where companies.id =:user_id
-                order by quotes_request.id desc"
-            ),array('user_id'=>Auth::id()));
-        
-         return collect($d);
+
+        return  $this->getRequests()->filter(function($value,$key){
+             return $value->rid == null;
+         });
     }
 
     public function getAnsweredRequests(){
@@ -281,7 +277,72 @@ class UserController extends Controller
          return collect($d);
     }
 
-    public function replyRequest($request_id){}
+    public function replyRequest(Request $request){
+        
+        $id; $client;
 
-    public function dismissRequest($request_id){}
+        DB::transaction(function() use ($request){
+            $id = DB::table('quotes')->insertGetId([
+                'rid'=>$request->rid,
+                'uid'=>$request->uid,
+                'client_id'=>$request->client_id,
+                'cost'=>$request->cost,
+                'message'=>$request->message
+            ]);
+
+            $client = DB::table('users')->select('name','email')->where('id',$request->client_id)->get();
+
+            /** Send Mail to Client**/
+        });
+        
+
+        if(!is_null($id)){
+
+            $info = json_encode([
+                'status'=>'Quotes Sent Successfully to '.$client->name
+            ]);
+            return $info;
+        }
+        else{
+            return json_encode([
+                'status'=>'Error Sending Please try again'
+            ]);
+        }
+    }
+
+    public function dismissRequest($rid,$uid,$client_id){
+
+        /*if(!is_null($rid)){
+            $id = DB::table('quotes')->insertGetId([
+                'rid'=>$rid,
+                'uid'=>$uid,
+                'client_id'=>$client_id,
+                'message'=>'',
+                'cost'=>''
+
+            ]);
+
+            if(!is_null($id)){
+                return json_encode([
+                'rid'=>$rid,
+                'uid'=>$uid,
+                'client_id'=>$client_id
+            ]);
+        }
+        else{
+
+            return json_encode([
+                'status'=>'Error Performing Operation'
+            ]);
+        }
+
+            
+        }*/
+
+         return json_encode([
+                'rid'=>$rid,
+                'uid'=>$uid,
+                'client_id'=>$client_id
+         ]);
+    }
 }

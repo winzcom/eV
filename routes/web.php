@@ -38,9 +38,9 @@ Route::group(['middleware'=>'auth'],function(){
 
     Route::post('/add/offdays','UserController@addOffDays');
 
-    Route::get('/reply_request/{id}','UserController@replyRequest');
+    Route::post('/reply_request','UserController@replyRequest')->name('reply_request');
 
-    Route::get('/dismiss_request/{id}','UserController@dismissRequest');
+    Route::get('/dismiss_request/{rid}/{uid}/{client_id}','UserController@dismissRequest')->name('dismiss_request');
 
     Route::get('/remove/offdays','UserController@removeOffDays');
 

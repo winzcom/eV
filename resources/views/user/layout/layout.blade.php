@@ -12,7 +12,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-	
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<!-- style.css is main stylesheet and all other sylesheets are being
 		 imported in this file. -->
 	<link rel="stylesheet" href="style.css">

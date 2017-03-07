@@ -87,8 +87,13 @@
 				<li><a href="{{url('/')}}">Home</a></li>
 				<li><a href="{{url('/browse_vendors')}}">Browse Vendors</a></li>
 				<li><a href="#">Request Quotes</a></li>
-				<li><a href="{{url('/login')}}">Sign In</a></li>
-				<li><a href="#">Join as Vendor</a></li>
+				
+				@if(Auth::check())
+					<li><a href="{{url('/home')}}">DashBoard</a></li>
+				@else
+					<li><a href="#">Join as Vendor</a></li>
+					<li><a href="{{url('/login')}}">Sign In</a></li>
+				@endif 
 			</ul>
 		</div><!-- /.navbar-collapse -->
 		
@@ -221,9 +226,11 @@
 <script src="{{asset('js/validate.js')}}"></script>
 <script src="{{asset('js/tempo.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>	
-<script src="{{asset('js/custom/data/requestdata.js')}}"></script>
+<script src="{{asset('vendor/js/hashids/dist/hashids.min.js')}}"></script>
+<<!--script src="{{asset('js/custom/data/requestdata.js')}}"></script>-->
 <script src="{{asset('jss/custom/startRequestwizard.js')}}"></script>
 <script src="{{asset('vendor/js/createsteps/jquery-bootstrap-modal-steps.min.js')}}"></script>
+
 
 <!--<script src="{{asset('vendor/twitterwizard/js/modal.js')}}"></script>-->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7SGP6giYEwQUUJXWbBffqhe9AIbp1ciY&libraries=places&callback=initAutoComplete"

@@ -61,7 +61,7 @@ class GuestController extends Controller
         $request = $request->except(['category','firstname','lastname','email','password','_token','state','vicinity']);
 
         
-        DB::transaction(function() use ($users,$request,$customer,$client,$category,$state,$vicinity){
+        DB::transaction(function() use ($request,$client,$category,$state,$vicinity){
 
             $customer = Customer::create([
                 'first_name'=>$client['first_name'],
@@ -82,13 +82,9 @@ class GuestController extends Controller
                  $q->where('categories.id',$category['category']);
             })->get();
 
+            /** Send Mail **/
+
         });
-
-        
-
-        
-
-        //sendMail($users);
     
         dd($users);
     }
