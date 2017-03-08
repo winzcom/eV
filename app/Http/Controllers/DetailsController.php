@@ -22,10 +22,16 @@ class DetailsController extends Controller
                     $q->orderBy('id','desc');
         }])->where('name_slug',$slug)->first();
 
+        $category_name = '';
+
         $similars = User::whereHas('categories',function($q) use ($user){
             $q->whereIn('categories.id',$user->categories()->pluck('categories.id'));
         })->where('id','!=',$user->id)->orderBy('id','desc')->take(3)->get();
 
+        if(!is_null($id)){
+            $cat_id = $id;
+            $category_name = $user->categories()->where('categories.id',$id)->first()->name;
+        }
         
        // $directory = public_path("storage".DIRECTORY_SEPARATOR."images");
         //$files = Service::getImages($directory);
@@ -33,7 +39,8 @@ class DetailsController extends Controller
                     'events'=>Service::getEvents(),
                     'similars'=>$similars,
                     'request'=>$this->request,
-                    'cat_id'=>$id != null ? $id:null
+                    'cat_id'=>$id != null ? $id:null,
+                    'category_name'=>$id!=null ? $user->categories()->where('categories.id',$id)->first()->name:''
                 ]);
     }
 }

@@ -93,9 +93,21 @@ $(document).ready(function(){
     $('#myModal').on('shown.bs.modal',function(event){
 
       var modal = $(this);
+      var button  = $(event.relatedTarget);
 
+      if(button.data('state') !==  undefined && button.data('state') !== ''){
+        var state = button.data('state');
+        var vicinity_id = null;
+        if(button.data('vicinity') !== '' && button.data('vicinity') !== undefined) vicinity_id = button.data('vicinity');
+        else vicinity_id = 0;
+
+        addStateLocality(state,vicinity_id);
+      }
+      else{
+        addStateLocality();
+      }
     
-      addStateLocality();
+      
       var cate = $('#category');
       var c = $('#category option:selected').text().replace('- ','');
 
@@ -169,34 +181,47 @@ $(document).ready(function(){
           $('#venue').hide();
         }
     } 
-    function addStateLocality(){
+    function addStateLocality(state1 = null,vicinity_id = null){
 
-      var state,locality,stateInput,localityInput, inputs
-      inputs = $('#start_request :input');
+      var state,locality,stateInput,localityInput, inputs;
 
-      if( inputs.length > 0 ){
-        console.log('called')
-          state = inputs[0].value;
-          locality = inputs[1].value;
+      if($('input[name="state"]').length == 0){
 
-          if(state == '' && locality == ''){
+          if(state1 !== null && vicinity_id !== null){
 
-              $('#myModal').modal('hide');
-              inputs[0].focus();
-              alert('Please select a state and locality')
-          }
-          else if(state == ''){
-
-          }
-          else{
+                state = state1; locality = vicinity_id;
+                console.log(vicinity_id);
                 stateInput = $('<input type="hidden" name="state" value="'+state+'" ></input>');
                 localityInput = $('<input type="hidden" name="vicinity" value="'+locality+'"></input>');
                 $('#myWizard').append(stateInput);
                 $('#myWizard').append(localityInput);
           }
-          
-      }
-      
+          else{
+
+                inputs = $('#start_request :input');
+
+                  if( inputs.length > 0 ){
+                      state = inputs[0].value;
+                      locality = inputs[1].value;
+
+                      if(state == '' && locality == ''){
+
+                          $('#myModal').modal('hide');
+                          inputs[0].focus();
+                          alert('Please select a state and locality')
+                      }
+                      else if(state == ''){
+
+                      }
+                      else{
+                            stateInput = $('<input type="hidden" name="state" value="'+state+'" ></input>');
+                            localityInput = $('<input type="hidden" name="vicinity" value="'+locality+'"></input>');
+                            $('#myWizard').append(stateInput);
+                            $('#myWizard').append(localityInput);
+                      }
+                }
+            }
+        }
     }
 
     function addAdditionalService(data,ele){

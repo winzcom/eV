@@ -20,13 +20,17 @@
 					<ol class="breadcrumb">
 					  
 						<li><a href="{{url('/')}};"><i class="fa fa-home"></i></a></li>
-						<li class="active">Get Quote from {{$company->name}} and Similar Vendors</li>
+						<li class="active">Get Quote from {{$company->name}} and Similar Vendors
+						for {{$category_name}}
+						</li>
 					</ol>
 					
 				</div>
 				<button type="submit" 
                     class="btn btn-primary btn-lg btn-block start"
                     data-toggle="modal" data-target="#myModal"
+					data-state="{{$company->state}}",
+					data-vicinity="{{$company->vicinity_id}}"
                 >
                         Start
                 </button>
