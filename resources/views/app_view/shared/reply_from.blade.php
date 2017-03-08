@@ -1,31 +1,57 @@
-<div id="id01" class="reply_form" style="display:none;">
-    <div class="w3-modal-content w3-card-8 w3-animate-zoom" style="max-width:600px">
-
-      <div class="w3-center"><br>
-        <span  class="w3-closebtn w3-hover-red w3-container w3-padding-8 w3-display-topright" title="Close Modal">&times;</span>
+<div class="modal fade" tabindex="-1" role="dialog" id="reply_review">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Reply Review</h4>
       </div>
-
-      <form class="w3-container" id = "review_reply" 
-      method ="post" 
-      action="{{url('/review_reply')}}">
-
-         {{ csrf_field() }}
-
-        <div class="w3-section">
-            <input type="text" name="reviewers_name" value="" readonly id="reviewers_name">
-             <input type="hidden" name="review_id" value="" readonly id="review_id">
-             </br>
-          <label class="w3-label w3-validate">Content</label>
-          <textarea name="reply_content" rows="6" cols="40" class="form-control" id="content" required></textarea>
-
-          <input class="w3-btn-block w3-blue" value="Post Reply" type="submit" id="submit">
-        </div>
-
-      </form>
-
-      <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-        <button  type="button" class="w3-closebtn w3-btn w3-red">Cancel</button>
-      </div>
-
+      <div class="modal-body">
+        <form id="send_review_reply" action="{{url('/reply_review')}}" method="post">
+            <div class="control-group" id="date">
+                <label class="control-label" for="inputCity">Reviewer's Name</label>
+                    <div class="controls">
+                        <input type="text" name="reviewers_name"  class="form-control input-lg quo" 
+                            value="" readonly id="reviewers_name" required
+                        >
+                        <input type="hidden" name="review_id" value="" readonly id="review_id">
+                    </div>
+                <label class="control-label" for="inputCity">Review</label>
+                    <div class="controls">
+                        <textarea class="form-control quo" rows="5" id="textarea" name="reply" required></textarea>
+                    </div>
+            </div>
+         </form>
+            <!---->
     </div>
-  </div>
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="reply_review_submit">Reply</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

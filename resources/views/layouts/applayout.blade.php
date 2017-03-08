@@ -240,7 +240,8 @@
 	$(document).ready(function(){
 
 		var url =  "{!! route('requests')!!}";
-		function confirmPasswordCheck(){
+		function confirmPasswordCheck(step){
+			console.log('things are '+step)
 			$('#step5confirm_password').blur(function(){
 			var password = $('#step5password').val();
 			if($(this).val() !== password){
@@ -250,8 +251,6 @@
 			}
 		})	
 	}
-
-		confirmPasswordCheck();
 		
 		$('#myModal').modalSteps({
 			btnCancelHtml: 'Cancel',

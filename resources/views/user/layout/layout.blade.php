@@ -15,7 +15,7 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<!-- style.css is main stylesheet and all other sylesheets are being
 		 imported in this file. -->
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="{{asset('style.css')}}">
 
 	<script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 	
@@ -73,7 +73,9 @@
 					</ul>
 				</li>
 				<li class="dropdown cart">
-					<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="ion-bag"></i><sup class="items-in-cart">{{count($unreplied_request)}}</sup></a>
+					<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						<i class="ion-bell"></i>
+						 <span class="glyphicon glyphicon-bell" aria-hidden="true">{{count($unreplied_request)}}</span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li>
 							<div class="cart-wrap">
@@ -82,7 +84,11 @@
                                         @foreach($unreplied_request as $ur)
                                             <li>
                                                 <a href="javascript:void(0);" class="product" title="link title">
-                                                    <img src="{{asset('img/defaultRequest.jpg')}}" alt="Product One"> Request From {{$ur->client_name}}
+                                                    <img src="{{asset('img/defaultRequest.jpg')}}" 
+															alt="Product One"
+															style="border-radius:7px;"
+													> 
+													 Request From {{$ur->client_name}}
                                                 </a>
                                                 <span class="quantity">
 													On @if(isset($ur->created_at))
@@ -123,7 +129,7 @@
 					<a href="{{url('/home')}}" title="Home page default">Home</a>
 				</li>
 				<li class="dropdown">
-					<a href="{{url('/profile/edit')}}" title="Template Features">Profile</a>
+					<a href="{{url('/profile')}}" title="Template Features">Profile</a>
 				</li>
 
 				<li class="dropdown">
@@ -132,6 +138,10 @@
 
 				<li class="dropdown">
 					<a href="javascript:void(0);" title="Home page default">Quotes</a>
+                </li>
+
+				<li class="dropdown">
+					<a href="{{url('/reviews')}}" title="Home page default">Reviews</a>
                 </li>
 
 				<li class="">

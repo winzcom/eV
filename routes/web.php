@@ -22,7 +22,7 @@ Route::group(['middleware'=>'auth'],function(){
 
     Route::get('/home','UserController@home');
 
-    Route::get('/profile/edit/','UserController@showProfileForm');
+    Route::get('/profile','UserController@showProfileForm');
 
     Route::post('/profile/edit','UserController@updateProfile');
 
@@ -32,7 +32,7 @@ Route::group(['middleware'=>'auth'],function(){
 
     Route::post('/gallery_upload','UserController@uploadPhotos');
 
-    Route::get('/reviews/{filter?}','UserController@getReviews');
+    Route::get('/reviews/{filter?}','UserController@getReviews')->name('review');
 
     Route::get('/gallery/publish','UserController@publish');
 

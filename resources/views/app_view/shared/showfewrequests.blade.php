@@ -23,7 +23,7 @@
                        
                         Request from {{$req->client_name}} for 
                        
-                        {{$cate->where('id',$req->category_id)->first()->name}}
+                        {{$cats->where('id',$req->category_id)->first()->name}}
                         
                         
                     </div>
@@ -41,9 +41,9 @@
                                             Reply
                                             
                                         </button>
-                                        <button class="btn btn-danger btn-xs request" data-rid = "{{$req->id}}"
+                                        <button class="btn btn-danger btn-xs request dismiss" data-rid = "{{$req->id}}"
                                             data-client-id = "{{$req->client_id}}" data-uid = "{{Auth::id()}}"
-                                            id="dismiss"
+                                            
                                         >
                                             Dismiss
                                             
@@ -63,10 +63,15 @@
                                  @foreach(json_decode($req->request) as $key=>$value)
                                     @php
                                         if(is_array($value)){
+                                            echo 'Additional Services ( ';
+                                            foreach($value as $val){
+                                                echo $cats->where('id',$val)->first()->name;
+                                            }
+                                            echo ' )<br><br>';
                                             continue;
                                         } 
                                     @endphp
-                                    {{$key}} : {{$value}}<hr>
+                                    {{title_case($key)}} : {{$value}}<hr>
                                      
                                  @endforeach
                                

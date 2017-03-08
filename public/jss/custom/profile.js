@@ -49,7 +49,61 @@ $(document).ready(function(){
          })
     });// shown.bs.modal ends
 
-    $('#dismiss').click(function(event){
+
+    /*** Reply Review Modal/ Submission */
+
+    $('#reply_review').on('show.bs.modal',function(event){
+
+        var modal = $(this);
+        var button = $(event.relatedTarget);
+        var reviewers_name = button.data('name');
+        var review_id = button.data('id');
+
+        var input_reviewers_name = $('#reviewers_name');
+        input_reviewers_name.val(reviewers_name);
+
+        var rev_id = $('#review_id');
+        rev_id.val(review_id);
+
+
+        $('#reply_review_submit').click(function(){
+
+        var form = $('#send_review_reply');
+        var url = form.attr('action');
+        var td = button.parents('td').siblings('.reply');
+        var datas = form.serialize();
+        var reply = $('textarea[name="reply"]').val();
+        console.log(url);
+        
+      $.ajax({
+            url:url,
+            headers:{
+						'X-CSRF-TOKEN':$("meta[name='csrf-token']").attr("content")
+					},
+            type:"POST",
+            dataType:'json',
+            data:datas,
+            success:function(data){
+                alert(data.status)
+                 td.html(reply)
+                 modal.modal('hide');
+                 button.remove();
+                 
+            },
+            error:function(err){
+                console.log(err)
+            
+            }
+        })
+    })
+
+    
+})
+
+    
+    /***End of Reply Review Modal */
+
+    $('.dismiss').click(function(event){
 
        
         var self = $(this);
@@ -62,7 +116,9 @@ $(document).ready(function(){
         if(response){
              var url = 'dismiss_request/'+rid+'/'+uid+'/'+client_id;
              $.get(url,{},function(data){
-                 window.location.href = '';
+                 if(data.status == undefined || data.status == null)
+                    location.reload(true);
+                else{}
             })
         }
        

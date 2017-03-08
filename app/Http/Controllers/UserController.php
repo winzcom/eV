@@ -7,14 +7,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\RegisterFormRequest;
+use Illuminate\Support\Facades\Mail;
 
 use GuzzleHttp\Client;
 use Carbon\Carbon;
+use App\Mail\SendQuote;
 use App\Entities\User;
 use App\Service\Service;
 use App\Interfaces\GalleryInterface;
 use App\Entities\Gallery;
 use App\Entities\Review;
+use App\Entities\Category;
 use App\Entities\OffDays;
 
 class UserController extends Controller
@@ -36,6 +39,7 @@ class UserController extends Controller
 
     public function home(){
 
+        $this->getrequest(4);
         $user =  User::with([
                  'galleries',
                  'categories',
@@ -47,7 +51,7 @@ class UserController extends Controller
         return view('user.home')->with([
                 'user'=>$user,'path'=>$this->path,
                 'reviews'=>$this->getFiveReviews(),
-                'cate'=>Auth::user()->categories()->get()
+                'cats'=>Category::all()
             ]);
     }
 
@@ -87,14 +91,12 @@ class UserController extends Controller
 
     public function showProfileForm(Request $request){
         
-            $user = User::with(['categories','vicinity'])->where(['id'=>Auth::id()])
-            ->get()->first();
-
-        return view('user.profile')
-                ->with(['user'=>$user,'formInputs'=>User::getFormInputs(),
-                        'states'=>Service::getStates(),
-                        'categories'=>Service::getCategories()
-                    ]);
+        $user  = Auth::user();
+        return view('user.profile')->with([
+            
+                            'user'=>$user,
+                            'formInputs'=>User::getFormInputs()
+                        ]);
     }
 
 
@@ -176,7 +178,7 @@ class UserController extends Controller
             $reviews = $query->paginate($pagination);
         }
 
-        return view('app_view.reviews')->with(
+        return view('user.reviews')->with(
             [
                 'reviews'=>$reviews,
                 'pagination'=>$pagination,
@@ -221,7 +223,7 @@ class UserController extends Controller
     public function reply(Request $request){
 
         $id = $request->review_id;
-        $reply = $request->reply_content;
+        $reply = $request->reply;
         if($request->ajax()){
             if($id !== '' && $reply !== ''){
                  Review::where('id','=',$id)->update(['reply'=>$reply]);
@@ -249,11 +251,22 @@ class UserController extends Controller
             and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 )
             inner join users on users.id = quotes_request.client_id  
             left join quotes on quotes.rid=quotes_request.id 
-            inner join dismiss on dismiss.rid != quotes_request.id
-            where companies.id =:vendor_id"
+            left join dismiss on dismiss.rid = quotes_request.id
+            where dismiss.rid is null and companies.id =:vendor_id"
         ),array('vendor_id'=>Auth::id()));
         
         return collect($d);
+    }
+
+    public function getRequest($id){
+        $d = DB::table('quotes_request')
+                ->join('categories','categories.id','=','quotes_request.category_id')
+                ->join('users','users.id','=','quotes_request.client_id')
+                ->where('quotes_request.id',$id)
+                ->select('quotes_request.*','categories.name','users.*')
+                ->first();
+            
+        return $d;
     }
 
     public function getRequestNotYetAnswered(){
@@ -270,7 +283,9 @@ class UserController extends Controller
                 inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 
                 and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 )
                 inner join users on users.id = quotes_request.client_id 
-                inner join quotes on quotes.rid = quotes_request.id and companies.id = quotes.uid where companies.id =:user_id
+                inner join quotes on quotes.rid = quotes_request.id and companies.id = quotes.uid 
+                left join dismiss on dismiss.rid = quotes_request.id
+                where companies.id =:user_id and dismiss.rid is null
                 order by quotes_request.id desc"
             ),array('user_id'=>Auth::id()));
         
@@ -279,9 +294,11 @@ class UserController extends Controller
 
     public function replyRequest(Request $request){
         
-        $id; $client;
+        $id = null; $client = null;
+       
+        
 
-        DB::transaction(function() use ($request){
+        DB::transaction(function() use ($request,$id){
             $id = DB::table('quotes')->insertGetId([
                 'rid'=>$request->rid,
                 'uid'=>$request->uid,
@@ -290,9 +307,21 @@ class UserController extends Controller
                 'message'=>$request->message
             ]);
 
-            $client = DB::table('users')->select('name','email')->where('id',$request->client_id)->get();
+             $data = $this->getRequest($request->rid);
 
+            $data = [
+
+                    'request_data'=>$data,
+                    'vendor_data'=>Auth::user(),
+                    'cost'=>$request->cost,
+                    'message'=>$request->message
+            ];
+
+           
             /** Send Mail to Client**/
+            Mail::to($data['request_data']->email)
+                ->send(new SendQuote($data));
+
         });
         
 
@@ -312,13 +341,10 @@ class UserController extends Controller
 
     public function dismissRequest($rid,$uid,$client_id){
 
-        /*if(!is_null($rid)){
-            $id = DB::table('quotes')->insertGetId([
+        if(!is_null($rid)){
+            $id = DB::table('dismiss')->insertGetId([
                 'rid'=>$rid,
                 'uid'=>$uid,
-                'client_id'=>$client_id,
-                'message'=>'',
-                'cost'=>''
 
             ]);
 
@@ -337,7 +363,7 @@ class UserController extends Controller
         }
 
             
-        }*/
+        }
 
          return json_encode([
                 'rid'=>$rid,

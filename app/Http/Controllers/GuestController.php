@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
 use App\Service\Service;
 use App\Entities\Customer;
 use App\Entities\User;
@@ -10,6 +12,8 @@ use App\Entities\Review;
 use App\Entities\QuotesRequest;
 use Illuminate\Support\Facades\DB;
 use App\TreeNode\CategoryTree;
+
+use App\Mail\SendRequest;
 
 class GuestController extends Controller
 {
@@ -78,11 +82,23 @@ class GuestController extends Controller
                 'request'=>json_encode($request)
             ]);
 
-            $users = User::whereHas('categories',function($q) use ($category){
-                 $q->where('categories.id',$category['category']);
-            })->get();
+                $users = User::whereHas('categories',function($q) use ($category){
+                    $q->where('categories.id',$category['category']);
+                })->StateVicinity($state,$vicinity)->get();
+        
+
+                $data = [
+
+                    'users_data'=>$users,
+                    'request'=>json_decode($request->request),
+                    'category'=>$category['category'],
+                    'customer'=>$customer
+                ];
 
             /** Send Mail **/
+
+            Mail::to($users)
+                ->send(new SendRequest($data));
 
         });
     

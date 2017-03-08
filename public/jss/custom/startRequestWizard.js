@@ -56,7 +56,20 @@ $(document).ready(function(){
                                       {name:'Tent Color',formname:'tentcolor',type:'text'},
                                       {name:'Tent Liner',formname:'tentliner',type:'text'}
                                     ]
-                   }
+                   },
+        'Transport':{
+
+                        'extras':[
+
+                                {
+                                  name:'Pick-up Location',formname:'pickuplocation',type:'text'
+                                },
+                                {
+                                  name:'Destination',formname:'destination', type:'text'
+                                }
+                        ]
+
+                    }
 
     }
 
@@ -81,8 +94,15 @@ $(document).ready(function(){
 
       var modal = $(this);
 
+    
       addStateLocality();
       var cate = $('#category');
+      var c = $('#category option:selected').text().replace('- ','');
+
+      if(c!== '' || c !== null){
+        categoryChange(cate)
+      }
+
       $('#venue').show();
       toggleBudgetFields(false);
       /***Start of Category event Operation */
@@ -153,14 +173,28 @@ $(document).ready(function(){
 
       var state,locality,stateInput,localityInput, inputs
       inputs = $('#start_request :input');
-      if( inputs !== undefined && inputs !== null && inputs !=={} ){
+
+      if( inputs.length > 0 ){
+        console.log('called')
           state = inputs[0].value;
           locality = inputs[1].value;
 
-          stateInput = $('<input type="hidden" name="state" value="'+state+'" ></input>');
-          localityInput = $('<input type="hidden" name="vicinity" value="'+locality+'"></input>');
-           $('#myWizard').append(stateInput);
-           $('#myWizard').append(localityInput);
+          if(state == '' && locality == ''){
+
+              $('#myModal').modal('hide');
+              inputs[0].focus();
+              alert('Please select a state and locality')
+          }
+          else if(state == ''){
+
+          }
+          else{
+                stateInput = $('<input type="hidden" name="state" value="'+state+'" ></input>');
+                localityInput = $('<input type="hidden" name="vicinity" value="'+locality+'"></input>');
+                $('#myWizard').append(stateInput);
+                $('#myWizard').append(localityInput);
+          }
+          
       }
       
     }
