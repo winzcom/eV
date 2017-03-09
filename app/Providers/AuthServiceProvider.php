@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Contracts\Auth\Access\Gate as GateContract;
+use Illuminate\Support\Facades\Auth;
+
+use App\CustomAuth\EloquentClientAuthProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,9 +25,14 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(GateContract $gate)
     {
         $this->registerPolicies();
+
+        Auth::provider('eloquent.client',function($app,array $config){
+
+            return new EloquentClientAuthProvider();
+        });
 
         //
     }

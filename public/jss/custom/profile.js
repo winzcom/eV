@@ -73,7 +73,7 @@ $(document).ready(function(){
         var td = button.parents('td').siblings('.reply');
         var datas = form.serialize();
         var reply = $('textarea[name="reply"]').val();
-        console.log(url);
+        console.log(url); 
         
       $.ajax({
             url:url,
@@ -84,7 +84,6 @@ $(document).ready(function(){
             dataType:'json',
             data:datas,
             success:function(data){
-                alert(data.status)
                  td.html(reply)
                  modal.modal('hide');
                  button.remove();
@@ -98,10 +97,7 @@ $(document).ready(function(){
     })
 
     
-})
-
-    
-    /***End of Reply Review Modal */
+})/***End of Reply Review Modal */
 
     $('.dismiss').click(function(event){
 

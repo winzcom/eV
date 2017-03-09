@@ -173,7 +173,7 @@
 
                         <label class="control-label" for="inputCity" id="step5password">Confirm Password</label>
                         <div class="controls">
-                            <input name="password" class="form-control" type="password" id="step5confirm_password" required/>
+                            <input name="confirm_password" class="form-control" type="password" id="step5confirm_password" required/>
                         </div>
                 </div>
 

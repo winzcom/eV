@@ -49,7 +49,22 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/quotes','UserController@showQuotes');
 });// end of middleware=>auth grouping
 
+/*** Client Routes **/
 
+Route::get('/culogin','CustomerAuth\CustomerAuthController@showLoginForm');
+Route::post('/culogin','CustomerAuth\CustomerAuthController@login');
+
+/* Client route group */
+
+Route::group(['middleware'=>'auth.client:client'],function(){
+
+    Route::get('/cuhome','');
+});
+
+/* End of client route group */
+
+
+/*** General Routes **/
 
 Route::get('/detail/{company}/{id?}','DetailsController@details');
 

@@ -188,9 +188,9 @@ $(document).ready(function(){
       if($('input[name="state"]').length == 0){
 
           if(state1 !== null && vicinity_id !== null){
-
+            alert(state1 + " "+ vicinity_id);
                 state = state1; locality = vicinity_id;
-                console.log(vicinity_id);
+                console.log(vicinity_id+' '+state1 );
                 stateInput = $('<input type="hidden" name="state" value="'+state+'" ></input>');
                 localityInput = $('<input type="hidden" name="vicinity" value="'+locality+'"></input>');
                 $('#myWizard').append(stateInput);

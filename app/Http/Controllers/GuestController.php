@@ -67,7 +67,7 @@ class GuestController extends Controller
         
         DB::transaction(function() use ($request,$client,$category,$state,$vicinity){
 
-            $customer = Customer::create([
+            $customer = Customer::firstOrCreate([
                 'first_name'=>$client['first_name'],
                 'last_name'=>$client['last_name'],
                 'email'=>$client['email'],

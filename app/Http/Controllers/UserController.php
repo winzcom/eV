@@ -227,6 +227,7 @@ class UserController extends Controller
         if($request->ajax()){
             if($id !== '' && $reply !== ''){
                  Review::where('id','=',$id)->update(['reply'=>$reply]);
+                 /*** Send email to reviewer */
                 return json_encode(array('status'=>'Reply Posted'));
             }
         }
