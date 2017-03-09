@@ -57,8 +57,7 @@ Route::post('/culogin','CustomerAuth\CustomerAuthController@login');
 /* Client route group */
 
 Route::group(['middleware'=>'auth.client:client'],function(){
-
-    Route::get('/cuhome','');
+    return;
 });
 
 /* End of client route group */
