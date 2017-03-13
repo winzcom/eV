@@ -16,11 +16,8 @@
 	<!-- style.css is main stylesheet and all other sylesheets are being
 		 imported in this file. -->
 	<link rel="stylesheet" href="{{asset('style.css')}}">
-	<link rel="stylesheet" href="{{asset('vendor/css/jquery-ui.min.css')}}">
 
 	<script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-
 	
 </head>
 <body>
@@ -78,36 +75,12 @@
 				<li class="dropdown cart">
 					<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 						<i class="ion-bell"></i>
-						 <span class="glyphicon glyphicon-bell" aria-hidden="true">{{count($requests->where('rid',null))}}</span></a>
+						 <span class="glyphicon glyphicon-bell" aria-hidden="true"></a>
 					<ul class="dropdown-menu" role="menu">
 						<li>
 							<div class="cart-wrap">
 								<ul>
-                                    @if(count($requests->where('rid',null)) > 0)
-										@php 
-											$unanswered = $requests->where('rid',null);
-										@endphp
-                                        @foreach($unanswered as $ur)
-                                            <li>
-                                                <a href="javascript:void(0);" class="product" title="link title">
-                                                    <img src="{{asset('img/defaultRequest.jpg')}}" 
-															alt="Product One"
-															style="border-radius:7px;"
-													> 
-													 Request From {{$ur->client_name}}
-                                                </a>
-                                                <span class="quantity">
-													On @if(isset($ur->created_at))
-														{{date('d M Y H:i:s',strtotime($ur->created_at))}}
-														for @php 
-															 echo ((json_decode($ur->request)->event))
-														  @endphp
-													@endif
-												</span>
-                                            </li>
-                                        @endforeach
-
-                                    @endif
+                                    
 									
 								</ul>
 							</div>
@@ -132,41 +105,20 @@
 			</div>
 			<ul>
 				<li class="dropdown">
-					<a href="{{url('/home')}}" title="Home page default">Home</a>
+					<a href="{{url('/cuhome')}}" title="Home page default">Home</a>
 				</li>
 				<li class="dropdown">
-					<a href="{{url('/profile')}}" title="Template Features">Profile</a>
+					<a href="{{url('/cuprofile')}}" title="Template Features">Profile</a>
 				</li>
 
 				<li class="dropdown">
-					<a href="{{url('/requests')}}" title="Extra Pages">Requests</a>
+					<a href="javascript:void(0);" title="Extra Pages">Requests</a>
 				</li>
 
 				<li class="dropdown">
 					<a href="javascript:void(0);" title="Home page default">Quotes</a>
                 </li>
-
-				<li class="dropdown">
-					<a href="{{url('/reviews')}}" title="Home page default">Reviews</a>
-                </li>
-
-				<li class="dropdown">
-					<a href="{{url('/gallery')}}" title="Home page default">Gallery</a>
-                </li>
-
-				<li class="dropdown">
-					<a href="{{url('')}}" title="Home page default">Offer Listing</a>
-                </li>
 					
-			</ul>
-
-			<ul class="social-links">
-				<li class="">
-					<a href="{{url('/')}}" title="Home page default">Eventing</a>
-                </li>
-				<li class="">
-					<a href="{{url('/')}}" title="Home page default">Logout</a>
-                </li>
 			</ul>
 			
 		</div><!-- /.nav-items -->
@@ -257,23 +209,16 @@
 	</div>
 </footer>
 <!-- footer style1 END -->
- 
- <!-- Custom Script -- >
 
-
-
- <!-- Custom Script End -->
-
-
-
+       
 <!-- jQuery plugins -->
-<script src="{{asset('js/vendor/jquery.js')}}"></script>
-<script src="{{asset('js/vendor/bootstrap.js')}}"></script>
-<script src="{{asset('js/easing.js')}}"></script>
-<script src="{{asset('js/scrollbar.js')}}"></script>
-<script src="{{asset('js/retina.js')}}"></script>
-<script src="{{asset('js/raphael.js')}}"></script>
-<script src="{{asset('js/tabs.js')}}"></script>
+<script src="js/vendor/jquery.js"></script>
+<script src="js/vendor/bootstrap.js"></script>
+<script src="js/easing.js"></script>
+<script src="js/scrollbar.js"></script>
+<script src="js/retina.js"></script>
+<script src="js/raphael.js"></script>
+<script src="js/tabs.js"></script>
 <script src="js/livicons.js"></script>
 <script src="js/icheck.js"></script>
 <script src="js/mousewheel.js"></script>
@@ -302,11 +247,7 @@
 <script src="js/validate.js"></script>
 <script src="js/tempo.js"></script>
 <script src="js/main.js"></script>	
-<script src="{{asset('jss/custom/profile.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-<script src="{{asset('vendor/js/dropzone/dropzone.js')}}"></script>
-
-@yield('script')
-
+<script src="{{asset('jss/custom/profile.js')}}"></script>	
+	
 </body>
 </html>

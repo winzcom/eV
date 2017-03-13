@@ -67,25 +67,26 @@ class GuestController extends Controller
         
         DB::transaction(function() use ($request,$client,$category,$state,$vicinity){
 
-            $customer = Customer::firstOrCreate([
-                'first_name'=>$client['first_name'],
-                'last_name'=>$client['last_name'],
-                'email'=>$client['email'],
-                'password'=>bcrypt($client['password'])
-            ]);
-
-            $request = QuotesRequest::create([
-                'category_id'=>$category['category'],
-                'client_id'=>$customer->id,
-                'state'=>$state,
-                'vicinity_id'=>$vicinity,
-                'request'=>json_encode($request)
-            ]);
-
-                $users = User::whereHas('categories',function($q) use ($category){
+            $users = User::whereHas('categories',function($q) use ($category){
                     $q->where('categories.id',$category['category']);
                 })->StateVicinity($state,$vicinity)->get();
-        
+
+            if(!empty($users)){
+
+                    $customer = Customer::updateOrCreate([
+                                        'first_name'=>$client['first_name'],
+                                        'last_name'=>$client['last_name'],
+                                        'email'=>$client['email'],
+                                        'password'=>bcrypt($client['password'])
+                                    ]);
+
+                    $request = QuotesRequest::create([
+                        'category_id'=>$category['category'],
+                        'client_id'=>$customer->id,
+                        'state'=>$state,
+                        'vicinity_id'=>$vicinity,
+                        'request'=>json_encode($request)
+                    ]);
 
                 $data = [
 
@@ -100,9 +101,18 @@ class GuestController extends Controller
             Mail::to($users)
                 ->send(new SendRequest($data));
 
-        });
+            }
+
+            else{
+
+                return json_decode([
+
+                    'message'=>'No Vendors Avalibale'
+                ]);
+            }
+            
+      });
     
-        dd($users);
     }
 
     

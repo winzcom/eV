@@ -227,7 +227,7 @@
 <script src="{{asset('js/tempo.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>	
 <script src="{{asset('vendor/js/hashids/dist/hashids.min.js')}}"></script>
-<<!--script src="{{asset('js/custom/data/requestdata.js')}}"></script>-->
+<script src="{{asset('jss/custom/data/requestdata.js')}}"></script>
 <script src="{{asset('jss/custom/startRequestwizard.js')}}"></script>
 <script src="{{asset('vendor/js/createsteps/jquery-bootstrap-modal-steps.min.js')}}"></script>
 

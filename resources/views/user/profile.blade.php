@@ -2,18 +2,10 @@
 
 @section('content')
     <!-- page title style6 START -->
-<section class="page-title style2 " data-path="{{asset('img/headers/header4.jpg')}}">
-	<div class="middle-align">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<h1 class="strong text-uppercase">Profile</h1>
-				</div>
-			</div>
-		</div>
-	</div>
-	<a href="#content" class="arrow bounce" title="Scroll Down"><i class="fa fa-angle-down"></i></a>
-</section>
+<!-- page title style6 START -->
+@include('user.header.header',['title'=>'Profile'])
+<!-- page title style6 END -->
+
 <!-- page title style6 END -->
         <div class="content">
             <div class="container-fluid">
@@ -42,8 +34,10 @@
                                         @elseif($input == 'category')
                                         
                                             <select  multiple ="true" class="form-control chzn-select" id="combobox" name="category[]"  required>
-                                                    <option></option>
-                                                    {{$categories->display()}}
+                                                    <option>...</option>
+                                                    @php 
+                                                     $categories->display($user->categories()->pluck('categories.id')->all());
+                                                    @endphp
                                             </select>
 
                                         @elseif($input == 'state')
@@ -134,3 +128,15 @@
             </div>
         </div>
 @stop
+
+@section('script')
+ 
+ <script type="text/javascript">
+    $(document).ready(function(){
+        alert('select')
+        $('#combobox').select2();
+    })
+    
+ </script>
+
+@endsection

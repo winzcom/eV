@@ -80,7 +80,7 @@ class Service{
             
     }
 
-    public static function uploadPhotos(GalleryInterface $gallery,array $files,array $captions,string $name_slug){
+    public static function uploadPhotos(GalleryInterface $gallery,array $files,array $captions = null,string $name_slug = null){
 
         return $gallery->uploadPhotos($files,$captions,$name_slug);
     }

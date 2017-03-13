@@ -24,28 +24,44 @@ class CategoryTree{
     }
 
     public function display($cat = null){
-       // echo "<option value=>"."</option>";
+       // echo "";
+       $options = "";
         if($this->depth > 0){
             for($i = 0; $i < $this->depth; $i++)  {
-                if($cat !== null){
-                    
-                    if((int)$this->id == $cat)
-                        echo "<option value='".$this->id."' selected>- ".$this->name."</option>";
-                    else
-                        echo "<option value='".$this->id."'>- ".$this->name."</option>";
-                }
-                else{
-                    echo "<option value='".$this->id."'>- ".$this->name."</option>";
-                }
+                if(!is_array($cat)){
+
+                    if($cat !== null){
+                        
+                        if((int)$this->id == $cat)
+                            echo  "<option value='".$this->id."' selected>- ".$this->name."</option>";
+                        else 
+                            echo  "<option value='".$this->id."'>- ".$this->name."</option>";
+                        
+                    }
+                    else{
+                        echo  "<option value='".$this->id."'>- ".$this->name."</option>";
+                     }
+                 } 
+                 else{
+
+                     foreach($cat as $key => $value){
+                         if($value == $this->id){
+                             $options .=  "<option value='".$this->id."' selected>- ".$this->name."</option>";
+                         }
+                     }
+                     
+                      echo !in_array($this->id,$cat) ? "<option value='".$this->id."'>- ".$this->name."</option>" :'';  
+                 } 
             }
         }
         else{
-            echo  "<option disabled>".$this->name."</option>";
+            echo   "<option disabled>".$this->name."</option>";
         }
         $num_children = sizeof($this->childlist);
         for($i = 0; $i<$num_children; $i++) {
              $this->childlist[$i]->display($cat);
         }
+
     }
 }
 

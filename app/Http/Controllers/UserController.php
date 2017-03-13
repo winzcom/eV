@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\RegisterFormRequest;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 use GuzzleHttp\Client;
 use Carbon\Carbon;
@@ -33,24 +36,23 @@ class UserController extends Controller
 
         $this->gallery_implementation = $gallery_implementation;
          $this->path = asset('storage/images/');
-        // $this->period = $this->computeDays();
+        
 
     }
 
     public function home(){
 
-        $this->getrequest(4);
         $user =  User::with([
                  'galleries',
                  'categories',
                  'offdays'
         ]) ->find(Auth::id());
 
-       // $all_requests = $this->getRequests();
 
         return view('user.home')->with([
                 'user'=>$user,'path'=>$this->path,
                 'reviews'=>$this->getFiveReviews(),
+                'quotes'=>$this->getQuotes(),
                 'cats'=>Category::all()
             ]);
     }
@@ -95,7 +97,7 @@ class UserController extends Controller
         return view('user.profile')->with([
             
                             'user'=>$user,
-                            'formInputs'=>User::getFormInputs()
+                            'formInputs'=>User::getFormInputs(),
                         ]);
     }
 
@@ -104,7 +106,7 @@ class UserController extends Controller
     public function showGallery(){
     
         $galleries = Gallery::where('user_id',Auth::id())->orderBy('id','desc')->get();
-         return view('app_view.user_gallery')->with(['galleries'=>$galleries,'path'=>$this->path]);
+         return view('user.user_gallery')->with(['galleries'=>$galleries,'path'=>$this->path]);
     }
 
     public function publish(Request $request){
@@ -128,11 +130,7 @@ class UserController extends Controller
         $names = Service::uploadPhotos($this->gallery_implementation,$request->photo,$request->caption,Auth::user()->name_slug);
         if($request->ajax()){
 
-            if(is_array($names))
                 return json_encode(array('status'=>'Success','paths'=>$names));
-             else
-                return json_encode(array('status'=>'Upload Failed','file'=>$names));
-
         }
         
         return back();
@@ -157,9 +155,9 @@ class UserController extends Controller
         $query1 = Review::where('review_for',Auth::id());
         $reviews = null;
         $pagination = 3;
-        $total_avg = $query1->select(DB::raw('count(rating) as total,avg(rating) as av'))->get();
+        $total_avg = $query1->select(DB::raw('count(rating) as total,avg(rating) as avg'))->get();
 
-        if($filter){
+       /* if($filter){
             if($filter == 'gt'){
                 $reviews = $query->where([
                                             ['review_for','=',Auth::id()],
@@ -176,15 +174,17 @@ class UserController extends Controller
 
         else{
             $reviews = $query->paginate($pagination);
-        }
+        }*/
 
+        $reviews = $query->paginate($pagination);
+        
         return view('user.reviews')->with(
             [
                 'reviews'=>$reviews,
                 'pagination'=>$pagination,
                 'page'=>$request->query('page'),
                 'total'=>$total_avg[0]->total,
-                'avg'=>$total_avg[0]->av
+                'avg'=>$total_avg[0]->avg
             ]);
     }
 
@@ -233,17 +233,21 @@ class UserController extends Controller
         }
     }
 
-    public function showQuotes(){
+    private function getQuotes(){
  
        $d = DB::table('quotes')->join('quotes_request','quotes.rid','=','quotes_request.id')
                 ->join('categories','categories.id','=','quotes_request.category_id')
-                ->select('quotes_request.request','categories.name')
+                ->join('companies','companies.id','=','quotes.uid')
+                ->join('users','users.id','=','quotes.client_id')
+                ->select('quotes.*','quotes_request.request as qrequest','categories.name as cat_name','users.first_name as fname'
+                    ,'users.last_name as lname'
+                )
                 ->where('quotes.uid',Auth::id())->get();
         return $d;
     }
 
 
-    public function getRequests(){
+    public  function getRequests(){
 
         $d = DB::select(DB::raw(
             "select quotes_request.*,users.first_name as client_name,quotes.rid as rid,quotes.dismissed as dismissed,company_category.company_id, company_category.category_id from quotes_request 
@@ -255,8 +259,29 @@ class UserController extends Controller
             left join dismiss on dismiss.rid = quotes_request.id
             where dismiss.rid is null and companies.id =:vendor_id"
         ),array('vendor_id'=>Auth::id()));
-        
+
+       
+
         return collect($d);
+       
+    }
+
+    public function showRequests(){
+
+        $req = $this->getRequests();
+        $paginator = self::paginate($req,3);
+        return view('user.requests')->with(['reqs'=>$paginator,
+            
+            'cats'=>Category::all()
+        ]);
+    }
+
+    private static function paginate($data,$per_page){
+
+        $current_page = LengthAwarePaginator::resolveCurrentPage();
+        $paginator = new LengthAwarePaginator($data->slice(($current_page-1)*$per_page,$per_page),count($data),$per_page,$current_page);
+        return $paginator;
+
     }
 
     public function getRequest($id){

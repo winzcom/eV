@@ -1,93 +1,59 @@
 
+@php 
 
-@if(isset($all_requests))
-    @if(count($all_requests) >0)
-    <div id="js-grid-faq" class="cbp cbp-l-grid-faq">
-        @foreach($all_requests as $req)
-    
-            <div class="cbp-item">
-                <div class="cbp-caption">
-                    <div class="cbp-caption-defaultWrap">
+if(count($all_requests) > 0){
+    echo '<div>';
+    foreach($all_requests as $request){
+        $rid = !is_null($request->rid) ? $request->rid : null;
+        $ob = json_decode($request->request);
+        $isobject =  is_object($ob) ? true :false;
+        echo '<h4>';
+        if(!is_null($rid)){
+            echo '<i class="fa fa-check-circle-o"></i>';
+        }
+        echo 'Request from '.$request->client_name.' for '.$cats->where('id',$request->category_id)->first()->name.'</h4>';
 
-                            @if($req->dismissed == 1)
-                                continue
-                            
-                            @elseif($req->rid !== null)
-                                 <i class="fa fa-check-circle-o"></i>
-                           
-                            @endif
-                            
-                       
- 
-                               
-                       
-                        Request from {{$req->client_name}} for 
-                       
-                        {{$cats->where('id',$req->category_id)->first()->name}}
-                        
-                        
-                    </div>
-                    <div class="cbp-caption-activeWrap">
-                        <div class="cbp-l-caption-body">
-                        @if($req->rid == null)
-                             
-                                @if(is_object($ob = json_decode($req->request)))
-
-                                    @if(strtotime($ob->date)>strtotime(date('Y-m-d')))
-                                       <button class="btn btn-success btn-xs request" id="reply" data-toggle="modal" 
-                                            data-target="#reply_request" data-rid = "{{$req->id}}"
-                                            data-client-id = "{{$req->client_id}}" data-uid = "{{Auth::id()}}"
-                                        >
-                                            Reply
-                                            
-                                        </button>
-                                        <button class="btn btn-danger btn-xs request dismiss" data-rid = "{{$req->id}}"
-                                            data-client-id = "{{$req->client_id}}" data-uid = "{{Auth::id()}}"
-                                            
-                                        >
-                                            Dismiss
-                                            
-                                        </button>
-                                        <br><br>
-                                    
-                                    @else
-                                    
-                                        <div class="alert alert-warning">Event Schedule Date has Passed</div>
-                                    @endif
-                                
-                            @endif
-                                
-                        @endif
-                           @if(is_object(json_decode($req->request)))
-                               
-                                 @foreach(json_decode($req->request) as $key=>$value)
-                                    @php
-                                        if(is_array($value)){
-                                            echo 'Additional Services ( ';
-                                            foreach($value as $val){
-                                                echo $cats->where('id',$val)->first()->name;
-                                            }
-                                            echo ' )<br><br>';
-                                            continue;
-                                        } 
-                                    @endphp
-                                    {{title_case($key)}} : {{$value}}<hr>
-                                     
-                                 @endforeach
-                               
-                            @else
-                            
-                                {{$req->request}}
-                            @endif
-                            <br>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        @endforeach
-    </div>
-    @endif
-@endif
-
+        echo '<div>';
+        if(is_null($rid) && !isset($customer)){
+            if($isobject){
+                if(strtotime($ob->date)>strtotime(date('Y-m-d'))){
+                echo '<button class="btn btn-success btn-xs request" id="reply" data-toggle="modal" 
+                    data-target="#reply_request" data-rid = "{{$req->id}}"
+                    data-client-id = "{{$req->client_id}}" data-uid = "{{Auth::id()}}"
+                >
+                    Reply
+                    
+                </button>
+                <button class="btn btn-danger btn-xs request dismiss" data-rid = "{{$req->id}}"
+                    data-client-id = "{{$req->client_id}}" data-uid = "{{Auth::id()}}"
+                    
+                >
+                    Dismiss
+                    
+                </button>
+                <br><br>';
+            }
+            else 
+                echo '<div class="alert alert-warning">Event Schedule Date has Passed</div>';
+            }
+        }
+        if($isobject){
+            foreach($ob as $key=>$value){
+                if(is_array($value)){
+                    echo 'Additional Services ( ';
+                        foreach($value as $val){
+                            if(is_numeric($val))
+                                echo $cats->where('id',$val)->first()->name;
+                            else
+                                echo $val;
+                        }
+                        echo ' )<br><br>';
+                }
+                else
+                    echo $key.':'.$value.'<br><hr>';
+            }
+        }
+        else echo $request->request;
+    }
+}
+@endphp

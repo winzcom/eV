@@ -1,97 +1,10 @@
 $(document).ready(function(){
 
 
-    var formElements = {
-      'Caterers':{
-                    'additional':[
-                            {name:'Catering Equipment',id:27,type:'checkbox',formname:'cateringadditions[]'},
-                            {name:'TableWare',id:19,type:'checkbox',formname:'cateringadditions[]'},
-                            {name:'Waiting Staffs',id:3,type:'checkbox',formname:'cateringadditions[]'}
-                          ]
-                },
-      'Canapes':{
-                     'additional':[{name:'Waiting Staffs',id:1}]
-                  },
-      'Vegetarian and Vegan Catering':{
-                     'additional':[{name:'Waiting Staffs',id:1}]
-                  },
-      'TableWare':{
-                     'additional':[{name:'Catering Equipment',id:27}]
-                  },
-      'Corporate Event Catering':{
-                     'additional':[{name:'Waiting Staffs',id:1}]
-                  },
-      'Buffet':{
-                     'additional':[{name:'Waiting Staffs',id:1}]
-                  },
-      'Bell Tents': {
-                          'additional':[
-                            {name:'Catering Equipment',id:27,type:'checkbox',formname:'cateringadditions[]'},
-                            {name:'Generator Hire',id:19,type:'checkbox',formname:'cateringadditions[]'},
-                            {name:'Waiting Staffs',id:3,type:'checkbox',formname:'cateringadditions[]'}
-                          ],
-                          'extras':[
-                                    {name:'Tent Color',formname:'tentcolor',type:'text'},
-                                    {name:'Tent Liner',formname:'tentliner',type:'text'}
-                                  ]
-                      },
-      'Party Tents':{
-                        'additional':[
-                            {name:'Catering Equipment',id:27,type:'checkbox',formname:'cateringadditions[]'},
-                            {name:'Generator Hire',id:19,type:'checkbox',formname:'cateringadditions[]'},
-                            {name:'Waiting Staffs',id:3,type:'checkbox',formname:'cateringadditions[]'}
-                          ],
-                          'extras':[
-                                    {name:'Tent Color',formname:'tentcolor',type:'text'},
-                                    {name:'Tent Liner',formname:'tentliner',type:'text'}
-                                  ]
-                    },
-        'Tipi Hire':{
-                          'additional':[
-                              {name:'Catering Equipment',id:27,type:'checkbox',formname:'cateringadditions[]'},
-                              {name:'Generator Hire',id:19,type:'checkbox',formname:'cateringadditions[]'},
-                              {name:'Waiting Staffs',id:3,type:'checkbox',formname:'cateringadditions[]'}
-                            ],
-                            'extras':[
-                                      {name:'Tent Color',formname:'tentcolor',type:'text'},
-                                      {name:'Tent Liner',formname:'tentliner',type:'text'}
-                                    ]
-                   },
-        'Transport':{
-
-                        'extras':[
-
-                                {
-                                  name:'Pick-up Location',formname:'pickuplocation',type:'text'
-                                },
-                                {
-                                  name:'Destination',formname:'destination', type:'text'
-                                }
-                        ]
-
-                    }
-
-    }
-
-    var eventType = {
-      'Concert':[
-                      {name:'Public Event',type:'radio',formname:'eventtype',siblings:
-
-                          [{name:'Name of Event',formname:'eventname'},{name:'Website',formname:'eventwebsite'}]                          
-                      },
-                      {name:'Private Event',type:'radio',formname:'eventtype'}
-                  ],
-      'Business Event':[
-                        {name:'Public Event',type:'checkbox',formname:'eventtype'},
-                        {name:'Private Event',type:'checkbox',
-                          siblings:
-                               [{name:'Name of Event',formname:'eventname'}]
-      }]
-    }
+    
 
 
     $('#myModal').on('shown.bs.modal',function(event){
-
       var modal = $(this);
       var button  = $(event.relatedTarget);
 
@@ -185,8 +98,6 @@ $(document).ready(function(){
 
       var state,locality,stateInput,localityInput, inputs;
 
-      if($('input[name="state"]').length == 0){
-
           if(state1 !== null && vicinity_id !== null){
             alert(state1 + " "+ vicinity_id);
                 state = state1; locality = vicinity_id;
@@ -198,20 +109,18 @@ $(document).ready(function(){
           }
           else{
 
-                inputs = $('#start_request :input');
+                //inputs = $('#start_request :input');
+                state = $('input[name="state"]').val();
+                console.log(state);
+                locality = $('input[name="vicinity"]').val();
 
-                  if( inputs.length > 0 ){
-                      state = inputs[0].value;
-                      locality = inputs[1].value;
+                  console.log(locality);
 
-                      if(state == '' && locality == ''){
+                      if(state == undefined || state == ''){
 
                           $('#myModal').modal('hide');
-                          inputs[0].focus();
+                          
                           alert('Please select a state and locality')
-                      }
-                      else if(state == ''){
-
                       }
                       else{
                             stateInput = $('<input type="hidden" name="state" value="'+state+'" ></input>');
@@ -219,10 +128,9 @@ $(document).ready(function(){
                             $('#myWizard').append(stateInput);
                             $('#myWizard').append(localityInput);
                       }
-                }
             }
-        }
     }
+    
 
     function addAdditionalService(data,ele){
 

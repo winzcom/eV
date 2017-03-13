@@ -35,11 +35,12 @@ class ProfileComposer
      */
     public function compose(View $view)
     {
-        $view->with(['requests'=> $this->uc->getRequests(),
-                     
-                     'unreplied_request'=>$this->uc->getRequestNotYetAnswered(),
-                     'replied_request'=>$this->uc->getAnsweredRequests()
+        $view->with([
+            'requests'=> $this->uc->getRequests()
         ]);
+                    
+                     /*'unreplied_request'=>$this->uc->getRequestNotYetAnswered(),
+                     'replied_request'=>$this->uc->getAnsweredRequests()*/
     }
 }
 

@@ -11,9 +11,9 @@ use App\Interfaces\GalleryInterface;
 
 class LocalGallery implements GalleryInterface{
 
-    public function uploadPhotos(array $files,array $captions,$name_slug=''){
+    public function uploadPhotos(array $files,array $captions = null,$name_slug=''){
 
-       
+    
         $names = [];
         $i = 0; 
         if(is_array($files)){

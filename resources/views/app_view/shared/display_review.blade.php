@@ -1,4 +1,17 @@
 
+@php 
+
+    if(!isset($company_id)){
+        if((Auth::guard('client')->check())){
+            echo "<button class='btn btn-default btn-sm'>Write A Review</button>";
+        }
+        else{
+            echo "<a href=\"{{url('/culogin')}}\"><button class=\"btn btn-default btn-sm\">Login To Write a Review</button></a>";
+        }
+    }
+    
+@endphp
+
 <span>Average Rating {{number_format($reviews->avg('rating'),1)}}/5<span>
                     @foreach($reviews as $review)
                         <h4>

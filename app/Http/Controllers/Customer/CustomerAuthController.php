@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\CustomerAuth;
+namespace App\Http\Controllers\Customer;
 
 use Validator;
 use Illuminate\Http\Request;
@@ -30,15 +30,17 @@ class CustomerAuthController extends Controller
             'password'=>'required'
         ]);
 
-        if(Auth::guard('client')->attempt(['email'=>$request->email,'password'=>$request->password])){
-            
+        if(Auth::guard('client')->attempt($request->only(['email','password']))){
+            return redirect($this->redirect);
         }
+        else return redirect('/culogin');
         
     }
 
     public function showLoginForm(){
 
-        return view('client.login');
+        return view('customer.login');
     }
+
     
 }

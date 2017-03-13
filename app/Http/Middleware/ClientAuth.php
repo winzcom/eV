@@ -24,5 +24,7 @@ class ClientAuth
                 return redirect('/culogin');
             }
         }
+
+        return $next($request);
     }
 }

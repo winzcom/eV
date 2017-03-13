@@ -90,7 +90,7 @@
 						
 					</div>
 					<div class="col-lg-7">
-						<h2 class="h1">{{$company->summary}}</h2>
+						<h5 class="h1">{{$company->summary}}</h5>
 							<div class="star-rating inline-block">
 								<i class="livicon" data-name="star-full" data-onparent="false" data-color="#f4c41c" data-hovercolor="#f4c41c" data-size="24"></i>
 								<i class="livicon" data-name="star-full" data-onparent="false" data-color="#f4c41c" data-hovercolor="#f4c41c" data-size="24"></i>
@@ -98,11 +98,32 @@
 								<i class="livicon" data-name="star-half" data-onparent="false" data-color="#f4c41c" data-hovercolor="#f4c41c" data-size="24"></i>
 								<i class="livicon" data-name="star-empty" data-onparent="false" data-color="#f4c41c" data-hovercolor="#f4c41c" data-size="24"></i>
 							</div>
-							<span class="reviews-link">( <a href="javascript:void(0);" title="customers reviews">17 Customer reviews</a> )</span>
+							<span class="reviews-link">( <a href="javascript:void(0);" title="customers reviews">{{count($company->reviews)}} Customer reviews</a> )</span>
 							<!--<h3 class="price"><del><span class="amount">$375.00</span></del> <ins><span class="amount">$299.00</span></ins></h3>-->
-							<p>
+							<div class="row">
+				<div class="col-lg-12">
+					
+					<div id="horizontalTab1">
+						<ul class="resp-tabs-list hor_1">
+							<li>Description</li>
+							<li>Reviews</li>
+							<li>Map</li>
+						</ul>
+						<div class="resp-tabs-container hor_1">
+							<div>
+								<h3>{{$company->summary}}</h3>
 								{{$company->description}}
-							</p>
+							</div>
+							<div>
+								@include('app_view.shared.display_review',['reviews'=>$company->reviews])
+							</div>
+							<div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 							
 							<div class="row">
 								

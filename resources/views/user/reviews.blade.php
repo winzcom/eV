@@ -26,19 +26,9 @@
 <?php $i = 0;?>
 <?php $j = 1;?>
     <!-- page title style6 START -->
-<section class="page-title style2 " data-path="{{asset('img/headers/header4.jpg')}}">
-	<div class="middle-align">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<h1 class="strong text-uppercase">Reviews</h1>
-				</div>
-			</div>
-		</div>
-	</div>
-	<a href="#content" class="arrow bounce" title="Scroll Down"><i class="fa fa-angle-down"></i></a>
-</section>
+@include('user.header.header',['title'=>'Review'])
 <!-- page title style6 END -->
+
     <div class="container-fluid">
         <div class="content table-responsive table-full-width">
             @if($reviews->count() > 0)
