@@ -11,6 +11,7 @@
 			<div class="container">
                 <div id="">
                     @include('app_view.shared.showfewrequests',['all_requests'=>$reqs])
+					
 					{{$reqs->setPath('requests')->render()}}
                 </div>
             </div>

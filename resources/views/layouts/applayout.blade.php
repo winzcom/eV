@@ -15,13 +15,13 @@
 	
 	<!-- style.css is main stylesheet and all other sylesheets are being
 		 imported in this file. -->
+		 <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
 
 	<link rel="stylesheet" href="{{asset('style.css')}}">
 	<link rel="stylesheet" href="{{asset('vendor/css/eazy.css')}}">
 
 	
-	<script src="{{asset('js/vendor/jquery.js')}}"></script>
-	<script src="{{asset('js/vendor/bootstrap.js')}}"></script>
 	<script src="{{asset('js/vendor/modernizr-2.8.3-respond-1.4.2.min.js')}}"></script>
 	<script src="{{asset('jss/custom/googleautocomplete.js')}}"></script>
 	
@@ -90,6 +90,8 @@
 				
 				@if(Auth::check())
 					<li><a href="{{url('/home')}}">DashBoard</a></li>
+				@elseif (Auth::guard('client')->check())
+					<li><a href="{{url('/cuhome')}}">DashBoard</a></li>
 				@else
 					<li><a href="#">Join as Vendor</a></li>
 					<li><a href="{{url('/login')}}">Sign In</a></li>
@@ -191,7 +193,8 @@
 
     
 <!-- jQuery plugins -->
-
+<script src="{{asset('js/vendor/jquery.js')}}"></script>
+<script src="{{asset('js/vendor/bootstrap.js')}}"></script>
 <script src="{{asset('js/easing.js')}}"></script>
 <script src="{{asset('js/scrollbar.js')}}"></script>
 <script src="{{asset('js/retina.js')}}"></script>
@@ -231,10 +234,16 @@
 <script src="{{asset('jss/custom/startRequestwizard.js')}}"></script>
 <script src="{{asset('vendor/js/createsteps/jquery-bootstrap-modal-steps.min.js')}}"></script>
 
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
+
 
 <!--<script src="{{asset('vendor/twitterwizard/js/modal.js')}}"></script>-->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7SGP6giYEwQUUJXWbBffqhe9AIbp1ciY&libraries=places&callback=initAutoComplete"
-        async defer></script>
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7SGP6giYEwQUUJXWbBffqhe9AIbp1ciY&libraries=places&callback=initAutoComplete,initMap"
+        async defer>
+</script>-->
+
+
 	
 <script>
 	$(document).ready(function(){
@@ -284,6 +293,15 @@
 		});
 
 	});
+
+
+	
 </script>
+
+
+</script>
+
+@yield('script')
+
 </body>
 </html>

@@ -12,6 +12,12 @@ class SearchController extends Controller
 {
     //
 
+    private $path;
+
+    public function __construct(){
+        $this->path = asset('storage/images/');
+    }
+
     public function search(Request $request){
 
         //dd($request->query->all());
@@ -27,7 +33,7 @@ class SearchController extends Controller
     }
 
     private function getVendors($cat){
-        $companies = User::with('reviews')->whereHas('categories',function($q) use ($cat){
+        $companies = User::with('reviews','galleries')->whereHas('categories',function($q) use ($cat){
             $q->where('categories.id',$cat);
         })->where('name','!=','null')->paginate(5);
         return $companies;
@@ -41,6 +47,7 @@ class SearchController extends Controller
                 return view('app_view.vendorbrowse')->with([
                     'companies'=>$companies,
                     'category_id'=>$category,
+                    'path'=>$this->path,
                     'cat_name'=>$companies->first()->categories()->where('categories.id',$category)->get()[0]->name
                 ]);
             }

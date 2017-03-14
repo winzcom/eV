@@ -18,9 +18,14 @@ class DetailsController extends Controller
 
     public function details($slug,$id=null){
 
-        $user = User::with(['reviews'=>function($q){
+        $user = User::with(
+            [
+                'reviews'=>function($q){
                     $q->orderBy('id','desc');
-        }])->where('name_slug',$slug)->first();
+                },
+                'galleries'
+            ]
+        )->where('name_slug',$slug)->first();
 
         $category_name = '';
 

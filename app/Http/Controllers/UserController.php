@@ -250,7 +250,9 @@ class UserController extends Controller
     public  function getRequests(){
 
         $d = DB::select(DB::raw(
-            "select quotes_request.*,users.first_name as client_name,quotes.rid as rid,quotes.dismissed as dismissed,company_category.company_id, company_category.category_id from quotes_request 
+            "select quotes_request.*,users.first_name as client_name,quotes.rid as rid,quotes.cost as cost,
+            quotes.message as message,company_category.company_id, company_category.category_id
+            from quotes_request 
             inner join company_category on company_category.category_id = quotes_request.category_id 
             inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 
             and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 )
@@ -279,9 +281,10 @@ class UserController extends Controller
     private static function paginate($data,$per_page){
 
         $current_page = LengthAwarePaginator::resolveCurrentPage();
-        $paginator = new LengthAwarePaginator($data->slice(($current_page-1)*$per_page,$per_page),count($data),$per_page,$current_page);
+        $sliced_data = $data->slice(($current_page-1)*$per_page,$per_page);
+        $paginator = new LengthAwarePaginator($sliced_data,count($data),$per_page,$current_page);
         return $paginator;
-
+       
     }
 
     public function getRequest($id){

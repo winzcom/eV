@@ -1,17 +1,54 @@
 $(document).ready(function(){
 
-    $('#reply_request').on('shown.bs.modal',function(event){
+    $('#reply_request').on('show.bs.modal',function(event){
 
          var button = $(event.relatedTarget);
-         var rid = button.data('rid');
-         var client_id = button.data('clientId');
-         var vendor_id = button.data('uid');
-         console.log(rid+' '+client_id)
-         var url = 'reply_request'
-         console.log(url)
+         if(button.data('message') !== undefined){
+             var message = button.data('message');
+             var cost = button.data('cost');
+             var cost_input = $('#cost');
+             var message_textarea =  $('#message')
+            
+             cost_input.attr({
+                    'disabled':true,
+                    'value':cost
+                });
 
-         var self = $(this);
-         var valid = true;
+             message_textarea.attr({
+                 'disabled':true
+             })
+
+             message_textarea.val(message);
+
+             $('#send_quote').hide();
+         }
+         else{
+
+             $('#send_quote').show();
+             var cost = $('#cost');
+             cost.attr({
+                 'disabled':false,
+                 'value':''
+             })
+
+             var message_textarea =  $('#message')
+             message_textarea.attr({
+                 'disabled':false,
+             })
+
+             message_textarea.val('')
+
+
+            var rid = button.data('rid');
+            var client_id = button.data('clientId');
+            var vendor_id = button.data('uid');
+            console.log(rid+' '+client_id)
+            var url = 'reply_request'
+            console.log(url)
+
+            var self = $(this);
+            var valid = true;
+         }
 
          $('#send_quote').click(function(){
              

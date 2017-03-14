@@ -44,10 +44,9 @@ class GuestController extends Controller
     }
 
     public function writeReview(Request $request){
-
         
-        Review::create($request->all());
-        return back()->with('search_url',$request->search_url);
+        Review::create($request->except(['_token']));
+        return back();
     }
 
 

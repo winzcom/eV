@@ -137,20 +137,40 @@
                         We are open to how this will work
                         </label>
                     </div>
-                </div>
+                </div><!-- id publicbudget-->
 
+                <div id="whatstage">
+                    <label>What Stage </label>
+                    <div class="radio">
+                        <label class="">
+                            <div class="iradio_square">
+                                <input type="radio" name="whatstage" id="optionsRadios2" value="Need to book asap"><ins class="iCheck-helper"></ins>
+                            </div>
+                        Need to book asap
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="">
+                            <div class="iradio_square">
+                                <input type="radio" name="whatstage" id="optionsRadios2" value="Just need Quotes"><ins class="iCheck-helper"></ins>
+                            </div>
+                       Just interested in quotes
+                        </label>
+                    </div>
+                </div><!--whatstage-->
                 
-         </div>
-
-          <!--step-4-->
+         </div> <!--step-4-->
 
             <div class="row hide" data-step="5" data-title="This is the first step!">
                 <div class="control-group" id="personalmessagae">
                     <label class="control-label" for="inputCity">Personal Message</label>
                         <div class="controls">
-                            <textarea name="personalmessage" class="form-control"  required></textarea>
+                            <textarea name="personalmessage" class="form-control"  rows="5" required></textarea>
                         </div>
+                </div>
+            </div>
 
+            <div class="row hide" data-step="6" data-title="This is the first step!">
                         <label class="control-label" for="inputCity">First Name</label>
                         <div class="controls">
                             <input name="first_name" class="form-control" type="text" required/>
@@ -175,7 +195,7 @@
                         <div class="controls">
                             <input name="confirm_password" class="form-control" type="password" id="step5confirm_password" required/>
                         </div>
-                </div>
+               
 
 
 
@@ -183,7 +203,7 @@
                 <!--<input type="text" id="administrative_area_level_1" value="" name="state"/>
                 <input type="text" id="locality" value="" name="vicinity"/>-->
                 <!-- End of State and Locality-->
-            </div><!--step-5-->
+            </div><!--step-6-->
            
         </form>
         <div class="modal-footer">
