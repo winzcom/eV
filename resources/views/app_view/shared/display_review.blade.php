@@ -3,9 +3,16 @@
 
 @if(!Auth::check())
     @if(Auth::guard('client')->check())
-        <button class='btn btn-default btn-sm' data-toggle='modal' data-target='#write_review'>
-            Write A Review
-        </button>
+       @php 
+            if(!in_array(Auth::guard('client')->user()->email,$reviews->pluck('reviewers_email')->all())
+                && !in_array($company->id,$reviews->pluck('reviews_for')->all())
+            ){
+                echo "<button class='btn btn-default btn-sm' data-toggle='modal' data-target='#write_review'>
+                        Write A Review
+                    </button>";
+            }
+       @endphp
+        
     @else
         <a href="{{url('/culogin')}}"><button class="btn btn-default btn-sm">Login To Write a Review</button></a>
     @endif

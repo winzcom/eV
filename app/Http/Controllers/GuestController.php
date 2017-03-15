@@ -12,6 +12,7 @@ use App\Entities\Review;
 use App\Entities\QuotesRequest;
 use Illuminate\Support\Facades\DB;
 use App\TreeNode\CategoryTree;
+use App\Events\NewRequestSentEvent;
 
 use App\Mail\SendRequest;
 
@@ -95,10 +96,7 @@ class GuestController extends Controller
                     'customer'=>$customer
                 ];
 
-            /** Send Mail **/
-
-            Mail::to($users)
-                ->send(new SendRequest($data));
+                event(new NewRequestSentEvent($data));
 
             }
 

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use App\Entities\Category;
+use App\Entities\Review;
 
 class CustomerController extends Controller
 {
@@ -25,14 +26,17 @@ class CustomerController extends Controller
         return view('customer.home')->with([
             'requests'=>$this->getRequests(),
             'quotes'=>$this->getQuotes(),
-            'cats'=>Category::all()
+            'cats'=>Category::all(),
+            'reviews'=>$this->getReviews()
         ]);
     }
 
     private function getRequests(){
 
         $d = DB::select(DB::raw(
-            "select DISTINCT(quotes_request.id),count(distinct(quotes.id)) as replies,categories.name as cat_name,quotes_request.request from quotes_request 
+            "select DISTINCT(quotes_request.id),count(distinct(quotes.id)) as replies,
+            categories.name as cat_name,quotes.rid as rid,
+            quotes_request.request from quotes_request 
             inner join company_category on company_category.category_id = quotes_request.category_id 
             inner join companies on companies.id = company_category.company_id 
             and companies.state = quotes_request.state 
@@ -41,7 +45,7 @@ class CustomerController extends Controller
             inner join users on users.id =quotes_request.client_id 
             where quotes_request.client_id = :customer_id
             group by quotes_request.id"
-        ),array('customer_id'=>$this->auth->id()));
+        ),array('customer_id'=>1));
 
         return collect($d);
     }
@@ -73,5 +77,9 @@ class CustomerController extends Controller
                 )
                 ->where('quotes.client_id',$this->auth->id())->get();
         return collect($d);
+    }
+
+    private function getReviews(){
+        return Review::where('reviewers_email',Auth::guard('client')->user()->email)->get();
     }
 }

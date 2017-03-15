@@ -22,6 +22,7 @@ use App\Entities\Gallery;
 use App\Entities\Review;
 use App\Entities\Category;
 use App\Entities\OffDays;
+use App\Events\NewRequestSentEvent;
 
 class UserController extends Controller
 {
@@ -42,6 +43,7 @@ class UserController extends Controller
 
     public function home(){
 
+        
         $user =  User::with([
                  'galleries',
                  'categories',

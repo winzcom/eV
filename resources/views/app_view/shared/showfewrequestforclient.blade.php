@@ -1,14 +1,14 @@
 @if(isset($requests))
     @if(count($requests) > 0)
-    <div class="panel-group accordion style1" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="">
         @foreach($requests as $key=>$request)
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="heading{{$key}}">
-                    <h4 class="panel-title">
+            <div class="">
+                <div class="" role="tab" id="heading{{$key}}">
+                    <h4 class="">
                         <a class="" data-toggle="collapse" data-parent="#accordion" 
                             href="#collapse{{$key}}" aria-expanded="false" 
                             aria-controls="collapse{{$key}}">
-								Request For {{$request->cat_name}}
+                                Request For {{$request->cat_name}} ({{$request->replies}} reply(s) )
                         </a>
                         
                     </h4><!-- panel-title-->
@@ -18,10 +18,18 @@
                     <div class="panel-body">
                         @php 
                             $obj = json_decode($request->request);
+                            if($request->rid !== null){
+                                echo "<button class='btn btn-success btn-xs request' id='reply'>
+                                            Show Quotes
+                                        </button><br><br>";
+                            }
                             if(is_object($obj)){
                                 foreach($obj as $key=>$val){
                                     echo $key.': '.$val.'<br><hr>';
                                 }
+                            }
+                            else{
+                                echo $request->request;
                             }
                         @endphp
                     </div><!-- panel-body-->
