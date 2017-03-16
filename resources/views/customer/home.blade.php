@@ -29,14 +29,14 @@
 				<div class="work-process style1">
 						<div class="process-wrap">
 							<div class="icon-wrap">
-								<span class="step">{{count($requests->where('reply','!=',0)->all())}}</span>
+								<span class="step">{{count($requests->where('replies','>',0)->all())}}</span>
 								<i class="icon icon-coffee"></i>
 							</div>
 							<h3 class="title">Answered Requests</h3>
 						</div>
 						<div class="process-wrap">
 							<div class="icon-wrap">
-								<span class="step">{{count($requests->where('reply',0)->all())}}</span>
+								<span class="step">{{count($requests->where('replies',0)->all())}}</span>
 								<i class="icon icon-web text-info"></i>
 							</div>
 							<h3 class="title">Unanswered Requests</h3>
@@ -54,27 +54,26 @@
 			<div class="row">
 				<div class="col-lg-12">
 					
-					<div id="horizontalTab1">
-						<ul class="resp-tabs-list hor_1">
-							<li>Reviews</li>
-							<li>Requests</li>
-							<li>Quotes</li>
-						</ul>
-						
-						<div class="resp-tabs-container hor_1">
-							
-								<div>
-									
-								</div>
-								<div>
-									@include('app_view.shared.showfewrequestforclient')
-								</div>
-								<div>
-								</div>
-							<!--</div>--><!-- panel-group accordion style1-->
-						</div><!-- resp-tabs-container hor_1-->
-						
-					</div><!-- horizontalTab1 -->
+					<!-- tabs header START -->
+					
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Reviews</a></li>
+						<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Quotes</a></li>
+						<li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Requests</a></li>
+					</ul>
+					
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="home">
+							@include('app_view.shared.display_review',['reviews'=>$reviews,'company_id'=>Auth::id()])
+						</div>
+						<div role="tabpanel" class="tab-pane" id="profile">
+							@include('app_view.shared.showquotes',['quotes'=>$quotes])
+						</div>
+						<div role="tabpanel" class="tab-pane" id="messages">
+							@include('app_view.shared.showfewrequestforclient',['all_requests'=>$requests])
+						</div>
+					</div>
 
 				</div>
 			</div>

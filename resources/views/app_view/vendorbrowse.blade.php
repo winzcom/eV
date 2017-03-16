@@ -60,15 +60,15 @@
                                 <div class="thumbnail style1">
                                     <div class="thumb-wrapper">
                                         <div class="thumbs-carousel">
-                                            <div class="item">
-                                                <img src="{{asset('img/thumbnails/thumb3.jpg')}}" alt="Thumbnail">
-                                            </div>
-                                            <div class="item">
-                                                <img src="{{asset('img/thumbnails/thumb4.jpg')}}" alt="Thumbnail">
-                                            </div>
-                                            <div class="item">
-                                                <img src="{{asset('img/thumbnails/thumb5.jpg')}}" alt="Thumbnail">
-                                            </div>
+                                            @if($company->galleries->count() > 0)
+                                                @foreach($company->galleries as $gallery)
+                                                    <div class="item">
+                                                        <img src="{{$path}}/{{$gallery->image_name}}" alt="Thumbnail">
+                                                    </div>
+                                                @endforeach
+                                            @else
+                                                <div class="alert alert-info">No Image</div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="caption">

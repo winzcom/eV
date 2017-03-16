@@ -103,9 +103,14 @@ body{
                                 </div>
                             </div>
                         </a>
-                                                    
+
+                        <div class="checkbox">
+                            <label class="">
+                                <div class="icheckbox_square"><input type="checkbox" value="{{$gallery->id}}" name="images[]" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                            </label>
+                        </div>
+
                     </div>
-                    
                 @endforeach
                 </div>
                 </form>

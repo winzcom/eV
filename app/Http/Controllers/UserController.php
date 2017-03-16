@@ -22,6 +22,7 @@ use App\Entities\Gallery;
 use App\Entities\Review;
 use App\Entities\Category;
 use App\Entities\OffDays;
+use App\Events\NewRequestSentEvent;
 
 class UserController extends Controller
 {
@@ -42,6 +43,7 @@ class UserController extends Controller
 
     public function home(){
 
+        
         $user =  User::with([
                  'galleries',
                  'categories',
@@ -250,14 +252,16 @@ class UserController extends Controller
     public  function getRequests(){
 
         $d = DB::select(DB::raw(
-            "select quotes_request.*,users.first_name as client_name,quotes.rid as rid,quotes.dismissed as dismissed,company_category.company_id, company_category.category_id from quotes_request 
+            "select quotes_request.*,users.first_name as client_name,quotes.rid as rid,quotes.cost as cost,
+            quotes.message as message,company_category.company_id, company_category.category_id
+            from quotes_request 
             inner join company_category on company_category.category_id = quotes_request.category_id 
             inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 
             and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 )
             inner join users on users.id = quotes_request.client_id  
             left join quotes on quotes.rid=quotes_request.id 
             left join dismiss on dismiss.rid = quotes_request.id
-            where dismiss.rid is null and companies.id =:vendor_id"
+            where dismiss.rid is null and companies.id =:vendor_id order by quotes_request.id desc"
         ),array('vendor_id'=>Auth::id()));
 
        
@@ -279,9 +283,10 @@ class UserController extends Controller
     private static function paginate($data,$per_page){
 
         $current_page = LengthAwarePaginator::resolveCurrentPage();
-        $paginator = new LengthAwarePaginator($data->slice(($current_page-1)*$per_page,$per_page),count($data),$per_page,$current_page);
+        $sliced_data = $data->slice(($current_page-1)*$per_page,$per_page);
+        $paginator = new LengthAwarePaginator($sliced_data,count($data),$per_page,$current_page);
         return $paginator;
-
+       
     }
 
     public function getRequest($id){
@@ -330,6 +335,7 @@ class UserController extends Controller
                 'uid'=>$request->uid,
                 'client_id'=>$request->client_id,
                 'cost'=>$request->cost,
+                'down_payment'=>$request->down_payment !== '' ? $request->down_payment:0,
                 'message'=>$request->message
             ]);
 

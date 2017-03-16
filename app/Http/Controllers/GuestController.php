@@ -12,6 +12,7 @@ use App\Entities\Review;
 use App\Entities\QuotesRequest;
 use Illuminate\Support\Facades\DB;
 use App\TreeNode\CategoryTree;
+use App\Events\NewRequestSentEvent;
 
 use App\Mail\SendRequest;
 
@@ -44,10 +45,9 @@ class GuestController extends Controller
     }
 
     public function writeReview(Request $request){
-
         
-        Review::create($request->all());
-        return back()->with('search_url',$request->search_url);
+        Review::create($request->except(['_token']));
+        return back();
     }
 
 
@@ -96,10 +96,7 @@ class GuestController extends Controller
                     'customer'=>$customer
                 ];
 
-            /** Send Mail **/
-
-            Mail::to($users)
-                ->send(new SendRequest($data));
+                event(new NewRequestSentEvent($data));
 
             }
 

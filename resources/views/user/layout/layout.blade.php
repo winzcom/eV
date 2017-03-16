@@ -20,8 +20,23 @@
 
 	<script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-
+	<script src="https://js.pusher.com/4.0/pusher.min.js"></script>
 	
+	<script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('6a78b439ea816808a071', {
+      encrypted: true
+    });
+
+    var channel = pusher.subscribe('newrequest-channel');
+    channel.bind('App\\Events\\NewRequestSentEvent', function(data) {
+      console.log(data.data.name);
+    });
+  </script>
+
 </head>
 <body>
 
@@ -274,37 +289,38 @@
 <script src="{{asset('js/retina.js')}}"></script>
 <script src="{{asset('js/raphael.js')}}"></script>
 <script src="{{asset('js/tabs.js')}}"></script>
-<script src="js/livicons.js"></script>
-<script src="js/icheck.js"></script>
-<script src="js/mousewheel.js"></script>
-<script src="js/selectik.js"></script>
-<script src="js/spinedit.js"></script>
-<script src="js/wow.js"></script>
-<script src="js/hover-dropdown.js"></script>
-<script src="js/classie.js"></script>
-<script src="cloudslider/js/cloudslider.jquery.min.js"></script>
-<script src="cubeportfolio/js/jquery.cubeportfolio.js"></script>
-<script src="nivo-lightbox/nivo-lightbox.min.js"></script>
-<script src="js/appear.js"></script>
-<script src="js/pie-chart.js"></script>
-<script src="js/vide.js"></script>
-<script src="js/fitvids.js"></script>
-<script src="owl-carousel/owl.carousel.min.js"></script>
-<script src="js/jflickrfeed.js"></script>
-<script src="js/tweecool.js"></script>
-<script src="js/chart.js"></script>
-<script src="js/totop.js"></script>
-<script src="js/sm-scroll.js"></script>
-<script src="js/smooth-scroll.js"></script>
-<script src="js/ajaxchimp.js"></script>
-<script src="js/contact.js"></script>
-<script src="js/form.js"></script>
-<script src="js/validate.js"></script>
-<script src="js/tempo.js"></script>
-<script src="js/main.js"></script>	
+<script src="{{asset('js/livicons.js')}}"></script>
+<script src="{{asset('js/icheck.js')}}"></script>
+<script src="{{asset('js/mousewheel.js')}}"></script>
+<script src="{{asset('js/selectik.js')}}"></script>
+<script src="{{asset('js/spinedit.js')}}"></script>
+<script src="{{asset('js/wow.js')}}"></script>
+<script src="{{asset('js/hover-dropdown.js')}}"></script>
+<script src="{{asset('js/classie.js')}}"></script>
+<script src="{{asset('cloudslider/js/cloudslider.jquery.min.js')}}"></script>
+<script src="{{asset('cubeportfolio/js/jquery.cubeportfolio.js')}}"></script>
+<script src="{{asset('nivo-lightbox/nivo-lightbox.min.js')}}"></script>
+<script src="{{asset('js/appear.js')}}"></script>
+<script src="{{asset('js/pie-chart.js')}}"></script>
+<script src="{{asset('js/vide.js')}}"></script>
+<script src="{{asset('js/fitvids.js')}}"></script>
+<script src="{{asset('owl-carousel/owl.carousel.min.js')}}"></script>
+<script src="{{asset('js/jflickrfeed.js')}}"></script>
+<script src="{{asset('js/tweecool.js')}}"></script>
+<script src="{{asset('js/chart.js')}}"></script>
+<script src="{{asset('js/totop.js')}}"></script>
+<script src="{{asset('js/sm-scroll.js')}}"></script>
+<script src="{{asset('js/smooth-scroll.js')}}"></script>
+<script src="{{asset('js/ajaxchimp.js')}}"></script>
+<script src="{{asset('js/contact.js')}}"></script>
+<script src="{{asset('js/form.js')}}"></script>
+<script src="{{asset('js/validate.js')}}"></script>
+<script src="{{asset('js/tempo.js')}}"></script>
+<script src="{{asset('js/main.js')}}"></script>	
 <script src="{{asset('jss/custom/profile.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script src="{{asset('vendor/js/dropzone/dropzone.js')}}"></script>
+<!--<script src="{{asset('js/app/app.js')}}"></script>-->
 
 @yield('script')
 

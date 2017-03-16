@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use App\Entities\Category;
+use App\Entities\Review;
 
 class CustomerController extends Controller
 {
@@ -24,15 +25,18 @@ class CustomerController extends Controller
 
         return view('customer.home')->with([
             'requests'=>$this->getRequests(),
-            'quotes'=>$this->getQuotes(),
-            'cats'=>Category::all()
+            'quotes'=>$this->getClientQuotes(),
+            'cats'=>Category::all(),
+            'reviews'=>$this->getReviews()
         ]);
     }
 
     private function getRequests(){
 
         $d = DB::select(DB::raw(
-            "select DISTINCT(quotes_request.id),count(distinct(quotes.id)) as replies,categories.name as cat_name,quotes_request.request from quotes_request 
+            "select DISTINCT(quotes_request.id),count(distinct(quotes.id)) as replies,
+            categories.name as cat_name,quotes.rid as rid,
+            quotes_request.request from quotes_request 
             inner join company_category on company_category.category_id = quotes_request.category_id 
             inner join companies on companies.id = company_category.company_id 
             and companies.state = quotes_request.state 
@@ -62,7 +66,7 @@ class CustomerController extends Controller
         return collect($d);
     }
 
-    private function getQuotes(){
+    private function getClientQuotes(){
 
         $d = DB::table('quotes')->join('quotes_request','quotes.rid','=','quotes_request.id')
                 ->join('categories','categories.id','=','quotes_request.category_id')
@@ -73,5 +77,29 @@ class CustomerController extends Controller
                 )
                 ->where('quotes.client_id',$this->auth->id())->get();
         return collect($d);
+    }
+
+    private function getQuotes($request_id){
+        $d = DB::table('quotes')->join('quotes_request','quotes.rid','=','quotes_request.id')
+                ->join('categories','categories.id','=','quotes_request.category_id')
+                ->join('companies','companies.id','=','quotes.uid')
+                ->join('users','users.id','=','quotes.client_id')
+                
+                ->select('quotes.*','quotes_request.request as qrequest','categories.name as cat_name',
+                         'companies.*',(DB::raw("(select avg(r.rating) from reviews r where r.review_for = companies.id) as avg")),
+                         (DB::raw("(select count(r.rating) from reviews r where r.review_for = companies.id) as count")
+                         )
+                )
+                ->where(['quotes.client_id'=>$this->auth->id(),'quotes.rid'=>$request_id])->simplePaginate(10);
+        return ($d);
+    }
+
+    private function getReviews(){
+        return Review::where('reviewers_email',Auth::guard('client')->user()->email)->get();
+    }
+
+    public function showQuotes($request_id = null){
+        $d = $this->getQuotes($request_id);
+        return view('customer.cuquote')->with('quotes',$d);
     }
 }
