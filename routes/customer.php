@@ -6,6 +6,10 @@ use  Illuminate\Http\Request;
 
 Route::get('/culogin','CustomerAuthController@showLoginForm');
 Route::post('/culogin','CustomerAuthController@login');
+Route::get('/reset/client','ForgotPasswordController@showLinkRequestForm');
+Route::post('/password/client','ForgotPasswordController@sendResetLinkEmail');
+Route::get('/password/reset/client/{token}','ResetPasswordController@showResetForm')->name('reset.password.client');
+Route::post('/password/reset/client','ResetPasswordController@reset');
 
 
 /* Client route group */
