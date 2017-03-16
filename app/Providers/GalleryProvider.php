@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 
 use App\Service\LocalGallery;
+use App\Service\AmazonGallery;
 use App\Interfaces\GalleryInterface as GI;
 
 class GalleryProvider extends ServiceProvider
