@@ -25,7 +25,7 @@ if(count($all_requests) > 0){
                     
                 </button>
                 <button class='btn btn-danger btn-xs request dismiss' data-rid = '$request->id'
-                    data-client-id = '$request->client_id' data-uid = 'Auth::id()'
+                    data-client-id = '$request->client_id' data-uid = '$vendor_id'
                     
                 >
                     Dismiss

@@ -84,11 +84,14 @@ class CustomerController extends Controller
                 ->join('categories','categories.id','=','quotes_request.category_id')
                 ->join('companies','companies.id','=','quotes.uid')
                 ->join('users','users.id','=','quotes.client_id')
+                
                 ->select('quotes.*','quotes_request.request as qrequest','categories.name as cat_name',
-                         'companies.*'
+                         'companies.*',(DB::raw("(select avg(r.rating) from reviews r where r.review_for = companies.id) as avg")),
+                         (DB::raw("(select count(r.rating) from reviews r where r.review_for = companies.id) as count")
+                         )
                 )
                 ->where(['quotes.client_id'=>$this->auth->id(),'quotes.rid'=>$request_id])->simplePaginate(10);
-        return $d;
+        return ($d);
     }
 
     private function getReviews(){

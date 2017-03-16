@@ -10,7 +10,7 @@
 			
 			<div class="container">
                 <div id="">
-                    @include('app_view.shared.showfewrequests',['all_requests'=>$reqs])
+                    @include('app_view.shared.showfewrequests',['all_requests'=>$reqs,'vendor_id'=>Auth::id()])
 					
 					{{$reqs->setPath('requests')->render()}}
                 </div>

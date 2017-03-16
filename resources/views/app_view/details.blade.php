@@ -143,7 +143,7 @@
 								{{$company->description}}
 							</div>
 							<div id="reviews">
-								@include('app_view.shared.display_review',['reviews'=>$company->reviews,'company'=>$company])
+								@include('app_view.shared.display_review',['reviews'=>$company->reviews,'company_id'=>$company->id])
 							</div>
 							<div>
 								<div id="map">

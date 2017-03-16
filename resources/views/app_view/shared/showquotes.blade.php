@@ -22,7 +22,7 @@
                                         echo '<div class="alert alert-success">';
                                         foreach($ob as $key=>$value){
                                             if(is_array($value)){
-                                                echo 'Additional Services ( ';
+                                             echo 'Additional Services ( ';
                                                     foreach($value as $val){
                                                         if(is_numeric($val))
                                                             echo $cats->where('id',$val)->first()->name;

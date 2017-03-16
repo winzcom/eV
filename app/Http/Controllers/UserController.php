@@ -335,6 +335,7 @@ class UserController extends Controller
                 'uid'=>$request->uid,
                 'client_id'=>$request->client_id,
                 'cost'=>$request->cost,
+                'down_payment'=>$request->down_payment !== '' ? $request->down_payment:0,
                 'message'=>$request->message
             ]);
 

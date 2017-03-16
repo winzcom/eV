@@ -7,12 +7,17 @@ $(document).ready(function(){
              var message = button.data('message');
              var cost = button.data('cost');
              var cost_input = $('#cost');
+             var down_payment = $('#down_payment');
              var message_textarea =  $('#message')
             
              cost_input.attr({
                     'disabled':true,
                     'value':cost
                 });
+            
+            down_payment.attr({
+                'disabled':true
+            })
 
              message_textarea.attr({
                  'disabled':true
