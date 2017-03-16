@@ -259,14 +259,14 @@ class UserController extends Controller
             inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 
             and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 )
             inner join users on users.id = quotes_request.client_id  
-            left join quotes on quotes.rid=quotes_request.id 
-            left join dismiss on dismiss.rid = quotes_request.id
+            left join quotes on quotes.rid=quotes_request.id and quotes.uid = companies.id 
+            left join dismiss on dismiss.rid = quotes_request.id and dismiss.uid = quotes.uid
             where dismiss.rid is null and companies.id =:vendor_id order by quotes_request.id desc"
         ),array('vendor_id'=>Auth::id()));
 
-       
 
-        return collect($d);
+
+        return (collect($d));
        
     }
 

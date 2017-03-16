@@ -101,6 +101,11 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
         ],
+        'client'=>[
+            'provider'=>'client',
+            'table'=>'password_resets',
+            'expire'=>60
+        ]
     ],
 
 ];

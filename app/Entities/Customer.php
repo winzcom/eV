@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use App\Notifications\ClientResetPassword;
 
 
 class Customer extends Authenticatable
@@ -22,5 +23,10 @@ class Customer extends Authenticatable
     protected $fillable = [
         'name','email','password','first_name','last_name',
     ];
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ClientResetPassword($token));
+    }
 
 }

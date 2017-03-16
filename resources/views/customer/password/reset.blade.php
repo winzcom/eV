@@ -1,34 +1,41 @@
 @extends('layouts.applayout')
 
-@section('content')
-
 <!-- page title style1 START -->
 <section class="page-title style1" data-path="{{asset('img/headers/header7.jpg')}}">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="strong">Client Login</h1>
+				<h1 class="strong">Password Reset</h1>
 			</div>
 		</div>
 	</div>
 </section>
 <!-- page title style1 END -->
 
-
+@section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+                <div class="panel-heading">Reset Password</div>
+
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/culogin') }}">
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset/client') }}">
                         {{ csrf_field() }}
+
+                        <input type="hidden" name="token" value="{{ $token }}">
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -52,25 +59,24 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : ''}}> Remember Me
-                                    </label>
-                                </div>
+                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+                            <div class="col-md-6">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+
+                                @if ($errors->has('password_confirmation'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
+                            <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    Login
+                                    Reset Password
                                 </button>
-
-                                <a class="btn btn-link" href="{{ url('/reset/client') }}">
-                                    Forgot Your Password?
-                                </a>
                             </div>
                         </div>
                     </form>
