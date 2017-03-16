@@ -57,7 +57,7 @@
 							@include('app_view.shared.showquotes',['quotes'=>$quotes])
 						</div>
 						<div role="tabpanel" class="tab-pane" id="messages">
-							@include('app_view.shared.showfewrequests',['all_requests'=>$requests])
+							@include('app_view.shared.showfewrequests',['all_requests'=>$requests,'vendor_id'=>Auth::id()])
 						</div>
 					</div>
 			</div>

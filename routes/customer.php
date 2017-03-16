@@ -13,6 +13,7 @@ Route::post('/culogin','CustomerAuthController@login');
 Route::group(['middleware'=>'auth.client:client'],function(){
 
     Route::get('/cuhome','CustomerController@home');
+    Route::get('/cuquote/{request_id?}','CustomerController@showQuotes');
 });
 
 /* End of client route group */

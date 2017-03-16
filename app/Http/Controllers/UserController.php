@@ -261,7 +261,7 @@ class UserController extends Controller
             inner join users on users.id = quotes_request.client_id  
             left join quotes on quotes.rid=quotes_request.id 
             left join dismiss on dismiss.rid = quotes_request.id
-            where dismiss.rid is null and companies.id =:vendor_id"
+            where dismiss.rid is null and companies.id =:vendor_id order by quotes_request.id desc"
         ),array('vendor_id'=>Auth::id()));
 
        

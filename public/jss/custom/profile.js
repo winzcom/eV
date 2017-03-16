@@ -42,6 +42,7 @@ $(document).ready(function(){
             var rid = button.data('rid');
             var client_id = button.data('clientId');
             var vendor_id = button.data('uid');
+            alert(vendor_id);
             console.log(rid+' '+client_id)
             var url = 'reply_request'
             console.log(url)

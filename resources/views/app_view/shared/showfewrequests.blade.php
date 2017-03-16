@@ -19,7 +19,7 @@ if(count($all_requests) > 0){
                 if(strtotime($ob->date)>strtotime(date('Y-m-d'))){
                 echo "<button class='btn btn-success btn-xs request' id='reply' data-toggle='modal'
                     data-target='#reply_request' data-rid = '$request->id'
-                    data-client-id = '$request->client_id' data-uid = 'Auth::id()'
+                    data-client-id = '$request->client_id' data-uid = '$vendor_id'
                 >
                     Reply
                     
@@ -40,7 +40,7 @@ if(count($all_requests) > 0){
         else{
                 echo "<button class='btn btn-success btn-xs request' id='reply' data-toggle='modal'
                     data-target='#reply_request' data-message = '$request->message'
-                    data-cost = '$request->cost' data-uid = 'Auth::id()'
+                    data-cost = '$request->cost' data-uid = '$vendor_id'
                 >
                     Show Quote
                 </button><br><br>";

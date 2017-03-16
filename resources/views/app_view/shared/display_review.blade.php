@@ -5,7 +5,7 @@
     @if(Auth::guard('client')->check())
        @php 
             if(!in_array(Auth::guard('client')->user()->email,$reviews->pluck('reviewers_email')->all())
-                && !in_array($company->id,$reviews->pluck('reviews_for')->all())
+                && !in_array($company_id,$reviews->pluck('reviews_for')->all())
             ){
                 echo "<button class='btn btn-default btn-sm' data-toggle='modal' data-target='#write_review'>
                         Write A Review

@@ -25,7 +25,7 @@ class CustomerController extends Controller
 
         return view('customer.home')->with([
             'requests'=>$this->getRequests(),
-            'quotes'=>$this->getQuotes(),
+            'quotes'=>$this->getClientQuotes(),
             'cats'=>Category::all(),
             'reviews'=>$this->getReviews()
         ]);
@@ -45,7 +45,7 @@ class CustomerController extends Controller
             inner join users on users.id =quotes_request.client_id 
             where quotes_request.client_id = :customer_id
             group by quotes_request.id"
-        ),array('customer_id'=>1));
+        ),array('customer_id'=>$this->auth->id()));
 
         return collect($d);
     }
@@ -66,7 +66,7 @@ class CustomerController extends Controller
         return collect($d);
     }
 
-    private function getQuotes(){
+    private function getClientQuotes(){
 
         $d = DB::table('quotes')->join('quotes_request','quotes.rid','=','quotes_request.id')
                 ->join('categories','categories.id','=','quotes_request.category_id')
@@ -79,7 +79,24 @@ class CustomerController extends Controller
         return collect($d);
     }
 
+    private function getQuotes($request_id){
+        $d = DB::table('quotes')->join('quotes_request','quotes.rid','=','quotes_request.id')
+                ->join('categories','categories.id','=','quotes_request.category_id')
+                ->join('companies','companies.id','=','quotes.uid')
+                ->join('users','users.id','=','quotes.client_id')
+                ->select('quotes.*','quotes_request.request as qrequest','categories.name as cat_name',
+                         'companies.*'
+                )
+                ->where(['quotes.client_id'=>$this->auth->id(),'quotes.rid'=>$request_id])->simplePaginate(10);
+        return $d;
+    }
+
     private function getReviews(){
         return Review::where('reviewers_email',Auth::guard('client')->user()->email)->get();
+    }
+
+    public function showQuotes($request_id = null){
+        $d = $this->getQuotes($request_id);
+        return view('customer.cuquote')->with('quotes',$d);
     }
 }

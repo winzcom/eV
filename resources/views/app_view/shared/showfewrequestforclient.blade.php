@@ -19,13 +19,26 @@
                         @php 
                             $obj = json_decode($request->request);
                             if($request->rid !== null){
-                                echo "<button class='btn btn-success btn-xs request' id='reply'>
+                                echo "<a href = 'cuquote/$request->id' class='cbp-singlePage' ><button class='btn btn-success btn-xs request ' id='reply'>
                                             Show Quotes
-                                        </button><br><br>";
+                                        </button></a><br><br>";
+                                    
                             }
                             if(is_object($obj)){
-                                foreach($obj as $key=>$val){
-                                    echo $key.': '.$val.'<br><hr>';
+                                
+                                foreach($obj as $key=>$value){
+                                    if(is_array($value)){
+                                        echo 'Additional Services ( ';
+                                            foreach($value as $val){
+                                                if(is_numeric($val))
+                                                    echo $cats->where('id',$val)->first()->name;
+                                                else
+                                                    echo $val;
+                                            }
+                                            echo ' )<br><br>';
+                                    }
+                                    else
+                                        echo title_case($key).':'.$value.'<br><hr>';
                                 }
                             }
                             else{
@@ -39,4 +52,32 @@
         @endforeach
         </div>
     @endif
+@elseif(isset($request))
+
+    @php 
+        
+        
+        if($obj = json_decode($request)){
+            
+            foreach($obj as $key=>$value){
+
+                if(is_array($value)){
+                    echo 'Additional Services ( ';
+                        foreach($value as $val){
+                            if(is_numeric($val))
+                                echo $cats->where('id',$val)->first()->name.' ';
+                            else
+                                echo $val.' ';
+                        }
+                        echo ' )<br><br>';
+                }
+                else
+                    echo title_case($key).':'.$value.'<br><hr>';
+            }
+        }
+        else{
+            echo $request;
+        }
+    @endphp
+
 @endif
