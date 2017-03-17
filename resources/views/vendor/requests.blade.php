@@ -1,8 +1,8 @@
-@extends('user.layout.layout')
+@extends('vendor.layout.layout')
 
 @section('content')
 @include('app_view.requestForm.replyrequest')
-@include('user.header.header',['title'=>'Requests'])
+@include('vendor.header.header',['title'=>'Requests'])
 <div class="content" id="content">
 
 	<!-- section START -->

@@ -2,13 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\NewRequestSentEvent;
+use App\Events\NewQuoteSent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\SendRequest;
+use App\Mail\SendQuote;
 
-class NewRequestSentListener
+class NewQuotesSentListener
 {
     /**
      * Create the event listener.
@@ -19,18 +18,17 @@ class NewRequestSentListener
     {
         //
     }
- 
+
     /**
      * Handle the event.
      *
-     * @param  SomeEvent  $event
+     * @param  NewQuoteSent  $event
      * @return void
      */
-    public function handle(NewRequestSentEvent $event)
+    public function handle(NewQuoteSent $event)
     {
         //
-        Mail::to($event->data['users_data'])
-                ->send(new SendRequest($event->data));
-       
+        Mail::to($event->data['request_data'])
+                ->send(new SendQuote($event->data));
     }
 }

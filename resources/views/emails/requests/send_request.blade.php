@@ -10,7 +10,7 @@ New Request From {{$data['customer']->first_name}} {{$data['customer']->last_nam
             if(is_array($value)){
                 echo 'Additional Services ( ';
                 foreach($value as $val){
-                    echo $cats->where('id',$val)->first()->name;
+                    echo $val.' ';
                 }
                 echo ' )<br><br>';
                 continue;

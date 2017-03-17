@@ -3,7 +3,7 @@
 @section('content')
     <!-- page title style6 START -->
 <!-- page title style6 START -->
-@include('user.header.header',['title'=>'Profile'])
+@include('vendor.header.header',['title'=>'Profile'])
 <!-- page title style6 END -->
 
 <!-- page title style6 END -->

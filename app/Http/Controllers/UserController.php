@@ -22,7 +22,7 @@ use App\Entities\Gallery;
 use App\Entities\Review;
 use App\Entities\Category;
 use App\Entities\OffDays;
-use App\Events\NewRequestSentEvent;
+use App\Events\NewQuoteSentEvent;
 
 class UserController extends Controller
 {
@@ -51,7 +51,7 @@ class UserController extends Controller
         ]) ->find(Auth::id());
 
 
-        return view('user.home')->with([
+        return view('vendor.home')->with([
                 'user'=>$user,'path'=>$this->path,
                 'reviews'=>$this->getFiveReviews(),
                 'quotes'=>$this->getQuotes(),
@@ -96,7 +96,7 @@ class UserController extends Controller
     public function showProfileForm(Request $request){
         
         $user  = Auth::user();
-        return view('user.profile')->with([
+        return view('vendor.profile')->with([
             
                             'user'=>$user,
                             'formInputs'=>User::getFormInputs(),
@@ -108,7 +108,7 @@ class UserController extends Controller
     public function showGallery(){
     
         $galleries = Gallery::where('user_id',Auth::id())->orderBy('id','desc')->get();
-         return view('user.user_gallery')->with(['galleries'=>$galleries,'path'=>$this->path]);
+         return view('vendor.user_gallery')->with(['galleries'=>$galleries,'path'=>$this->path]);
     }
 
     public function publish(Request $request){
@@ -180,7 +180,7 @@ class UserController extends Controller
 
         $reviews = $query->paginate($pagination);
         
-        return view('user.reviews')->with(
+        return view('vendor.reviews')->with(
             [
                 'reviews'=>$reviews,
                 'pagination'=>$pagination,
@@ -253,7 +253,8 @@ class UserController extends Controller
 
         $d = DB::select(DB::raw(
             "select quotes_request.*,users.first_name as client_name,quotes.rid as rid,quotes.cost as cost,
-            quotes.message as message,company_category.company_id, company_category.category_id
+            quotes.message as message, quotes.down_payment as dp,
+            company_category.company_id, company_category.category_id
             from quotes_request 
             inner join company_category on company_category.category_id = quotes_request.category_id 
             inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 
@@ -274,7 +275,7 @@ class UserController extends Controller
 
         $req = $this->getRequests();
         $paginator = self::paginate($req,3);
-        return view('user.requests')->with(['reqs'=>$paginator,
+        return view('vendor.requests')->with(['reqs'=>$paginator,
             
             'cats'=>Category::all()
         ]);
@@ -350,9 +351,8 @@ class UserController extends Controller
             ];
 
            
-            /** Send Mail to Client**/
-            Mail::to($data['request_data']->email)
-                ->send(new SendQuote($data));
+            event(new NewQuoteSentEvent($data));
+            
 
         });
         

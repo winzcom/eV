@@ -1,8 +1,8 @@
-@extends('user.layout.layout')
+@extends('vendor.layout.layout')
 
 @section('content')
 <!-- page title style6 START -->
-@include('user.header.header',['title'=>'Gallery'])
+@include('vendor.header.header',['title'=>'Gallery'])
 <!-- page title style6 END -->
 <style>
 

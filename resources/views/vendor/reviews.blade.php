@@ -1,4 +1,4 @@
-@extends('user.layout.layout')
+@extends('vendor.layout.layout')
 
 @section('customstyle')
 
@@ -26,7 +26,7 @@
 <?php $i = 0;?>
 <?php $j = 1;?>
     <!-- page title style6 START -->
-@include('user.header.header',['title'=>'Review'])
+@include('vendor.header.header',['title'=>'Review'])
 <!-- page title style6 END -->
 
     <div class="container-fluid">

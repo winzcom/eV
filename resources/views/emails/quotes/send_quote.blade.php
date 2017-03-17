@@ -9,8 +9,9 @@
             @foreach($ob as $key=>$value)
                     @php
                         if(is_array($value)){
-                            echo 'Additional Services required'
-                            continue;
+                            foreach($value as $key=>$val){
+                                echo $val.' ';
+                            }
                         } 
                     @endphp
                     {{$key}} : {{$value}}<hr>
