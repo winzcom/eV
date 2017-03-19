@@ -1,23 +1,23 @@
 
 
-
-@if(!Auth::check())
-    @if(Auth::guard('client')->check())
-       @php 
-            if(!in_array(Auth::guard('client')->user()->email,$reviews->pluck('reviewers_email')->all())
-                && !in_array($company_id,$reviews->pluck('reviews_for')->all())
-            ){
-                echo "<button class='btn btn-default btn-sm' data-toggle='modal' data-target='#write_review'>
-                        Write A Review
-                    </button>";
-            }
-       @endphp
-        
-    @else
-        <a href="{{url('/culogin')}}"><button class="btn btn-default btn-sm">Login To Write a Review</button></a>
+@if(!isset($client_id))
+    @if(!Auth::check())
+        @if(Auth::guard('client')->check())
+        @php 
+                if(!in_array(Auth::guard('client')->user()->email,$reviews->pluck('reviewers_email')->all())
+                    && !in_array($company_id,$reviews->pluck('reviews_for')->all())
+                ){
+                    echo "<button class='btn btn-default btn-sm' data-toggle='modal' data-target='#write_review'>
+                            Write A Review
+                        </button>";
+                }
+        @endphp
+            
+        @else
+            <a href="{{url('/culogin')}}"><button class="btn btn-default btn-sm">Login To Write a Review</button></a>
+        @endif
     @endif
 @endif
-
 <span>Average Rating {{number_format($reviews->avg('rating'),1)}}/5<span>
                     @foreach($reviews as $review)
                         <h4>
