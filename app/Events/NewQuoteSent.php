@@ -10,22 +10,22 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class NewRequestSentEvent implements ShouldBroadcast
+class NewQuoteSent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-
-    public $data;
     /**
      * Create a new event instance.
      *
      * @return void
      */
+
+     protected $data;
+
     public function __construct(Array $data)
     {
         //
         $this->data = $data;
-        
     }
 
     /**
@@ -35,6 +35,6 @@ class NewRequestSentEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('newrequest-channel');
+        return new PrivateChannel('channel-name');
     }
 }

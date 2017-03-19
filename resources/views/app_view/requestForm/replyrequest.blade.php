@@ -12,9 +12,9 @@
                     <div class="controls">
                         <input type="number" name="cost" class="form-control input-lg quo" id = "cost" value="" required/>
                     </div>
-                  <label class="control-label" for="inputCity">Down Payment( percentage)</label>
+                  <label class="control-label" for="inputCity">Down Payment( percentage ) <span>%</spa></label>
                     <div class="controls">
-                        <input type="number" min="1" max= "100" name="down_payment" class="form-control input-lg quo" id = "down_payment" value="" required><span>%</span>
+                        <input type="number" min="1" max= "100" name="down_payment" class="form-control input-lg quo" id = "down_payment" value="" required>
                     </div>
                 <label class="control-label" for="inputCity">Message (break-down analysis,recommendation)</label>
                     <div class="controls">

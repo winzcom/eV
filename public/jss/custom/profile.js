@@ -3,9 +3,12 @@ $(document).ready(function(){
     $('#reply_request').on('show.bs.modal',function(event){
 
          var button = $(event.relatedTarget);
-         if(button.data('message') !== undefined){
+         if(button.data('message') !== undefined && button.data('message') !== ''){
              var message = button.data('message');
              var cost = button.data('cost');
+             var dp = button.data('dp');
+             console.log(button);
+
              var cost_input = $('#cost');
              var down_payment = $('#down_payment');
              var message_textarea =  $('#message')
@@ -16,7 +19,8 @@ $(document).ready(function(){
                 });
             
             down_payment.attr({
-                'disabled':true
+                'disabled':true,
+                'value':dp
             })
 
              message_textarea.attr({
@@ -31,6 +35,13 @@ $(document).ready(function(){
 
              $('#send_quote').show();
              var cost = $('#cost');
+             var down_payment = $('#down_payment');
+
+             down_payment.attr({
+                 'disabled':false,
+                 'value':''
+             })
+
              cost.attr({
                  'disabled':false,
                  'value':''

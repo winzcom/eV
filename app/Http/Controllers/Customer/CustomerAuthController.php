@@ -16,11 +16,11 @@ class CustomerAuthController extends Controller
 {
     private $redirect = '/cuhome';
     public function __construct(){
-
+        $this->middleware('guest.client:client');
     }
 
     public function register(){
-
+        
     }
 
     public function login(Request $request){
