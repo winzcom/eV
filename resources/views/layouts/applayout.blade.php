@@ -16,12 +16,13 @@
 	<!-- style.css is main stylesheet and all other sylesheets are being
 		 imported in this file. -->
 		 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
 
 	<link rel="stylesheet" href="{{asset('style.css')}}">
 	<link rel="stylesheet" href="{{asset('vendor/css/eazy.css')}}">
 
 	
+
 	<script src="{{asset('js/vendor/modernizr-2.8.3-respond-1.4.2.min.js')}}"></script>
 	<script src="{{asset('jss/custom/googleautocomplete.js')}}"></script>
 	
@@ -236,7 +237,8 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
-
+<-- standard version -->
+<script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
 
 <!--<script src="{{asset('vendor/twitterwizard/js/modal.js')}}"></script>-->
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7SGP6giYEwQUUJXWbBffqhe9AIbp1ciY&libraries=places&callback=initAutoComplete,initMap"
@@ -247,19 +249,9 @@
 	
 <script>
 	$(document).ready(function(){
-
+		
 		var url =  "{!! route('requests')!!}";
-		function confirmPasswordCheck(step){
-			console.log('things are '+step)
-			$('#step5confirm_password').blur(function(){
-			var password = $('#step5password').val();
-			if($(this).val() !== password){
-				$('#myModal').modalSteps({
-					disableNextButton: true
-				})
-			}
-		})	
-	}
+	
 		
 		$('#myModal').modalSteps({
 			btnCancelHtml: 'Cancel',
@@ -272,6 +264,7 @@
 				/*** Ajax Call To Submit Form **/
 
 					console.log($('#myWizard').serialize())
+					alertify.delay(0).log("Request is been sent...").maxLogItems(1);
 
 				$.ajax({
 					url:url,
@@ -283,10 +276,11 @@
 					}
 				})
 				.done(function(){
-					return false;
+					$('#myModal').modal('hide');
+					alertify.log('Request has been Sent');
 				})
 				.fail(function(){
-
+					alertify.error('Request could not sent');
 				})
 
 			}

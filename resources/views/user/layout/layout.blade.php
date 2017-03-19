@@ -22,6 +22,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 	<script src="https://js.pusher.com/4.0/pusher.min.js"></script>
 	
+	
 	<script>
 
     // Enable pusher logging - don't include this in production
@@ -320,6 +321,7 @@
 <script src="{{asset('jss/custom/profile.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script src="{{asset('vendor/js/dropzone/dropzone.js')}}"></script>
+<script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
 <!--<script src="{{asset('js/app/app.js')}}"></script>-->
 
 @yield('script')
