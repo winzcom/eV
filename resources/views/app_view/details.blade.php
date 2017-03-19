@@ -187,8 +187,8 @@
 									<div class="thumbnail product">
 										<div class="thumb-wrapper">
 											<a href="{{url('/detail/')}}/{{$sim->name_slug}}" title="Single product">
-												<img src="{{asset('img/shop/p1.jpg')}}" class="img-one" alt="Thumbnail">
-												<img src="{{asset('img/shop/p1-alt.jpg')}}" class="img-two" alt="Thumbnail">
+												<img src="{{$path}}/{{$sim->galleries()->pluck('image_name')->first()}}" class="img-one" alt="no image available">
+												<!--<img src="{{asset('img/shop/p1-alt.jpg')}}" class="img-two" alt="Thumbnail">-->
 												<!--<span class="sale">Sale!</span>-->
 											</a>
 											<div class="controls">

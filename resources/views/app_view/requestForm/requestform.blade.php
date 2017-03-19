@@ -170,7 +170,8 @@
                 </div>
             </div>
 
-            <div class="row hide" data-step="6" data-title="This is the first step!">
+            @if(!Auth::guard('client')->check())
+            <div class="row hide" data-step="6" data-title="This is the first step!" id="personal">
                         <label class="control-label" for="inputCity">First Name</label>
                         <div class="controls">
                             <input name="first_name" class="form-control" type="text" required/>
@@ -204,7 +205,7 @@
                 <input type="text" id="locality" value="" name="vicinity"/>-->
                 <!-- End of State and Locality-->
             </div><!--step-6-->
-           
+           @endif
         </form>
         <div class="modal-footer">
             <button type="button" class="btn btn-default js-btn-step pull-left" data-orientation="cancel" data-dismiss="modal"></button>

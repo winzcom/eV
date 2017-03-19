@@ -51,11 +51,7 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('auth.register')
-        ->with(['formInputs'=>User::getRegisterInputs(),
-        'categories'=>Service::getCategories(),
-        'states'=>Service::getStates()
-        ]);
+        return view('auth.register');
     }
 
 
@@ -67,12 +63,22 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, Service::formRules(new FormRegistration));
+        return Validator::make($data,[
+            'name'=>'required|unique:companies',
+            'email'=>'required|email|unique:companies',
+            'password'=>'required|confirmed'
+        ]);
     }
 
     protected function register(Request $request){
 
-        $this->validator($request->all())->validate();
+        $validator = $this->validator($request->all());
+
+        if($validator->fails()){
+            return redirect('/register')
+                    ->withErrors($validator)
+                    ->withInput();
+        }
 
         DB::Transaction(function() use ($request){
                 event(new Registered($user = $this->create($request->all())));
@@ -123,5 +129,15 @@ class RegisterController extends Controller
         $user->save();
         return redirect('login')->with('message','Please Login');
         //$this->guard()->login($user);
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'A Company Name is required',
+            'email.required'  => 'An Email is required',
+            'password.required'=>'A password is required',
+            'password.confirmed'=>'Both Password And Password Confirmation must Match'
+        ];
     }
 }

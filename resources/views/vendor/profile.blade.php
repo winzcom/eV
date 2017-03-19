@@ -1,4 +1,4 @@
-@extends('user.layout.layout')
+@extends('vendor.layout.layout')
 
 @section('content')
     <!-- page title style6 START -->

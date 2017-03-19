@@ -94,7 +94,7 @@
 				@elseif (Auth::guard('client')->check())
 					<li><a href="{{url('/cuhome')}}">DashBoard</a></li>
 				@else
-					<li><a href="#">Join as Vendor</a></li>
+					<li><a href="{{url('/register')}}">Join as Vendor</a></li>
 					<li><a href="{{url('/login')}}">Sign In</a></li>
 				@endif 
 			</ul>
@@ -231,6 +231,7 @@
 <script src="{{asset('js/tempo.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>	
 <script src="{{asset('vendor/js/hashids/dist/hashids.min.js')}}"></script>
+<script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
 <script src="{{asset('jss/custom/data/requestdata.js')}}"></script>
 <script src="{{asset('jss/custom/startRequestwizard.js')}}"></script>
 <script src="{{asset('vendor/js/createsteps/jquery-bootstrap-modal-steps.min.js')}}"></script>
@@ -238,7 +239,7 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
 <-- standard version -->
-<script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
+
 
 <!--<script src="{{asset('vendor/twitterwizard/js/modal.js')}}"></script>-->
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7SGP6giYEwQUUJXWbBffqhe9AIbp1ciY&libraries=places&callback=initAutoComplete,initMap"
@@ -258,7 +259,7 @@
 			btnPreviousHtml: 'Previous',
 			btnNextHtml: 'Next',
 			btnLastStepHtml: 'Complete',
-			callbacks:{'*':confirmPasswordCheck},
+		
 			disableNextButton: false,
 			completeCallback: function(){
 				/*** Ajax Call To Submit Form **/
@@ -277,7 +278,7 @@
 				})
 				.done(function(){
 					$('#myModal').modal('hide');
-					alertify.log('Request has been Sent');
+					alertify.success('Request has been Sent');
 				})
 				.fail(function(){
 					alertify.error('Request could not sent');
@@ -294,7 +295,7 @@
 </script>
 
 
-</script>
+
 
 @yield('script')
 

@@ -174,7 +174,7 @@ $(document).ready(function(){
             })
         },
         function(){
-            alertify.log('Request Cancelled');
+            alertify.log('Cancelled');
         });
         
         
@@ -206,6 +206,9 @@ $(document).ready(function(){
                         var italic = $('<i>').attr('class','fa fa-check-circle-o');
                         $('cbp-caption-defaultWrap').prepend(italic);
                         alertify.log('Reply Sent');
+                    },
+                    error:function(err){
+                        alertify.alert('An error occured, quote could not be sent');
                     }
 				})
         /**End ajax call */

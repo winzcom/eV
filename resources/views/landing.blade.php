@@ -41,14 +41,14 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div class="icon-box style7">
-						<i class="livicon" data-name="umbrella" data-color="#2ECC71" data-hovercolor="false" data-size="48" data-onparent="true"></i>
+						<i class="livicon" data-name="sitemap" data-color="#2ECC71" data-hovercolor="false" data-size="48" data-onparent="true"></i>
 						<h4 class="box-title strong">Make a request</h4>
 						<p>Make a request with our simple form flow</p>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="icon-box style7">
-						<i class="livicon" data-name="sitemap" data-color="#F1C40F" data-hovercolor="false" data-size="48" data-onparent="true"></i>
+						<i class="livicon" data-name="umbrella" data-color="#F1C40F" data-hovercolor="false" data-size="48" data-onparent="true"></i>
 						<h4 class="box-title strong">Receive Quotes</h4>
 						<p>Receive quotes from Vendors</p>
 					</div>
@@ -422,7 +422,7 @@
 				<div class="row">
 					<div class="col-lg-10 col-lg-offset-1">
 						<i class="livicon pull-right visible-lg" data-name="angle-double-right" data-color="#fff" data-hovercolor="false" data-size="36" data-onparent="true"></i>
-						<p class="h2">Take your business to the ultimate level with tempo</p>
+						<p class="h2">Take your business to the ultimate level with eVenting</p>
 					</div>
 				</div>
 			</div>

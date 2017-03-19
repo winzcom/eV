@@ -35,7 +35,11 @@ class SearchController extends Controller
     private function getVendors($cat){
         $companies = User::with('reviews','galleries')->whereHas('categories',function($q) use ($cat){
             $q->where('categories.id',$cat);
-        })->where('name','!=','null')->paginate(5);
+        })->where([
+            ['first_name','!=','null'],
+            ['last_name','!=','null'],
+            ['phone_no','!=','null']
+        ])->paginate(5);
         return $companies;
     }
 
