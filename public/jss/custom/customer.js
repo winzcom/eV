@@ -10,16 +10,19 @@ $(document).ready(function(){
        var description = button.data('description');
        var company_name = button.data('companyName');
        var rating = button.data('rating');
-
+       console.log(rating);
        var title = $('#title');
 
        title.text('Details for '+company_name);
 
-       if(review !== null){
+       console.log(Object.keys(review)[0])
+       if(Object.keys(review).length > 0 && review[Object.keys(review)[0]] !== null){
 
            showReviewsAndReply(review,reply,reviewer,rating);
-           showDescription(description);
+           
        }
+
+       showDescription(description);
    })
 
    $('#show_details').on('hidden.bs.modal',function(event){
@@ -49,22 +52,21 @@ $(document).ready(function(){
     function showReviewsAndReply(reviews,reply,reviewer,rating){
 
         var reviewDiv = document.getElementById('review');
-        console.log(reviews)
         
-        if(!$.isEmptyObject(reviews)){
-
                 $.each(reviews,function(key,value){
-                console.log(rating)
-                var review = '<p>'+value+'</p><span class="rating" data-rating="'+rating[key]+'"></span>'
-                //console.log(reply)
-                var rev = '<h4>'+reviewer[key]+'</h4>'
+
+                var review = document.createElement('p');
+                review.innerHTML = value;
+
+                var rev = '<h4>'+reviewer[key]+' '+rating[key]+'</h4>'
 
                 reviewDiv.insertAdjacentHTML('beforeend',rev)
-                reviewDiv.insertAdjacentHTML('beforeend',review)
-                //console.log(value)
+                reviewDiv.appendChild(review);
+                //reviewDiv.insertAdjacentHTML('beforeend',review)
+                
                 if(reply[key] !== '' && reply[key] !== null){
 
-                    //console.log(reply[key])
+                    
                     var d = `<div class="well">
                         <small>Supplier's Reply</small></br>
                         <i>`+reply[key]+`</i>
@@ -74,7 +76,6 @@ $(document).ready(function(){
                 }
                 
             })
-        }
     }
 
     function showDescription(description){

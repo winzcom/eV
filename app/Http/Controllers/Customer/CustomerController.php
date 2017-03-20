@@ -93,7 +93,7 @@ class CustomerController extends Controller
                          )
                 )
                 ->where(['quotes.client_id'=>$this->auth->id(),'quotes.rid'=>$request_id])->get();
-                
+            
                  return Service::paginate($d->groupBy('id'),10);
     }
 

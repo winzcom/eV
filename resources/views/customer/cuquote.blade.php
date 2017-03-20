@@ -62,7 +62,7 @@
                                              $reviewers_name = json_encode($quote->pluck('reviewers_name')->all());
                                              $description = $quote->first()->description;
                                              $rating = json_encode($quote->pluck('rating')->all());
-                                             dd($rating);
+                                    
                                               $formatter = new \NumberFormatter('en_GB',  NumberFormatter::CURRENCY);
                                               $formatter->setSymbol(NumberFormatter::CURRENCY_SYMBOL,'');
                                               $down_payment = null; 
