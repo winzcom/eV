@@ -60,12 +60,11 @@
                                 <div class="thumbnail style1">
                                     <div class="thumb-wrapper">
                                         <div class="thumbs-carousel">
-                                            @if($company->galleries->count() > 0)
-                                                @foreach($company->galleries as $gallery)
+                                            @if(count($company->galleries) > 0)
+                                                
                                                     <div class="item">
-                                                        <img src="{{$path}}/{{$gallery->image_name}}" alt="Thumbnail">
+                                                        <img src="{{$path}}/{{$company->galleries->pluck('image_name')->first()}}" alt="Thumbnail">
                                                     </div>
-                                                @endforeach
                                             @else
                                                 <div class="alert alert-info">No Image</div>
                                             @endif

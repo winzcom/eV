@@ -114,15 +114,17 @@ $(document).ready(function(){
                 console.log(state);
                 locality = $('input[name="vicinity"]').val();
 
-                  console.log(locality);
-
                       if(state == undefined || state == ''){
-
-                          $('#myModal').modal('hide');
                           
-                          alert('Please select a state and locality')
+                          $('#myModal').modal('hide');
+                          alertify.alert('Please select a state and locality')
+                          
                       }
                       else{
+
+                          if(locality == 'all' || locality == '')
+                              locality = 0;
+            
                             stateInput = $('<input type="hidden" name="state" value="'+state+'" ></input>');
                             localityInput = $('<input type="hidden" name="vicinity" value="'+locality+'"></input>');
                             $('#myWizard').append(stateInput);

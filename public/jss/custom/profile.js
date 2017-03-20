@@ -155,24 +155,31 @@ $(document).ready(function(){
 
     $('.dismiss').click(function(event){
 
-       
+        
+
         var self = $(this);
         var rid = self.data('rid');
         var client_id = self.data('clientId');
         var uid = self.data('uid');
 
-        var response = confirm('Are You Sure You Want to Dismiss This Request');
-        
-        if(response){
+        alertify.logPosition('bottom right');
+        alertify.okBtn('Dismiss')
+        .cancelBtn('Cancel')
+        .confirm('Are You Sure You Want to Dismiss This Request',function(){
              var url = 'dismiss_request/'+rid+'/'+uid+'/'+client_id;
              $.get(url,{},function(data){
                  if(data.status == undefined || data.status == null)
                     location.reload(true);
                 else{}
             })
-        }
+        },
+        function(){
+            alertify.log('Cancelled');
+        });
+        
+        
        
-        console.log(url);
+        //console.log(url);
 
        /* $.get(url,{},function(data){
 
@@ -198,6 +205,10 @@ $(document).ready(function(){
                         $('#reply_request').modal('hide');
                         var italic = $('<i>').attr('class','fa fa-check-circle-o');
                         $('cbp-caption-defaultWrap').prepend(italic);
+                        alertify.log('Reply Sent');
+                    },
+                    error:function(err){
+                        alertify.alert('An error occured, quote could not be sent');
                     }
 				})
         /**End ajax call */

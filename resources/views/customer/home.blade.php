@@ -65,7 +65,11 @@
 					<!-- Tab panes -->
 					<div class="tab-content">
 						<div role="tabpanel" class="tab-pane active" id="home">
+<<<<<<< HEAD
 							@include('app_view.shared.display_review',['reviews'=>$reviews,'company_id'=>Auth::id(),'client_id'=>Auth::guard('client')->id()])
+=======
+							@include('app_view.shared.display_review',['reviews'=>$reviews,'company_id'=>'cuhome'])
+>>>>>>> refs/remotes/origin/developing
 						</div>
 						<div role="tabpanel" class="tab-pane" id="profile">
 							@include('app_view.shared.showquotes',['quotes'=>$quotes])

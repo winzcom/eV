@@ -73,16 +73,23 @@ class GuestController extends Controller
 
             if(!empty($users)){
 
-                    $customer = Customer::updateOrCreate([
+                    $id = null; $customer = null;
+                    if(Auth::guard('client')->check()){
+                        $id = Auth::guard('client')->id();
+                    }
+                    else{
+
+                        $customer = Customer::firstOrCreate([
                                         'first_name'=>$client['first_name'],
                                         'last_name'=>$client['last_name'],
                                         'email'=>$client['email'],
                                         'password'=>bcrypt($client['password'])
                                     ]);
 
+                    }
                     $request = QuotesRequest::create([
                         'category_id'=>$category['category'],
-                        'client_id'=>$customer->id,
+                        'client_id'=>$id !== null ? $id:$customer->id,
                         'state'=>$state,
                         'vicinity_id'=>$vicinity,
                         'request'=>json_encode($request)

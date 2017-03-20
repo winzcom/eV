@@ -28,7 +28,7 @@ if(count($all_requests) > 0){
                     data-client-id = '$request->client_id' data-uid = '$vendor_id'
                     
                 >
-                    Dismiss
+                    Ignore
                     
                 </button>
                 <br><br>";
