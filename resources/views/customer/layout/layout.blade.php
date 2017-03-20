@@ -18,7 +18,7 @@
 	<link rel="stylesheet" href="{{asset('style.css')}}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
 	<script src="{{asset('js/vendor/modernizr-2.8.3-respond-1.4.2.min.js')}}"></script>
-	
+	@yield('style')
 </head>
 <body>
 
@@ -237,7 +237,7 @@
 <script src="{{asset('owl-carousel/owl.carousel.min.js')}}"></script>
 <script src="{{asset('js/jflickrfeed.js')}}"></script>
 <script src="{{asset('js/tweecool.js')}}"></script>
-<script src="js/chart.js"></script>
+<script src="{{asset('js/chart.js')}}"></script>
 <script src="{{asset('js/totop.js')}}"></script>
 <script src="{{asset('js/sm-scroll.js')}}"></script>
 <script src="{{asset('js/smooth-scroll.js')}}"></script>
@@ -247,8 +247,10 @@
 <script src="{{asset('js/validate.js')}}"></script>
 <script src="{{asset('js/tempo.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>	
-<script src="{{asset('jss/custom/profile.js')}}"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
+<script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
+<script src="{{asset('jss/custom/customer.js')}}"></script>
+	
 	
 @yield('script')
 </body>

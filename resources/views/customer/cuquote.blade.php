@@ -1,5 +1,17 @@
 @extends('customer.layout.layout')
 
+@section('style')
+
+<style>
+
+.details{
+    max-height:450px;
+    overflow-y:scroll;
+}
+
+</style>
+@endsection
+
 @section('content')
 
 <!-- page title style6 START -->
@@ -8,8 +20,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-                
-					<h1 class="strong text-uppercase">quotes For {{$quotes->pluck('cat_name')->first()}}</h1>
+					<h1 class="strong text-uppercase">quotes For {{$quotes->first()->pluck('cat_name')->first()}}</h1>
 				</div>
 			</div>
 		</div>
@@ -17,7 +28,7 @@
 	<a href="#content" class="arrow bounce" title="Scroll Down"><i class="fa fa-angle-down"></i></a>
 </section>
 <!-- page title style6 END -->
-@include('app_view.requestForm.show_quote',['request'=>$quotes->pluck('qrequest')->first()])
+@include('app_view.requestForm.show_quote',['request'=>$quotes->first()->pluck('qrequest')->first()])
 @include('app_view.shared.showdetails')
 
 <!-- page content START -->
@@ -35,6 +46,7 @@
 
                     <div class="row">
             
+
                         @foreach($quotes as $quote)
                         
                             <div class="col-sm-6">
@@ -44,24 +56,38 @@
                                     <div class="caption">
                                         <div class="well">
                                             @php 
+
+                                             $review = json_encode($quote->pluck('review')->all());
+                                             $reply = json_encode($quote->pluck('reply')->all());
+                                             $reviewers_name = json_encode($quote->pluck('reviewers_name')->all());
+                                             $description = $quote->first()->description;
+                                             $rating = json_encode($quote->pluck('rating')->all());
+                                             dd($rating);
                                               $formatter = new \NumberFormatter('en_GB',  NumberFormatter::CURRENCY);
                                               $formatter->setSymbol(NumberFormatter::CURRENCY_SYMBOL,'');
                                               $down_payment = null; 
-                                              if($quote->down_payment != 0 && $quote->down_payment !== 100){
-                                                  $down_payment = ((int)$quote->down_payment*(int)$quote->cost)/100;
+                                              if($quote->first()->down_payment != 0 && $quote->first()->down_payment !== 100){
+                                                  $down_payment = ((int)$quote->first()->down_payment*(int)$quote->first()->cost)/100;
                                               } 
                                               
                                             @endphp
-                                            <h4>quote from {{$quote->name}}</h4>
+                                            <h4>quote from {{$quote->first()->name}}</h4>
                                         </div>
-                                        <h3>&#8358 {{$formatter->formatCurrency($quote->cost,'EUR')}} </h3>
+                                        <h3>&#8358 {{$formatter->formatCurrency($quote->first()->cost,'EUR')}} </h3>
                                         <h5>@if($down_payment !== null) DownPayment: &#8358 {{$formatter->formatCurrency($down_payment,'EUR')}}@endif</h5>
-                                        <p>{{$quote->message}}</p>
-                                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#show_details" title="Thumbnail link">Book</button>
-                                        <a href="{{url('/detail')}}/{{$quote->name_slug}}" class="btn btn-primary btn-sm ">
+                                        <p>{{$quote->first()->message}}</p>
+                                        <button class="btn btn-primary btn-sm" data-toggle="modal" 
+                                             data-target="#show_details" title="Thumbnail link"
+                                             data-review = "{{$review}}" data-reply="{{$reply}}",
+                                             data-reviewer = "{{$reviewers_name}}"
+                                             data-description = "{{$description}}",
+                                             data-company-name = "{{$quote->first()->name}}"
+                                             data-rating = "{{$rating}}"
+                                        >
                                             Details
-                                        </a>
-                                        <div class="rating" data-rating="{{$quote->avg}}"></div> <span class="reviews-link">({{number_format($quote->avg,1)}} From {{$quote->count}} reviews)</span>
+                                        </button>
+
+                                        <div class="rating" data-rating="{{$quote->first()->avg}}"></div> <span class="reviews-link">({{number_format($quote->first()->avg,1)}} From {{$quote->first()->count}} reviews)</span>
                                     </div>
                                 </div>
                             </div>
@@ -81,21 +107,6 @@
 
 @section('script')
 <script>
-$(document).ready(function(){
 
-    $('.rating').each(function(i,e){
-
-        var self = $(this);
-        var rating = self.data('rating');
-
-        if(rating !=''){
-            self.rateYo({
-                rating:rating,
-                readOnly:false,
-                starWidth:'20px'
-            })
-        }
-    })
-})
 </script>
 @endsection

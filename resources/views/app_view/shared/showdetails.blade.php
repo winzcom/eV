@@ -3,26 +3,26 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Details</h4>
+        <h4 class="modal-title" id="title">Details</h4>
       </div>
       <div class="modal-body">
         <!-- tabs header START -->
 					
 					<ul class="nav nav-tabs" role="tablist">
-						<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Reviews</a></li>
+						<li role="presentation" class="active"><a href="#review" aria-controls="home" role="tab" data-toggle="tab">Reviews</a></li>
 						<li role="presentation"><a href="#description" aria-controls="profile" role="tab" data-toggle="tab">Description</a></li>
 						<li role="presentation"><a href="#gallery" aria-controls="messages" role="tab" data-toggle="tab">Gallery</a></li>
 					</ul>
 					
 					<!-- Tab panes -->
 					<div class="tab-content">
-						<div role="tabpanel" class="tab-pane active" id="home">
+						<div role="tabpanel" class="tab-pane active details" id="review">
 							
 						</div>
-						<div role="tabpanel" class="tab-pane" id="description">
+						<div role="tabpanel" class="tab-pane details" id="description">
 							
 						</div>
-						<div role="tabpanel" class="tab-pane" id="gallery">
+						<div role="tabpanel" class="tab-pane details" id="gallery">
 							
 						</div>
 					</div>

@@ -16,6 +16,8 @@ use Carbon\Carbon;
 use App\TreeNode\CategoryTree;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Storage; 
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 
 class Service{
@@ -94,5 +96,13 @@ class Service{
         return Vicinity::OrderBy('name')->get();
     }
 
-   
+    public static function paginate($data,$per_page){
+
+        $current_page = LengthAwarePaginator::resolveCurrentPage();
+        $sliced_data = $data->slice(($current_page-1)*$per_page,$per_page);
+        $paginator = new LengthAwarePaginator($sliced_data,count($data),$per_page,$current_page);
+        return $paginator;
+       
+    }
+
 }

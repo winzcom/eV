@@ -4,7 +4,7 @@
 
 @include('app_view.requestForm.replyrequest')
 <!-- page title style6 START -->
-@include('vendor.header.header',['title'=>'Home'])
+@include('vendor.header.header',['title'=>'Home '.Auth::user()->name])
 <!-- page title style6 END -->
 
 <!-- page content START -->

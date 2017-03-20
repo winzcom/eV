@@ -22,7 +22,7 @@ use App\Entities\Gallery;
 use App\Entities\Review;
 use App\Entities\Category;
 use App\Entities\OffDays;
-use App\Events\NewQuoteSentEvent;
+use App\Events\NewQuoteSent;
 
 class UserController extends Controller
 {
