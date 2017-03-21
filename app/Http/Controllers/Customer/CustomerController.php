@@ -86,14 +86,14 @@ class CustomerController extends Controller
                 ->join('companies','companies.id','=','quotes.uid')
                 ->join('users','users.id','=','quotes.client_id')
                 ->leftJoin('reviews','reviews.review_for','=','companies.id')
+                ->leftJoin('galleries','galleries.user_id','=','quotes.uid')
                 ->select('quotes.*','quotes_request.request as qrequest','categories.name as cat_name',
-                        'reviews.review','reviews.reply','reviewers_name','rating',
+                        'reviews.review','reviews.reply','reviewers_name','rating','image_name',
                          'companies.*',(DB::raw("(select avg(r.rating) from reviews r where r.review_for = companies.id) as avg")),
                          (DB::raw("(select count(r.rating) from reviews r where r.review_for = companies.id) as count")
                          )
                 )
                 ->where(['quotes.client_id'=>$this->auth->id(),'quotes.rid'=>$request_id])->get();
-            
                  return Service::paginate($d->groupBy('id'),10);
     }
 

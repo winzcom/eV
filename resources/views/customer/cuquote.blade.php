@@ -57,12 +57,12 @@
                                         <div class="well">
                                             @php 
 
-                                             $review = json_encode($quote->pluck('review')->all());
-                                             $reply = json_encode($quote->pluck('reply')->all());
-                                             $reviewers_name = json_encode($quote->pluck('reviewers_name')->all());
+                                             $review = json_encode($quote->pluck('review')->unique()->all());
+                                             $reply = json_encode($quote->pluck('reply')->unique()->all());
+                                             $reviewers_name = json_encode($quote->pluck('reviewers_name')->unique()->all());
                                              $description = $quote->first()->description;
                                              $rating = json_encode($quote->pluck('rating')->all());
-                                    
+                                             $gallery_names = json_encode($quote->pluck('image_name')->unique()->all());
                                               $formatter = new \NumberFormatter('en_GB',  NumberFormatter::CURRENCY);
                                               $formatter->setSymbol(NumberFormatter::CURRENCY_SYMBOL,'');
                                               $down_payment = null; 
@@ -82,7 +82,8 @@
                                              data-reviewer = "{{$reviewers_name}}"
                                              data-description = "{{$description}}",
                                              data-company-name = "{{$quote->first()->name}}"
-                                             data-rating = "{{$rating}}"
+                                             data-rating = "{{$rating}}",
+                                             data-gallery = "{{$gallery_names}}"
                                         >
                                             Details
                                         </button>

@@ -10,7 +10,11 @@ $(document).ready(function(){
        var description = button.data('description');
        var company_name = button.data('companyName');
        var rating = button.data('rating');
-       console.log(rating);
+       var gallery = button.data('gallery');
+
+       console.log(gallery);
+       //console.log(rating);
+
        var title = $('#title');
 
        title.text('Details for '+company_name);
@@ -23,6 +27,7 @@ $(document).ready(function(){
        }
 
        showDescription(description);
+       showGallery(gallery);
    })
 
    $('#show_details').on('hidden.bs.modal',function(event){
@@ -31,6 +36,8 @@ $(document).ready(function(){
         reviewDiv.innerHTML = '';
         var reviewDiv = document.getElementById('description');
         reviewDiv.innerHTML = '';
+        var galleryDiv = document.getElementById('gallery');
+        galleryDiv.innerHTML = '';
 
    })
 
@@ -87,5 +94,37 @@ $(document).ready(function(){
         reviewDiv.insertAdjacentHTML('afterbegin',desc)
     }
 
+    function showGallery(gallery_names){
+
+        /*var productImagesDiv = $('div');
+        productImagesDiv.attr('class','product-images');
+        var productGallery = $('div');
+        productGallery.attr('class','product-gallery');
+
+        productImagesDiv.append(productGallery);
+
+        var galleryDiv = $('#gallery');        
+        
+        $.each(gallery_names,function(key,value){
+
+            var krSky = $('div');
+            krSky.attr('class','kr-sky');
+
+            var img = $('img');
+            img.attr({
+                'class':'sky-background',
+                'src':"{!! asset('storage/images')!!}/"+value
+            })
+
+            krSky.append(img);
+
+            //productGallery.append(krSky);
+        });
+
+        console.log(productImagesDiv);
+        //galleryDiv.html(productImagesDiv);
+      
+				*/				
+    }
 
 })
