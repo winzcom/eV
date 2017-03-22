@@ -9,7 +9,9 @@
 
 <!-- page content START -->
 <div class="content" id="content">
-
+	@if(!is_null(session('message')))
+		<div id = "profile_update_message"></div>
+	@endif
 	<!-- section START -->
 		<section class="section half-section-right">
 			
@@ -82,6 +84,10 @@
 		$("#request_accordion").accordion({
 			collapsible:true
 		})
+
+		var s_message  = $('#profile_update_message');
+		if(s_message.length > 0)
+			alertify.success('Profile Updated');
 	})
 	
 

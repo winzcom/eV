@@ -105,4 +105,28 @@ class Service{
        
     }
 
+    public static function currencyFormatter(){
+
+        $formatter = new \NumberFormatter('en_GB',  \NumberFormatter::CURRENCY);
+        $formatter->setSymbol(\NumberFormatter::CURRENCY_SYMBOL,'');
+
+        return $formatter;
+    }
+
+    public function showPopOverReviews($review,$reviewers_name,$reply,$rating){
+
+        $template = "<div class='well'>";
+
+        foreach($review as $key=>$item){
+            
+            $template .= "<h4>".$reviewers_name[$key]."<div class='rate' data-rating=".$rating[$key]."></div></h4>";
+            $template .= '<p>'.$item.'</p>';
+            if(array_key_exists($key,$reply)){
+                $template .= "<div class='well'><p>Supplier's Reply</p>".$reply[$key].'</div>';
+            }
+        }
+        $template .= '</div>';
+        echo $template;
+    }
+
 }

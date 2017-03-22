@@ -14,6 +14,7 @@ class ProfileComposer
      * @var UserRepository
      */
     protected $uc;
+    protected $formatter;
 
     /**
      * Create a new profile composer.
@@ -25,6 +26,7 @@ class ProfileComposer
     {
         // Dependencies automatically resolved by service container...
         $this->uc = $uc;
+        
     }
 
     /**
@@ -42,6 +44,7 @@ class ProfileComposer
                      /*'unreplied_request'=>$this->uc->getRequestNotYetAnswered(),
                      'replied_request'=>$this->uc->getAnsweredRequests()*/
     }
+
 }
 
 ?>

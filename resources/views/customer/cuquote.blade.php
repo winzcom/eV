@@ -9,11 +9,22 @@
     overflow-y:scroll;
 }
 
+.pop_over_img{
+   width:250px;
+    height:auto;
+}
+
+.popover{
+    max-width:500px;
+    max-height:300px;
+    overflow-y:scroll;
+}
+
 </style>
 @endsection
 
 @section('content')
-
+@include('app_view.shared.showdetails')
 <!-- page title style6 START -->
 <section class="page-title style2 " data-path="{{asset('img/headers/header4.jpg')}}">
 	<div class="middle-align">
@@ -29,7 +40,7 @@
 </section>
 <!-- page title style6 END -->
 @include('app_view.requestForm.show_quote',['request'=>$quotes->first()->pluck('qrequest')->first()])
-@include('app_view.shared.showdetails')
+
 
 <!-- page content START -->
 <div class="content" id="content">
@@ -40,14 +51,14 @@
                 @if(isset($quotes))
                 
                     <button class='btn btn-success btn-xs request' id='reply' data-toggle='modal'
-                         data-target='#show_quote'>
+                         data-target='#show_quote' data-ph = "{{$amazon_path}}">
                         Show Request
                     </button><br><hr>
 
                     <div class="row">
             
 
-                        @foreach($quotes as $quote)
+                       @foreach($quotes as $quote)
                         
                             <div class="col-sm-6">
                                 <div class="thumbnail style1">
@@ -57,14 +68,16 @@
                                         <div class="well">
                                             @php 
 
-                                             $review = json_encode($quote->pluck('review')->unique()->all());
-                                             $reply = json_encode($quote->pluck('reply')->unique()->all());
-                                             $reviewers_name = json_encode($quote->pluck('reviewers_name')->unique()->all());
+                                             $review = ($quote->pluck('review')->unique()->all());
+                                             $reply = ($quote->pluck('reply')->unique()->all());
+                                             $reviewers_name = ($quote->pluck('reviewers_name')->unique()->all());
                                              $description = $quote->first()->description;
-                                             $rating = json_encode($quote->pluck('rating')->all());
-                                             $gallery_names = json_encode($quote->pluck('image_name')->unique()->all());
+                                             $rating = $quote->pluck('rating')->all();
+                                             $gallery_names = $quote->pluck('image_name')->unique()->all();
+                                             //dd($quote->pluck('image_name')->unique()->all());
                                               $formatter = new \NumberFormatter('en_GB',  NumberFormatter::CURRENCY);
                                               $formatter->setSymbol(NumberFormatter::CURRENCY_SYMBOL,'');
+                                             
                                               $down_payment = null; 
                                               if($quote->first()->down_payment != 0 && $quote->first()->down_payment !== 100){
                                                   $down_payment = ((int)$quote->first()->down_payment*(int)$quote->first()->cost)/100;
@@ -76,14 +89,21 @@
                                         <h3>&#8358 {{$formatter->formatCurrency($quote->first()->cost,'EUR')}} </h3>
                                         <h5>@if($down_payment !== null) DownPayment: &#8358 {{$formatter->formatCurrency($down_payment,'EUR')}}@endif</h5>
                                         <p>{{$quote->first()->message}}</p>
-                                        <button class="btn btn-primary btn-sm" data-toggle="modal" 
-                                             data-target="#show_details" title="Thumbnail link"
-                                             data-review = "{{$review}}" data-reply="{{$reply}}",
-                                             data-reviewer = "{{$reviewers_name}}"
-                                             data-description = "{{$description}}",
-                                             data-company-name = "{{$quote->first()->name}}"
-                                             data-rating = "{{$rating}}",
-                                             data-gallery = "{{$gallery_names}}"
+                                        <!--<button class="btn btn-primary btn-sm" data-toggle="modal" 
+                                             
+                                        >
+                                            Details
+                                        </button>-->
+                                       @inject('service','App\Service\Service')
+                                        <button class="pop_over_details btn btn-primary btn-sm" data-description = "{{$description}}" 
+                                            title='<img src="{{$amazon_path}}/{{collect($gallery_names)->take(1)->first()}}" class="pop_over_img"/>' 
+                                            data-content="<div><h4>Description</h4>
+                                                                {{$description}}
+                                                                <h4>Reviews</h4>
+                                                               {{$service->showPopOverReviews(array_slice($review,0,3),$reviewers_name,$reply,$rating)}}
+                                                            </div>"
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            
                                         >
                                             Details
                                         </button>

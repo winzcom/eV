@@ -58,8 +58,8 @@
 					
 					<ul class="nav nav-tabs" role="tablist">
 						<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Reviews</a></li>
-						<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Quotes</a></li>
-						<li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Requests</a></li>
+						<!--<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Quotes</a></li>-->
+						<li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Requests/Quotes</a></li>
 					</ul>
 					
 					<!-- Tab panes -->
@@ -67,9 +67,7 @@
 						<div role="tabpanel" class="tab-pane active" id="home">
 							@include('app_view.shared.display_review',['reviews'=>$reviews,'company_id'=>'cuhome'])
 						</div>
-						<div role="tabpanel" class="tab-pane" id="profile">
-							@include('app_view.shared.showquotes',['quotes'=>$quotes])
-						</div>
+			
 						<div role="tabpanel" class="tab-pane" id="messages">
 							@include('app_view.shared.showfewrequestforclient',['all_requests'=>$requests])
 						</div>

@@ -23,6 +23,7 @@ use App\Entities\Review;
 use App\Entities\Category;
 use App\Entities\OffDays;
 use App\Events\NewQuoteSent;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -46,11 +47,10 @@ class UserController extends Controller
         
         $user =  User::with([
                  'galleries',
-                 'categories',
-                 'offdays'
+                 'categories'
         ]) ->find(Auth::id());
 
-
+        
         return view('vendor.home')->with([
                 'user'=>$user,'path'=>$this->path,
                 'reviews'=>$this->getFiveReviews(),

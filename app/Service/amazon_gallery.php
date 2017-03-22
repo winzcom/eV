@@ -28,7 +28,7 @@ class AmazonGallery implements GalleryInterface{
 
                 try{
                     
-                    if($file->storeAs('evegal/'.$names[$key][0],'s3')){
+                    if($file->storeAs($names[$key][0],'s3')){
                         Gallery::create(['image_name'=>$names[$key][0],'user_id'=>Auth::id(),'caption'=>htmlentities($captions[$i])]);
 
                     }
@@ -49,17 +49,20 @@ class AmazonGallery implements GalleryInterface{
 
         $list  = array();
         if(is_array($paths)){
-            foreach($paths as $path){
-                File::delete(public_path().'/storage/images/'.$path);
-               
-            }  
+            /*foreach($paths as $path){
+                //File::delete(public_path().'/storage/images/'.$path);
+                Storage::delete('public/images'.$path);
+                
+            }*/
+            Storage::delete($paths);  
            // $prefixed_array = preg_filter('/^/', $name_slug, $paths);
             //array_walk($paths, function(&$item) use ($name_slug){ $item *= $name_slug; });
              Gallery::whereIn('image_name',$paths)->where('user_id',Auth::id())->delete();
             return ;
         }
         else{
-                File::delete(public_path().'/storage/images/'.$paths);
+                //File::delete(public_path().'/storage/images/'.$paths);
+                Storage::delete('public/images'.$paths);
                 return;
         }
         

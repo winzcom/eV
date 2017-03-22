@@ -1,25 +1,23 @@
+ <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
 @if(isset($requests))
     @if(count($requests) > 0)
-    <div class="">
+   
         @foreach($requests as $key=>$request)
-            <div class="">
-                <div class="" role="tab" id="heading{{$key}}">
-                    <h4 class="">
-                        <a class="" data-toggle="collapse" data-parent="#accordion" 
-                            href="#collapse{{$key}}" aria-expanded="false" 
-                            aria-controls="collapse{{$key}}">
-                                Request For {{$request->cat_name}} ({{$request->replies}} reply(s) )
-                        </a>
+            <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading{{$key}}">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{$key}}" aria-expanded="true" aria-controls="collapse{{$key}}">
+                             Request For {{$request->cat_name}} ({{$request->replies}} reply(s) )
+                            </a>
                         
-                    </h4><!-- panel-title-->
-                        
-                </div><!-- panel-heading -->
-                <div id="collapse{{$key}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$key}}">
+                        </h4><!-- panel-title-->
+                    </div><!-- panel-heading -->
+                <div id="collapse{{$key}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{$key}}">
                     <div class="panel-body">
                         @php 
                             $obj = json_decode($request->request);
                             if($request->rid !== null){
-                                echo "<a href = 'cuquote/$request->id' class='cbp-singlePage' ><button class='btn btn-success btn-xs request ' id='reply'>
+                                echo "<a href = 'cuquote/$request->id' ><button class='btn btn-success btn-xs request ' id='reply'>
                                             Show Quotes
                                         </button></a><br><br>";
                                     
@@ -50,7 +48,6 @@
             </div><!-- panel panel-default-->
                 
         @endforeach
-        </div>
     @endif
 @elseif(isset($request))
 
@@ -81,3 +78,4 @@
     @endphp
 
 @endif
+</div>

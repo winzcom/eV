@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 use App\Service\Service;
 use App\Entities\Category;
@@ -16,10 +17,14 @@ class CustomerController extends Controller
     //
 
     private $auth;
+    private $amazon_path;
+    
 
     public function __construct(){
 
         $this->auth = Auth::guard('client');
+        //$this->amazon_path = Storage::url('public/images');
+        $this->amazon_path = asset('storage/images');
     }
 
     public function home(){
@@ -28,7 +33,8 @@ class CustomerController extends Controller
             'requests'=>$this->getRequests(),
             'quotes'=>$this->getClientQuotes(),
             'cats'=>Category::all(),
-            'reviews'=>$this->getReviews()
+            'reviews'=>$this->getReviews(),
+            'formatter'=>Service::currencyFormatter()
         ]);
     }
 
@@ -94,6 +100,7 @@ class CustomerController extends Controller
                          )
                 )
                 ->where(['quotes.client_id'=>$this->auth->id(),'quotes.rid'=>$request_id])->get();
+                //dd(json_encode($d->groupBy('id')[13]->unique()->pluck('image_name')->all()));
                  return Service::paginate($d->groupBy('id'),10);
     }
 
@@ -103,8 +110,7 @@ class CustomerController extends Controller
 
     public function showQuotes($request_id = null){
         $d = $this->getQuotes($request_id);
-        return view('customer.cuquote')->with('quotes',$d);
+        return view('customer.cuquote')->with(['quotes'=>$d,'amazon_path'=>$this->amazon_path]);
     }
-
     
 }

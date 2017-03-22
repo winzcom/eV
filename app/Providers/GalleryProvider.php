@@ -29,7 +29,7 @@ class GalleryProvider extends ServiceProvider
     {
         $this->app->bind(
             GI::class,function($app){
-                return new LocalGallery();
+                return new AmazonGallery();
             }
         );
     }

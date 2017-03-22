@@ -22,8 +22,11 @@
 						<div role="tabpanel" class="tab-pane details" id="description">
 							
 						</div>
-						<div role="tabpanel" class="tab-pane details" id="gallery">
+						<div role="tabpanel" class="tab-pane " id="gallery">
 							
+							  <div class="slickslider" id="slick_slider" >
+                </div><!--product-gallery-->
+
 						</div>
 					</div>
      </div>
