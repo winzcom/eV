@@ -129,4 +129,18 @@ class Service{
         echo $template;
     }
 
+    public function showPopOverImages($galleries,$path){
+
+        $title = "<div class='slick'>";
+
+        foreach($galleries as $gallery){
+            $title .= "<img ";
+            $title .= "src='";
+            $title .= $path."/".$gallery."'";
+            $title .= "/>";
+        }
+        $title .="</div>";
+        echo $title;
+    }
+
 }

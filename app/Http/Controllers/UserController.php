@@ -39,7 +39,7 @@ class UserController extends Controller
         $this->gallery_implementation = $gallery_implementation;
          $this->path = asset('storage/images/');
         
-
+         config(['filesystems.default'=>'local']);
     }
 
     public function home(){
@@ -71,9 +71,11 @@ class UserController extends Controller
 
     public function updateProfile(RegisterFormRequest $request){
         
-       
-        $filtered = $request->except(['password_confirm','category','_token']);
+        $file = $request->file('company_image');
+        
+        $filtered = $request->except(['password_confirm','category','_token','company_image']);
         $filtered['password'] = bcrypt($filtered['password']);
+        $filtered['company_image'] = Auth::user()->name.$file->getClientOriginalName();
         $name_slug =  ['name_slug'=>str_slug($filtered['name'])];
         $filtered['vicinity_id'] = (int)$request->vicinity_id !== 0 ? (int)$request->vicinity_id:0 ;
         $filtered = array_merge($filtered,$name_slug);
@@ -83,9 +85,10 @@ class UserController extends Controller
          
           $user = User::where('id',Auth::id())->first();
           $user->update($filtered);
+          $file->storeAs('public/images',$filtered['company_image']);
           $user->categories()->sync($request->category);
           return redirect('home')->with('message','Profile Updated');
-                
+           dd('');     
       } 
 
       catch(Exception $e){
@@ -120,8 +123,10 @@ class UserController extends Controller
             $query->update(['publish'=>0]);
     }
 
+
     public function uploadPhotos(Request $request){
       
+        
         $this->validate($request,[
             'photo.*'=>'mimes:jpeg,bmp,png,jfif,gif',
             'size'=>'5000'

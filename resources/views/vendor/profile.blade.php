@@ -1,9 +1,50 @@
 @extends('vendor.layout.layout')
 
+
+@section('style')
+
+<style type="text/css">
+#image-preview {
+  width: 400px;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+  color: #ecf0f1;
+}
+#image-preview input {
+  line-height: 200px;
+  font-size: 200px;
+  position: absolute;
+  opacity: 0;
+  z-index: 10;
+}
+#image-preview label {
+  position: absolute;
+  z-index: 5;
+  opacity: 0.8;
+  cursor: pointer;
+  background-color: #bdc3c7;
+  width: 200px;
+  height: 50px;
+  font-size: 20px;
+  line-height: 50px;
+  text-transform: uppercase;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  text-align: center;
+}
+</style>
+
+@endsection
+
 @section('content')
     <!-- page title style6 START -->
 <!-- page title style6 START -->
-@include('vendor.header.header',['title'=>'Profile'])
+@include('vendor.header.header',['title'=>'Profile '.Auth::user()->name])
 <!-- page title style6 END -->
 
 <!-- page title style6 END -->
@@ -16,7 +57,7 @@
                                 
                             </div>
                             <div class="content">
-                                {{Form::model($user,['url'=>"profile/edit"])}}
+                                {{Form::model($user,['url'=>"profile/edit",'enctype'=>"multipart/form-data"])}}
                         {{ csrf_field() }}
                         <div id="accordion">
                             @foreach($formInputs as $key=>$val)
@@ -33,7 +74,7 @@
                                             </div>
                                         @elseif($input == 'category')
                                         
-                                            <select  multiple ="true" class="form-control chzn-select" id="combobox" name="category[]"  required>
+                                            <select  multiple ="true" class="form-control chzn-select" id="combobox" name="category[]" >
                                                     <option>...</option>
                                                     @php 
                                                      $categories->display($user->categories()->pluck('categories.id')->all());
@@ -73,6 +114,12 @@
                                         <div class="form-group form-group-md">
                                             {{Form::email($input,$user->email,['class'=>'form-control','required'])}}
                                         </div>
+                                    @elseif($input == 'company_image')
+                                        <div id="image-preview">
+                                            <label for="image-upload" id="image-label">Choose File</label>
+                                            <input type="file" name="company_image" id="image-upload" />
+                                        </div>
+                                        
                                     @else
                                         <div class="form-group form-group-md">
                                             {{Form::text($input,$user->$input,['class'=>'form-control'])}}
@@ -99,12 +146,18 @@
                     <div class="col-md-4" style="margin-top:10px;">
                         <div class="card card-user">
                             <div class="image">
-                                <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
+                                
+                                @if($user->company_image != null)
+                                    <img src="{{asset('storage/images')}}/{{$user->company_image}}" width="500"/>
+                                @else
+                                    <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
+                                @endif
+                                
                             </div>
                             <div class="content">
                                 <div class="author">
                                      <a href="#">
-                                    <img class="avatar border-gray" src="{{asset('assets/img/faces/face-3.jpg')}}" alt="..."/>
+                                   <!-- <img class="avatar border-gray" width="200" src="" alt="..."/>-->
 
                                       <h4 class="title">{{Auth::user()->first_name}}<br />
                                          <small>{{Auth::user()->name}}</small>
@@ -130,13 +183,5 @@
 @stop
 
 @section('script')
- 
- <script type="text/javascript">
-    $(document).ready(function(){
-        alert('select')
-        $('#combobox').select2();
-    })
-    
- </script>
-
+<script src="{{asset('vendor/js/uploadpreview/uploadpreview.js')}}"></script>
 @endsection

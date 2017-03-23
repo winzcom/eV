@@ -14,6 +14,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+	<link rel="stylesheet" type="text/css" href="{{asset('vendor/css/slick.css')}}"/>
 	<!-- style.css is main stylesheet and all other sylesheets are being
 		 imported in this file. -->
 	<link rel="stylesheet" href="{{asset('style.css')}}">

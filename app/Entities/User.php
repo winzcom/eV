@@ -41,7 +41,8 @@ class User extends Authenticatable
             'category',
             'summary',
             'description',
-            'phone_no'
+            'phone_no',
+            'company_image'
         ]
     ];
 

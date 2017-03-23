@@ -15,7 +15,7 @@
 }
 
 .popover{
-    max-width:500px;
+    /*max-width:500px;*/
     max-height:300px;
     overflow-y:scroll;
 }
@@ -96,13 +96,13 @@
                                         </button>-->
                                        @inject('service','App\Service\Service')
                                         <button class="pop_over_details btn btn-primary btn-sm" data-description = "{{$description}}" 
-                                            title='<img src="{{$amazon_path}}/{{collect($gallery_names)->take(1)->first()}}" class="pop_over_img"/>' 
+                                            title="{{$service->showPopOverImages(array_slice($gallery_names,0,3),$amazon_path)}}" class="pop_over_img"
                                             data-content="<div><h4>Description</h4>
                                                                 {{$description}}
                                                                 <h4>Reviews</h4>
                                                                {{$service->showPopOverReviews(array_slice($review,0,3),$reviewers_name,$reply,$rating)}}
                                                             </div>"
-                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-toggle="popover" data-placement="buttom"
                                             
                                         >
                                             Details

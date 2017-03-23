@@ -18,6 +18,8 @@
 	<link rel="stylesheet" href="{{asset('style.css')}}">
 	<link rel="stylesheet" href="{{asset('vendor/css/jquery-ui.min.css')}}">
 
+	@yield('style')
+
 	<script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 	<script src="https://js.pusher.com/4.0/pusher.min.js"></script>

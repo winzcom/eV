@@ -37,7 +37,6 @@ class RegisterFormRequest extends FormRequest implements RequestInterface
             'house_no'=>'required',
             'street_name'=>'required',
             'state'=>'required',
-            'category'=>'required',
             'description'=>'required',
             'first_name'=>'required',
             'last_name'=>'required'

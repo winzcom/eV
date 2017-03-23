@@ -5,8 +5,7 @@ $(document).ready(function(){
     $('.pop_over_details').popover({
 
         html:true,
-        container:'body',
-        trigger:'focus'
+        container:'body'
     })  
 
     $('.pop_over_details').on('shown.bs.popover', function () {
@@ -24,6 +23,14 @@ $(document).ready(function(){
                 })
             }
         })
+
+        $('.slick').slick();
+    })
+
+    $('.pop_over_details').on('hidden.bs.popover', function () {
+       
+
+        $('.slick').slick('unslick');
     })
 
     var ph = $('#reply').data('ph');

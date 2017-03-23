@@ -73,7 +73,7 @@
 						<div class="product-images">
 							<div id="cloudslider" class="product-gallery">
 								@if($company->galleries->count() > 0)
-									@foreach($company->galleries as $gallery)
+									@foreach($company->galleries->take(3) as $gallery)
 										<div class="kr-sky" data-duration="5000">
 											<img class="sky-background" src="{{$path}}/{{$gallery->image_name}}" alt="product title">								
 										</div>
@@ -198,7 +198,7 @@
 											</div>
 										</div>
 										<div class="caption">
-											<h3><a href="{{url('/detail/')}}/{{$sim->name_slug}}" title="Single Product">{{$sim->name}}</a></h3>
+											<h3><a href="{{url('/detail/')}}/{{$sim->name_slug}}/{{$cat_id}}" title="Single Product">{{$sim->name}}</a></h3>
 											<div class="product-cat">
 												<span class="strong small text-uppercase">Categories</span>: {{$sim->categories()->pluck('name')}}
 											</div>
