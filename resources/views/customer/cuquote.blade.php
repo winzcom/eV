@@ -10,21 +10,24 @@
 }
 
 .pop_over_img{
-   width:250px;
+   width:100%;
     height:auto;
 }
 
+.slick{
+    max-width:100%;
+}
+
 .popover{
-    /*max-width:500px;*/
-    max-height:300px;
-    overflow-y:scroll;
+   padding:0px;
 }
 
 </style>
 @endsection
 
 @section('content')
-@include('app_view.shared.showdetails')
+@include('app_view.requestForm.showdetails')
+@include('app_view.requestForm.contact_vendor')
 <!-- page title style6 START -->
 <section class="page-title style2 " data-path="{{asset('img/headers/header4.jpg')}}">
 	<div class="middle-align">
@@ -71,10 +74,11 @@
                                              $review = ($quote->pluck('review')->unique()->all());
                                              $reply = ($quote->pluck('reply')->unique()->all());
                                              $reviewers_name = ($quote->pluck('reviewers_name')->unique()->all());
+
                                              $description = $quote->first()->description;
                                              $rating = $quote->pluck('rating')->all();
                                              $gallery_names = $quote->pluck('image_name')->unique()->all();
-                                             //dd($quote->pluck('image_name')->unique()->all());
+                                             
                                               $formatter = new \NumberFormatter('en_GB',  NumberFormatter::CURRENCY);
                                               $formatter->setSymbol(NumberFormatter::CURRENCY_SYMBOL,'');
                                              
@@ -97,17 +101,22 @@
                                        @inject('service','App\Service\Service')
                                         <button class="pop_over_details btn btn-primary btn-sm" data-description = "{{$description}}" 
                                             title="{{$service->showPopOverImages(array_slice($gallery_names,0,3),$amazon_path)}}" class="pop_over_img"
-                                            data-content="<div><h4>Description</h4>
-                                                                {{$description}}
-                                                                <h4>Reviews</h4>
-                                                               {{$service->showPopOverReviews(array_slice($review,0,3),$reviewers_name,$reply,$rating)}}
+                                            data-content="<div><h4>Contact</h4>
+                                                                {{$quote->first()->house_no}} {{$quote->first()->street_name}} {{$quote->first()->state}}
+                                                                <h4>Summary</h4>
+                                                               {{$service->limitWords($quote->first()->summary,50)}}
+                                                               <a href='{{url('detail')}}/{{$quote->first()->name_slug}}'>View Profile</a>
                                                             </div>"
-                                            data-toggle="popover" data-placement="buttom"
+
+                                            data-toggle="popover" data-placement="right"
                                             
                                         >
                                             Details
                                         </button>
-
+                                        <button class="btn btn-default contact_vendor" data-target="#contact_vendor" data-toggle='modal' data-vendor-id="{{$quote->first()->id}}">
+                                            Contact
+                                        </button>
+                                        
                                         <div class="rating" data-rating="{{$quote->first()->avg}}"></div> <span class="reviews-link">({{number_format($quote->first()->avg,1)}} From {{$quote->first()->count}} reviews)</span>
                                     </div>
                                 </div>
@@ -127,7 +136,5 @@
 @endsection
 
 @section('script')
-<script>
-
-</script>
+<script src="{{asset('vendor/js/scroll/scroll.js')}}"></script>
 @endsection

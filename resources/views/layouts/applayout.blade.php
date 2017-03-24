@@ -238,6 +238,7 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
+<script src="{{asset('jss/combox.js')}}"></script>
 <-- standard version -->
 
 
@@ -249,49 +250,7 @@
 
 	
 <script>
-	$(document).ready(function(){
-		
-		var url =  "{!! route('requests')!!}";
-	
-		
-		$('#myModal').modalSteps({
-			btnCancelHtml: 'Cancel',
-			btnPreviousHtml: 'Previous',
-			btnNextHtml: 'Next',
-			btnLastStepHtml: 'Complete',
-		
-			disableNextButton: false,
-			completeCallback: function(){
-				/*** Ajax Call To Submit Form **/
 
-					console.log($('#myWizard').serialize())
-					alertify.delay(0).log("Request is been sent...").maxLogItems(1);
-
-				$.ajax({
-					url:url,
-					type:"POST",
-					data:$('#myWizard').serialize(),
-					contentType:"application/x-www-form-urlencoded",
-					headers:{
-						'X-CSRF-TOKEN':Laravel.csrfToken
-					}
-				})
-				.done(function(){
-					$('#myModal').modal('hide');
-					alertify.success('Request has been Sent');
-				})
-				.fail(function(){
-					alertify.error('Request could not sent');
-				})
-
-			}
-		});
-
-	});
-
-	
-
-	
 </script>
 
 

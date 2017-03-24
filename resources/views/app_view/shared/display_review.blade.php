@@ -1,6 +1,5 @@
 
 
-
 @if(!Auth::check())
     @if(Auth::guard('client')->check())
        @php 
@@ -14,6 +13,7 @@
        @endphp
         
     @else
+       
         <a href="{{url('/culogin')}}"><button class="btn btn-default btn-sm">Login To Write a Review</button></a>
     @endif
 @endif

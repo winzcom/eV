@@ -1,7 +1,53 @@
 $(document).ready(function(){
 
 
+    var request_url =  "{!! route('requests')!!}";
+    var v_available = true;
     
+		$('#myModal').modalSteps({
+			btnCancelHtml: 'Cancel',
+			btnPreviousHtml: 'Previous',
+			btnNextHtml: 'Next',
+			btnLastStepHtml: 'Complete',
+      callbacks: {
+        '2': function(){
+
+            var category_value = $('#category').val();
+            
+            if(category_value == ''){
+              $('#myModal').modal('hide')
+              alertify.alert('Please Select a Category')
+            } 
+            checkVendorAvailability(category_value,$('#state').val(),$('#vicinity').val())
+        }
+    },
+			disableNextButton: false,
+			completeCallback: function(){
+				/*** Ajax Call To Submit Form **/
+
+					console.log($('#myWizard').serialize())
+					alertify.delay(0).log("Request is been sent...").maxLogItems(1);
+
+				$.ajax({
+					url:request_url,
+					type:"POST",
+					data:$('#myWizard').serialize(),
+					contentType:"application/x-www-form-urlencoded",
+					headers:{
+						'X-CSRF-TOKEN':Laravel.csrfToken
+					}
+				})
+				.done(function(){
+					$('#myModal').modal('hide');
+					alertify.success('Request has been Sent');
+				})
+				.fail(function(){
+					alertify.error('Request could not sent');
+				})
+
+			}
+		});/***End of Modal Step */
+
 
 
     $('#myModal').on('shown.bs.modal',function(event){
@@ -21,23 +67,22 @@ $(document).ready(function(){
       }
     
       
-      var cate = $('#category');
-      var c = $('#category option:selected').text().replace('- ','');
-
-      if(c!== '' || c !== null){
-        categoryChange(cate)
-      }
+      //var cate = $('#category');
+      //var c = $('#category option:selected').text().replace('- ','');
+    
 
       $('#venue').show();
       toggleBudgetFields(false);
-      /***Start of Category event Operation */
-      cate.change(function(){
+  })
+
+    /***Start of Category event Operation */
+       $('#category').on('change',function(){
         
         categoryChange($(this));
-      })/***End of Category event Operation */
+    })/***End of Category event Operation */
 
 
-/*** Start of event Change Event */
+    /*** Start of event Change Event */
 
     $('#event').change(function(){
       var self = $(this);
@@ -56,7 +101,6 @@ $(document).ready(function(){
          addExtraFormElement(exists,self)
        }
     })/***End of event Change Event */
-  })
 
     $('#browsevendor').change(function(){
       var cat = $(this).val();
@@ -73,6 +117,28 @@ $(document).ready(function(){
 
   /***Start of vanilla functions */
 
+
+   function checkVendorAvailability(cat_id,state,locality){
+      var data = {'state':state,'locality':locality,'category':cat_id};
+
+      alertify.log("Checking if vendors are available").maxLogItems(1);
+    
+        $.ajax({
+          url:'check_vendor_availabity',
+          type:'GET',
+          data:data,
+          success:function(data){
+            if(data.available == 0){
+              v_available = false;
+              $('#myModal').modal('hide')
+              alertify.alert('No vendor for available for the criteria')
+              alertify.log('No vendors available')
+            }
+            else alertify.log(''+data.available+' vendor(s) available')
+          }
+        })
+   }
+
     function categoryChange(self){
 
         if($('.divContainer')){
@@ -80,28 +146,37 @@ $(document).ready(function(){
         }
         var category = $('#category option:selected').text();
         category = category.replace('- ','');
-      
-        //var self = $(this);
-        var data = formElements[category];
-        if(data){
-          addAdditionalService(data,self);
-        }
-        else if(category == 'Event Planner'){
 
-        }
-        else if(category == 'Transport'){
-          addTransportInputs();
-          $('#venue').hide();
-        }
+        var state = $('#state').val()
+        var locality = $('#vicinity').val();
+        
+        
+        
+          checkVendorAvailability(self.val(),state,locality)
+        
+            var data = formElements[category];
+            if(data){
+              addAdditionalService(data,self);
+            }
+            else if(category == 'Event Planner'){
+
+            }
+            else if(category == 'Transport'){
+              addTransportInputs();
+              $('#venue').hide();
+            }
+        
     } 
     function addStateLocality(state1 = null,vicinity_id = null){
 
       var state,locality,stateInput,localityInput, inputs;
 
           if(state1 !== null && vicinity_id !== null){
+
             alert(state1 + " "+ vicinity_id);
                 state = state1; locality = vicinity_id;
                 console.log(vicinity_id+' '+state1 );
+
                 stateInput = $('<input type="hidden" name="state" value="'+state+'" ></input>');
                 localityInput = $('<input type="hidden" name="vicinity" value="'+locality+'"></input>');
                 $('#myWizard').append(stateInput);
@@ -109,22 +184,20 @@ $(document).ready(function(){
           }
           else{
 
-                //inputs = $('#start_request :input');
-                state = $('input[name="state"]').val();
-                console.log(state);
-                locality = $('input[name="vicinity"]').val();
+                   state = $('#state').val()
+                   locality = $('#vicinity').val();
 
-                      if(state == undefined || state == ''){
+                  if(state == undefined || state == ''){
                           
-                          $('#myModal').modal('hide');
-                          alertify.alert('Please select a state and locality')
+                        $('#myModal').modal('hide');
+                        alertify.alert('Please select a state and locality')
                           
                       }
                       else{
 
-                          if(locality == 'all' || locality == '')
-                              locality = 0;
-            
+                          if(vicinity_id == 'all' || vicinity_id == '')
+
+                            locality = 0;
                             stateInput = $('<input type="hidden" name="state" value="'+state+'" ></input>');
                             localityInput = $('<input type="hidden" name="vicinity" value="'+locality+'"></input>');
                             $('#myWizard').append(stateInput);

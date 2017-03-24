@@ -83,7 +83,7 @@
 
                                         @elseif($input == 'state')
                                             <select   class="form-control chzn-select" id="state" name="state" 
-                                                onchange = "changeVicinitySelect(this)"
+                                                onchange = "changeVicinitySelect(this,'changed')"
                                                 
                                                 required>
                                                 <option></option>
@@ -180,8 +180,13 @@
                 </div>
             </div>
         </div>
-@stop
+@endsection
 
 @section('script')
 <script src="{{asset('vendor/js/uploadpreview/uploadpreview.js')}}"></script>
+<script src="{{asset('jss/combox.js')}}"></script>
+<script src="{{asset('jss/custom/profilepage.js')}}"></script>
+<script>
+
+</script>
 @endsection

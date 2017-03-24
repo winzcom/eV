@@ -140,7 +140,7 @@
 						<div class="resp-tabs-container hor_1">
 							<div>
 								<h3>{{$company->summary}}</h3>
-								{{$company->description}}
+									{{$company->description}}
 							</div>
 							<div id="reviews">
 								@include('app_view.shared.display_review',['reviews'=>$company->reviews,'company_id'=>$company->id])

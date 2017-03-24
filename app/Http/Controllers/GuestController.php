@@ -50,6 +50,12 @@ class GuestController extends Controller
         return back();
     }
 
+    private function getUserWithCategoryQuery($category,$state,$vicinity){
+
+        return User::whereHas('categories',function($q) use ($category){
+                    $q->where('categories.id',$category['category']);
+                })->StateVicinity($state,$vicinity);
+    }
 
     public function quotesRequest(Request $request){
 
@@ -67,9 +73,7 @@ class GuestController extends Controller
         
         DB::transaction(function() use ($request,$client,$category,$state,$vicinity){
 
-            $users = User::whereHas('categories',function($q) use ($category){
-                    $q->where('categories.id',$category['category']);
-                })->StateVicinity($state,$vicinity)->get();
+            $users = $this->getUserWithCategoryQuery($category,$state,$vicinity)->get();
 
             if(!empty($users)){
 
@@ -117,6 +121,17 @@ class GuestController extends Controller
             
       });
     
+    }
+
+    public function checkVendorAvailability(Request $request){
+
+        //dd($request->all());
+        $category = $request->only(['category']);
+        $available = $this->getUserWithCategoryQuery($category,$request->state,$request->locality)->count();
+        
+        return response()->json([
+            'available'=>$available
+        ]);
     }
 
     

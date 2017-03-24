@@ -62,6 +62,7 @@ Route::get('/detail/{company}/{id?}','DetailsController@details');
 
 Route::post('/quotes_request','GuestController@quotesRequest')->name('requests');
 
+Route::get('/check_vendor_availabity','GuestController@checkVendorAvailability');
 
 Route::post('/write_review','GuestController@writeReview');
 

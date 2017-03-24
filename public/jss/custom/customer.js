@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-
+    
 
     $('.pop_over_details').popover({
 
@@ -9,8 +9,9 @@ $(document).ready(function(){
     })  
 
     $('.pop_over_details').on('shown.bs.popover', function () {
-       
-        $('.rate').each(function(i,e){
+        
+
+        /*$('.rate').each(function(i,e){
             
             var self = $(this);
             var rating = self.data('rating');
@@ -22,15 +23,47 @@ $(document).ready(function(){
                     starWidth:'20px'
                 })
             }
-        })
+        })*/
 
         $('.slick').slick();
     })
 
+    $('#contact_vendor').on('show.bs.modal',function(event){
+
+           var button =  $(event.relatedTarget);
+           var vendor_id = button.data('vendorId');
+
+           $('#vendor_id').val(vendor_id);
+    })
+
+    $('#send_vendor_message').click(function(){
+        
+       $(this).prop('disabled',true);
+       $('.contact_vendor').prop('disabled',true);
+
+       var data = {};
+       data.message = $('#message_to_vendor').val();
+       data.vendor_id = $('#vendor_id').val();
+
+       $.ajax({
+           url:'contact_vendor',
+           data:data,
+           type:'POST',
+           dataType:'json',
+           success:function(data){
+               $(this).prop('disabled',false);
+               $('.contact_vendor').prop('disabled',false);
+               alertify.success('Message Sent');
+           }
+       })
+
+    })
+
     $('.pop_over_details').on('hidden.bs.popover', function () {
        
-
-        $('.slick').slick('unslick');
+        
+        var index = $(this).index();
+        console.log(index)
     })
 
     var ph = $('#reply').data('ph');

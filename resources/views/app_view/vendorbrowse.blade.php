@@ -72,7 +72,7 @@
                                     </div>
                                     <div class="caption">
                                         <h3>{{$company->name}}</h3>
-                                        <p>{{$company->description}}</p>
+                                        <p>{{str_limit($company->description,50)}}</p>
                                         <a href="{{url('/detail/')}}/{{$company->name_slug}}/{{$category_id}}" class="btn btn-primary btn-sm" title="Thumbnail link">Read More</a>
 
                                     </div>

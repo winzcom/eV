@@ -3,12 +3,24 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="form-group">
-                    <input type="text" class="form-control input-lg" id="yourName" placeholder="State" name="state" >
+                    <select class="form-control input-lg" id="state" name="state" 
+                        required >
+                        <option></option>
+                        @foreach ($states as $state)
+                        <option value = "{{$state->state}}" data-id = "{{$state->id}}">{{$state->state}}</option>
+                        @endforeach
+                    </select>
+                    <!--<input type="text" class="form-control input-lg" id="yourName" placeholder="State" name="state" >-->
                 </div>
             </div>
             <div class="col-md-5">
                 <div class="form-group">
-                    <input type="text" class="form-control input-lg" id="yourEmail" name="vicinity" placeholder="Locality"  class="">
+                    <select class="form-control" id="vicinity" name="vicinity_id">
+                        <option></option>
+                        @foreach ($vicinities as $vicinity)
+                        <option value = "{{$vicinity->id}}"data-state-id = "{{$vicinity->state_id}}"class="vicinities form-control input-lg">{{$vicinity->name}}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <!--<div class="col-md-3">
