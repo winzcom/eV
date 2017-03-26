@@ -43,6 +43,8 @@
 	]) 
 !!};
 
+window.myUrl = "http:\/\/localhost/eventing/public\/";
+
 </script>
 
 <body data-spy="scroll" data-target=".navscroll">
