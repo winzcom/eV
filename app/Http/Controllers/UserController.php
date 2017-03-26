@@ -75,18 +75,24 @@ class UserController extends Controller
         
         $filtered = $request->except(['password_confirm','category','_token','company_image']);
         $filtered['password'] = bcrypt($filtered['password']);
-        $filtered['company_image'] = Auth::user()->name.$file->getClientOriginalName();
-        $name_slug =  ['name_slug'=>str_slug($filtered['name'])];
+        if($file !== null){
+            $filtered['company_image'] = Auth::user()->name.$file->getClientOriginalName();
+            $file->storeAs('public/images',$filtered['company_image']);
+        }
+        
+        
+        $filtered['name_slug'] = str_slug($filtered['name']);
         $filtered['vicinity_id'] = (int)$request->vicinity_id !== 0 ? (int)$request->vicinity_id:0 ;
-        $filtered = array_merge($filtered,$name_slug);
+        //$filtered = array_merge($filtered,$name_slug);
 
       try{
 
          
           $user = User::where('id',Auth::id())->first();
           $user->update($filtered);
-          $file->storeAs('public/images',$filtered['company_image']);
+          
           $user->categories()->sync($request->category);
+
           return redirect('home')->with('message','Profile Updated');
            dd('');     
       } 

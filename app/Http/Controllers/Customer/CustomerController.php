@@ -112,5 +112,9 @@ class CustomerController extends Controller
         $d = $this->getQuotes($request_id);
         return view('customer.cuquote')->with(['quotes'=>$d,'amazon_path'=>$this->amazon_path]);
     }
+
+    public function contactVendor(Request $request){
+        
+    }
     
 }

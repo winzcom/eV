@@ -1,8 +1,14 @@
 $(document).ready(function(){
 
 
-    var request_url =  "{!! route('requests')!!}";
+    var request_url = $('#myWizard').attr('action');
+    var button;
     var v_available = true;
+
+    $('#state').change(function(){
+
+        v_available = !v_available;
+    })
     
 		$('#myModal').modalSteps({
 			btnCancelHtml: 'Cancel',
@@ -17,8 +23,12 @@ $(document).ready(function(){
             if(category_value == ''){
               $('#myModal').modal('hide')
               alertify.alert('Please Select a Category')
+            }
+            else if(!v_available){
+                checkVendorAvailability(category_value,$('#state').val(),$('#vicinity').val())
+                v_available = true;
             } 
-            checkVendorAvailability(category_value,$('#state').val(),$('#vicinity').val())
+            
         }
     },
 			disableNextButton: false,
@@ -52,7 +62,7 @@ $(document).ready(function(){
 
     $('#myModal').on('shown.bs.modal',function(event){
       var modal = $(this);
-      var button  = $(event.relatedTarget);
+      button  = $(event.relatedTarget);
 
       if(button.data('state') !==  undefined && button.data('state') !== ''){
         var state = button.data('state');
@@ -118,13 +128,20 @@ $(document).ready(function(){
   /***Start of vanilla functions */
 
 
-   function checkVendorAvailability(cat_id,state,locality){
+   function checkVendorAvailability(cat_id,state = null,locality = null){
+
+     if(state == null || locality == null){
+       state = button.data('state');
+       if(button.data('vicinity') !== '' && button.data('vicinity') !== undefined) locality = button.data('vicinity');
+        else locality = 0;
+     }
       var data = {'state':state,'locality':locality,'category':cat_id};
+      
 
       alertify.log("Checking if vendors are available").maxLogItems(1);
     
         $.ajax({
-          url:'check_vendor_availabity',
+          url:myUrl+'/'+'check_vendor_availabity',
           type:'GET',
           data:data,
           success:function(data){

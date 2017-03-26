@@ -137,6 +137,7 @@ class Service{
             $title .= "<img ";
             $title .= "src='";
             $title .= $path."/".$gallery."'";
+            $title .= "style='width:100%'";
             $title .= "/>";
         }
         $title .="</div>";

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 use App\Service\Service;
 use App\Entities\Customer;
@@ -80,6 +81,7 @@ class GuestController extends Controller
                     $id = null; $customer = null;
                     if(Auth::guard('client')->check()){
                         $id = Auth::guard('client')->id();
+                        $customer = Auth::guard('client')->user();
                     }
                     else{
 
