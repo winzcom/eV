@@ -22,10 +22,10 @@ class ProfileComposer
      * @param  UserRepository  $users
      * @return void
      */
-    public function __construct(UserController $uc)
+    public function __construct()
     {
         // Dependencies automatically resolved by service container...
-        $this->uc = $uc;
+        $this->uc = new UserController();
         
     }
 

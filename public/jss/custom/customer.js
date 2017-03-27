@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    
+    var contact_button;
 
     $('.pop_over_details').popover({
 
@@ -32,7 +32,7 @@ $(document).ready(function(){
 
            var button =  $(event.relatedTarget);
            var vendor_id = button.data('vendorId');
-
+           contact_button = button;
            $('#vendor_id').val(vendor_id);
     })
 
@@ -46,13 +46,18 @@ $(document).ready(function(){
        data.vendor_id = $('#vendor_id').val();
 
        $.ajax({
-           url:'contact_vendor',
+           url:customerUrl+'contact_vendor',
            data:data,
+           headers:{
+						'X-CSRF-TOKEN':Laravel.csrfToken
+					},
            type:'POST',
            dataType:'json',
            success:function(data){
                $(this).prop('disabled',false);
+               contact_button.remove();
                $('.contact_vendor').prop('disabled',false);
+               $('#contact_vendor').modal('hide');
                alertify.success('Message Sent');
            }
        })
@@ -117,7 +122,7 @@ $(document).ready(function(){
         $('.gallery').resize();
     });*/
 
-   $('body').on('hidden.bs.modal',function(event){
+   /*$('body').on('hidden.bs.modal',function(event){
 
         var reviewDiv = document.getElementById('review');
         reviewDiv.innerHTML = '';
@@ -131,7 +136,7 @@ $(document).ready(function(){
         $(this).removeData('bs.modal');
         
         
-   })
+   })*/
 
 
    $('.rating').each(function(i,e){

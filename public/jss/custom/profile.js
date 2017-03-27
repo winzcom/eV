@@ -195,7 +195,6 @@ $(document).ready(function(){
         $.ajax({
 					url:'reply_request',
 					type:"POST",
-                    dataType:"json",
                     processData:false,
 					data:data,
 					contentType:false,
@@ -203,14 +202,19 @@ $(document).ready(function(){
 						'X-CSRF-TOKEN':$("meta[name='csrf-token']").attr("content")
 					},
                     success:function(data){
-                        $('.request').remove();
+                        //$('.request').remove();
                         $('#reply_request').modal('hide');
                         var italic = $('<i>').attr('class','fa fa-check-circle-o');
                         $('cbp-caption-defaultWrap').prepend(italic);
                         alertify.log('Reply Sent');
+                        setTimeout(function(){
+                            window.location.reload();
+                        });
+                       console.log(data);
                     },
                     error:function(err){
-                        alertify.alert('An error occured, quote could not be sent');
+                        alertify.alert('An error occured, quote could not be sent ');
+                        console.log(err)
                     }
 				})
         /**End ajax call */

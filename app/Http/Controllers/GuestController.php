@@ -111,13 +111,17 @@ class GuestController extends Controller
 
                 event(new NewRequestSentEvent($data));
 
+                return json_encode([
+                    'message'=>'Request Sent'
+                ]);
+
             }
 
             else{
 
-                return json_decode([
+                return json_encode([
 
-                    'message'=>'No Vendors Avalibale'
+                    'message'=>'No Vendors Avalible'
                 ]);
             }
             
@@ -134,6 +138,17 @@ class GuestController extends Controller
         return response()->json([
             'available'=>$available
         ]);
+    }
+
+    public function logout(){
+        if(Auth::check()){
+            Auth::logout();
+            return redirect('/login');
+        }
+        elseif(Auth::guard('client')->check()){
+            Auth::guard('client')->logout();
+            return redirect('/culogin');
+        }
     }
 
     

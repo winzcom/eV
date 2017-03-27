@@ -10,7 +10,7 @@
 				<div class="col-lg-12 text-center">
 					<section class="form-elements">
 						<p class="slide-sub-title light-color wow fadeInUp" data-wow-delay="0.5">Receive Tailored Quotes from  vendors round you with a single request.</p>
-						<h3 class="slide-title light-color wow fadeInUp" data-wow-delay="1s">eVenting</h3>
+						<h3 class="slide-title light-color wow fadeInUp" data-wow-delay="1s">e-Venting</h3>
 						@include('app_view.requestForm.stateform')
 					</section>
 					<small class="form-disclaimer light-color"><strong></strong></small>

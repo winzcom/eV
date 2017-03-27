@@ -172,9 +172,9 @@
 					<a href="{{url('/gallery')}}" title="Home page default">Gallery</a>
                 </li>
 
-				<li class="dropdown">
+				<!--<li class="dropdown">
 					<a href="{{url('')}}" title="Home page default">Offer Listing</a>
-                </li>
+                </li>-->
 					
 			</ul>
 
@@ -183,7 +183,7 @@
 					<a href="{{url('/')}}" title="Home page default">Eventing</a>
                 </li>
 				<li class="">
-					<a href="{{url('/')}}" title="Home page default">Logout</a>
+					<a href="{{url('/logout')}}" title="Home page default">Logout</a>
                 </li>
 			</ul>
 			

@@ -22,6 +22,14 @@
 	<link rel="stylesheet" href="{{asset('vendor/css/scroll.css')}}">
 	<script src="{{asset('js/vendor/modernizr-2.8.3-respond-1.4.2.min.js')}}"></script>
 	@yield('style')
+
+	<script>
+	window.Laravel = {!! json_encode([
+		'csrfToken' => csrf_token(),
+	]) 
+!!};
+	window.customerUrl = "http:\/\/localhost/eventing/public\/";
+	</script>
 </head>
 <body>
 
@@ -122,6 +130,15 @@
 					<a href="javascript:void(0);" title="Home page default">Quotes</a>
                 </li>
 					
+			</ul>
+
+			<ul class="social-links">
+				<li class="">
+					<a href="{{url('/')}}" title="Home page default">Eventing</a>
+                </li>
+				<li class="">
+					<a href="{{url('/logout')}}" title="Home page default">Logout</a>
+                </li>
 			</ul>
 			
 		</div><!-- /.nav-items -->

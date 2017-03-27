@@ -34,12 +34,14 @@ class UserController extends Controller
     private $gallery_implementation;
     private $period;
 
-    public function __construct(GalleryInterface $gallery_implementation){
+    public function __construct(){
 
-        $this->gallery_implementation = $gallery_implementation;
-         $this->path = asset('storage/images/');
+        $this->gallery_implementation = resolve(GalleryInterface::class);
+       
         
-         config(['filesystems.default'=>'local']);
+         $this->path = Storage::url('public');
+         
+         
     }
 
     public function home(){
@@ -339,7 +341,7 @@ class UserController extends Controller
         
         $id = null; $client = null;
        
-        
+       
 
         DB::transaction(function() use ($request,$id){
             $id = DB::table('quotes')->insertGetId([
@@ -351,7 +353,9 @@ class UserController extends Controller
                 'message'=>$request->message
             ]);
 
+           
              $data = $this->getRequest($request->rid);
+             
 
             $data = [
 
@@ -364,22 +368,20 @@ class UserController extends Controller
            
             event(new NewQuoteSent($data));
             
+            if(!is_null($id)){
+
+                   return response()->json([
+                        'status'=>'Quotes Sent Successfully to '.$data['request_data']->first_name.' '.$data['request_data']->last_name
+                        ]);
+                    }
+                else{
+                    return response()->json([
+                        'status'=>'Error Sending Please try again'
+                    ]);
+                }
 
         });
         
-
-        if(!is_null($id)){
-
-            $info = json_encode([
-                'status'=>'Quotes Sent Successfully to '.$client->name
-            ]);
-            return $info;
-        }
-        else{
-            return json_encode([
-                'status'=>'Error Sending Please try again'
-            ]);
-        }
     }
 
     public function dismissRequest($rid,$uid,$client_id){
@@ -392,7 +394,7 @@ class UserController extends Controller
             ]);
 
             if(!is_null($id)){
-                return json_encode([
+                return response()->json([
                 'rid'=>$rid,
                 'uid'=>$uid,
                 'client_id'=>$client_id

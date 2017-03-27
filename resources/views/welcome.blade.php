@@ -142,7 +142,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    eVenting
+                    e-Venting
                 </div>
 
                 <div class="">

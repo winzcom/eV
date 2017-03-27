@@ -11,6 +11,11 @@ use App\Interfaces\GalleryInterface;
 
 class LocalGallery implements GalleryInterface{
 
+    public function __construct(){
+
+        config(['filesystems.default'=>'local']);
+    }
+
     public function uploadPhotos(array $files,array $captions = null,$name_slug=''){
 
     

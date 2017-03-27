@@ -30,7 +30,7 @@ class NewRequestSentListener
     {
         //
         Mail::to($event->data['users_data'])
-                ->send(new SendRequest($event->data));
+                ->queue(new SendRequest($event->data));
        
     }
 }

@@ -14,7 +14,7 @@
                             }
                         } 
                     @endphp
-                    {{$key}} : {{$value}}<hr>
+                    {{$key}} : {{$value}}
                         
             @endforeach
                 

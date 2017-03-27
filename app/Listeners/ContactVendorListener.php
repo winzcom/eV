@@ -2,12 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\NewQuoteSent;
+use App\Events\ContactVendorEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Mail\SendQuote;
 
-class NewQuotesSentListener
+class ContactVendorListener
 {
     /**
      * Create the event listener.
@@ -22,13 +21,11 @@ class NewQuotesSentListener
     /**
      * Handle the event.
      *
-     * @param  NewQuoteSent  $event
+     * @param  ContactVendorEvent  $event
      * @return void
      */
-    public function handle(NewQuoteSent $event)
+    public function handle(ContactVendorEvent $event)
     {
         //
-        Mail::to($event->data['request_data'])
-                ->queue(new SendQuote($event->data));
     }
 }

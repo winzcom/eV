@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Service\Service;
 use App\Entities\Category;
 use App\Entities\Review;
+use App\Events\ContactVendorEvent;
 
 class CustomerController extends Controller
 {
@@ -114,7 +115,16 @@ class CustomerController extends Controller
     }
 
     public function contactVendor(Request $request){
-        
+
+        //Send Mail to Vendor.
+
+        $vendor = User::findorFail($request->vendor_id);
+
+        event(new ContactVendorEvent($vendor));
+
+        return response()->json([
+            
+        ]);
     }
     
 }

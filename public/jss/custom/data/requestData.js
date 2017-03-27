@@ -18,6 +18,12 @@ var CateringAdditionals = [
                             {name:'Waiting Staffs',id:'Catering Equipment',type:'checkbox',formname:'cateringadditions[]'}
 ]
 
+var publicPrivateEvents = [{name:'Public Event',type:'radio',formname:'eventtype',siblings:
+
+                          [{name:'Name of Event',formname:'eventname'},{name:'Website',formname:'eventwebsite'}]                          
+                      },
+                      {name:'Private Event',type:'radio',formname:'eventtype'}]
+
     var formElements = {
       'Caterers':{
                     'additional':CateringAdditionals
@@ -61,24 +67,12 @@ var CateringAdditionals = [
                                 }
                         ]
 
-                    }
-
+                    },
     }
 
 
 
     var eventType = {
-      'Concert':[
-                      {name:'Public Event',type:'radio',formname:'eventtype',siblings:
-
-                          [{name:'Name of Event',formname:'eventname'},{name:'Website',formname:'eventwebsite'}]                          
-                      },
-                      {name:'Private Event',type:'radio',formname:'eventtype'}
-                  ],
-      'Business Event':[
-                        {name:'Public Event',type:'checkbox',formname:'eventtype'},
-                        {name:'Private Event',type:'checkbox',
-                          siblings:
-                               [{name:'Name of Event',formname:'eventname'}]
-      }]
+      'Concert': publicPrivateEvents,
+      'Business Event':publicPrivateEvents,
     }

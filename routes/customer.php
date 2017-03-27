@@ -18,6 +18,7 @@ Route::group(['middleware'=>'auth.client:client'],function(){
 
     Route::get('/cuhome','CustomerController@home');
     Route::get('/cuquote/{request_id?}','CustomerController@showQuotes');
+    Route::post('/contact_vendor','CustomerController@contactVendor');
 });
 
 /* End of client route group */

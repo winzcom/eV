@@ -104,10 +104,11 @@ $(document).ready(function(){
     
        var exists = eventType[event] || null;
 
-       if(event == 'Wedding' && 'Event Planner'=='Event Planner'){
+       /*if((event == 'Wedding' || event == '') && 'Event Planner'=='Event Planner'){
          addThemeColorInputElements(self);
        }
-       else if(exists != null ){
+       */
+        if(exists != null ){
          addExtraFormElement(exists,self)
        }
     })/***End of event Change Event */
@@ -176,7 +177,7 @@ $(document).ready(function(){
               addAdditionalService(data,self);
             }
             else if(category == 'Event Planner'){
-
+                addThemeColorInputElements();
             }
             else if(category == 'Transport'){
               addTransportInputs();

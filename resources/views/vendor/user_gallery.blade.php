@@ -88,6 +88,8 @@ body{
                 <div class="alert alert-success">No Galleries</div>
             @else
                  <form id="delete_gallery" method="post" action="{{url('/delete_gallery')}}">
+                    {{csrf_field()}}
+                 <input type="submit" class="btn btn-default" value="Delete Selected"/>
                 <div  class="cbp cbp-l-grid-team gallery1">
                 @foreach($galleries as $gallery)
                     <div class="cbp-item graphics-design">
@@ -106,7 +108,7 @@ body{
 
                         <div class="checkbox">
                             <label class="">
-                                <div class="icheckbox_square"><input type="checkbox" value="{{$gallery->id}}" name="images[]" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                <div class="icheckbox_square"><input type="checkbox" value="{{$gallery->image_name}}" name="images[]" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
                             </label>
                         </div>
 
