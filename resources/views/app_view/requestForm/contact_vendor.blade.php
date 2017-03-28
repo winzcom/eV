@@ -14,6 +14,7 @@
               <textarea class="form-control quo" rows="5" id="message_to_vendor" name="message_to_vendor" required></textarea>
           </div>
           <input type="hidden" id="vendor_id" name="vendor_id"></input>
+          <input type="hidden" id="request_id" name="request_id"></input>
       </form>
      </div>
       <div class="modal-footer">

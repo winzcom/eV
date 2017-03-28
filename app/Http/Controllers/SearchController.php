@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
 use App\Category;
 use App\Service\Service;
 use App\Entities\User;
@@ -15,7 +17,8 @@ class SearchController extends Controller
     private $path;
 
     public function __construct(){
-        $this->path = asset('storage/images/');
+        $this->path = Storage::url('public');
+
     }
 
     public function search(Request $request){

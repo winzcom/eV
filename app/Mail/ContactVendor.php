@@ -16,9 +16,18 @@ class ContactVendor extends Mailable
      *
      * @return void
      */
-    public function __construct()
+
+     protected $vendor;
+     protected $customer;
+     protected $request;
+     
+    public function __construct($vendor,$customer,$request,$message)
     {
         //
+        $this->vendor = $vendor;
+        $this->customer = $customer;
+        $this->request = $request;
+        $this->message = $message;
     }
 
     /**
@@ -28,6 +37,11 @@ class ContactVendor extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.contact_vendor.message');
+        return $this->from($this->customer)->markdown('emails.contact_vendor.message')->with(
+            [
+                'vendor'=>$this->vendor,'customer'=>$this->customer,'request'=>$this->request,
+                'message'=>$this->message
+            ]
+        );
     }
 }

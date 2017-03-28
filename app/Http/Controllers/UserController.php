@@ -267,7 +267,8 @@ class UserController extends Controller
         $d = DB::select(DB::raw(
             "select quotes_request.*,users.first_name as client_name,quotes.rid as rid,quotes.cost as cost,
             quotes.message as message, quotes.down_payment as dp,
-            company_category.company_id, company_category.category_id
+            company_category.company_id, company_category.category_id,(select max(quotes.cost) from quotes where quotes.rid = quotes_request.id) as max_cost,
+            (select min(quotes.cost) from quotes where quotes.rid = quotes_request.id) as min_cost
             from quotes_request 
             inner join company_category on company_category.category_id = quotes_request.category_id 
             inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 

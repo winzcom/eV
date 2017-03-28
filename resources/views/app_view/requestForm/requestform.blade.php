@@ -8,7 +8,7 @@
                 <div class="control-group" >
                     <label class="control-label" for="inputCity">What are you looking for?</label>
                         <div class="controls">
-                            <select class="form-control input-lg " name="category" id="category">
+                            <select class="form-control input-lg " name="category" id="category" placeholder="select a category">
                                 <option></option>
                                 @if(isset($category_id))
                                     {{$categories->display($category_id)}}
@@ -23,7 +23,7 @@
                 <div class="control-group" id="eventtype">
                     <label class="control-label" for="inputCity">What type of Event?</label>
                         <div class="controls">
-                            <select class="form-control input-lg" name="event" id="event">
+                            <select class="form-control input-lg" name="event" id="event" placeholder="pick the type of event">
                                 
                                 @foreach($events as $event)
                                     <option>{{$event->name}}</option>
@@ -165,7 +165,7 @@
                 <div class="control-group" id="personalmessagae">
                     <label class="control-label" for="inputCity">Personal Message</label>
                         <div class="controls">
-                            <textarea name="personalmessage" class="form-control"  rows="5" required></textarea>
+                            <textarea name="personalmessage" class="form-control"  rows="5" placeholder="tell us more about the your event needs e.g type of meal(Africanna, buffet) it a standing event, customer are going to pay" required></textarea>
                         </div>
                 </div>
             </div>
@@ -192,10 +192,10 @@
                             <input name="password" class="form-control" type="password" id="step5password" required/>
                         </div>
 
-                        <label class="control-label" for="inputCity" id="step5password">Confirm Password</label>
+                        <!--<label class="control-label" for="inputCity" id="step5password">Confirm Password</label>
                         <div class="controls">
                             <input name="confirm_password" class="form-control" type="password" id="step5confirm_password" required/>
-                        </div>
+                        </div>-->
                
 
 

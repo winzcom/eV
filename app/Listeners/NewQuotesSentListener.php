@@ -29,6 +29,6 @@ class NewQuotesSentListener
     {
         //
         Mail::to($event->data['request_data'])
-                ->queue(new SendQuote($event->data));
+                ->send(new SendQuote($event->data));
     }
 }

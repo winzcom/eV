@@ -28,6 +28,12 @@ class NewQuoteSent
         $this->data = $data;
     }
 
+    public function __get($name){
+        if(property_exists($this,$name)){
+            return $this->$name;
+        }
+    }
+
     /**
      * Get the channels the event should broadcast on.
      *

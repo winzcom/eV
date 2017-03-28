@@ -22,12 +22,25 @@ class ContactVendorEvent
      * @return void
      */
 
-     protected $user;
+     protected $vendor;
+     protected $customer;
+     protected $request;
+     protected $message;
 
-    public function __construct(User $user)
+    public function __construct($vendor,$customer,$request,$message)
     {
         //
-        $this->user = $user;
+        $this->vendor = $vendor;
+        $this->customer = $customer;
+        $this->request = $request;
+        $this->message = $message;
+    }
+
+    public function __get($name){
+        if(property_exists($this,$name)){
+            return $this->$name;
+        }
+        else throw new \Exception;
     }
 
     /**

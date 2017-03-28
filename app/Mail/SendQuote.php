@@ -17,7 +17,7 @@ class SendQuote extends Mailable
      * @return void
      */
 
-     private $data;
+     protected $data;
 
 
     public function __construct(Array $data = null)

@@ -47,12 +47,12 @@ $(document).ready(function(){
 						'X-CSRF-TOKEN':Laravel.csrfToken
 					}
 				})
-				.done(function(){
+				.done(function(data){
 					$('#myModal').modal('hide');
-					alertify.success('Request has been Sent');
+					alertify.success('Request Sent');
 				})
-				.fail(function(){
-					alertify.error('Request could not sent');
+				.fail(function(data){
+					alertify.log('An Error Occured Request Could Not Be Sent');
 				})
 
 			}

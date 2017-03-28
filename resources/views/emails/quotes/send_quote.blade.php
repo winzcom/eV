@@ -2,6 +2,10 @@
 
     Quote Received From {{$data['vendor_data']->name}} For {{$data['request_data']->name}}
 
+    <h4>Cost: {{$data['cost']}}</h4>
+    <p>Message: {{$data['message']}}</p>
+
+
     @component('mail::panel')
 
         @if(is_object($ob = json_decode($data['request_data']->request)))
@@ -24,9 +28,6 @@
                                         
                 
         @endif
-
-        <h4>Cost: {{$data['cost']}}</h4>
-        <p>Message: {{$data['message']}}</p>
 
     @endcomponent
 

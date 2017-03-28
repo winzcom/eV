@@ -18,6 +18,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\NewQuoteSentEvent'=>[
             'App\Listeners\NewQuotesSentListener'
+        ],
+        'App\Events\ContactVendorEvent'=>[
+            'App\Listeners\ContactVendorListener'
         ]
     ];
 

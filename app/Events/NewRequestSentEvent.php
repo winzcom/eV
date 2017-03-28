@@ -15,7 +15,7 @@ class NewRequestSentEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
 
-    public $data;
+    private $data;
     /**
      * Create a new event instance.
      *
@@ -26,6 +26,13 @@ class NewRequestSentEvent implements ShouldBroadcast
         //
         $this->data = $data;
         
+    }
+
+
+    public function __get($name){
+        if(property_exists($this,$name)){
+            return $this->$name;
+        }
     }
 
     /**

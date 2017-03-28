@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Service\Service;
 use App\Entities\Category;
 use App\Entities\Review;
+use App\Entities\User;
+use App\Entities\QuotesRequest;
 use App\Events\ContactVendorEvent;
 
 class CustomerController extends Controller
@@ -119,11 +121,22 @@ class CustomerController extends Controller
         //Send Mail to Vendor.
 
         $vendor = User::findorFail($request->vendor_id);
-
-        event(new ContactVendorEvent($vendor));
+        $message = $request->message;
+        $request = QuotesRequest::with(
+            [
+                'category','quote'=>function($query) use($vendor,$request){
+                    $query->where('uid',$vendor->id)
+                    ->where('rid',$request->request_id)
+                    ->get();
+                }
+            ]
+        )
+        ->findorFail($request->request_id);
+        
+       event(new ContactVendorEvent($vendor,Auth::guard('client')->user(),$request,$message));
 
         return response()->json([
-            
+            'message'=>'Message Sent'
         ]);
     }
     

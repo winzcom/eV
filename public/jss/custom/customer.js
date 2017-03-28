@@ -31,9 +31,13 @@ $(document).ready(function(){
     $('#contact_vendor').on('show.bs.modal',function(event){
 
            var button =  $(event.relatedTarget);
-           var vendor_id = button.data('vendorId');
+           var vendor_id = button.data('vId');
+           var request_id = button.data('rId');
+           
            contact_button = button;
            $('#vendor_id').val(vendor_id);
+           $('#request_id').val(request_id);
+           
     })
 
     $('#send_vendor_message').click(function(){
@@ -44,6 +48,7 @@ $(document).ready(function(){
        var data = {};
        data.message = $('#message_to_vendor').val();
        data.vendor_id = $('#vendor_id').val();
+       data.request_id = $('#request_id').val();
 
        $.ajax({
            url:customerUrl+'contact_vendor',
@@ -56,6 +61,7 @@ $(document).ready(function(){
            success:function(data){
                $(this).prop('disabled',false);
                contact_button.remove();
+               console.log(data);
                $('.contact_vendor').prop('disabled',false);
                $('#contact_vendor').modal('hide');
                alertify.success('Message Sent');

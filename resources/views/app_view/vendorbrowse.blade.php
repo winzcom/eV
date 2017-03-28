@@ -52,6 +52,7 @@
 
 	<!-- section thumbnail box style1 START -->
 		<section class="section">
+        @inject('service','App\Service\Service')
 			<div class="container">
                 @if(isset($companies))
                     <div class="row">
@@ -66,13 +67,13 @@
                                                         <img src="{{$path}}/{{$company->galleries->pluck('image_name')->first()}}" alt="Thumbnail">
                                                     </div>
                                             @else
-                                                <div class="alert alert-info">No Image</div>
+                                                <div class="well"><div class="alert alert-info ">No Image</div></div>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="caption">
                                         <h3>{{$company->name}}</h3>
-                                        <p>{{str_limit($company->description,50)}}</p>
+                                        <p>{{$service->limitWords($company->description,21)}}...</p>
                                         <a href="{{url('/detail/')}}/{{$company->name_slug}}/{{$category_id}}" class="btn btn-primary btn-sm" title="Thumbnail link">Read More</a>
 
                                     </div>

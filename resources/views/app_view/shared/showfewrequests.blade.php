@@ -1,14 +1,16 @@
+@inject('service','App\Service\Service')
 
 @php 
 
 if(count($all_requests) > 0){
     echo '<div>';
     foreach($all_requests as $request){
+        
         $rid = !is_null($request->rid) ? $request->rid : null;
         $ob = json_decode($request->request);
         $isobject =  is_object($ob) ? true :false;
         echo '<h3>';
-        if(!is_null($rid)){
+        if(!is_null($rid)){ 
             echo '<i class="fa fa-check-circle-o"></i>&nbsp';
         }
         echo 'request from '.$request->client_name.' for '.$cats->where('id',$request->category_id)->first()->name.'</h3>';
@@ -43,7 +45,9 @@ if(count($all_requests) > 0){
                     data-cost = '$request->cost' data-uid = '$vendor_id' data-dp='$request->dp'
                 >
                     Show Quote
-                </button><br><br>";
+                </button>
+                &nbsp;<i class=\"btn btn-info btn-xs sq-corner\">Highest Cost: ".$service->currencyFormatter()->formatCurrency($request->max_cost,'EUR').
+                " Lowest Cost: ".$service->currencyFormatter()->formatCurrency($request->min_cost,'EUR')."</i><br><br>";
         }
         if($isobject){
             echo '<div class="alert alert-success">';

@@ -69,6 +69,8 @@ class GuestController extends Controller
         $client = $request->only(['first_name','last_name','email','password']);
         $category = $request->only(['category']);
 
+        
+
         $request = $request->except(['category','firstname','lastname','email','password','_token','state','vicinity']);
 
         
@@ -84,6 +86,13 @@ class GuestController extends Controller
                         $customer = Auth::guard('client')->user();
                     }
                     else{
+
+                        if(!Service::isValid($client)){
+                               
+                            return response('failed to ',500);
+                                
+                        }
+                            
 
                         $customer = Customer::firstOrCreate([
                                         'first_name'=>$client['first_name'],

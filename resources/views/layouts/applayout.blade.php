@@ -88,7 +88,7 @@ window.myUrl = "http:\/\/localhost/eventing/public\/";
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="{{url('/')}}">Home</a></li>
 				<li><a href="{{url('/browse_vendors')}}">Browse Vendors</a></li>
-				<li><a href="#">Request Quotes</a></li>
+				<!--<li><a href="#">Request Quotes</a></li>-->
 				
 				@if(Auth::check())
 					<li><a href="{{url('/home')}}">DashBoard</a></li>

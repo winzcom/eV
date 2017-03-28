@@ -62,7 +62,7 @@
 
                     <div class="row">
             
-
+                     @inject('service','App\Service\Service')
                        @foreach($quotes as $quote)
                         
                             <div class="col-sm-6">
@@ -81,8 +81,6 @@
                                              $rating = $quote->pluck('rating')->all();
                                              $gallery_names = $quote->pluck('image_name')->unique()->all();
                                              
-                                              $formatter = new \NumberFormatter('en_GB',  NumberFormatter::CURRENCY);
-                                              $formatter->setSymbol(NumberFormatter::CURRENCY_SYMBOL,'');
                                              
                                               $down_payment = null; 
                                               if($quote->first()->down_payment != 0 && $quote->first()->down_payment !== 100){
@@ -92,15 +90,15 @@
                                             @endphp
                                             <h4>quote from {{$quote->first()->name}}</h4>
                                         </div>
-                                        <h3>&#8358 {{$formatter->formatCurrency($quote->first()->cost,'EUR')}} </h3>
-                                        <h5>@if($down_payment !== null) DownPayment: &#8358 {{$formatter->formatCurrency($down_payment,'EUR')}}@endif</h5>
+                                        <h3>&#8358 {{$service->currencyFormatter()->formatCurrency($quote->first()->cost,'EUR')}} </h3>
+                                        <h5>@if($down_payment !== null) DownPayment: &#8358 {{$service->currencyFormatter()->formatCurrency($down_payment,'EUR')}}@endif</h5>
                                         <p>{{$quote->first()->message}}</p>
                                         <!--<button class="btn btn-primary btn-sm" data-toggle="modal" 
                                              
                                         >
                                             Details
                                         </button>-->
-                                       @inject('service','App\Service\Service')
+                                      
                                         <button class="pop_over_details btn btn-primary btn-sm" data-description = "{{$description}}" 
                                             title="{{$service->showPopOverImages(array_slice($gallery_names,0,3),$amazon_path)}}" class="pop_over_img"
                                             data-content="<div><h4>Contact</h4>
@@ -115,7 +113,7 @@
                                         >
                                             Details
                                         </button>
-                                        <button class="btn btn-default contact_vendor" data-target="#contact_vendor" data-toggle='modal' data-vendor-id="{{$quote->first()->id}}">
+                                        <button class="btn btn-default contact_vendor" data-target="#contact_vendor" data-toggle='modal' data-v-id="{{$quote->first()->id}}" data-r-id="{{$quote->first()->rid}}">
                                             Contact
                                         </button>
                                         

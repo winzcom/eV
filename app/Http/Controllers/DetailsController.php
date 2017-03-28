@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+
 use App\Entities\User;
 use App\Service\Service;
 
@@ -13,7 +16,7 @@ class DetailsController extends Controller
 
     public function __construct(Request $request){
         $this->request = $request;
-        $this->path = asset('storage/images/');
+       $this->path = Storage::url('public');
     }
 
     public function details($slug,$id=null){

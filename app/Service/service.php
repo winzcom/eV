@@ -105,7 +105,27 @@ class Service{
        
     }
 
-    public static function currencyFormatter(){
+    public static function isValid(Array $data){
+        foreach($data as $key=>$value){
+            if(is_null($data[$key]) || empty($data[$key])){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static function getResponseObject(){
+        return new \Illuminate\Http\Response();
+    }
+
+    public static function setResponseContent($content){
+        
+        self::getResponseObject()->setContent($content);
+        return $response;
+    }
+
+    public  function currencyFormatter(){
 
         $formatter = new \NumberFormatter('en_GB',  \NumberFormatter::CURRENCY);
         $formatter->setSymbol(\NumberFormatter::CURRENCY_SYMBOL,'');
