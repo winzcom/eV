@@ -15,18 +15,21 @@ use App\Entities\User;
 use App\Entities\QuotesRequest;
 use App\Events\ContactVendorEvent;
 
+
+
 class CustomerController extends Controller
 {
     //
 
     private $auth;
     private $amazon_path;
-    
+  
 
     public function __construct(){
 
         $this->auth = Auth::guard('client');
         //$this->amazon_path = Storage::url('public/images');
+        
         $this->amazon_path = asset('storage/images');
     }
 
@@ -36,8 +39,7 @@ class CustomerController extends Controller
             'requests'=>$this->getRequests(),
             'quotes'=>$this->getClientQuotes(),
             'cats'=>Category::all(),
-            'reviews'=>$this->getReviews(),
-            'formatter'=>Service::currencyFormatter()
+            'reviews'=>$this->getReviews()
         ]);
     }
 
@@ -132,6 +134,7 @@ class CustomerController extends Controller
             ]
         )
         ->findorFail($request->request_id);
+        
         
        event(new ContactVendorEvent($vendor,Auth::guard('client')->user(),$request,$message));
 

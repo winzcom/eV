@@ -20,10 +20,13 @@ class SendQuote extends Mailable
      protected $data;
 
 
-    public function __construct(Array $data = null)
+    public function __construct($request,$vendor,$cost,$message)
     {
         //
-        $this->data = $data;
+        $this->request = $request;
+        $this->vendor = $vendor;
+        $this->cost = $cost;
+        $this->message = $message;
     }
 
     /**
@@ -33,7 +36,12 @@ class SendQuote extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.quotes.send_quote')
-                    ->with('data',$this->data);
+        return $this->from($this->vendor)->markdown('emails.quotes.send_quote')
+                    ->with([
+                        'request'=>$this->request,
+                        'vendor'=>$this->vendor,
+                        'cost'=>$this->cost,
+                        'message'=>$this->message
+                    ]);
     }
 }

@@ -76,9 +76,15 @@
                                         
                                             <select  multiple ="true" class="form-control chzn-select" id="combobox" name="category[]" >
                                                     <option>...</option>
-                                                    @php 
-                                                     $categories->display($user->categories()->pluck('categories.id')->all());
-                                                    @endphp
+                                                    @foreach ($categories as $cate)
+                                                        <option value = "{{$cate->id}}" <?php 
+                                                            if($user->categories->contains($cate->id))
+                                                            echo 'selected'
+                                                        ?>>
+                                                            {{$cate->name}}
+                                                        </option>
+                                                    @endforeach
+                                                  
                                             </select>
 
                                         @elseif($input == 'state')

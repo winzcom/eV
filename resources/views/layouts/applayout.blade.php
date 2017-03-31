@@ -31,6 +31,15 @@
     .pac-container {
         z-index: 10000 !important;
     }
+.outPopUp {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  z-index: 15;
+  top: 50%;
+  left: 50%;
+  margin: -100px 0 0 -150px;
+}
 </style>
 </head>
 

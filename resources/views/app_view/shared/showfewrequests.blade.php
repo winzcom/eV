@@ -21,13 +21,13 @@ if(count($all_requests) > 0){
                 if(strtotime($ob->date)>strtotime(date('Y-m-d'))){
                 echo "<button class='btn btn-success btn-xs request' id='reply' data-toggle='modal'
                     data-target='#reply_request' data-rid = '$request->id'
-                    data-client-id = '$request->client_id' data-uid = '$vendor_id'
+                    data-cid = '$request->client_id'
                 >
                     Reply
                     
                 </button>
                 <button class='btn btn-danger btn-xs request dismiss' data-rid = '$request->id'
-                    data-client-id = '$request->client_id' data-uid = '$vendor_id'
+                    data-cid = '$request->client_id'
                     
                 >
                     Ignore

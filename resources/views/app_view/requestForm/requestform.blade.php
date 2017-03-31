@@ -10,11 +10,20 @@
                         <div class="controls">
                             <select class="form-control input-lg " name="category" id="category" placeholder="select a category">
                                 <option></option>
-                                @if(isset($category_id))
-                                    {{$categories->display($category_id)}}
-                                @else
-                                     {{$categories->display()}}
-                                @endif
+                                @foreach ($categories as $cate)
+                                    @if(isset($category_id))
+                                        <option value = "{{$cate->id}}" <?php 
+                                            if($cate->id== $category_id)
+                                                echo 'selected'
+                                        ?>>
+                                            {{$cate->name}}
+                                        </option>
+                                    @else
+                                    <option value = "{{$cate->id}}">
+                                            {{$cate->name}}
+                                        </option>
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
                 </div>

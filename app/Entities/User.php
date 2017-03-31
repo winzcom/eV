@@ -135,8 +135,7 @@ class User extends Authenticatable
         ]) : $query;*/
 
         if($state !== 'all'){
-            if(($vicinity !== null) && ($vicinity !== 'all'))
-                if($vicinity != 0)
+            if(($vicinity !== null) && ($vicinity !== 'all') && ($vicinity != 0))
                     return $query->where(['state'=>$state,'vicinity_id'=>$vicinity]);
              else return $query->where('state',$state);
         }

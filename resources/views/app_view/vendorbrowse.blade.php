@@ -10,7 +10,7 @@
 				<h1 class="strong">Browse Vendors</h1>
                 @if(isset($cat_name))
 						<h4 class="strong text-uppercase" style="color:white;">
-							Get Quotes from {{$cat_name}}
+							Get Quotes for {{$cat_name or ''}}
 						</h4>
 						@include('app_view.requestForm.stateform')
                 @endif
@@ -25,19 +25,28 @@
 <div class="container">
     
 <div class="">
-    <h3 class="pull-left">Featured Items</h3>
+    <!--<h3 class="pull-left">Featured Items</h3>-->
     <div id="filters-container" class="cbp-l-filters-dropdown">
         <div class="cbp-l-filters-dropdownWrap">
-            <div class="">Sort Gallery</div>
+            <div class="outPopUp">
                 <select class="form-control input-lg " name="category" id="browsevendor">
-                
-                    @if(isset($category_id))
-                        {{$categories->display($category_id)}}
-                        {{$category_id}}
-                    @else
-                        {{$categories->display()}}
-                    @endif
+                    <option>...</option>
+                    @foreach ($categories as $cate)
+                        @if(isset($category_id))
+                            <option value = "{{$cate->id}}" <?php 
+                                if($cate->id== $category_id)
+                                    echo 'selected'
+                            ?>>
+                                {{$cate->name}}
+                            </option>
+                        @else
+                        <option value = "{{$cate->id}}">
+                                {{$cate->name}}
+                            </option>
+                        @endif
+                    @endforeach
                 </select>
+                </div>
             </div>
         </div>
     </div>
@@ -62,18 +71,17 @@
                                     <div class="thumb-wrapper">
                                         <div class="thumbs-carousel">
                                             @if(count($company->galleries) > 0)
-                                                
                                                     <div class="item">
-                                                        <img src="{{$path}}/{{$company->galleries->pluck('image_name')->first()}}" alt="Thumbnail">
+                                                        <img src="{{$path}}/{{$company->galleries->pluck('image_name')->take(3)}}" alt="Thumbnail">
                                                     </div>
                                             @else
-                                                <div class="well"><div class="alert alert-info ">No Image</div></div>
+                                                <div class="alert alert-info "></div>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="caption">
                                         <h3>{{$company->name}}</h3>
-                                        <p>{{$service->limitWords($company->description,21)}}...</p>
+                                        <p>{{$service->limitWords($company->description,15)}}...</p>
                                         <a href="{{url('/detail/')}}/{{$company->name_slug}}/{{$category_id}}" class="btn btn-primary btn-sm" title="Thumbnail link">Read More</a>
 
                                     </div>

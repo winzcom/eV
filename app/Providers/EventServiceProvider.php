@@ -16,7 +16,7 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\NewRequestSentEvent' => [
             'App\Listeners\NewRequestSentListener',
         ],
-        'App\Events\NewQuoteSentEvent'=>[
+        'App\Events\NewQuoteSent'=>[
             'App\Listeners\NewQuotesSentListener'
         ],
         'App\Events\ContactVendorEvent'=>[

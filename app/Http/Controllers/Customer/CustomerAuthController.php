@@ -33,7 +33,9 @@ class CustomerAuthController extends Controller
         if(Auth::guard('client')->attempt($request->only(['email','password']))){
             return redirect($this->redirect);
         }
-        else return redirect('/culogin');
+        else return redirect('/culogin')
+                    ->withInput($request->only('email','remember'))
+                    ->withErrors(['email'=>'These credentials do not match our records.']);
         
     }
 

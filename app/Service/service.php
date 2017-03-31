@@ -30,8 +30,8 @@ class Service{
 
     public static function getCategories(){
 
-           return new \App\TreeNode\CategoryTree(0,'',-1);
-
+           //return new \App\TreeNode\CategoryTree(0,'',-1);
+           return Category::all();
     }
 
     public static function getFiveCompanies(){

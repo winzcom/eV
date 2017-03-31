@@ -20,17 +20,26 @@ class NewQuoteSent
      * @return void
      */
 
-     protected $data;
+     protected $request_data;
+     protected $vendor;
+     protected $cost;
+     protected $message;
 
-    public function __construct(Array $data)
+    public function __construct($request,$vendor,$cost,$message)
     {
         //
-        $this->data = $data;
+        $this->request = $request;
+        $this->vendor = $vendor;
+        $this->cost = $cost;
+        $this->message = $message;
     }
 
     public function __get($name){
         if(property_exists($this,$name)){
             return $this->$name;
+        }
+        else{
+            dd('no property like that');
         }
     }
 

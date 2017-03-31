@@ -21,7 +21,9 @@
             "database"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Aws\\":"vendor/aws/src/",
+            "GuzzleHttp\\":"vendor/guzzlehttp/guzzle"
         }
     },
     "autoload-dev": {

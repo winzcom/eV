@@ -8,6 +8,8 @@ use App\Http\Controllers\UserController as UC;
 use App\Service\LocalGallery;
 use App\Service\Service;
 
+use Aws\Sns\SnsClient;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -31,6 +33,15 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        
+        $this->app->bind(SnsClient::class,function($app){
+            return new SnsClient(
+                            ['region'=>env('AWS_REGION'),'version'=>'2010-03-31',
+                            'credentials'=>[
+                                'secret'=>env('AWS_SECRET'),
+                                'key'=>env('AWS_KEY'),
+                            ]
+                ]
+            );
+        });
     }
 }

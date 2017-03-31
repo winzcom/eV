@@ -73,6 +73,7 @@
 						<div class="product-images">
 							<div id="cloudslider" class="product-gallery">
 								@if($company->galleries->count() > 0)
+								
 									@foreach($company->galleries->take(3) as $gallery)
 										<div class="kr-sky" data-duration="5000">
 											<img class="sky-background" src="{{$path}}/{{$gallery->image_name}}" alt="product title">								
@@ -80,7 +81,8 @@
 									@endforeach
 									
 								@else
-									<div class="alert alert-success kr-sky">No gallery available</div>
+								
+									<div class=" kr-sky"></div>
 								@endif
 								<!--<div class="kr-sky" data-duration="5000">
 									<img class="sky-background" src="{{asset('img/shop/p2.jpg')}}" alt="product title">								

@@ -58,9 +58,9 @@ $(document).ready(function(){
 
 
             var rid = button.data('rid');
-            var client_id = button.data('clientId');
-            var vendor_id = button.data('uid');
-            alert(vendor_id);
+            var client_id = button.data('cid');
+            //var vendor_id = button.data('uid');
+            //alert(vendor_id);
             console.log(rid+' '+client_id)
             var url = 'reply_request'
             console.log(url)
@@ -95,7 +95,7 @@ $(document).ready(function(){
 
                 fd.append('rid',rid);
                 fd.append('client_id',client_id);
-                fd.append('uid',vendor_id);
+                //fd.append('uid',vendor_id);
                 var data = fd;
                 submitRequest(data,self,url,button);
              }
@@ -161,14 +161,14 @@ $(document).ready(function(){
 
         var self = $(this);
         var rid = self.data('rid');
-        var client_id = self.data('clientId');
-        var uid = self.data('uid');
+        var client_id = self.data('cid');
+        //var uid = self.data('uid');
 
         alertify.logPosition('bottom right');
         alertify.okBtn('Dismiss')
         .cancelBtn('Cancel')
         .confirm('Are You Sure You Want to Dismiss This Request',function(){
-             var url = 'dismiss_request/'+rid+'/'+uid+'/'+client_id;
+             var url = 'dismiss_request/'+rid+'/'+client_id;
              $.get(url,{},function(data){
                  if(data.status == undefined || data.status == null)
                     location.reload(true);
@@ -207,10 +207,10 @@ $(document).ready(function(){
                         var italic = $('<i>').attr('class','fa fa-check-circle-o');
                         $('cbp-caption-defaultWrap').prepend(italic);
                         alertify.log('Reply Sent');
-                        setTimeout(function(){
+                        /*setTimeout(function(){
                             window.location.reload();
-                        });
-                       console.log(data);
+                        });*/
+                       
                     },
                     error:function(err){
                         alertify.alert('An error occured, quote could not be sent ');

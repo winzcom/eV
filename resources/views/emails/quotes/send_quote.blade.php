@@ -1,14 +1,14 @@
 @component('mail::message')
 
-    Quote Received From {{$data['vendor_data']->name}} For {{$data['request_data']->name}}
+    Quote Received From {{$vendor->name}} For {{$request->name}}
 
-    <h4>Cost: {{$data['cost']}}</h4>
-    <p>Message: {{$data['message']}}</p>
+    Cost: {{$cost}}
+    Message: {{$message}}
 
 
     @component('mail::panel')
 
-        @if(is_object($ob = json_decode($data['request_data']->request)))
+        @if(is_object($ob = json_decode($request->request)))
 
             @foreach($ob as $key=>$value)
                     @php
@@ -16,15 +16,16 @@
                             foreach($value as $key=>$val){
                                 echo $val.' ';
                             }
+                        }
+                        else{
+                            echo $key.' '.$value;
                         } 
-                    @endphp
-                    {{$key}} : {{$value}}
-                        
+                    @endphp                
             @endforeach
                 
         @else
 
-            {{$data->request}}
+            {{$request}}
                                         
                 
         @endif

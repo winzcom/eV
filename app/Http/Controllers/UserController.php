@@ -342,12 +342,11 @@ class UserController extends Controller
         
         $id = null; $client = null;
        
-       
 
         DB::transaction(function() use ($request,$id){
             $id = DB::table('quotes')->insertGetId([
                 'rid'=>$request->rid,
-                'uid'=>$request->uid,
+                'uid'=>Auth::id(),
                 'client_id'=>$request->client_id,
                 'cost'=>$request->cost,
                 'down_payment'=>$request->down_payment !== null ? $request->down_payment:0,
@@ -355,49 +354,50 @@ class UserController extends Controller
             ]);
 
            
-             $data = $this->getRequest($request->rid);
+             $request_data = $this->getRequest($request->rid);
              
 
-            $data = [
+            /*$datas = [
 
                     'request_data'=>$data,
                     'vendor_data'=>Auth::user(),
                     'cost'=>$request->cost,
                     'message'=>$request->message
-            ];
+            ];*/
 
            
-            event(new NewQuoteSent($data));
+            event(new NewQuoteSent($request_data,Auth::user(),$request->cost,$request->message));
             
+
             if(!is_null($id)){
 
                    return response()->json([
-                        'status'=>'Quotes Sent Successfully to '.$data['request_data']->first_name.' '.$data['request_data']->last_name
+                        'status'=>'Quotes Sent Successfully to '.$request_data->first_name.' '.$request_data->last_name
                         ]);
                     }
                 else{
                     return response()->json([
                         'status'=>'Error Sending Please try again'
-                    ]);
+                    ],401);
                 }
 
         });
         
     }
 
-    public function dismissRequest($rid,$uid,$client_id){
+    public function dismissRequest($rid,$client_id){
 
         if(!is_null($rid)){
             $id = DB::table('dismiss')->insertGetId([
                 'rid'=>$rid,
-                'uid'=>$uid,
+                'uid'=>Auth::id(),
 
             ]);
 
             if(!is_null($id)){
                 return response()->json([
                 'rid'=>$rid,
-                'uid'=>$uid,
+                'uid'=>Auth::id(),
                 'client_id'=>$client_id
             ]);
         }
@@ -413,7 +413,7 @@ class UserController extends Controller
 
          return json_encode([
                 'rid'=>$rid,
-                'uid'=>$uid,
+                'uid'=>Auth::id(),
                 'client_id'=>$client_id
          ]);
     }

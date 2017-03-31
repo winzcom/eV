@@ -89,7 +89,7 @@ class GuestController extends Controller
 
                         if(!Service::isValid($client)){
                                
-                            return response('failed to ',500);
+                            return response()->json(['message'=>'Please fill your details'],401);
                                 
                         }
                             

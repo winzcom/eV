@@ -16,7 +16,7 @@
             <div class="col-md-5">
                 <div class="form-group">
                     <select class="form-control" id="vicinity" name="vicinity_id">
-                        <option></option>
+                        <option value="all">All</option>
                         @foreach ($vicinities as $vicinity)
                         <option value = "{{$vicinity->id}}"data-state-id = "{{$vicinity->state_id}}"class="vicinities form-control input-lg">{{$vicinity->name}}</option>
                         @endforeach

@@ -8,6 +8,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Mail\ContactVendor;
 use Illuminate\Support\Facades\Mail;
 
+
+use App\Jobs\SendPushNotification as SPN;
+
+
 class ContactVendorListener
 {
     /**
@@ -15,12 +19,11 @@ class ContactVendorListener
      *
      * @return void
      */
-
-     
+     private $push_message;
     public function __construct()
     {
         //
-        
+        $this->push_message = $push_message;
     }
 
     /**
@@ -33,13 +36,16 @@ class ContactVendorListener
     {
         //Send Mail to Vendor
         try{
+            
             Mail::to($event->vendor)
                 ->send(new ContactVendor($event->vendor,$event->customer,$event->request,$event->message));
+            
+            
         }
         catch(\Exception $e){
             return response()->json([
                 'message'=>'An Error Occured Message could not be sent'
-            ]);
+            ],401);
         }
         
     }

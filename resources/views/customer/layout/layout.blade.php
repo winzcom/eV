@@ -21,6 +21,20 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
 	<link rel="stylesheet" href="{{asset('vendor/css/scroll.css')}}">
 	<script src="{{asset('js/vendor/modernizr-2.8.3-respond-1.4.2.min.js')}}"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+	<script>
+	
+	var config = {
+            apiKey: "AIzaSyDaLwKhrrU0XnVwajC_lh_1nKX5hFBJ514",
+            authDomain: "myfirstapp-a776e.firebaseapp.com",
+            databaseURL: "https://myfirstapp-a776e.firebaseio.com",
+            storageBucket: "myfirstapp-a776e.appspot.com",
+            messagingSenderId: "43600357644"
+        };
+	firebase.initializeApp(config);
+	
+	</script>
+
 	@yield('style')
 
 	<script>
@@ -272,7 +286,7 @@
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
 <script src="{{asset('jss/custom/customer.js')}}"></script>
-	
+<script src="{{asset('jss/custom/firebase.js')}}"></script>
 	
 @yield('script')
 </body>
