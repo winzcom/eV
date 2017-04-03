@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-
+changeVicinitySelect(document.getElementById('state'))
 
 $('#state').change(function(e){
     changeVicinitySelect(this,'change')
@@ -11,15 +11,16 @@ $('#state').change(function(e){
 function changeVicinitySelect(e,oc = null){
         
         var v = document.getElementById('vicinity');
-        if(oc !== null)
+        if(oc !== null){
             v.selectedIndex = 0;
+            v.disabled = true;
+        }
+            
             
         let vicinites = document.getElementsByClassName('vicinities');
         let len=vicinites.length;
         let toggle = true;
 
-       
-       
 
         for(i=0; i<len; i++){
                 vicinites[i].style.display = "";

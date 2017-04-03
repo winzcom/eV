@@ -179,7 +179,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\GalleryProvider::class,
         App\Providers\DashBoardViewComposer::class,
-        App\Providers\PushNotificationProvider::class
+        App\Providers\PushNotificationProvider::class,
+        App\Providers\RepoProvider::class
        
 
     ],

@@ -16,7 +16,7 @@ class LocalGallery implements GalleryInterface{
         config(['filesystems.default'=>'local']);
     }
 
-    public function uploadPhotos(array $files,array $captions = null,$name_slug=''){
+    public function uploadPhotos(array $files,array $captions = null,string $name_slug= null,int $user_id){
 
     
         $names = [];
@@ -28,7 +28,7 @@ class LocalGallery implements GalleryInterface{
                 try{
                     
                     if($file->storeAs('public/images',$names[$key][0])){
-                        Gallery::create(['image_name'=>$names[$key][0],'user_id'=>Auth::id(),'caption'=>htmlentities($captions[$i])]);
+                        Gallery::create(['image_name'=>$names[$key][0],'user_id'=>$user_id,'caption'=>htmlentities($captions[$i])]);
 
                     }
                 }   
@@ -44,7 +44,7 @@ class LocalGallery implements GalleryInterface{
     }
 }
 
-    public function deletePhotos(array $paths){
+    public function deletePhotos(array $paths,int $user_id){
 
         $list  = array();
         if(is_array($paths)){
@@ -54,7 +54,7 @@ class LocalGallery implements GalleryInterface{
             }  
            // $prefixed_array = preg_filter('/^/', $name_slug, $paths);
             //array_walk($paths, function(&$item) use ($name_slug){ $item *= $name_slug; });
-             Gallery::whereIn('image_name',$paths)->where('user_id',Auth::id())->delete();
+             Gallery::whereIn('image_name',$paths)->where('user_id',$user_id)->delete();
             return ;
         }
         else{
@@ -63,6 +63,10 @@ class LocalGallery implements GalleryInterface{
         }
         
 
+    }
+
+    public function directoryPath(){
+        return asset('public/images');
     }
 
 }

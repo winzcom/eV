@@ -33,14 +33,6 @@ class AuthServiceProvider extends ServiceProvider
 
             return new EloquentClientAuthProvider();
         });
-
-        Gate::define('delete-quote',function($user,$quote){
-            return $user->id == $quote->uid;
-        });
-
-        Gate::define('delete-request',function($user,$request){
-            return $user->id == $request->client_id;
-        });
         //
     }
 }

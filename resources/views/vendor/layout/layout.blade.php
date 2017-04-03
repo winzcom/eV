@@ -29,7 +29,7 @@
 
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
-
+	window.myUrl = "http:\/\/localhost/eventing/public\/";
     var pusher = new Pusher('6a78b439ea816808a071', {
       encrypted: true
     });

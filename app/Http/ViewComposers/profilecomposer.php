@@ -3,8 +3,8 @@
 namespace App\Http\ViewComposers;
 
 use Illuminate\View\View;
-use App\Repositories\UserRepository;
-use App\Http\Controllers\UserController;
+use App\Repo\Interfaces\UserRepoInterface as IUserRepo;
+
 
 class ProfileComposer
 {
@@ -13,7 +13,7 @@ class ProfileComposer
      *
      * @var UserRepository
      */
-    protected $uc;
+    protected $user_repo;
     protected $formatter;
 
     /**
@@ -22,10 +22,10 @@ class ProfileComposer
      * @param  UserRepository  $users
      * @return void
      */
-    public function __construct()
+    public function __construct(IUserRepo $user_repo)
     {
         // Dependencies automatically resolved by service container...
-        $this->uc = new UserController();
+        $this->user_repo = $user_repo;
         
     }
 
@@ -38,7 +38,7 @@ class ProfileComposer
     public function compose(View $view)
     {
         $view->with([
-            'requests'=> $this->uc->getRequests()
+            'requests'=> $this->user_repo->getRequests()
         ]);
                     
                      /*'unreplied_request'=>$this->uc->getRequestNotYetAnswered(),

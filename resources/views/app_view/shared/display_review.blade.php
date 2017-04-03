@@ -18,7 +18,7 @@
     @endif
 @endif
 
-<span>Average Rating {{number_format($reviews->avg('rating'),1)}}/5<span>
+<span>Average Rating {{number_format($avg,1)}}/5<span>
                     @foreach($reviews as $review)
                         <h4>
                             {{$review->reviewers_name}} 

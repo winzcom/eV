@@ -15,7 +15,8 @@ use App\Entities\User;
 use App\Entities\QuotesRequest;
 use App\Events\ContactVendorEvent;
 
-
+use App\Repo\Interfaces\CustRepoInterface as CRI;
+use App\Interfaces\GalleryInterface as GI;
 
 class CustomerController extends Controller
 {
@@ -23,106 +24,65 @@ class CustomerController extends Controller
 
     private $auth;
     private $amazon_path;
-  
+    private $user_repo;
 
-    public function __construct(){
+    public function __construct(CRI $cust_repo,GI $gi){
 
         $this->auth = Auth::guard('client');
         //$this->amazon_path = Storage::url('public/images');
-        
-        $this->amazon_path = asset('storage/images');
+        $this->cust_repo = $cust_repo;
+        $this->amazon_path = $gi->directoryPath();
     }
 
     public function home(){
-
+        list($total_avg,$reviews) = $this->getFiveReviews();
         return view('customer.home')->with([
             'requests'=>$this->getRequests(),
             'quotes'=>$this->getClientQuotes(),
             'cats'=>Category::all(),
-            'reviews'=>$this->getReviews()
+            'avg'=>$total_avg[0]->avg,
+            'reviews'=>$reviews
         ]);
     }
 
     private function getRequests(){
 
-        $d = DB::select(DB::raw(
-            "select DISTINCT(quotes_request.id),count(distinct(quotes.id)) as replies,
-            categories.name as cat_name,quotes.rid as rid,
-            quotes_request.request from quotes_request 
-            inner join company_category on company_category.category_id = quotes_request.category_id 
-            inner join companies on companies.id = company_category.company_id 
-            and companies.state = quotes_request.state 
-            inner join categories on categories.id = company_category.category_id
-            left join quotes on quotes.rid = quotes_request.id
-            inner join users on users.id =quotes_request.client_id 
-            where quotes_request.client_id = :customer_id
-            group by quotes_request.id"
-        ),array('customer_id'=>$this->auth->id()));
-
-        return collect($d);
+        $d =  $this->cust_repo->getRequests($this->auth->id());
+        return $this->cust_repo->paginate($d,3);
     }
 
     private function getAnsweredRequests(){
-        $d = DB::select(DB::raw(
-            "select DISTINCT(quotes_request.id),count(distinct(quotes.id)) as replies,categories.name as cat_name,quotes_request.request from quotes_request 
-            inner join company_category on company_category.category_id = quotes_request.category_id 
-            inner join companies on companies.id = company_category.company_id 
-            and companies.state = quotes_request.state 
-            inner join categories on categories.id = company_category.category_id
-            left join quotes on quotes.rid = quotes_request.id
-            inner join users on users.id =quotes_request.client_id 
-            where quotes_request.client_id = :customer_id
-            group by quotes_request.id having replies > 0"
-        ),array('customer_id'=>$this->auth->id()));
-
-        return collect($d);
+        
+       return $this->cust_repo->getAnsweredRequests($this->auth->id());
     }
 
     private function getClientQuotes(){
-
-        $d = DB::table('quotes')->join('quotes_request','quotes.rid','=','quotes_request.id')
-                ->join('categories','categories.id','=','quotes_request.category_id')
-                ->join('companies','companies.id','=','quotes.uid')
-                ->join('users','users.id','=','quotes.client_id')
-                ->select('quotes.*','quotes_request.request as qrequest','categories.name as cat_name','users.first_name as fname'
-                    ,'users.last_name as lname'
-                )
-                ->where('quotes.client_id',$this->auth->id())->get();
-        return collect($d);
+        return $this->cust_repo->getClientQuotes($this->auth->id());
     }
 
-    private function getQuotes($request_id){
-        $d = DB::table('quotes')->join('quotes_request','quotes.rid','=','quotes_request.id')
-                ->join('categories','categories.id','=','quotes_request.category_id')
-                ->join('companies','companies.id','=','quotes.uid')
-                ->join('users','users.id','=','quotes.client_id')
-                ->leftJoin('reviews','reviews.review_for','=','companies.id')
-                ->leftJoin('galleries','galleries.user_id','=','quotes.uid')
-                ->select('quotes.*','quotes_request.request as qrequest','categories.name as cat_name',
-                        'reviews.review','reviews.reply','reviewers_name','rating','image_name',
-                         'companies.*',(DB::raw("(select avg(r.rating) from reviews r where r.review_for = companies.id) as avg")),
-                         (DB::raw("(select count(r.rating) from reviews r where r.review_for = companies.id) as count")
-                         )
-                )
-                ->where(['quotes.client_id'=>$this->auth->id(),'quotes.rid'=>$request_id])->get();
-                //dd(json_encode($d->groupBy('id')[13]->unique()->pluck('image_name')->all()));
-                 return Service::paginate($d->groupBy('id'),10);
+    private function getRequestQuotes($request_id){
+        return $this->cust_repo->getRequestQuotes($this->auth->id(),$request_id);
     }
 
-    private function getReviews(){
-        return Review::where('reviewers_email',Auth::guard('client')->user()->email)->get();
+    private function getFiveReviews(){
+        return $this->cust_repo->getReviews($this->auth->id(),null,5,['id','desc']);
     }
 
     public function showQuotes($request_id = null){
-        $d = $this->getQuotes($request_id);
+        $d = $this->getRequestQuotes($request_id);
         return view('customer.cuquote')->with(['quotes'=>$d,'amazon_path'=>$this->amazon_path]);
+    }
+
+    public function showRequests(){
+        $d = $this->getRequests();
+        return view('customer.request')->with('requests',$d);
     }
 
     public function contactVendor(Request $request){
 
         //Send Mail to Vendor.
 
-        $vendor = User::findorFail($request->vendor_id);
+        $vendor = $this->user_repo->find($request->vendor_id);
         $message = $request->message;
         $request = QuotesRequest::with(
             [

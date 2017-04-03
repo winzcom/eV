@@ -57,7 +57,7 @@
 						</div>
 						
 						<div role="tabpanel" class="tab-pane" id="messages">
-							@include('app_view.shared.showfewrequests',['all_requests'=>$requests,'vendor_id'=>Auth::id()])
+							@include('app_view.shared.showfewrequests',['all_requests'=>$requests->take(4),'requests_count'=>$requests->count(),'vendor_id'=>Auth::id()])
 						</div>
 					</div>
 			</div>

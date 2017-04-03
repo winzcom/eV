@@ -27,6 +27,16 @@ class Service{
     public function __construct(){
         
     }
+    
+    private function computeDays(){
+                $begin = new Carbon(); 
+                $begin->addDays(1);
+                $end = $begin->copy()->addMonths(3);
+                $interval = \DateInterval::createFromDateString('1 day');
+                $period = new \DatePeriod($begin, $interval, $end);
+            
+                return $period;
+    }
 
     public static function getCategories(){
 
@@ -76,13 +86,13 @@ class Service{
         return $user;
     }
     
-    public static function deletePhotos(GalleryInterface $gallery,array $files){
+    public static function deletePhotos(GalleryInterface $gallery,array $files,int $user_id){
 
-        return $gallery->deletePhotos($files);
+        return $gallery->deletePhotos($files,$user_id);
             
     }
 
-    public static function uploadPhotos(GalleryInterface $gallery,array $files,array $captions = null,string $name_slug = null){
+    public static function uploadPhotos(GalleryInterface $gallery,array $files,array $captions = null,string $name_slug = null,int $user_id){
 
         return $gallery->uploadPhotos($files,$captions,$name_slug);
     }

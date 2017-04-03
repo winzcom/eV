@@ -69,6 +69,10 @@ class AmazonGallery implements GalleryInterface{
 
     }
 
+    public function directoryPath(){
+        return Storage::url('public');
+    }
+
 }
 
 ?>

@@ -7,69 +7,41 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\RegisterFormRequest;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
+use App\Repo\Interfaces\UserRepoInterface as UPI;
 
-use GuzzleHttp\Client;
-use Carbon\Carbon;
-use App\Mail\SendQuote;
 use App\Entities\User;
 use App\Service\Service;
 use App\Interfaces\GalleryInterface;
-use App\Entities\Gallery;
-use App\Entities\Review;
+
 use App\Entities\Category;
 use App\Entities\OffDays;
 use App\Events\NewQuoteSent;
-use Illuminate\Support\Facades\Storage;
+
 
 class UserController extends Controller
 {
-    //
 
-    
+    private $gallery;
+   
+    public function __construct(GalleryInterface $gi,UPI $user_repo){
 
-    private $gallery_implementation;
-    private $period;
-
-    public function __construct(){
-
-        $this->gallery_implementation = resolve(GalleryInterface::class);
-       
-        
-         $this->path = Storage::url('public');
-         
-         
+        $this->gallery = $gi;
+        $this->user_repo = $user_repo;
+        $this->path = $this->gallery->directoryPath();
     }
 
     public function home(){
-
-        
-        $user =  User::with([
-                 'galleries',
-                 'categories'
-        ]) ->find(Auth::id());
-
-        
+ 
+        $user = $this->user_repo->findWith(Auth::id(),['galleries','categories']);
+        list($total_avg,$reviews) = $this->getFiveReviews();
         return view('vendor.home')->with([
                 'user'=>$user,'path'=>$this->path,
-                'reviews'=>$this->getFiveReviews(),
-                'quotes'=>$this->getQuotes(),
-                'cats'=>Category::all()
+                'reviews'=>$reviews,
+                'avg'=>$total_avg[0]->avg,
+                'cats'=>Service::getCategories()
             ]);
     }
 
-    private function computeDays(){
-                $begin = new Carbon(); 
-                $begin->addDays(1);
-                $end = $begin->copy()->addMonths(3);
-                $interval = \DateInterval::createFromDateString('1 day');
-                $period = new \DatePeriod($begin, $interval, $end);
-            
-                return $period;
-    }
 
     public function updateProfile(RegisterFormRequest $request){
         
@@ -90,7 +62,7 @@ class UserController extends Controller
       try{
 
          
-          $user = User::where('id',Auth::id())->first();
+          $user = $this->user_repo->findFirstByWhere(['id','=',Auth::id()]);
           $user->update($filtered);
           
           $user->categories()->sync($request->category);
@@ -106,10 +78,9 @@ class UserController extends Controller
 
     public function showProfileForm(Request $request){
         
-        $user  = Auth::user();
         return view('vendor.profile')->with([
             
-                            'user'=>$user,
+                            'user'=>Auth::user(),
                             'formInputs'=>User::getFormInputs(),
                         ]);
     }
@@ -117,19 +88,10 @@ class UserController extends Controller
 
 
     public function showGallery(){
-    
-        $galleries = Gallery::where('user_id',Auth::id())->orderBy('id','desc')->get();
-         return view('vendor.user_gallery')->with(['galleries'=>$galleries,'path'=>$this->path]);
+        $galleries = $this->user_repo->getImages(['id','=',Auth::id()]);
+        return view('vendor.user_gallery')->with(['galleries'=>$galleries,'path'=>$this->path]);
     }
 
-    public function publish(Request $request){
-
-        $query = Gallery::where('id',$request->image_id);
-        if($request->published == "true")
-            $query->update(['publish'=>1]);
-        else 
-            $query->update(['publish'=>0]);
-    }
 
 
     public function uploadPhotos(Request $request){
@@ -142,7 +104,7 @@ class UserController extends Controller
 
         
 
-        $names = Service::uploadPhotos($this->gallery_implementation,$request->photo,$request->caption,Auth::user()->name_slug);
+        $names = Service::uploadPhotos($this->gallery,$request->photo,$request->caption,Auth::user()->name_slug,Auth::id());
         if($request->ajax()){
 
                 return json_encode(array('status'=>'Success','paths'=>$names));
@@ -154,44 +116,19 @@ class UserController extends Controller
     public function deletePhotos(Request $request){
 
         if(count($request->images) > 0)
-            Service::deletePhotos($this->gallery_implementation,$request->images);
+            Service::deletePhotos($this->gallery,$request->images,Auth::id());
         
         return back();
     }
 
     public function getFiveReviews(){
-        $reviews = Review::where('review_for',Auth::id())->orderBy('id','desc')->take(5)->get();
-        return $reviews;
+        return $this->user_repo->getReviews(Auth::id(),null,5,['id','desc']);
     }
 
     public function getReviews(Request $request,$filter = null){
-
-        $query = Review::where('review_for',Auth::id());
-        $query1 = Review::where('review_for',Auth::id());
-        $reviews = null;
+        
         $pagination = 3;
-        $total_avg = $query1->select(DB::raw('count(rating) as total,avg(rating) as avg'))->get();
-
-       /* if($filter){
-            if($filter == 'gt'){
-                $reviews = $query->where([
-                                            ['review_for','=',Auth::id()],
-                                            ['rating','>=',$total_avg[0]->av]
-                ])->paginate($pagination);
-            }
-            elseif($filter == 'lt'){
-                $reviews = $query->where([
-                                            ['review_for','=',Auth::id()],
-                                            ['rating','<',$total_avg[0]->av]
-                ])->paginate($pagination);
-            }
-        }
-
-        else{
-            $reviews = $query->paginate($pagination);
-        }*/
-
-        $reviews = $query->paginate($pagination);
+        list($total_avg,$reviews,$query) = $this->user_repo->getReviews(Auth::id(),$pagination,null,['id','desc']);
         
         return view('vendor.reviews')->with(
             [
@@ -211,27 +148,32 @@ class UserController extends Controller
         }
         else 
             $to_date = date("Y-m-d",strtotime($request->to_date));
-        
-        if($request->ajax()){
-           $offdays =  OffDays::create(['from_date'=>$from_date,
+
+        $offdays =  OffDays::create(['from_date'=>$from_date,
                             'to_date'=>$to_date,
                             'user_id'=>Auth::id()
                         ]);
+        
+        if($request->ajax()){
                 return json_encode(array('from_date'=>$offdays->from_date->format('l jS \\of F Y'),
                                          'to_date'=>$offdays->to_date->format('l jS \\of F Y'),
                                          'date_id'=>$offdays->id
                 ));
         }
+        return back();
     }//end of addOffDays
 
     public function removeOffDays(Request $request){
 
-        if($request->ajax()){
-             OffDays::where(['id'=>$request->date_id,
+        OffDays::where(['id'=>$request->date_id,
                         'user_id'=>Auth::id()
             ])->delete();
+
+        if($request->ajax()){
+             
             return json_encode(array('status'=>'Date Deleted'));
         }
+        return back();
        
     }
 
@@ -239,103 +181,47 @@ class UserController extends Controller
 
         $id = $request->review_id;
         $reply = $request->reply;
-        if($request->ajax()){
-            if($id !== '' && $reply !== ''){
+        if($id !== '' && $reply !== ''){
                  Review::where('id','=',$id)->update(['reply'=>$reply]);
+
+        if($request->ajax()){
                  /*** Send email to reviewer */
                 return json_encode(array('status'=>'Reply Posted'));
             }
+            return back();
         }
     }
 
     private function getQuotes(){
  
-       $d = DB::table('quotes')->join('quotes_request','quotes.rid','=','quotes_request.id')
-                ->join('categories','categories.id','=','quotes_request.category_id')
-                ->join('companies','companies.id','=','quotes.uid')
-                ->join('users','users.id','=','quotes.client_id')
-                ->select('quotes.*','quotes_request.request as qrequest','categories.name as cat_name','users.first_name as fname'
-                    ,'users.last_name as lname'
-                )
-                ->where('quotes.uid',Auth::id())->get();
-        return $d;
+       return $this->user_repo->getQuotes();
     }
 
 
     public  function getRequests(){
-
-        $d = DB::select(DB::raw(
-            "select quotes_request.*,users.first_name as client_name,quotes.rid as rid,quotes.cost as cost,
-            quotes.message as message, quotes.down_payment as dp,
-            company_category.company_id, company_category.category_id,(select max(quotes.cost) from quotes where quotes.rid = quotes_request.id) as max_cost,
-            (select min(quotes.cost) from quotes where quotes.rid = quotes_request.id) as min_cost
-            from quotes_request 
-            inner join company_category on company_category.category_id = quotes_request.category_id 
-            inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 
-            and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 )
-            inner join users on users.id = quotes_request.client_id  
-            left join quotes on quotes.rid=quotes_request.id and quotes.uid = companies.id 
-            left join dismiss on dismiss.rid = quotes_request.id and dismiss.uid = companies.id
-            where dismiss.rid is null and companies.id =:vendor_id order by quotes_request.id desc"
-        ),array('vendor_id'=>Auth::id()));
-
-
-
-        return (collect($d));
-       
+        return $this->user_repo->getRequests();
     }
 
     public function showRequests(){
 
         $req = $this->getRequests();
-        $paginator = self::paginate($req,3);
+        $paginator = $this->user_repo->paginate($req,3);
         return view('vendor.requests')->with(['reqs'=>$paginator,
             
-            'cats'=>Category::all()
+            'cats'=>Service::getCategories()
         ]);
     }
 
-    private static function paginate($data,$per_page){
-
-        $current_page = LengthAwarePaginator::resolveCurrentPage();
-        $sliced_data = $data->slice(($current_page-1)*$per_page,$per_page);
-        $paginator = new LengthAwarePaginator($sliced_data,count($data),$per_page,$current_page);
-        return $paginator;
-       
-    }
-
     public function getRequest($id){
-        $d = DB::table('quotes_request')
-                ->join('categories','categories.id','=','quotes_request.category_id')
-                ->join('users','users.id','=','quotes_request.client_id')
-                ->where('quotes_request.id',$id)
-                ->select('quotes_request.*','categories.name','users.*')
-                ->first();
-            
-        return $d;
+        return $this->user_repo->getRequest($id);
     }
 
     public function getRequestNotYetAnswered(){
-
-        return  $this->getRequests()->filter(function($value,$key){
-             return $value->rid == null;
-         });
+        return $this->user_repo->getRequestNotYetAnswered();
     }
 
     public function getAnsweredRequests(){
-        $d = DB::select(DB::raw(
-                "select quotes_request.*,users.first_name as client_name,company_category.company_id, company_category.category_id from quotes_request 
-                inner join company_category on company_category.category_id = quotes_request.category_id 
-                inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 
-                and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 )
-                inner join users on users.id = quotes_request.client_id 
-                inner join quotes on quotes.rid = quotes_request.id and companies.id = quotes.uid 
-                left join dismiss on dismiss.rid = quotes_request.id
-                where companies.id =:user_id and dismiss.rid is null
-                order by quotes_request.id desc"
-            ),array('user_id'=>Auth::id()));
-        
-         return collect($d);
+        $this->user_repo->getAnsweredRequests();
     }
 
     public function replyRequest(Request $request){
@@ -365,12 +251,9 @@ class UserController extends Controller
                     'message'=>$request->message
             ];*/
 
-           
-            event(new NewQuoteSent($request_data,Auth::user(),$request->cost,$request->message));
-            
-
             if(!is_null($id)){
 
+                   event(new NewQuoteSent($request_data,Auth::user(),$request->cost,$request->message));
                    return response()->json([
                         'status'=>'Quotes Sent Successfully to '.$request_data->first_name.' '.$request_data->last_name
                         ]);
@@ -394,27 +277,25 @@ class UserController extends Controller
 
             ]);
 
-            if(!is_null($id)){
-                return response()->json([
-                'rid'=>$rid,
-                'uid'=>Auth::id(),
-                'client_id'=>$client_id
-            ]);
-        }
-        else{
+                if(!is_null($id)){
+                    return response()->json([
+                    'rid'=>$rid,
+                    'uid'=>Auth::id(),
+                    'client_id'=>$client_id
+                ]);
+            }
+            else{
 
-            return json_encode([
-                'status'=>'Error Performing Operation'
-            ]);
-        }
+                return json_encode([
+                    'status'=>'Error Performing Operation'
+                ]);
+            }
 
             
         }
 
-         return json_encode([
-                'rid'=>$rid,
-                'uid'=>Auth::id(),
-                'client_id'=>$client_id
-         ]);
+         return response()->json([
+             'Bad request'
+         ],401);
     }
 }

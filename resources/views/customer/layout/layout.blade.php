@@ -137,7 +137,7 @@
 				</li>
 
 				<li class="dropdown">
-					<a href="javascript:void(0);" title="Extra Pages">Requests</a>
+					<a href="{{url('/curequest')}}" title="Extra Pages">Requests</a>
 				</li>
 
 				<li class="dropdown">

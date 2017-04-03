@@ -36,7 +36,14 @@ if(count($all_requests) > 0){
                 <br><br>";
             }
             else 
-                echo '<div class="alert alert-warning">Event Schedule Date has Passed</div>';
+                echo '<div class="row"><div class="alert alert-warning col-sm-4">Event Schedule Date has Passed</div>';
+                echo "<button class='btn btn-danger btn-sm col-sm-1 request dismiss' data-rid = '$request->id'
+                    data-cid = '$request->client_id'
+                    
+                >
+                    Dismiss
+                    
+                </button></div>";
             }
         }
         else{
@@ -71,3 +78,8 @@ if(count($all_requests) > 0){
     }
 }
 @endphp
+@if(isset($requests_count))
+    @if($requests_count > $all_requests->count())
+         <a href="{{url('/requests')}}" class="btn btn-default">View all</a>
+    @endif
+@endif

@@ -34,9 +34,9 @@ class NewQuotesSentListener
     public function handle(NewQuoteSent $event)
     {
         //
-       $this->push_message->pushMessage('f6EM8mIWTV0:APA91bGXqZ8dw9xRrAXxcGxbiTPq-L2_x8TtLSapiPOQdmsT3C9H3FYBUKD50WB0hdtZqbmr0OwKdZzVVHW-nvYYAfHaHToK-QQ6ylp1Dy13wrfG9YzebjBYPnD623Mqqr9NLIlgnooq',$event->vendor,$event->request);
+       $this->push_message->pushMessage('emMVXDU2niI:APA91bGl9qC5qpIkCaSx9xUVCJHJlYcrL6gz4YC2dFdwJCR51GwWszTBqF8D4EzBV1I-2HdHSbLzzqskkXvoFGo6rKDqqcVA5EHv4dW7ebAwsK4oLCoLGmjtsGlThExBNVwqAnQmAQeH',$event->vendor,$event->request);
         Mail::to($event->request)
-               ->send(new SendQuote($event->request,$event->vendor,$event->cost,$event->message));
+               ->queue(new SendQuote($event->request,$event->vendor,$event->cost,$event->message));
 
         //Send A Push notification
 
