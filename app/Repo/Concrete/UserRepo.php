@@ -1,8 +1,9 @@
 <?php
 namespace App\Repo\Concrete;
 
-use  App\Repo\Abstracts\UserBaseRepo;
+use  App\Repo\Abstracts\BaseRepo;
 use Illuminate\Database\Eloquent\Model;
+use App\Repo\Interfaces\UserRepoInterface;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +13,7 @@ use Illuminate\Foundation\Application;
 
 use App\Entities\Review;
 
-class MySqlUserRepo extends UserBaseRepo{
+class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
 
    
     public function __construct(Application $app){

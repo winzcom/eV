@@ -1,8 +1,9 @@
 <?php
 namespace App\Repo\Concrete;
 
-use  App\Repo\Abstracts\CustBaseRepo;
+use  App\Repo\Abstracts\BaseRepo;
 use Illuminate\Database\Eloquent\Model;
+use App\Repo\Interfaces\CustRepoInterface;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +13,7 @@ use Illuminate\Foundation\Application;
 
 use App\Entities\Review;
 
-class MySqlCustRepo extends CustBaseRepo{
+class MySqlCustRepo extends BaseRepo implements CustRepoInterface{
 
    
     public function __construct(Application $app){
