@@ -28,6 +28,7 @@ class NewQuoteSent
     public function __construct($request,$vendor,$cost,$message)
     {
         //
+       
         $this->request = $request;
         $this->vendor = $vendor;
         $this->cost = $cost;

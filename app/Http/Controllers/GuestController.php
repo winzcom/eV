@@ -102,6 +102,7 @@ class GuestController extends Controller
                                     ]);
 
                     }
+                    if($vicinity == 'all' || $vicinity == '') $vicinity = 0;
                     $request = QuotesRequest::create([
                         'category_id'=>$category['category'],
                         'client_id'=>$id !== null ? $id:$customer->id,

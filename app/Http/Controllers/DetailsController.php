@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Entities\User;
 use App\Service\Service;
+use App\Repo\Interfaces\UserRepoInterface as UPI;
 
 class DetailsController extends Controller
 {
     //
     public $request;
 
-    public function __construct(Request $request){
+    public function __construct(Request $request,UPI $user_repo){
         $this->request = $request;
        $this->path = Storage::url('public');
     }
@@ -48,6 +49,7 @@ class DetailsController extends Controller
                     'similars'=>$similars,
                     'request'=>$this->request,
                     'cat_id'=>$id != null ? $id:null,
+                    'avg'=>$user->reviews->pluck('rating')->avg(),
                     'category_name'=>$id!=null ? $user->categories()->where('categories.id',$id)->first()->name:''
                 ]);
     }

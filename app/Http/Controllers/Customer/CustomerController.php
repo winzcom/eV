@@ -16,6 +16,7 @@ use App\Entities\QuotesRequest;
 use App\Events\ContactVendorEvent;
 
 use App\Repo\Interfaces\CustRepoInterface as CRI;
+use App\Repo\Interfaces\UserRepoInterface as URI;
 use App\Interfaces\GalleryInterface as GI;
 
 class CustomerController extends Controller
@@ -24,13 +25,15 @@ class CustomerController extends Controller
 
     private $auth;
     private $amazon_path;
+    private $cust_repo;
     private $user_repo;
 
-    public function __construct(CRI $cust_repo,GI $gi){
+    public function __construct(CRI $cust_repo,GI $gi,URI $user_repo){
 
         $this->auth = Auth::guard('client');
         //$this->amazon_path = Storage::url('public/images');
         $this->cust_repo = $cust_repo;
+        $this->user_repo = $user_repo;
         $this->amazon_path = $gi->directoryPath();
     }
 
@@ -84,18 +87,7 @@ class CustomerController extends Controller
 
         $vendor = $this->user_repo->find($request->vendor_id);
         $message = $request->message;
-        $request = QuotesRequest::with(
-            [
-                'category','quote'=>function($query) use($vendor,$request){
-                    $query->where('uid',$vendor->id)
-                    ->where('rid',$request->request_id)
-                    ->get();
-                }
-            ]
-        )
-        ->findorFail($request->request_id);
-        
-        
+        $request = $this->user_repo->getRequest($request->request_id);
        event(new ContactVendorEvent($vendor,Auth::guard('client')->user(),$request,$message));
 
         return response()->json([

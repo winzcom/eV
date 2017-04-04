@@ -7,7 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Mail\ContactVendor;
 use Illuminate\Support\Facades\Mail;
-
+use App\Interfaces\PushNotificationInterface as PI;
 
 use App\Jobs\SendPushNotification as SPN;
 
@@ -23,7 +23,7 @@ class ContactVendorListener
     public function __construct()
     {
         //
-        $this->push_message = $push_message;
+        //$this->push_message = $push_message;
     }
 
     /**

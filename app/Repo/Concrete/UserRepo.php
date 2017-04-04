@@ -58,9 +58,15 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
     public function getRequest(int $id){
         $d = DB::table('quotes_request')
                 ->join('categories','categories.id','=','quotes_request.category_id')
+                ->join('company_category','company_category.category_id','=','quotes_request.category_id')
+                ->join('companies','companies.id','company_category.company_id')
                 ->join('users','users.id','=','quotes_request.client_id')
+                ->leftJoin('quotes',function($join){
+                    $join->on('quotes.rid','=','quotes_request.id')
+                    ->on('quotes.uid','=','companies.id');
+                })
                 ->where('quotes_request.id',$id)
-                ->select('quotes_request.*','categories.name','users.*')
+                ->select('quotes_request.*','categories.name','users.*','quotes.*')
                 ->first();
             
         return $d;

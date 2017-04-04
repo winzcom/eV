@@ -17,7 +17,10 @@ class SendQuote extends Mailable
      * @return void
      */
 
-     protected $data;
+     protected $request;
+     protected $vendor;
+     protected $cost;
+     protected $message;
 
 
     public function __construct($request,$vendor,$cost,$message)

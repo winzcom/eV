@@ -1,12 +1,13 @@
 @component('mail::message')
 
-    Quote Received From {{$vendor->name}} For {{$request->name}}
-
-    Cost: {{$cost}}
+    @component('mail::panel')
+        Quote Received From {{$vendor->name}} For {{$request->name}}
+        Cost: {{$cost}}
     Message: {{$message}}
 
+    @endcomponent
 
-    @component('mail::panel')
+    @component('mail::subcopy')
 
         @if(is_object($ob = json_decode($request->request)))
 

@@ -2,7 +2,7 @@
 
  @inject('service','App\Service\Service')
 
-Message from {{$customer->first_name}} {{$customer->last_name}} for {{$request->category->name}}<br><hr>
+Message from {{$customer->first_name}} {{$customer->last_name}} for {{$request->name}}<br><hr>
 
 @component('mail::panel')
 {{$message}}
@@ -11,8 +11,8 @@ Message from {{$customer->first_name}} {{$customer->last_name}} for {{$request->
 
 Quote<br><hr>
 
-cost: {{$service->currencyFormatter()->formatCurrency($request->quote->first()->cost,'EUR')}}<br><hr>
-message: {{$request->quote->first()->message}}
+cost: {{$service->currencyFormatter()->formatCurrency($request->cost,'EUR')}}<br><hr>
+message: {{$request->message}}
 
 @endcomponent
 @component('mail::subcopy')

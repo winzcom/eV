@@ -28,6 +28,7 @@ class UserController extends Controller
         $this->gallery = $gi;
         $this->user_repo = $user_repo;
         $this->path = $this->gallery->directoryPath();
+        
     }
 
     public function home(){
@@ -88,7 +89,7 @@ class UserController extends Controller
 
 
     public function showGallery(){
-        $galleries = $this->user_repo->getImages(['id','=',Auth::id()]);
+        $galleries = $this->user_repo->getImages(['user_id','=',Auth::id()]);
         return view('vendor.user_gallery')->with(['galleries'=>$galleries,'path'=>$this->path]);
     }
 
@@ -239,9 +240,7 @@ class UserController extends Controller
                 'message'=>$request->message
             ]);
 
-           
-             $request_data = $this->getRequest($request->rid);
-             
+          
 
             /*$datas = [
 
@@ -251,8 +250,10 @@ class UserController extends Controller
                     'message'=>$request->message
             ];*/
 
-            if(!is_null($id)){
+            $request_data = $this->user_repo->getRequest($request->rid);
 
+
+            if(!is_null($id)){
                    event(new NewQuoteSent($request_data,Auth::user(),$request->cost,$request->message));
                    return response()->json([
                         'status'=>'Quotes Sent Successfully to '.$request_data->first_name.' '.$request_data->last_name

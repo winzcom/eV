@@ -11,7 +11,7 @@ class FirebasePushNotification implements PI{
 
     }
 
-    public function pushMessage($endpoint,$vendor,$request){
+    public function pushMessage($endpoint,$vendor,$category){
 
             $client = new Client();
             $response = $client->request('POST','https://fcm.googleapis.com/fcm/send',[
@@ -26,7 +26,7 @@ class FirebasePushNotification implements PI{
                 'data'=>[
                     
                         'title'=> 'New Quote',
-                        'body'=>'A new Quotes from '.$vendor->name.' For '.$request->name.' Has Been Sent to Your Inbox'
+                        'body'=>'A new Quotes from '.$vendor->name.' For '.$category.' Has Been Sent to Your Inbox'
                     
                 ],
             ]

@@ -36,14 +36,12 @@ if(count($all_requests) > 0){
                 <br><br>";
             }
             else 
-                echo '<div class="row"><div class="alert alert-warning col-sm-4">Event Schedule Date has Passed</div>';
-                echo "<button class='btn btn-danger btn-sm col-sm-1 request dismiss' data-rid = '$request->id'
-                    data-cid = '$request->client_id'
-                    
-                >
+                echo "<div class='row'><div class='alert alert-warning col-sm-4'>Event Schedule Date has Passed</div>
+                <div class='col-sm-6'><button class='btn btn-danger btn-sm col-sm-1 request dismiss' data-rid = '$request->id'
+                    data-cid = '$request->client_id'>
                     Dismiss
                     
-                </button></div>";
+                </button></div></div>";
             }
         }
         else{
