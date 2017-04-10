@@ -10,16 +10,18 @@ $(document).ready(function(){
              var cost = button.data('cost');
              var dp = button.data('dp');
              console.log(button);
-
+             console.log(cost);
              var cost_input = $('#cost');
              var down_payment = $('#down_payment');
              var message_textarea =  $('#message')
-            
+
              cost_input.attr({
                     'disabled':true,
+                    'type':'text',
                     'value':cost
                 });
             
+
             down_payment.attr({
                 'disabled':true,
                 'value':dp

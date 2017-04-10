@@ -79,7 +79,7 @@ class Service{
     }
 
     public static function createNewUser($data){
-         $filtered =  array_except($data,['password_confirm','_token']);
+        $filtered =  array_except($data,['password_confirm','_token']);
         $filtered['password'] = bcrypt($filtered['password']);
         $user =  User::create($filtered);
 
@@ -135,11 +135,11 @@ class Service{
         return $response;
     }
 
-    public  function currencyFormatter(){
+    public function currencyFormatter(){
 
         $formatter = new \NumberFormatter('en_GB',  \NumberFormatter::CURRENCY);
         $formatter->setSymbol(\NumberFormatter::CURRENCY_SYMBOL,'');
-
+        $formatter->setAttribute(\NumberFormatter::MAX_FRACTION_DIGITS,0);
         return $formatter;
     }
 

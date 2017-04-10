@@ -45,6 +45,8 @@ Route::get('/register/verify/{confirm_token}','Auth\RegisterController@verifyTok
 
 Route::get('/', 'GuestController@index');
 
+Route::get('/set_firebase_token','GuestController@setFirebaseNotificationEndPoint');
+
 Route::get('/logout','GuestController@logout');
 
 Auth::routes();

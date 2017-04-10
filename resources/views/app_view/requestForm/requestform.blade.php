@@ -31,7 +31,7 @@
             <div class="row hide" data-step="2" data-title="This is the first step!">
                 <div class="control-group" id="eventtype">
                     <label class="control-label" for="inputCity">What type of Event?</label>
-                        <div class="controls">
+                        <div class="controls" id="div_event">
                             <select class="form-control input-lg" name="event" id="event" placeholder="pick the type of event">
                                 
                                 @foreach($events as $event)
@@ -103,6 +103,25 @@
                     </div>
                 </div>
 
+                <div id="delivery_service">
+                    <label>How do you want to get it</label>
+                    <div class="radio">
+                        <label class="">
+                            <div class="iradio_square">
+                                <input type="radio" name="delivery_service" id="optionsRadios2" value="I would Want it Delivered"><ins class="iCheck-helper"></ins>
+                            </div>
+                        Delivery
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="">
+                            <div class="iradio_square">
+                                <input type="radio" name="delivery_service" id="optionsRadios2" value="I would Come to Collect When Ready"><ins class="iCheck-helper"></ins>
+                            </div>
+                            Collecting
+                        </label>
+                    </div>
+                </div>
 
                 <div id="publicbudget">
                     <label>How do You Want to Work With Vendors?</label>

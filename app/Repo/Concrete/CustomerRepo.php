@@ -82,11 +82,33 @@ class MySqlCustRepo extends BaseRepo implements CustRepoInterface{
                         'reviews.review','reviews.reply','reviewers_name','rating','image_name',
                          'companies.*',(DB::raw("(select avg(r.rating) from reviews r where r.review_for = companies.id) as avg")),
                          (DB::raw("(select count(r.rating) from reviews r where r.review_for = companies.id) as count")
-                         )
+                         ),
+                        (DB::raw("(select bay_average from bayesian_average where bayesian_average.review_for = companies.id) as bay_avg"))
                 )
-                ->where(['quotes.client_id'=>$cust_id,'quotes.rid'=>$request_id])->get();
+                ->where(['quotes.client_id'=>$cust_id,'quotes.rid'=>$request_id])->orderBy('bay_avg','desc')->get();
                 //dd(json_encode($d->groupBy('id')[13]->unique()->pluck('image_name')->all()));
                  return $this->paginate($d->groupBy('id'),10);
+    }
+
+    public function getReviews(int $id,int $pagination = null,$take = null,$ordering = null){
+        $query = Review::where('reviewers_id',$id);
+        $query1 = clone $query;
+        $total_avg = $query1->select(DB::raw('count(rating) as total,avg(rating) as avg'))->get();
+        if(!is_null($ordering)){
+            list($field,$order) = $ordering;
+            if(!is_null($take))
+                $reviews = $query->orderBy($field,$order)->take($take)->get();
+            else
+                $reviews = $query->orderBy($field,$order)->paginate($pagination);
+        }
+        else{
+            if(!is_null($take))
+                $reviews = $query->take($take)->get();
+            else
+                $reviews = $query->paginate($pagination);
+        }
+        
+        return [$total_avg,$reviews,$query];
     }
 
     

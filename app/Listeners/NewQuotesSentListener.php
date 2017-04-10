@@ -6,6 +6,7 @@ use App\Events\NewQuoteSent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
+use App\Repo\Interfaces\UserRepoInterface as UPI;
 
 use App\Mail\SendQuote;
 use App\Interfaces\PushNotificationInterface as PI;
@@ -18,10 +19,11 @@ class NewQuotesSentListener
      * @return void
      */
      protected $push_message;
-    public function __construct(PI $push_message)
+     protected $repo;
+    public function __construct(PI $push_message,UPI $repo)
     {
         //
-        
+        $this->repo = $repo;
        $this->push_message = $push_message;
     }
 
@@ -34,8 +36,10 @@ class NewQuotesSentListener
     public function handle(NewQuoteSent $event)
     {
         
-       $this->push_message->pushMessage('emMVXDU2niI:APA91bGl9qC5qpIkCaSx9xUVCJHJlYcrL6gz4YC2dFdwJCR51GwWszTBqF8D4EzBV1I-2HdHSbLzzqskkXvoFGo6rKDqqcVA5EHv4dW7ebAwsK4oLCoLGmjtsGlThExBNVwqAnQmAQeH',$event->vendor,$event->request->name);
-        Mail::to($event->request)
+       $client_firebase_endpoint = $this->repo->createModel('customer')->find($event->request->user_id)->firebase_endpoint;
+       if($client_firebase_endpoint !== null)
+            $this->push_message->pushMessage($client_firebase_endpoint,$event->vendor,$event->request->name);
+        Mail::to('ebudare@yahoo.com')
                ->send(new SendQuote($event->request,$event->vendor,$event->cost,$event->message));
 
         //Send A Push notification

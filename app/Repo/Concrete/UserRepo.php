@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\RegisterFormRequest;
 use Illuminate\Support\Collection;
+use App\Entities\Gallery;
 use Illuminate\Foundation\Application;
 
 use App\Entities\Review;
@@ -20,9 +21,47 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
         $this->app = $app;
         $this->model = $this->model();
     }
+    
 
     protected function model(){
         return $this->app->make('\App\Entities\User');
+    }
+
+    public function createNewUser($data){
+        $filtered =  array_except($data,['password_confirm','_token']);
+        $filtered['password'] = bcrypt($filtered['password']);
+        $user =  $this->model->create($filtered);
+
+        return $user;
+    }
+
+    public function getReviews(int $id,int $pagination = null,$take = null,$ordering = null){
+       
+       
+        $query = Review::where('review_for',$id);
+        $query1 = clone $query;
+        $total_avg = $query1->select(DB::raw('count(rating) as total,avg(rating) as avg'))->get();
+        if(!is_null($ordering)){
+            list($field,$order) = $ordering;
+            if(!is_null($take))
+                $reviews = $query->orderBy($field,$order)->take($take)->get();
+            else
+                $reviews = $query->orderBy($field,$order)->paginate($pagination);
+        }
+        else{
+            if(!is_null($take))
+                $reviews = $query->take($take)->get();
+            else
+                $reviews = $query->paginate($pagination);
+        }
+        
+        return [$total_avg,$reviews,$query];
+    }
+
+    public function getImages(...$args){
+           //$args = func_get_args();
+           $array = $this->returnWhereArrays($args);        
+         return Gallery::where($array)->orderBy('id','desc')->get();
     }
 
     public function getQuotes(){
@@ -66,7 +105,7 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
                     ->on('quotes.uid','=','companies.id');
                 })
                 ->where('quotes_request.id',$id)
-                ->select('quotes_request.*','categories.name','users.*','quotes.*')
+                ->select('quotes_request.*','categories.name','users.*','quotes.*','users.id as user_id')
                 ->first();
             
         return $d;

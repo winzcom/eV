@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Requests\FormRegistration;;
 use App\Service\Service;
+use App\Repo\Interfaces\UserRepoInterface as UPI;
 
 class RegisterController extends Controller
 {
@@ -38,15 +39,16 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/home';
      
-
+    private $user_repo;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UPI $user_repo)
     {
         $this->middleware('guest');
+        $this->user_repo = $user_repo;
     }
 
     public function showRegistrationForm()
@@ -82,7 +84,6 @@ class RegisterController extends Controller
 
         DB::Transaction(function() use ($request){
                 event(new Registered($user = $this->create($request->all())));
-                $this->sendVerificationMail($user);
         },5);
 
         return redirect('login')->with('message','A verification email has been sent');
@@ -111,7 +112,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = Service::createNewUser($data);
+        $user = $this->user_repo->createNewUser($data);
         $user->confirm_token = $this->generateToken();
         $user->save();
         $this->sendVerificationMail($user);
@@ -120,7 +121,7 @@ class RegisterController extends Controller
 
     public function verifyToken($confirm_token){
 
-        $user = User::where('confirm_token','=',$confirm_token)->first();
+        $user = $this->user_repo->findFirstByWhere(['confirm_token','=',$confirm_token]);
 
         if(!$user) throw new \Exception;
 

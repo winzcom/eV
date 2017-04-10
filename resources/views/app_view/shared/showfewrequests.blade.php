@@ -45,9 +45,10 @@ if(count($all_requests) > 0){
             }
         }
         else{
+                $cost = $service->currencyFormatter()->formatCurrency($request->cost,'EUR');
                 echo "<button class='btn btn-success btn-xs request' id='reply' data-toggle='modal'
                     data-target='#reply_request' data-message = '$request->message'
-                    data-cost = '$request->cost' data-uid = '$vendor_id' data-dp='$request->dp'
+                    data-cost ='$cost' data-uid = '$vendor_id' data-dp='$request->dp'
                 >
                     Show Quote
                 </button>

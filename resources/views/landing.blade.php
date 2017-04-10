@@ -9,7 +9,7 @@
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<section class="form-elements">
-						<p class="slide-sub-title light-color wow fadeInUp" data-wow-delay="0.5">Receive Tailored Quotes from  vendors round you with a single request.</p>
+						<p class="slide-sub-title light-color wow fadeInUp" data-wow-delay="0.5">Receive Tailored Quotes from  Vendors Round You With a Single Request.</p>
 						<h3 class="slide-title light-color wow fadeInUp" data-wow-delay="1s">e-Venting</h3>
 						@include('app_view.requestForm.stateform')
 					</section>
@@ -50,7 +50,7 @@
 					<div class="icon-box style7">
 						<i class="livicon" data-name="umbrella" data-color="#F1C40F" data-hovercolor="false" data-size="48" data-onparent="true"></i>
 						<h4 class="box-title strong">Receive Quotes</h4>
-						<p>Receive quotes from Vendors</p>
+						<p>Receive quotes from vendors</p>
 					</div>
 				</div>
 				<div class="col-md-4">

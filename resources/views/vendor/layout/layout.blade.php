@@ -28,16 +28,9 @@
 	<script>
 
     // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
+    
 	window.myUrl = "http:\/\/localhost/eventing/public\/";
-    var pusher = new Pusher('6a78b439ea816808a071', {
-      encrypted: true
-    });
 
-    var channel = pusher.subscribe('newrequest-channel');
-    channel.bind('App\\Events\\NewRequestSentEvent', function(data) {
-      console.log(data.data.name);
-    });
   </script>
 
 </head>

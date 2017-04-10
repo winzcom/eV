@@ -71,9 +71,15 @@
                                     <div class="thumb-wrapper">
                                         <div class="thumbs-carousel">
                                             @if(count($company->galleries) > 0)
+                                                @php
+                                                    $file_name = $company->galleries->pluck('image_name')->take(3); 
+                                                @endphp
+                                                @foreach($file_name as $key=>$value)
                                                     <div class="item">
-                                                        <img src="{{$path}}/{{$company->galleries->pluck('image_name')->take(3)}}" alt="Thumbnail">
+                                                        <img src="{{$path}}/{{$value}}" alt="Thumbnail">
                                                     </div>
+                                                @endforeach
+                                                    
                                             @else
                                                 <div class="alert alert-info "></div>
                                             @endif

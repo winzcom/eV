@@ -58,7 +58,6 @@ class UserController extends Controller
         
         $filtered['name_slug'] = str_slug($filtered['name']);
         $filtered['vicinity_id'] = (int)$request->vicinity_id !== 0 ? (int)$request->vicinity_id:0 ;
-        //$filtered = array_merge($filtered,$name_slug);
 
       try{
 
@@ -68,12 +67,11 @@ class UserController extends Controller
           
           $user->categories()->sync($request->category);
 
-          return redirect('home')->with('message','Profile Updated');
-           dd('');     
+          return redirect('home')->with('message','Profile Updated');    
       } 
 
       catch(Exception $e){
-          dd('Error Encountered');
+          dd('Error Encountered ');
       }
     }
 
@@ -183,7 +181,7 @@ class UserController extends Controller
         $id = $request->review_id;
         $reply = $request->reply;
         if($id !== '' && $reply !== ''){
-                 Review::where('id','=',$id)->update(['reply'=>$reply]);
+                 $this->user_repo->createModel('reviews')->where('id','=',$id)->update(['reply'=>$reply]);
 
         if($request->ajax()){
                  /*** Send email to reviewer */
@@ -231,6 +229,8 @@ class UserController extends Controller
        
 
         DB::transaction(function() use ($request,$id){
+            $request_data = $this->user_repo->getRequest($request->rid);
+            
             $id = DB::table('quotes')->insertGetId([
                 'rid'=>$request->rid,
                 'uid'=>Auth::id(),
@@ -250,7 +250,6 @@ class UserController extends Controller
                     'message'=>$request->message
             ];*/
 
-            $request_data = $this->user_repo->getRequest($request->rid);
 
 
             if(!is_null($id)){

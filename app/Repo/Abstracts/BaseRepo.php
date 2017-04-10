@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\RegisterFormRequest;
 use Illuminate\Support\Collection;
-use App\Entities\Gallery;
+
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use App\Entities\Review;
@@ -17,6 +17,17 @@ abstract class BaseRepo implements RepoInterface {
 
     protected $model;
     protected $app;
+
+    protected $models = [
+        'reviews'=>'\App\Entities\Review',
+        'gallery'=>'\App\Entities\Gallery',
+        'user'=>'\App\Entities\User',
+        'category'=>'\App\Entities\Category',
+        'vendor'=>'App\Entities\User',
+        'offdays'=>'App\Entities\OffDay',
+        'customer'=>'App\Entities\Customer',
+        'quotes_request'=>'App\Entities\QuotesRequest'
+    ];
 
     public function __construct(){}
 
@@ -30,6 +41,12 @@ abstract class BaseRepo implements RepoInterface {
     public function findWith(int $id,array $relations){
         
         return $this->model->with($relations)->find($id);
+    }
+
+    public function update(){
+        $args = func_get_args();
+        $array = $this->returnWhereArrays($args);
+        $this->model->update();
     }
 
     public function findBy(){
@@ -46,6 +63,16 @@ abstract class BaseRepo implements RepoInterface {
         
     }
 
+    public function getModel(){
+        return $this->model;
+    }
+
+    public function createModel($key){
+
+        if(array_key_exists($key,$this->models)){
+            return $this->app->make($this->models[$key]);
+        }
+    }
 
     public function paginate($data,$per_page){
 
@@ -56,13 +83,9 @@ abstract class BaseRepo implements RepoInterface {
        
     }
 
-    public function getImages(){
-           $args = func_get_args();
-           $array = $this->returnWhereArrays($args);        
-         return Gallery::where($array)->orderBy('id','desc')->get();
-    }
+    
 
-    private function returnWhereArrays(array $args){
+    protected function returnWhereArrays(array $args){
         
         $array = [];
         if(count($args) > 0){
@@ -73,29 +96,6 @@ abstract class BaseRepo implements RepoInterface {
             }
         }
         return $array;
-    }
-
-    public function getReviews(int $id,int $pagination = null,$take = null,$ordering = null){
-       
-       
-        $query = Review::where('review_for',$id);
-        $query1 = clone $query;
-        $total_avg = $query1->select(DB::raw('count(rating) as total,avg(rating) as avg'))->get();
-        if(!is_null($ordering)){
-            list($field,$order) = $ordering;
-            if(!is_null($take))
-                $reviews = $query->orderBy($field,$order)->take($take)->get();
-            else
-                $reviews = $query->orderBy($field,$order)->paginate($pagination);
-        }
-        else{
-            if(!is_null($take))
-                $reviews = $query->get();
-            else
-                $reviews = $query->paginate($pagination);
-        }
-        
-        return [$total_avg,$reviews,$query];
     }
 
     abstract protected function model();

@@ -7,12 +7,11 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 
 use App\Service\Service;
-use App\Entities\Customer;
 use App\Entities\User;
-use App\Entities\Review;
 use App\Entities\QuotesRequest;
 use Illuminate\Support\Facades\DB;
 use App\TreeNode\CategoryTree;
+use App\Repo\Interfaces\UserRepoInterface as UPI;
 use App\Events\NewRequestSentEvent;
 
 use App\Mail\SendRequest;
@@ -25,12 +24,12 @@ class GuestController extends Controller
      * @return void
      */
 
-     private $com;
+     private $repo;
 
-    public function __construct()
+    public function __construct(UPI $repo)
     {
-        //Nothing H
-        $this->com = '';
+        
+        $this->repo = $repo;
     }
 
     /**
@@ -47,13 +46,16 @@ class GuestController extends Controller
 
     public function writeReview(Request $request){
         
-        Review::create($request->except(['_token']));
+        $data = $request->except(['_token']);
+        $data['reviewers_id'] = Auth::guard('client')->id();
+        $this->repo->createModel('reviews')
+            ->create($data);
         return back();
     }
 
     private function getUserWithCategoryQuery($category,$state,$vicinity){
 
-        return User::whereHas('categories',function($q) use ($category){
+        return $this->repo->createModel('vendor')->whereHas('categories',function($q) use ($category){
                     $q->where('categories.id',$category['category']);
                 })->StateVicinity($state,$vicinity);
     }
@@ -94,7 +96,7 @@ class GuestController extends Controller
                         }
                             
 
-                        $customer = Customer::firstOrCreate([
+                        $customer = $this->repo->createModel('customer')->firstOrCreate([
                                         'first_name'=>$client['first_name'],
                                         'last_name'=>$client['last_name'],
                                         'email'=>$client['email'],
@@ -103,7 +105,7 @@ class GuestController extends Controller
 
                     }
                     if($vicinity == 'all' || $vicinity == '') $vicinity = 0;
-                    $request = QuotesRequest::create([
+                    $request = $this->repo->createModel('quotes_request')->create([
                         'category_id'=>$category['category'],
                         'client_id'=>$id !== null ? $id:$customer->id,
                         'state'=>$state,
@@ -161,5 +163,15 @@ class GuestController extends Controller
         }
     }
 
-    
+    public function setFirebaseNotificationEndPoint(Request $request){
+        $model = null;
+        if(Auth::check()){
+            $model = $this->repo->createModel('vendor');
+            $model->where('id',Auth::id())->update(['firebase_endpoint'=>$request->token]);
+        }
+        elseif(Auth::guard('client')->check()){
+            $model = $this->repo->createModel('customer');
+            $model->where('id',Auth::guard('client')->id())->update(['firebase_endpoint'=>$request->token]);
+        }
+    }
 }

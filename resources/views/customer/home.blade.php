@@ -87,3 +87,7 @@
 
 
 @endsection
+
+@section('script')
+<script src="{{asset('jss/custom/firebase.js')}}"></script>
+@endsection

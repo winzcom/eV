@@ -1,4 +1,5 @@
-var MargueeAditional = [
+
+    var MargueeAditional = [
                             
                             {name:'Generator Hire',id:'Generator Hire',type:'checkbox',formname:'cateringadditions[]'},
                             {name:'Mobile Toilet',id:'Mobile Toilet',type:'checkbox',formname:'cateringadditions[]'},
@@ -23,6 +24,8 @@ var publicPrivateEvents = [{name:'Public Event',type:'radio',formname:'eventtype
                           [{name:'Name of Event',formname:'eventname'},{name:'Website',formname:'eventwebsite'}]                          
                       },
                       {name:'Private Event',type:'radio',formname:'eventtype'}]
+  
+var eventPlanning = ['EventPlanner','WeddingPlanner']
 
     var formElements = {
       'Caterers':{
@@ -31,7 +34,7 @@ var publicPrivateEvents = [{name:'Public Event',type:'radio',formname:'eventtype
       'Canapes':{
                      'additional':[{name:'Waiting Staffs',id:'Waiting Staffs'}]
                   },
-      'Vegetarian and Vegan Catering':{
+      'VegetarianandVeganCatering':{
                      'additional':[{name:'Waiting Staffs',id:'Waiting Staffs'}]
                   },
       'TableWare':{
@@ -43,15 +46,15 @@ var publicPrivateEvents = [{name:'Public Event',type:'radio',formname:'eventtype
       'Buffet':{
                      'additional':CateringAdditionals
                   },
-      'Bell Tents': {
+      'BellTents': {
                           'additional':MargueeAditional,
                           'extras':MargueeExtras
                       },
-      'Party Tents':{
+      'PartyTents':{
                         'additional':MargueeAditional,
                           'extras':MargueeExtras
                     },
-        'Tipi Hire':{
+        'TipiHire':{
                           'additional':MargueeAditional,
                           'extras':MargueeExtras
                    },
@@ -68,6 +71,9 @@ var publicPrivateEvents = [{name:'Public Event',type:'radio',formname:'eventtype
                         ]
 
                     },
+          'Event Planner':{
+
+          }
     }
 
 
@@ -76,3 +82,4 @@ var publicPrivateEvents = [{name:'Public Event',type:'radio',formname:'eventtype
       'Concert': publicPrivateEvents,
       'Business Event':publicPrivateEvents,
     }
+

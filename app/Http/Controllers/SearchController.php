@@ -8,24 +8,25 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Category;
 use App\Service\Service;
-use App\Entities\User;
+use App\Repo\Interfaces\UserRepoInterface as UPI;
+use App\Interfaces\GalleryInterface as GI;
 
 class SearchController extends Controller
 {
     //
 
     private $path;
+    private $user_repo;
 
-    public function __construct(){
-        $this->path = Storage::url('public');
-
+    public function __construct(UPI $user_repo,GI $gi){
+        $this->path = $gi->directoryPath();
+        $this->user_repo = $user_repo;
     }
 
     public function search(Request $request){
 
-        //dd($request->query->all());
         $categories = implode(',',$request->query('category'));
-        $companies = User::with('reviews')->whereHas('categories',function($q) use ($request){
+        $companies = $this->user_repo->createModel('vendor')->with('reviews')->whereHas('categories',function($q) use ($request){
             $q->whereIn('categories.id',$request->input('category'));
         })->StateVicinity($request->state,$request->vicinity)->where('name','!=','null')->paginate(15);
        /*return view('app_view.browsevendors')->with(['companies'=>$companies,'request'=>$request,
@@ -36,7 +37,7 @@ class SearchController extends Controller
     }
 
     private function getVendors($cat){
-        $companies = User::with('reviews','galleries')->whereHas('categories',function($q) use ($cat){
+        $companies = $this->user_repo->createModel('vendor')->with('reviews','galleries')->whereHas('categories',function($q) use ($cat){
             $q->where('categories.id',$cat);
         })->where([
             ['first_name','!=','null'],
@@ -50,12 +51,13 @@ class SearchController extends Controller
     
         if($category){
             $companies = $this->getVendors($category);
+        
             if(count($companies) > 0){
                 return view('app_view.vendorbrowse')->with([
                     'companies'=>$companies,
                     'category_id'=>$category,
                     'path'=>$this->path,
-                    'cat_name'=>$companies->first()->categories()->where('categories.id',$category)->get()[0]->name
+                    'cat_name'=>$companies->first()->categories->find($category)->name
                 ]);
             }
             return view('app_view.vendorbrowse')->with('category_id',$category);
@@ -67,7 +69,7 @@ class SearchController extends Controller
 
     public function search_by_typing(Request $request){
         $name = $request->name;
-        $companies = User::with('categories','reviews')->where('name','like',$name."%")->paginate(10);
+        $companies = $this->user_repo->createModel('vendor')->with('categories','reviews')->where('name','like',$name."%")->paginate(10);
         return view('app_view.display_list')->with(['companies'=>$companies,'request'=>$request,
             'events'=>Service::getEvents()
         ]);

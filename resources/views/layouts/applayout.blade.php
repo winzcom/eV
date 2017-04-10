@@ -38,7 +38,7 @@
   z-index: 15;
   top: 50%;
   left: 50%;
-  margin: -100px 0 0 -150px;
+  margin: 0px 0 0 -150px;
 }
 </style>
 </head>
@@ -240,7 +240,7 @@ window.myUrl = "http:\/\/localhost/eventing/public\/";
 <script src="{{asset('js/validate.js')}}"></script>
 <script src="{{asset('js/tempo.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>	
-<script src="{{asset('vendor/js/hashids/dist/hashids.min.js')}}"></script>
+
 <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
 <script src="{{asset('jss/custom/data/requestdata.js')}}"></script>
 <script src="{{asset('jss/custom/startRequestwizard.js')}}"></script>

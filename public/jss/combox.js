@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
-changeVicinitySelect(document.getElementById('state'))
+if(document.getElementById('state') !== null)
+    changeVicinitySelect(document.getElementById('state'))
 
 $('#state').change(function(e){
     changeVicinitySelect(this,'change')

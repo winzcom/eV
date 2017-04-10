@@ -29,6 +29,10 @@ class FirebasePushNotification implements PI{
                         'body'=>'A new Quotes from '.$vendor->name.' For '.$category.' Has Been Sent to Your Inbox'
                     
                 ],
+                'notification'=>[
+                    'title'=>'New Quote for '.$category,
+                    'body'=>$vendor->name.' as replied with a quote',
+                    'click_action'=>'localhost/eventing/public/culogin'                ]
             ]
         ]);
 

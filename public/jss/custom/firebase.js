@@ -12,6 +12,7 @@ navigator.serviceWorker
                     messaging.requestPermission().then(function(){
                     
                       messaging.getToken().then(function(token){
+                          setServerToken(token);
                           console.log(token)
                       }).catch(function(e){
                           console.log('Token not generated')
@@ -23,6 +24,7 @@ navigator.serviceWorker
 
                else{
                  messaging.getToken().then(function(token){
+                   setServerToken(token);
                    console.log(token);
                  }) 
                }
@@ -35,6 +37,7 @@ messaging.onTokenRefresh(function() {
     console.log('Token refreshed.');
     // Indicate that the new Instance ID token has not yet been sent to the
     // app server.
+    setServerToken(refreshedToken);
     console.log(refreshedToken);
     // ...
   })
@@ -43,6 +46,17 @@ messaging.onTokenRefresh(function() {
     showToken('Unable to retrieve refreshed token ', err);
   });
 });
+
+function setServerToken(Token){
+  $.ajax({
+      url:customerUrl+'set_firebase_token',
+      type:'GET',
+      data:{token:Token},
+      success:function(data){
+        console.log('token Saved')
+      }
+    });
+}
 
  /*messaging.useServiceWorker(regg);
 messaging.getToken().then(function(token){

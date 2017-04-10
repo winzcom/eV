@@ -1,13 +1,14 @@
 $(document).ready(function(){
 
-
     var request_url = $('#myWizard').attr('action');
     var button;
     var v_available = true;
+    statee = null;
 
     $('#state').change(function(){
 
         v_available = !v_available;
+        statee = $(this).val();
     })
     
 		$('#myModal').modalSteps({
@@ -87,31 +88,29 @@ $(document).ready(function(){
 
     /***Start of Category event Operation */
        $('#category').on('change',function(){
-        
+         $('.themecolor').remove()
         categoryChange($(this));
     })/***End of Category event Operation */
 
 
-    /*** Start of event Change Event */
+    /*** Start of event Change operation */
 
     $('#event').change(function(){
       var self = $(this);
 
-      $('.themecolor').remove();
+      //$('.themecolor').remove();
       $('.pP').remove();
 
        var event = $('#event option:selected').text();
     
        var exists = eventType[event] || null;
 
-       /*if((event == 'Wedding' || event == '') && 'Event Planner'=='Event Planner'){
-         addThemeColorInputElements(self);
-       }
-       */
+       //var category = $('#category option:selected').text().replace(/\s+/g, '');
+
         if(exists != null ){
          addExtraFormElement(exists,self)
        }
-    })/***End of event Change Event */
+    })/***End of event Change Event operation */
 
     $('#browsevendor').change(function(){
       var cat = $(this).val();
@@ -124,7 +123,7 @@ $(document).ready(function(){
         //display the form wizard;
          return false;
 
-  });/***End of Jquery events Operation */
+  });/***End of Jquery events changeOperation */
 
   /***Start of vanilla functions */
 
@@ -132,12 +131,13 @@ $(document).ready(function(){
    function checkVendorAvailability(cat_id,state = null,locality = null){
 
      if(state == null || locality == null){
-       state = button.data('state');
-       if(button.data('vicinity') !== '' && button.data('vicinity') !== undefined) locality = button.data('vicinity');
-        else locality = 0;
+       state = button.data('state') || $('#state').val();
+       locality = button.data('vicinity') || $('#vicinity').val() || 0;
+       if(locality == 'all');
+         locality = 0;
      }
       var data = {'state':state,'locality':locality,'category':cat_id};
-      
+      console.log(data);
 
       alertify.log("Checking if vendors are available").maxLogItems(1);
     
@@ -147,6 +147,7 @@ $(document).ready(function(){
           data:data,
           success:function(data){
             if(data.available == 0){
+              console.log(data.available)
               v_available = false;
               $('#myModal').modal('hide')
               alertify.alert('No vendor for available for the criteria')
@@ -162,27 +163,32 @@ $(document).ready(function(){
         if($('.divContainer')){
           $('.divContainer').remove();
         }
-        var category = $('#category option:selected').text();
-        category = category.replace('- ','');
 
-        var state = $('#state').val()
-        var locality = $('#vicinity').val();
+        var category = $('#category option:selected').text();
+         category = category.replace(/\s+/g, '');
+
+
+        var state = $('#state').val(); var locality = $('#vicinity').val();
+        checkVendorAvailability(self.val(),state,locality)
+
+       
         
+        console.log(category)
         
-        
-          checkVendorAvailability(self.val(),state,locality)
-        
-            var data = formElements[category];
+        var data = formElements[category];
+            console.log(data);
             if(data){
               addAdditionalService(data,self);
             }
-            else if(category == 'Event Planner'){
-                addThemeColorInputElements();
+            else if($.inArray(category,eventPlanning) != -1){
+                addThemeColorInputElements($('#div_event'));
             }
             else if(category == 'Transport'){
               addTransportInputs();
               $('#venue').hide();
             }
+        
+          
         
     } 
     function addStateLocality(state1 = null,vicinity_id = null){
@@ -194,6 +200,8 @@ $(document).ready(function(){
             alert(state1 + " "+ vicinity_id);
                 state = state1; locality = vicinity_id;
                 console.log(vicinity_id+' '+state1 );
+                 if(locality == 'all')
+                     locality = 0;
 
                 stateInput = $('<input type="hidden" name="state" value="'+state+'" ></input>');
                 localityInput = $('<input type="hidden" name="vicinity" value="'+locality+'"></input>');
@@ -213,13 +221,12 @@ $(document).ready(function(){
                       }
                       else{
 
-                          if(vicinity_id == 'all' || vicinity_id == '')
-
-                            locality = 0;
-                            stateInput = $('<input type="hidden" name="state" value="'+state+'" ></input>');
-                            localityInput = $('<input type="hidden" name="vicinity" value="'+locality+'"></input>');
-                            $('#myWizard').append(stateInput);
-                            $('#myWizard').append(localityInput);
+                          if(locality == 'all')
+                             locality = 0;
+                          stateInput = $('<input type="hidden" name="state" value="'+state+'" ></input>');
+                          localityInput = $('<input type="hidden" name="vicinity" value="'+locality+'"></input>');
+                          $('#myWizard').append(stateInput);
+                          $('#myWizard').append(localityInput);
                       }
             }
     }
@@ -303,7 +310,8 @@ $(document).ready(function(){
       
       divContainer.append(colorQuestionInput);
 
-      divContainer.insertAfter(e);
+      $('#eventtype').append(divContainer);
+     // divContainer.insertAfter(e);
 
   }
 
@@ -373,9 +381,8 @@ $(document).ready(function(){
 
           divC.append(pue);
       })
-
-     
-      divC.insertAfter(element);
+      $('#eventtype').append(divC);
+        //divC.insertAfter(next);
   }
 
   function toggleBudgetFields(public){
