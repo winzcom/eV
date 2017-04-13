@@ -15,7 +15,7 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<!-- style.css is main stylesheet and all other sylesheets are being
 		 imported in this file. -->
-	<link rel="stylesheet" href="{{asset('style.css')}}">
+	<link rel="stylesheet" href="{{asset('customcss/all.css')}}">
 	<link rel="stylesheet" href="{{asset('vendor/css/jquery-ui.min.css')}}">
 
 	@yield('style')

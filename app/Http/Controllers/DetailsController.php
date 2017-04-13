@@ -38,9 +38,10 @@ class DetailsController extends Controller
         })->where('id','!=',$user->id)->orderBy('id','desc')->take(3)->get();
 
         if(!is_null($id)){
-            $cat_id = $id;
-            $category_name = $user->categories()->where('categories.id',$id)->first()->name;
+            $category_name = $user->categories->find($id)->name;
+            $cat_id = $user->categories->find($id)->id; 
         }
+            
         
        // $directory = public_path("storage".DIRECTORY_SEPARATOR."images");
         //$files = Service::getImages($directory);
@@ -48,9 +49,9 @@ class DetailsController extends Controller
                     'events'=>Service::getEvents(),
                     'similars'=>$similars,
                     'request'=>$this->request,
-                    'cat_id'=>$id != null ? $id:null,
+                    'cat_id'=>isset($cat_id) ? $cat_id : '',
                     'avg'=>$user->reviews->pluck('rating')->avg(),
-                    'category_name'=>$id!=null ? $user->categories()->where('categories.id',$id)->first()->name:''
+                    'category_name'=>$category_name
                 ]);
     }
 }

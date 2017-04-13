@@ -200,7 +200,7 @@
 											</div>
 										</div>
 										<div class="caption">
-											<h3><a href="{{url('/detail/')}}/{{$sim->name_slug}}/{{$cat_id}}" title="Single Product">{{$sim->name}}</a></h3>
+											<h3><a href="{{url('/detail/')}}/{{$sim->name_slug}}" title="Single Product">{{$sim->name}}</a></h3>
 											<div class="product-cat">
 												<span class="strong small text-uppercase">Categories</span>: {{$sim->categories()->pluck('name')}}
 											</div>

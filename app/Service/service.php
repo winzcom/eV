@@ -117,7 +117,7 @@ class Service{
 
     public static function isValid(Array $data){
         foreach($data as $key=>$value){
-            if(is_null($data[$key]) || empty($data[$key])){
+            if(is_null($value) || empty($value) || $value = ''){
                 return false;
             }
         }

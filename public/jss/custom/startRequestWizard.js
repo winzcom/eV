@@ -43,6 +43,7 @@ $(document).ready(function(){
 					url:request_url,
 					type:"POST",
 					data:$('#myWizard').serialize(),
+          dataType:'json',
 					contentType:"application/x-www-form-urlencoded",
 					headers:{
 						'X-CSRF-TOKEN':Laravel.csrfToken
@@ -50,10 +51,12 @@ $(document).ready(function(){
 				})
 				.done(function(data){
 					$('#myModal').modal('hide');
-					alertify.success('Request Sent');
+					alertify.success(data.message);
+          console.log(data);
 				})
 				.fail(function(data){
-					alertify.log('An Error Occured Request Could Not Be Sent');
+          console.log(data);
+					alertify.log('An Error Occured Request Could Not Be Sent '+data.message);
 				})
 
 			}
@@ -142,7 +145,7 @@ $(document).ready(function(){
       alertify.log("Checking if vendors are available").maxLogItems(1);
     
         $.ajax({
-          url:myUrl+'/'+'check_vendor_availabity',
+          url:myUrl+'check_vendor_availabity',
           type:'GET',
           data:data,
           success:function(data){

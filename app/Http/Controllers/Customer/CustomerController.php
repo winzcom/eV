@@ -51,7 +51,7 @@ class CustomerController extends Controller
     private function getRequests(){
 
         $d =  $this->cust_repo->getRequests($this->auth->id());
-        return $this->cust_repo->paginate($d,3);
+        return $this->cust_repo->paginate($d,6);
     }
 
     private function getAnsweredRequests(){

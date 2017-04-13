@@ -18,7 +18,7 @@
 		 <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
 
-	<link rel="stylesheet" href="{{asset('style.css')}}">
+	<link rel="stylesheet" href="{{asset('customcss/all.css')}}">
 	<link rel="stylesheet" href="{{asset('vendor/css/eazy.css')}}">
 
 	
@@ -41,6 +41,8 @@
   margin: 0px 0 0 -150px;
 }
 </style>
+<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+<script src="{{asset('jss/firebase_config.js')}}"></script>
 </head>
 
 <script>
@@ -52,6 +54,8 @@
 	]) 
 !!};
 window.myUrl = "http:\/\/localhost/eventing/public\/";
+//window.myUrl = window.location.origin;
+window.customerUrl = "http:\/\/localhost/eventing/public\/";
 
 </script>
 
@@ -221,7 +225,6 @@ window.myUrl = "http:\/\/localhost/eventing/public\/";
 <script src="{{asset('js/classie.js')}}"></script>
 <script src="{{asset('cloudslider/js/cloudslider.jquery.min.js')}}"></script>
 <script src="{{asset('cubeportfolio/js/jquery.cubeportfolio.js')}}"></script>
-<script src="{{asset('vendor/js/eazyForm.js')}}"></script>
 <script src="{{asset('nivo-lightbox/nivo-lightbox.min.js')}}"></script>
 <script src="{{asset('js/appear.js')}}"></script>
 <script src="{{asset('js/pie-chart.js')}}"></script>
@@ -249,6 +252,7 @@ window.myUrl = "http:\/\/localhost/eventing/public\/";
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
 <script src="{{asset('jss/combox.js')}}"></script>
+<script src="{{asset('jss/custom/firebase.js')}}"></script>
 <-- standard version -->
 
 

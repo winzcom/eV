@@ -30,12 +30,13 @@
 <!-- page title style6 END -->
 
     <div class="container-fluid">
-        <div class="content table-responsive table-full-width">
+        <div class="content">
             @if($reviews->count() > 0)
             <div class="header">
                                 
              <h5 class="title">@include('app_view.shared.review_filter_tab',['total'=>$total,'avg'=>$avg])</h5> 
             </div>
+            <div class="table-responsive">
                <table  class="table table-striped  table-bordered table-hover">
                         <tr>
                             <th>#</th>
@@ -100,7 +101,7 @@
                         </tr>
                     @endforeach
                     </table>
-                
+                </div>
  @include('app_view.shared.reply_from')
                 
                 {{$reviews->links()}}

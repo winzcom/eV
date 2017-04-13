@@ -63,7 +63,7 @@ class GuestController extends Controller
     public function quotesRequest(Request $request){
 
         $users = null; $customer= null;
-
+        $_r = $request;
 
 
         $state = $request->state;
@@ -76,7 +76,7 @@ class GuestController extends Controller
         $request = $request->except(['category','firstname','lastname','email','password','_token','state','vicinity']);
 
         
-        DB::transaction(function() use ($request,$client,$category,$state,$vicinity){
+        DB::transaction(function() use ($request,$client,$category,$state,$vicinity,$_r){
 
             $users = $this->getUserWithCategoryQuery($category,$state,$vicinity)->get();
 
@@ -90,9 +90,9 @@ class GuestController extends Controller
                     else{
 
                         if(!Service::isValid($client)){
-                               
-                            return response()->json(['message'=>'Please fill your details'],401);
-                                
+                        
+                            if($_r->expectsJson())
+                                return response()->json(['error'=>'Please fill your details'],400); 
                         }
                             
 
@@ -123,7 +123,7 @@ class GuestController extends Controller
 
                 event(new NewRequestSentEvent($data));
 
-                return json_encode([
+                return response()->json([
                     'message'=>'Request Sent'
                 ]);
 
@@ -131,7 +131,7 @@ class GuestController extends Controller
 
             else{
 
-                return json_encode([
+                return response()->json([
 
                     'message'=>'No Vendors Avalible'
                 ]);
@@ -175,3 +175,5 @@ class GuestController extends Controller
         }
     }
 }
+
+?>

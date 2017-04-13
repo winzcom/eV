@@ -17,7 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="{{asset('vendor/css/slick.css')}}"/>
 	<!-- style.css is main stylesheet and all other sylesheets are being
 		 imported in this file. -->
-	<link rel="stylesheet" href="{{asset('style.css')}}">
+	<link rel="stylesheet" href="{{asset('customcss/all.css')}}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
 	<link rel="stylesheet" href="{{asset('vendor/css/scroll.css')}}">
 	<script src="{{asset('js/vendor/modernizr-2.8.3-respond-1.4.2.min.js')}}"></script>
@@ -286,7 +286,7 @@
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
 <script src="{{asset('jss/custom/customer.js')}}"></script>
-<<!--script src="{{asset('jss/custom/firebase.js')}}"></script>-->
+<script src="{{asset('jss/custom/firebase.js')}}"></script>
 	
 @yield('script')
 </body>
