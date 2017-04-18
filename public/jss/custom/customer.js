@@ -49,7 +49,7 @@ $(document).ready(function(){
        data.message = $('#message_to_vendor').val();
        data.vendor_id = $('#vendor_id').val();
        data.request_id = $('#request_id').val();
-
+       console.log(data);
        $.ajax({
            url:customerUrl+'contact_vendor',
            data:data,
@@ -64,7 +64,7 @@ $(document).ready(function(){
                console.log(data);
                $('.contact_vendor').prop('disabled',false);
                $('#contact_vendor').modal('hide');
-               alertify.success('Message Sent');
+               alertify.success(data.message);
            }
        })
 

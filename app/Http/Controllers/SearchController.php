@@ -37,14 +37,14 @@ class SearchController extends Controller
     }
 
     private function getVendors($cat){
-        $companies = $this->user_repo->createModel('vendor')->with('reviews','galleries')->whereHas('categories',function($q) use ($cat){
+        $companies = $this->user_repo->createModel('vendor')->with('reviews','galleries','bay_average')->whereHas('categories',function($q) use ($cat){
             $q->where('categories.id',$cat);
         })->where([
             ['first_name','!=','null'],
             ['last_name','!=','null'],
             ['phone_no','!=','null']
-        ])->paginate(5);
-        return $companies;
+        ])->paginate(10);
+       return $companies;
     }
 
     public function browseByCategory($category = null){

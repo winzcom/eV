@@ -64,26 +64,33 @@
         @inject('service','App\Service\Service')
 			<div class="container">
                 @if(isset($companies))
+                   @php $comps = $companies->sortByDesc('bay_average');@endphp
                     <div class="row">
-                        @foreach($companies as $company)
+                    
+                        @foreach($comps as $company)
                             <div class="col-sm-4">
                                 <div class="thumbnail style1">
                                     <div class="thumb-wrapper">
-                                        <div class="thumbs-carousel">
-                                            @if(count($company->galleries) > 0)
+                                        
+                                        
+                                            @if(count($company->galleries) > 1)
+                                                <div class="thumbs-carousel">
                                                 @php
-                                                    $file_name = $company->galleries->pluck('image_name')->take(3); 
+                                                    $file_name = $company->galleries->pluck('image_name')->take(2); 
                                                 @endphp
                                                 @foreach($file_name as $key=>$value)
                                                     <div class="item">
-                                                        <img src="{{$path}}/{{$value}}" alt="Thumbnail">
+                                                        <img src="{{$path}}/{{$value}}" width=300 height=300 alt="Thumbnail">
                                                     </div>
                                                 @endforeach
-                                                    
-                                            @else
-                                                <div class="alert alert-info "></div>
+                                                </div>
+                                            @elseif(count($company->galleries) == 1)
+                                                <div class="item">
+
+                                                  <img src="{{$path}}/{{$company->galleries->first()->image_name}}" alt="Thumbnail" width="300" height="3"/>
+                                                </div>
                                             @endif
-                                        </div>
+                                        
                                     </div>
                                     <div class="caption">
                                         <h3>{{$company->name}}</h3>

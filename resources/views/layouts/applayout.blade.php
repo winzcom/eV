@@ -28,18 +28,7 @@
 	
 	
 	<style>
-    .pac-container {
-        z-index: 10000 !important;
-    }
-.outPopUp {
-  position: absolute;
-  width: 300px;
-  height: 200px;
-  z-index: 15;
-  top: 50%;
-  left: 50%;
-  margin: 0px 0 0 -150px;
-}
+    
 </style>
 <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
 <script src="{{asset('jss/firebase_config.js')}}"></script>

@@ -84,7 +84,6 @@ class CustomerController extends Controller
     public function contactVendor(Request $request){
 
         //Send Mail to Vendor.
-
         $vendor = $this->user_repo->find($request->vendor_id);
         $message = $request->message;
         $request = $this->user_repo->getRequest($request->request_id);

@@ -1,5 +1,6 @@
 importScripts('https://www.gstatic.com/firebasejs/3.5.2/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/3.5.2/firebase-messaging.js');
+importScripts('https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js');
 
 // Initialize the Firebase app in the service worker by passing in the
 // messagingSenderId.
@@ -40,18 +41,11 @@ var vendor_file_to_cache = [
     'js/vide.js',
     'js/fitvids.js',
     'owl-carousel/owl.carousel.min.js',
-    'js/jflickrfeed.js',
-    'js/tweecool.js',
-    'js/chart.js',
     'js/totop.js',
     'js/sm-scroll.js',
     'js/smooth-scroll.js',
-    'js/ajaxchimp.js',
     'js/contact.js',
-    'js/form.js',
-    'js/validate.js',
-    'js/tempo.js',
-    'js/main.js'
+    'js/tempo.js'
 ]
 
 //window.onMessage.apply(message,f);
@@ -69,9 +63,9 @@ self.addEventListener('install', function(event) {
 message.setBackgroundMessageHandler(function(payload) {
   console.log('[firebase-messaging-sw.js] Received background message ', payload.data.messsage);
   // Customize notification here
-  const notificationTitle = payload.data.title;
+  const notificationTitle = payload.notification.title;
   const notificationOptions = {
-    body: payload.data.body,
+    body: payload.notification.body,
     icon: ''
   };
 

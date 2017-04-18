@@ -118,9 +118,4 @@
 
 @section('js')
 
-    <script src="{{asset('/js/review.js')}}"></script>
-
-    <script>
-        
-    </script>
 @endsection

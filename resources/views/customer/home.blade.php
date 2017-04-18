@@ -20,12 +20,12 @@
 
 <!-- page content START -->
 <div class="content" id="content">
-
+	
 	<!-- section START -->
 		<section class="section half-section-right">
 			
 			<div class="container">
-
+				<div class="btn btn-success btn-xs" id="sb" onclick="subscribeToPush()">Subscribe to push</div>
 				<div class="work-process style1">
 						<div class="process-wrap">
 							<div class="icon-wrap">
@@ -89,5 +89,5 @@
 @endsection
 
 @section('script')
-<script src="{{asset('jss/custom/firebase.js')}}"></script>
+<!--<script src="{{asset('jss/custom/firebase.js')}}"></script>-->
 @endsection

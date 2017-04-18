@@ -10,7 +10,7 @@ $(document).ready(function(){
         v_available = !v_available;
         statee = $(this).val();
     })
-    
+
 		$('#myModal').modalSteps({
 			btnCancelHtml: 'Cancel',
 			btnPreviousHtml: 'Previous',
@@ -21,11 +21,7 @@ $(document).ready(function(){
 
             var category_value = $('#category').val();
             
-            if(category_value == ''){
-              $('#myModal').modal('hide')
-              alertify.alert('Please Select a Category')
-            }
-            else if(!v_available){
+             if(!v_available){
                 checkVendorAvailability(category_value,$('#state').val(),$('#vicinity').val())
                 v_available = true;
             } 
@@ -36,35 +32,52 @@ $(document).ready(function(){
 			completeCallback: function(){
 				/*** Ajax Call To Submit Form **/
 
-					console.log($('#myWizard').serialize())
+					//console.log($('#myWizard').serialize())
 					alertify.delay(0).log("Request is been sent...").maxLogItems(1);
-
+          
+          var formData = $('#myWizard').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
+        
 				$.ajax({
 					url:request_url,
-					type:"POST",
-					data:$('#myWizard').serialize(),
-          dataType:'json',
-					contentType:"application/x-www-form-urlencoded",
+					type:'POST',
+					data:formData,
 					headers:{
-						'X-CSRF-TOKEN':Laravel.csrfToken
-					}
+						'X-CSRF-TOKEN':Laravel.csrfToken,
+					},
+          success:function(data){
+            console.log(data);
+            if(JSON.parse(data).error.length > 0){
+              var d = JSON.parse(data);
+              var html = "<p style='color:white'>Error: "+d.error+"</p>"
+              alertify.closeLogOnClick(true).error(html,function(ev){
+                  $('#myModal').modal('show');
+              });
+              
+              
+            }
+            else{
+              alertify.log('Request Sent');
+            }
+          },
+          error:function(err){
+            console.log(err.error);
+            alertify.log(err.error);
+          }
 				})
-				.done(function(data){
-					$('#myModal').modal('hide');
-					alertify.success(data.message);
-          console.log(data);
-				})
-				.fail(function(data){
-          console.log(data);
-					alertify.log('An Error Occured Request Could Not Be Sent '+data.message);
-				})
-
 			}
 		});/***End of Modal Step */
 
 
 
     $('#myModal').on('shown.bs.modal',function(event){
+
+      if($('#category').val() == ''){
+        d_orientations = $('.js-btn-step');
+        d_orientations.each(function(i,v){
+          if(v.dataset.orientation == 'next')
+            v.disabled = true;
+        })
+      }
       var modal = $(this);
       button  = $(event.relatedTarget);
 
@@ -91,6 +104,12 @@ $(document).ready(function(){
 
     /***Start of Category event Operation */
        $('#category').on('change',function(){
+         d_orientations = $('.js-btn-step');
+         d_orientations.each(function(i,v){
+          if(v.dataset.orientation == 'next')
+            v.disabled = false;
+        })
+        
          $('.themecolor').remove()
         categoryChange($(this));
     })/***End of Category event Operation */
@@ -117,7 +136,8 @@ $(document).ready(function(){
 
     $('#browsevendor').change(function(){
       var cat = $(this).val();
-      window.location.href ='http://localhost/eventing/public/browse_vendors/'+cat;
+      if(!isNaN(cat))
+        window.location.href ='http://localhost/eventing/public/browse_vendors/'+cat;
     })
 
 
@@ -147,6 +167,7 @@ $(document).ready(function(){
         $.ajax({
           url:myUrl+'check_vendor_availabity',
           type:'GET',
+          dataType:'json',
           data:data,
           success:function(data){
             if(data.available == 0){
@@ -156,7 +177,7 @@ $(document).ready(function(){
               alertify.alert('No vendor for available for the criteria')
               alertify.log('No vendors available')
             }
-            else alertify.log(''+data.available+' vendor(s) available')
+            else {alertify.log(''+data.available+' vendor(s) available'); console.log(data)}
           }
         })
    }

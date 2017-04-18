@@ -1,11 +1,11 @@
 $(document).ready(function(){
 
 if(document.getElementById('state') !== null)
-    changeVicinitySelect(document.getElementById('state'))
+    changeVicinitySelect(document.getElementById('state'));
 
 $('#state').change(function(e){
-    changeVicinitySelect(this,'change')
-})
+    changeVicinitySelect(this,'change');
+});
 
 
 
@@ -15,12 +15,10 @@ function changeVicinitySelect(e,oc = null){
         if(oc !== null){
             v.selectedIndex = 0;
             v.disabled = true;
-        }
-            
-            
-        let vicinites = document.getElementsByClassName('vicinities');
-        let len=vicinites.length;
-        let toggle = true;
+        }    
+        var vicinites = document.getElementsByClassName('vicinities');
+        var len=vicinites.length;
+        var toggle = true;
 
 
         for(i=0; i<len; i++){
@@ -28,7 +26,7 @@ function changeVicinitySelect(e,oc = null){
             }
 
         if(e.options[e.selectedIndex].value !== 'all'){
-            toggleDisplayForVicinity(toggle,e.options[e.selectedIndex].value)
+            toggleDisplayForVicinity(toggle,e.options[e.selectedIndex].value);
 
             for(i=0; i<len; i++){
                 if(vicinites[i].dataset.stateId != e.options[e.selectedIndex].dataset.id){
@@ -42,7 +40,7 @@ function changeVicinitySelect(e,oc = null){
 
             toggle = false;
             v.selectedIndex = 0;
-            toggleDisplayForVicinity(toggle,e.options[e.selectedIndex].value)
+            toggleDisplayForVicinity(toggle,e.options[e.selectedIndex].value);
         }
             
 
@@ -55,8 +53,4 @@ function changeVicinitySelect(e,oc = null){
         }
         else document.getElementById('vicinity').disabled = !display;
     }
-
-
-
-
-})
+});

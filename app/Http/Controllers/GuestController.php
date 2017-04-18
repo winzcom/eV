@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -63,23 +62,18 @@ class GuestController extends Controller
     public function quotesRequest(Request $request){
 
         $users = null; $customer= null;
-        $_r = $request;
-
-
         $state = $request->state;
         $vicinity = $request->vicinity;
         $client = $request->only(['first_name','last_name','email','password']);
         $category = $request->only(['category']);
 
-        
-
         $request = $request->except(['category','firstname','lastname','email','password','_token','state','vicinity']);
 
         
-        DB::transaction(function() use ($request,$client,$category,$state,$vicinity,$_r){
+        DB::transaction(function() use ($request,$client,$category,$state,$vicinity){
 
             $users = $this->getUserWithCategoryQuery($category,$state,$vicinity)->get();
-
+           
             if(!empty($users)){
 
                     $id = null; $customer = null;
@@ -88,20 +82,18 @@ class GuestController extends Controller
                         $customer = Auth::guard('client')->user();
                     }
                     else{
+                            if(!Service::isValid($client)){
+                                   echo json_encode(['error'=>'Please fill your personal details']);  
+                                   return;
+                            }
+                                
 
-                        if(!Service::isValid($client)){
-                        
-                            if($_r->expectsJson())
-                                return response()->json(['error'=>'Please fill your details'],400); 
-                        }
-                            
-
-                        $customer = $this->repo->createModel('customer')->firstOrCreate([
-                                        'first_name'=>$client['first_name'],
-                                        'last_name'=>$client['last_name'],
-                                        'email'=>$client['email'],
-                                        'password'=>bcrypt($client['password'])
-                                    ]);
+                            $customer = $this->repo->createModel('customer')->firstOrCreate([
+                                            'first_name'=>$client['first_name'],
+                                            'last_name'=>$client['last_name'],
+                                            'email'=>$client['email'],
+                                            'password'=>bcrypt($client['password'])
+                                        ]);
 
                     }
                     if($vicinity == 'all' || $vicinity == '') $vicinity = 0;
@@ -123,17 +115,13 @@ class GuestController extends Controller
 
                 event(new NewRequestSentEvent($data));
 
-                return response()->json([
-                    'message'=>'Request Sent'
-                ]);
-
+                return response()->json(['message'=>'Request Sent']);
             }
 
             else{
 
                 return response()->json([
-
-                    'message'=>'No Vendors Avalible'
+                    'message'=>'No Vendors Available'
                 ]);
             }
             

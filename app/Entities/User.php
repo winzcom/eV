@@ -141,4 +141,8 @@ class User extends Authenticatable
         }
         else return $query;
     }
+
+    public function bay_average(){
+        return $this->hasOne('App\Entities\BaysianAverage','review_for');
+    }
 }
