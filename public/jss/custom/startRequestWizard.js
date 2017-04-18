@@ -46,18 +46,24 @@ $(document).ready(function(){
 					},
           success:function(data){
             console.log(data);
-            if(JSON.parse(data).error.length > 0){
-              var d = JSON.parse(data);
-              var html = "<p style='color:white'>Error: "+d.error+"</p>"
-              alertify.closeLogOnClick(true).error(html,function(ev){
-                  $('#myModal').modal('show');
-              });
-              
-              
+            try{
+                
+                var d = JSON.parse(data);
+                if(d.error){
+                  var html = "<p style='color:white'>Error: "+d.error+"</p>"
+                  alertify.closeLogOnClick(true).error(html,function(ev){
+                      $('#myModal').modal('show');
+                  });
+                }
+                else{
+                   var html = "<p style='color:white'>Error: "+d.message+"</p>"
+                  alertify.closeLogOnClick(true).sucess(html);
+                }
             }
-            else{
-              alertify.log('Request Sent');
+            catch(e){
+              alertify.success('Reply Sent')
             }
+            
           },
           error:function(err){
             console.log(err.error);

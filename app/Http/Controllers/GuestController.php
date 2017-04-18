@@ -115,7 +115,8 @@ class GuestController extends Controller
 
                 event(new NewRequestSentEvent($data));
 
-                return response()->json(['message'=>'Request Sent']);
+                echo json_encode(['message'=>'Reply Sent']);
+                return;
             }
 
             else{
