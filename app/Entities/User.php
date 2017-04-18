@@ -25,7 +25,8 @@ class User extends Authenticatable
         'vicinity_id',
         'description',
         'summary',
-        'phone_no','house_no','street_name','name_slug'
+        'phone_no','house_no','street_name','name_slug',
+        'company_image'
     ];
 
     protected static $formInputs = [

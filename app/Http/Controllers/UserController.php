@@ -47,12 +47,11 @@ class UserController extends Controller
     public function updateProfile(RegisterFormRequest $request){
         
         $file = $request->file('company_image');
-        
         $filtered = $request->except(['password_confirm','category','_token','company_image']);
         $filtered['password'] = bcrypt($filtered['password']);
-        if($file !== null){
+        if($file !== null && $file->isValid()){
             $filtered['company_image'] = Auth::user()->name.$file->getClientOriginalName();
-            $file->storeAs('public/images',$filtered['company_image']);
+            $file->storeAs('images',$filtered['company_image'],'public');
         }
         
         
