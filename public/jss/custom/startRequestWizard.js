@@ -61,7 +61,7 @@ $(document).ready(function(){
                 }
             }
             catch(e){
-              alertify.success('Reply Sent')
+              alertify.success('Reply Sent');
             }
             
           },
