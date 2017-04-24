@@ -14,6 +14,7 @@ if(count($all_requests) > 0){
             echo '<i class="fa fa-check-circle-o"></i>&nbsp';
         }
         echo 'request from '.$request->client_name.' for '.$cats->where('id',$request->category_id)->first()->name.'</h3>';
+     echo (int)$request->count_available_vendors !== 0 ? '<h5><i>(sent to '.((int)$request->count_available_vendors-1).' other vendors)</i></h5>':'';
 
         echo '<div>';
         if(is_null($rid) && !isset($customer)){
@@ -53,7 +54,9 @@ if(count($all_requests) > 0){
                     Show Quote
                 </button>
                 &nbsp;<i class=\"btn btn-info btn-xs sq-corner\">Highest Cost: ".$service->currencyFormatter()->formatCurrency($request->max_cost,'EUR').
-                " Lowest Cost: ".$service->currencyFormatter()->formatCurrency($request->min_cost,'EUR')."</i><br><br>";
+                " Lowest Cost: ".$service->currencyFormatter()->formatCurrency($request->min_cost,'EUR')." <br>Average: ".
+                $service->currencyFormatter()->formatCurrency($request->avg_cost,'EUR')."
+                </i><br><br>";
         }
         if($isobject){
             echo '<div class="alert alert-success">';
@@ -69,7 +72,7 @@ if(count($all_requests) > 0){
                         echo ' )<br><br>';
                 }
                 else
-                    echo title_case($key).':'.$value.'<br><hr>';
+                    echo str_replace('_','',title_case($key)).':'.$value.'<br><hr>';
             }
             echo '</div>';
         }

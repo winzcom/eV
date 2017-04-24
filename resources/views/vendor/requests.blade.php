@@ -4,7 +4,7 @@
 @include('app_view.requestForm.replyrequest')
 @include('vendor.header.header',['title'=>'Requests'])
 <div class="content" id="content">
-
+@include('vendor.profile_update_snippet')
 	<!-- section START -->
 		<section class="section half-section-right">
 			

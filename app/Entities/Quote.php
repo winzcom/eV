@@ -9,4 +9,7 @@ class Quote extends Model
     //
 
     protected $table = 'quotes';
+    protected $fillable = [
+        'rid','uid','cost','message','contact','client_id'
+    ];
 }

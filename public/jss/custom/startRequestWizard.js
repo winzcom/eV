@@ -78,11 +78,7 @@ $(document).ready(function(){
     $('#myModal').on('shown.bs.modal',function(event){
 
       if($('#category').val() == ''){
-        d_orientations = $('.js-btn-step');
-        d_orientations.each(function(i,v){
-          if(v.dataset.orientation == 'next')
-            v.disabled = true;
-        })
+        disableNextButton(true);
       }
       var modal = $(this);
       button  = $(event.relatedTarget);
@@ -110,12 +106,8 @@ $(document).ready(function(){
 
     /***Start of Category event Operation */
        $('#category').on('change',function(){
-         d_orientations = $('.js-btn-step');
-         d_orientations.each(function(i,v){
-          if(v.dataset.orientation == 'next')
-            v.disabled = false;
-        })
-        
+         
+        //disableNextButton();
          $('.themecolor').remove()
         categoryChange($(this));
     })/***End of Category event Operation */
@@ -143,7 +135,7 @@ $(document).ready(function(){
     $('#browsevendor').change(function(){
       var cat = $(this).val();
       if(!isNaN(cat))
-        window.location.href ='http://localhost/eventing/public/browse_vendors/'+cat;
+        window.location.href = myUrl+'browse_vendors/'+cat;
     })
 
 
@@ -156,6 +148,15 @@ $(document).ready(function(){
 
   /***Start of vanilla functions */
 
+  function disableNextButton(disable = false){
+      d_orientations = $('.js-btn-step');
+      d_orientations.each(function(i,v){
+        if(v.dataset.orientation == 'next')
+          v.disabled = disable;
+      })
+  }
+  
+
 
    function checkVendorAvailability(cat_id,state = null,locality = null){
 
@@ -165,10 +166,12 @@ $(document).ready(function(){
        if(locality == 'all');
          locality = 0;
      }
+     var vendor_available_span = $('.vendor_available');
       var data = {'state':state,'locality':locality,'category':cat_id};
       console.log(data);
-
-      alertify.log("Checking if vendors are available").maxLogItems(1);
+      vendor_available_span.css('color','blue');
+      vendor_available_span.text('Checking vendors available...')
+      //alertify.log("Checking if vendors are available").maxLogItems(1);
     
         $.ajax({
           url:myUrl+'check_vendor_availabity',
@@ -179,11 +182,15 @@ $(document).ready(function(){
             if(data.available == 0){
               console.log(data.available)
               v_available = false;
-              $('#myModal').modal('hide')
-              alertify.alert('No vendor for available for the criteria')
-              alertify.log('No vendors available')
+              vendor_available_span.css('color','red')
+              vendor_available_span.text('no vendors available')
+              disableNextButton(true);
+            }else {
+              
+               vendor_available_span.css('color','green')
+               vendor_available_span.text(data.available+' vendor(s) available')
+               disableNextButton();
             }
-            else {alertify.log(''+data.available+' vendor(s) available'); console.log(data)}
           }
         })
    }

@@ -3,6 +3,7 @@
 namespace App\Http\ViewComposers;
 
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 use App\Repo\Interfaces\UserRepoInterface as IUserRepo;
 
 
@@ -38,7 +39,8 @@ class ProfileComposer
     public function compose(View $view)
     {
         $view->with([
-            'requests'=> $this->user_repo->getRequests()
+            'requests'=> $this->user_repo->getRequests(),
+            'profile_updated'=>!is_null(Auth::user()->first_name)?true:false
         ]);
                     
                      /*'unreplied_request'=>$this->uc->getRequestNotYetAnswered(),

@@ -50,6 +50,7 @@
 <!-- page content START -->
 <div class="content" id="content">
 	<!-- section START -->
+         @inject('service','App\Service\Service')
 		<section class="section half-section-right">
 			
 			<div class="container">
@@ -58,11 +59,18 @@
                     <button class='btn btn-success btn-xs request' id='reply' data-toggle='modal'
                          data-target='#show_quote' data-ph = "{{$amazon_path}}">
                         Show Request
-                    </button><br><hr>
+                    </button>
+                        <span>Average Cost: 
+                            <i>
+                               &#8358 {{$service->currencyFormatter()->formatCurrency($cost_avg,'EUR')}}
+                            </i>
+                        </span>
+                    <br/>
+                    <hr> 
 
                     <div class="row">
             
-                     @inject('service','App\Service\Service')
+                    
                        @foreach($quotes as $quote)
                         
                             <div class="col-sm-6">
@@ -113,9 +121,11 @@
                                         >
                                             Details
                                         </button>
-                                        <button class="btn btn-default contact_vendor" data-target="#contact_vendor" data-toggle='modal' data-v-id="{{$quote->first()->id}}" data-r-id="{{$quote->first()->rid}}">
-                                            Contact
-                                        </button>
+                                        @if($quote->first()->contact == 0)
+                                            <button class="btn btn-default contact_vendor" data-target="#contact_vendor" data-toggle='modal' data-v-id="{{$quote->first()->id}}" data-r-id="{{$quote->first()->rid}}">
+                                                Contact
+                                            </button>
+                                        @endif
                                         
                                         <div class="rating" data-rating="{{$quote->first()->avg}}"></div> <span class="reviews-link">({{number_format($quote->first()->avg,1)}} From {{$quote->first()->count}} reviews)</span>
                                     </div>

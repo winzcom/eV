@@ -12,6 +12,7 @@
 	@if(!is_null(session('message')))
 		<div id = "profile_update_message"></div>
 	@endif
+	@include('vendor.profile_update_snippet')
 	<!-- section START -->
 		<section class="section half-section-right">
 			

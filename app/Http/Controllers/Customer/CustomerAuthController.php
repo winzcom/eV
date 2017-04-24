@@ -28,7 +28,7 @@ class CustomerAuthController extends Controller
         $this->validate($request,[
             'email'=>'bail|required',
             'password'=>'required'
-        ]);
+        ],$this->messages());
 
         if(Auth::guard('client')->attempt($request->only(['email','password']))){
             return redirect($this->redirect);
@@ -44,5 +44,10 @@ class CustomerAuthController extends Controller
         return view('customer.login');
     }
 
-    
+    protected function messages(){
+        return [
+            'email.required'=>'Email field is required',
+            'password.required'=>'Password is required'
+        ];
+    }
 }

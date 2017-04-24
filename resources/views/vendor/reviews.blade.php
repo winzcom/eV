@@ -27,10 +27,12 @@
 <?php $j = 1;?>
     <!-- page title style6 START -->
 @include('vendor.header.header',['title'=>'Review'])
+ @include('vendor.profile_update_snippet')
 <!-- page title style6 END -->
 
     <div class="container-fluid">
         <div class="content">
+           
             @if($reviews->count() > 0)
             <div class="header">
                                 

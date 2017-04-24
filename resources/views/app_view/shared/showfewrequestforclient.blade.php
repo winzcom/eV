@@ -7,7 +7,17 @@
                     <div class="panel-heading" role="tab" id="heading{{$key}}">
                         <h4 class="panel-title">
                             <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{$key}}" aria-expanded="true" aria-controls="collapse{{$key}}">
-                             Request For {{$request->cat_name}} ({{$request->replies}} reply(s) )
+                             @if($request->replies > 0)
+                                <i class="fa fa-check-circle-o"></i>&nbsp;
+                            @endif
+
+                             Request For {{$request->cat_name}} 
+                             @if(!is_null($request->vicinity))
+                                in {{$request->vicinity}}, {{$request->state}}
+                             @else all of {{$request->state}}
+                             @endif 
+                             
+                             on {{$request->created_at}}({{$request->replies}} reply(s) of {{$request->total_vendors}})
                             </a>
                         
                         </h4><!-- panel-title-->

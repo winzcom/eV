@@ -51,7 +51,7 @@ class CustomerController extends Controller
     private function getRequests(){
 
         $d =  $this->cust_repo->getRequests($this->auth->id());
-        return $this->cust_repo->paginate($d,6);
+        return $d;
     }
 
     private function getAnsweredRequests(){
@@ -73,7 +73,12 @@ class CustomerController extends Controller
 
     public function showQuotes($request_id = null){
         $d = $this->getRequestQuotes($request_id);
-        return view('customer.cuquote')->with(['quotes'=>$d,'amazon_path'=>$this->amazon_path]);
+        $quotes = $d->paginate($d->data,10);
+        $cost_avg = $d->data->first()->pluck('cost_avg')->first();
+        return view('customer.cuquote')->with(['quotes'=>$quotes,
+                                                'amazon_path'=>$this->amazon_path,
+                                                'cost_avg'=>$cost_avg
+                                            ]);
     }
 
     public function showRequests(){
@@ -83,6 +88,9 @@ class CustomerController extends Controller
 
     public function contactVendor(Request $request){
 
+        $quote = $this->user_repo->createModel('quote')->where(['rid'=>$request->request_id,'uid'=>$request->vendor_id])->first();
+        $quote->contact = 1;
+        $quote->save();
         //Send Mail to Vendor.
         $vendor = $this->user_repo->find($request->vendor_id);
         $message = $request->message;

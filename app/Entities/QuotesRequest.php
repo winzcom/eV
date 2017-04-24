@@ -15,7 +15,10 @@ class QuotesRequest extends Model
         'client_id',
         'state',
         'vicinity_id',
-        'request'
+        'request',
+        'created_at',
+        'updated_at',
+        'count_available_vendors'
     ];
 
     protected $dates = [

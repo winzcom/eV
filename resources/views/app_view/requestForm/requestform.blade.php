@@ -6,7 +6,10 @@
              {{ csrf_field() }}
              <div class="row hide" data-step="1" data-title="This is the first step!">
                 <div class="control-group" >
-                    <label class="control-label" for="inputCity">What are you looking for?</label>
+                    <label class="control-label" for="inputCity">
+                         What are you looking for?
+                         <span ><i class="vendor_available"></i></span>
+                    </label>
                         <div class="controls">
                             <select class="form-control input-lg " name="category" id="category" placeholder="select a category">
                                 <option></option>
@@ -24,6 +27,7 @@
                                         </option>
                                     @endif
                                 @endforeach
+                                
                             </select>
                         </div>
                 </div>

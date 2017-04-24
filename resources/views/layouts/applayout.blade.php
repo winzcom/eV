@@ -42,9 +42,9 @@
 		'csrfToken' => csrf_token(),
 	]) 
 !!};
-window.myUrl = "http:\/\/localhost/eventing/public\/";
-//window.myUrl = window.location.origin;
-window.customerUrl = "http:\/\/localhost/eventing/public\/";
+window.myUrl = window.location.origin+"/eventing/public\/";
+//alert(window.myUrl = window.location.origin);
+window.customerUrl = window.location.origin+"/eventing/public\/";
 
 </script>
 
@@ -216,24 +216,28 @@ window.customerUrl = "http:\/\/localhost/eventing/public\/";
 <script src="{{asset('cubeportfolio/js/jquery.cubeportfolio.js')}}"></script>
 <script src="{{asset('nivo-lightbox/nivo-lightbox.min.js')}}"></script>
 <script src="{{asset('js/appear.js')}}"></script>
-<script src="{{asset('js/pie-chart.js')}}"></script>
-<script src="{{asset('js/vide.js')}}"></script>
-<script src="{{asset('js/fitvids.js')}}"></script>
-<script src="{{asset('owl-carousel/owl.carousel.min.js')}}"></script>
-<script src="{{asset('js/jflickrfeed.js')}}"></script>
-<script src="{{asset('js/tweecool.js')}}"></script>
-<script src="{{asset('js/chart.js')}}"></script>
+<!--<script src="{{asset('js/pie-chart.js')}}"></script>
+<script src="{{asset('js/vide.js')}}"></script>-->
+<!--<script src="{{asset('js/fitvids.js')}}"></script>-->
+<!--<script src="{{asset('owl-carousel/owl.carousel.min.js')}}"></script>-->
+<!--<script src="{{asset('js/jflickrfeed.js')}}"></script>-->
+<!--<script src="{{asset('js/tweecool.js')}}"></script>-->
+<!--<script src="{{asset('js/chart.js')}}"></script>-->
 <script src="{{asset('js/totop.js')}}"></script>
 <script src="{{asset('js/sm-scroll.js')}}"></script>
 <script src="{{asset('js/smooth-scroll.js')}}"></script>
-<script src="{{asset('js/ajaxchimp.js')}}"></script>
-<script src="{{asset('js/contact.js')}}"></script>
+<!--<script src="{{asset('js/ajaxchimp.js')}}"></script>-->
+<!--<script src="{{asset('js/contact.js')}}"></script>
 <script src="{{asset('js/form.js')}}"></script>
-<script src="{{asset('js/validate.js')}}"></script>
+<script src="{{asset('js/validate.js')}}"></script>-->
 <script src="{{asset('js/tempo.js')}}"></script>
-<script src="{{asset('js/main.js')}}"></script>	
-
+<!--<script src="{{asset('js/main.js')}}"></script>-->	
+<script src="{{asset('jss/custom/profile.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script src="{{asset('vendor/js/dropzone/dropzone.js')}}"></script>
 <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
+<!--<script src="{{asset('js/app/app.js')}}"></script>-->
+
 <script src="{{asset('jss/custom/data/requestdata.js')}}"></script>
 <script src="{{asset('jss/custom/startRequestwizard.js')}}"></script>
 <script src="{{asset('vendor/js/createsteps/jquery-bootstrap-modal-steps.min.js')}}"></script>

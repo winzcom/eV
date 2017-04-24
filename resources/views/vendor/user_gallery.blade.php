@@ -16,6 +16,7 @@ body{
     height:450px;
 }
 </style>
+@include('vendor.profile_update_snippet')
 <div id="actions" class="row">
 
       <div class="col-lg-7">

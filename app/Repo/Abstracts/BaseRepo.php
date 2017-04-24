@@ -21,6 +21,7 @@ abstract class BaseRepo implements RepoInterface {
     protected $models = [
         'reviews'=>'\App\Entities\Review',
         'gallery'=>'\App\Entities\Gallery',
+        'quote'=>'\App\Entities\Quote',
         'user'=>'\App\Entities\User',
         'category'=>'\App\Entities\Category',
         'vendor'=>'App\Entities\User',
@@ -34,11 +35,11 @@ abstract class BaseRepo implements RepoInterface {
     public function findAll(){
         return $this->model->all();
     }
-    public function find(int $id){
+    public function find($id){
         return $this->model->find($id);
     }
 
-    public function findWith(int $id,array $relations){
+    public function findWith($id,$relations){
         
         return $this->model->with($relations)->find($id);
     }
@@ -83,7 +84,22 @@ abstract class BaseRepo implements RepoInterface {
        
     }
 
-    
+    public function getSomeRequestsAndAverage($city = null){
+
+         $sql = "select `quotes_request`.`request` as `qrequest`, quotes_request.state,vicinities.name as vn,
+                    `categories`.`name` as `cat_name`, max(quotes.cost) as ma,min(quotes.cost) as mi, 
+                     count(quotes.cost) as cc,avg(quotes.cost) as cost_avg 
+                    from `quotes_request` inner join `quotes` on `quotes`.`rid` = `quotes_request`.`id`
+                    left join vicinities on vicinities.id = quotes_request.vicinity_id 
+                    inner join `categories` on `categories`.`id` = `quotes_request`.`category_id`";
+            if($city != '' || $city !== null){
+                $sql.="where quotes_request.state=:state";
+            } 
+            $sql.=" group by quotes.rid,quotes_request.id,cat_name,qrequest having cc > 0 limit 5";
+                    
+         $d = DB::select(DB::raw($sql),array('state'=>$city));
+            return collect($d);
+    }
 
     protected function returnWhereArrays(array $args){
         

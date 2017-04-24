@@ -38,9 +38,11 @@ class GuestController extends Controller
      */
     public function index()
     {
-        
+
+        //$city = json_decode(file_get_contents('http://freegeoip.net/json/'))->city;
+        //$some_quotes = $this->repo->getSomeRequestsAndAverage($city);
         $companies = Service::getFiveCompanies();
-        return view('landing')->with(['companies'=>$companies]);
+        return view('landing',compact('companies'));
     }
 
     public function writeReview(Request $request){
@@ -52,7 +54,7 @@ class GuestController extends Controller
         return back();
     }
 
-    private function getUserWithCategoryQuery($category,$state,$vicinity){
+    private function getUserQuery($category,$state,$vicinity){
 
         return $this->repo->createModel('vendor')->whereHas('categories',function($q) use ($category){
                     $q->where('categories.id',$category['category']);
@@ -67,13 +69,13 @@ class GuestController extends Controller
         $client = $request->only(['first_name','last_name','email','password']);
         $category = $request->only(['category']);
 
-        $request = $request->except(['category','firstname','lastname','email','password','_token','state','vicinity']);
+        $request = $request->except(['category','firstname','','lastname','email','password','_token','state','vicinity']);
 
         
         DB::transaction(function() use ($request,$client,$category,$state,$vicinity){
 
-            $users = $this->getUserWithCategoryQuery($category,$state,$vicinity)->get();
-           
+            $users = $this->getUserQuery($category,$state,$vicinity)->get();
+            
             if(!empty($users)){
 
                     $id = null; $customer = null;
@@ -100,6 +102,7 @@ class GuestController extends Controller
                     $request = $this->repo->createModel('quotes_request')->create([
                         'category_id'=>$category['category'],
                         'client_id'=>$id !== null ? $id:$customer->id,
+                        'count_available_vendors'=>count($users),
                         'state'=>$state,
                         'vicinity_id'=>$vicinity,
                         'request'=>json_encode($request)
@@ -115,7 +118,7 @@ class GuestController extends Controller
 
                 event(new NewRequestSentEvent($data));
 
-                echo json_encode(['message'=>'Reply Sent']);
+                echo json_encode(['message'=>'Request Sent']);
                 return;
             }
 
@@ -134,7 +137,7 @@ class GuestController extends Controller
 
         //dd($request->all());
         $category = $request->only(['category']);
-        $available = $this->getUserWithCategoryQuery($category,$request->state,$request->locality)->count();
+        $available = $this->getUserQuery($category,$request->state,$request->locality)->count();
         
         return response()->json([
             'available'=>$available

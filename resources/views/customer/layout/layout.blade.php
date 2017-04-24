@@ -42,7 +42,8 @@
 		'csrfToken' => csrf_token(),
 	]) 
 !!};
-	window.customerUrl = "http:\/\/localhost/eventing/public\/";
+	//window.customerUrl = "http:\/\/localhost/eventing/public\/";
+	window.customerUrl = window.location.origin+"/eventing/public\/";
 	</script>
 </head>
 <body>

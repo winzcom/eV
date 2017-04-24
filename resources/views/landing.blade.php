@@ -69,24 +69,13 @@
 		
 	<!-- section END -->
 	
-	<!-- section START -->
-		<!--<section class="section half-section-left">
-			<div class="section-bg bg6 hidden-xs">
-				<a title="How we doing" class="nivo-lightbox play-btn cbutton cbutton--effect-ivana wow fadeInUp" data-wow-delay="0.5s" href="http://vimeo.com/70301553"><i class="fa fa-play"></i></a>
-			</div>
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-6 col-sm-offset-6">
-						<div class="overlay">
-							<h2>Section with video block on left</h2>
-							<p class="lead alt-font">Etiam placerat commodo feugiat. Proin in quam erat. Duis sed porttitor magna, a laoreet enim.</p>
-							<p>Morbi pulvinar sagittis ipsum sed posuere. Sed et interdum nibh. Duis tristique massa non est hendrerit vehicula. Fusce rutrum lorem luctus blandit ultricies. Aliquam auctor mi ac odio sollicitudin sollicitudin. </p>
-							<a class="btn btn-danger">Learn More</a>
-						</div>				
-					</div>
-				</div>
-			</div>
-		</section>-->
+	<!-- section START Some Quotes-->
+
+		<section class="section">
+		<div class="container">
+			
+		</div>
+		</section>
 	<!-- section END -->
 	
 	<!-- section START -->

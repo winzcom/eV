@@ -63,15 +63,8 @@ class Service{
         return $files;
     }
 
-    public static function getTop5Companies(){
-        return User::with(['galleries','reviews'=>function($q){
-
-            $q->select(DB::raw(`*,((select count("reviews_for") from reviews)/(select count(distinct reviews_for from reviews))
-                as 'avg_num_votes'
-                (select avg("ratings") from reviews) as 'avg_rating',count("reviews_for") as 'this_num_votes',
-                avg("ratings") as 'this_num_ratings' from ratings groupby ratings,reviews_for
-            `));
-        }])->take(5)->get();    
+    public static function getTopRankedVendors($state = null){
+        
     }
 
     public static function getEvents(){

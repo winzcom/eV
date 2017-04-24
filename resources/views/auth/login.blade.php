@@ -21,7 +21,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
-                {{session('message') or ''}}
+                @if(session('message'))
+                    <div class="alert alert-success">{{session('message')}}</div>
+                @endif
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
 

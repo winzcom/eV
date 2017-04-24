@@ -36,7 +36,7 @@
 						</div>
 						<div class="process-wrap">
 							<div class="icon-wrap">
-								<span class="step">{{count($requests->where('replies',0)->all())}}</span>
+								<span class="step">{{count($requests->where('rid',null)->all())}}</span>
 								<i class="icon icon-web text-info"></i>
 							</div>
 							<h3 class="title">Unanswered Requests</h3>

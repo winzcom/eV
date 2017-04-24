@@ -69,10 +69,10 @@ class RegisterController extends Controller
             'name'=>'required|unique:companies',
             'email'=>'required|email|unique:companies',
             'password'=>'required|confirmed'
-        ]);
+        ],$this->messages());
     }
 
-    protected function register(Request $request){
+    public function register(Request $request){
 
         $validator = $this->validator($request->all());
 
@@ -96,8 +96,12 @@ class RegisterController extends Controller
 
     private function sendVerificationMail($user){
 
-        Mail::to($user->email)
-            ->send(new SendVerificationMail($user));
+        try{
+            Mail::to($user->email)
+                ->send(new SendVerificationMail($user));
+        }catch(\Swift_TransportException $e){
+
+        }
     }
 
     private function generateToken(){
@@ -115,7 +119,7 @@ class RegisterController extends Controller
         $user = $this->user_repo->createNewUser($data);
         $user->confirm_token = $this->generateToken();
         $user->save();
-        $this->sendVerificationMail($user);
+        //$this->sendVerificationMail($user);
         return $user;
     }
 
