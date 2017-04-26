@@ -17,7 +17,7 @@
                              @else all of {{$request->state}}
                              @endif 
                              
-                             on {{$request->created_at}}({{$request->replies}} reply(s) of {{$request->total_vendors}})
+                             on {{\Carbon\Carbon::parse($request->created_at)->toFormattedDateString()}}({{$request->replies}} reply(s) of {{$request->total_vendors}})
                             </a>
                         
                         </h4><!-- panel-title-->
@@ -44,9 +44,18 @@
                                                     echo $val;
                                             }
                                             echo ' )<br><br>';
+                                    }elseif($key == 'date'){
+                                        $dt = null;
+                                        try{
+                                            $dt = \Carbon\Carbon::parse($value);
+                                            echo str_replace('_','',title_case($key)).':'.$dt->toFormattedDateString().'<br><hr>';
+                                        }catch(\Exception $e){
+                                            echo 'Date: Date of event not specified<br><hr>';
+                                        }
+                                        
                                     }
                                     else
-                                        echo title_case($key).':'.$value.'<br><hr>';
+                                        echo str_replace('_','',title_case($key)).':'.$value.'<br><hr>';
                                 }
                             }
                             else{

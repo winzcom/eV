@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="form-group">
-                    <select class="form-control input-lg" id="state" name="state" 
+                    <select class="form-control input-lg" id="state" name="state" placeholder="State"
                         required >
                         <option value=""></option>
                         @foreach ($states as $state)
@@ -15,7 +15,7 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group">
-                    <select class="form-control input-lg" id="vicinity" name="vicinity_id">
+                    <select class="form-control input-lg" id="vicinity" name="vicinity_id" placeholder="Vicinity">
                         <option value="all">All</option>
                         @foreach ($vicinities as $vicinity)
                         <option value = "{{$vicinity->id}}"data-state-id = "{{$vicinity->state_id}}"class="vicinities form-control ">{{$vicinity->name}}</option>

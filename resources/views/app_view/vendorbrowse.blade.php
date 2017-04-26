@@ -80,7 +80,7 @@
                                                 @endphp
                                                 @foreach($file_name as $key=>$value)
                                                     <div class="item">
-                                                        <img src="{{$path}}/{{$value}}" width=300 height=300 alt="Thumbnail">
+                                                        <img src="{{$path}}/{{$value}}" alt="Thumbnail">
                                                     </div>
                                                 @endforeach
                                                 </div>

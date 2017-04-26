@@ -7,10 +7,9 @@
 	@include('app_view.requestForm.requestform',['events'=>$events])
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-12 text-center">
+				<div class="col-lg-12 col-sm-12 text-center">
 					<section class="form-elements">
-						<p class="slide-sub-title light-color wow fadeInUp" data-wow-delay="0.5">Receive Tailored Quotes from  Vendors Round You With a Single Request.</p>
-						<h3 class="slide-title light-color wow fadeInUp" data-wow-delay="1s">e-Venting</h3>
+						<h1 style="font-size: 36px; font-weight: 300; width: 70%; margin: 0 auto;" class="light-color wow fadeInUp" data-wow-delay="0.5">Receive tailored quotes from  vendors round you with a single request!</h1>
 						@include('app_view.requestForm.stateform')
 					</section>
 					<small class="form-disclaimer light-color"><strong></strong></small>
@@ -65,8 +64,8 @@
 	</section>
 	<!-- section END -->
 	
-	<!-- section START -->
-		
+	<!-- section START top vendors  -->
+		@include('app_view.topvendors')
 	<!-- section END -->
 	
 	<!-- section START Some Quotes-->
@@ -411,7 +410,7 @@
 				<div class="row">
 					<div class="col-lg-10 col-lg-offset-1">
 						<i class="livicon pull-right visible-lg" data-name="angle-double-right" data-color="#fff" data-hovercolor="false" data-size="36" data-onparent="true"></i>
-						<p class="h2">Take your business to the ultimate level with eVenting</p>
+						<p class="h2">Take your business to the ultimate level with epoint.. signup</p>
 					</div>
 				</div>
 			</div>

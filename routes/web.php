@@ -43,7 +43,8 @@ Route::get('/browse_vendors/{category?}','SearchController@browseByCategory');
 
 Route::get('/register/verify/{confirm_token}','Auth\RegisterController@verifyToken');
 
-Route::get('/', 'GuestController@index');
+Route::get('/', 'GuestController@index')->middleware('web');
+
 
 Route::get('/set_firebase_token','GuestController@setFirebaseNotificationEndPoint');
 

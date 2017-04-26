@@ -12,7 +12,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<!-- style.css is main stylesheet and all other sylesheets are being
 		 imported in this file. -->
 		 <!-- Latest compiled and minified CSS -->
@@ -24,14 +24,17 @@
 	
 
 	<script src="{{asset('js/vendor/modernizr-2.8.3-respond-1.4.2.min.js')}}"></script>
-	<script src="{{asset('jss/custom/googleautocomplete.js')}}"></script>
+	<!--<script src="{{asset('jss/custom/googleautocomplete.js')}}"></script>-->
 	
-	
-	<style>
-    
+<style>
+    .request_modal{
+		margin-top:10%;
+	}
+	body{
+		overflow-x:hidden;
+	}
 </style>
-<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
-<script src="{{asset('jss/firebase_config.js')}}"></script>
+
 </head>
 
 <script>
@@ -54,7 +57,9 @@ window.customerUrl = window.location.origin+"/eventing/public\/";
 		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 	<![endif]-->
 	
-
+@if(session('user_state') !== null)
+	<p style="display:none" id="user_state" data-user-state ="{{session('user_state')}}">session('user_state')</p>
+@endif
 <!-- preloader START -->
 <div class="preloader">
 	<div class="spinner-wrap">
@@ -98,7 +103,21 @@ window.customerUrl = window.location.origin+"/eventing/public\/";
 					<li><a href="{{url('/cuhome')}}">DashBoard</a></li>
 				@else
 					<li><a href="{{url('/register')}}">Join as Vendor</a></li>
-					<li><a href="{{url('/login')}}">Sign In</a></li>
+					<!--<li><a href="{{url('/login')}}">Sign In</a></li>-->
+					<li class="dropdown">
+						<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sign In <span class="fa fa-chevron-down"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li class="submenu left-dropdown">
+								<a href="{{url('/login')}}" title="Shop Style1">As a vendor</a>
+								
+							</li>
+							<li class="submenu left-dropdown">
+								<a href="{{url('/culogin')}}" title="Shop Style2">As a client</a>
+							
+							</li>
+							
+						</ul>
+				</li>
 				@endif 
 			</ul>
 		</div><!-- /.navbar-collapse -->
@@ -198,6 +217,7 @@ window.customerUrl = window.location.origin+"/eventing/public\/";
     
 <!-- jQuery plugins -->
 <script src="{{asset('js/vendor/jquery.js')}}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{{asset('js/vendor/bootstrap.js')}}"></script>
 <script src="{{asset('js/easing.js')}}"></script>
 <script src="{{asset('js/scrollbar.js')}}"></script>
@@ -219,7 +239,7 @@ window.customerUrl = window.location.origin+"/eventing/public\/";
 <!--<script src="{{asset('js/pie-chart.js')}}"></script>
 <script src="{{asset('js/vide.js')}}"></script>-->
 <!--<script src="{{asset('js/fitvids.js')}}"></script>-->
-<!--<script src="{{asset('owl-carousel/owl.carousel.min.js')}}"></script>-->
+<script src="{{asset('owl-carousel/owl.carousel.min.js')}}"></script>
 <!--<script src="{{asset('js/jflickrfeed.js')}}"></script>-->
 <!--<script src="{{asset('js/tweecool.js')}}"></script>-->
 <!--<script src="{{asset('js/chart.js')}}"></script>-->
@@ -245,7 +265,10 @@ window.customerUrl = window.location.origin+"/eventing/public\/";
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
 <script src="{{asset('jss/combox.js')}}"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+<script src="{{asset('jss/firebase_config.js')}}"></script>
 <script src="{{asset('jss/custom/firebase.js')}}"></script>
+
 <-- standard version -->
 
 

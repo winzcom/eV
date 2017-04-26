@@ -92,29 +92,33 @@ body{
                     {{csrf_field()}}
                  <input type="submit" class="btn btn-default" value="Delete Selected"/>
                 <div  class="cbp cbp-l-grid-team gallery1">
-                @foreach($galleries as $gallery)
-                    <div class="cbp-item graphics-design">
-                        <a href="{{$path}}/{{$gallery->image_name}}" class="cbp-caption nivo-lightbox" data-lightbox-gallery="gallery1">
-                            <div class="cbp-caption-defaultWrap">
-                                <img src="{{$path}}/{{$gallery->image_name}}" alt="">
-                            </div>
-                            <div class="cbp-caption-activeWrap">
-                                <div class="cbp-l-caption-alignCenter">
-                                    <div class="cbp-l-caption-body">
-                                        <div class="cbp-l-caption-text">ENLARGE</div>
+                    <div class="row">
+                        @foreach($galleries as $gallery)
+                            <div class="col-4">
+                                <div class="cbp-item graphics-design">
+                                    <a href="{{$path}}/{{$gallery->image_name}}" class="cbp-caption nivo-lightbox" data-lightbox-gallery="gallery1">
+                                        <div class="cbp-caption-defaultWrap">
+                                            <img src="{{$path}}/{{$gallery->image_name}}" alt="" style="max-width:350px;">
+                                        </div>
+                                        <div class="cbp-caption-activeWrap">
+                                            <div class="cbp-l-caption-alignCenter">
+                                                <div class="cbp-l-caption-body">
+                                                    <div class="cbp-l-caption-text">ENLARGE</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <div class="checkbox">
+                                        <label class="">
+                                            <div class="icheckbox_square"><input type="checkbox" value="{{$gallery->image_name}}" name="images[]" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                        </label>
                                     </div>
+
                                 </div>
-                            </div>
-                        </a>
-
-                        <div class="checkbox">
-                            <label class="">
-                                <div class="icheckbox_square"><input type="checkbox" value="{{$gallery->image_name}}" name="images[]" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
-                            </label>
-                        </div>
-
-                    </div>
+                            </div><!--Col-sm-4-->
                 @endforeach
+                    </div><!--Row-->
                 </div>
                 </form>
             @endif

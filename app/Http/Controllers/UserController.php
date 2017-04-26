@@ -125,7 +125,7 @@ class UserController extends Controller
 
     public function getReviews(Request $request,$filter = null){
         
-        $pagination = 3;
+        $pagination = 10;
         list($total_avg,$reviews,$query) = $this->user_repo->getReviews(Auth::id(),$pagination,null,['id','desc']);
         
         return view('vendor.reviews')->with(

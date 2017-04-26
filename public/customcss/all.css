@@ -6737,6 +6737,7 @@ to {
 html, 
 body{
 	height:100%;
+	overflow-x:hidden;
 }
 .content{
 	overflow-x: hidden;
@@ -9597,7 +9598,7 @@ left: 290px;
 	background-image:url(../img/slides/landing-page/slide1.jpg);
 }
 .landing-intro.horizontal-form{
-	background-image:url(../img/slides/landing-page/slide2.jpg);
+	background-image:url(../img/slides/landing-page/event.jpg);
 }
 .landing-intro.app-landing{
 	background-image:url(../img/slides/landing-page/slide3.jpg);

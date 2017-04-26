@@ -56,7 +56,7 @@ if(count($all_requests) > 0){
                 &nbsp;<i class=\"btn btn-info btn-xs sq-corner\">Highest Cost: ".$service->currencyFormatter()->formatCurrency($request->max_cost,'EUR').
                 " Lowest Cost: ".$service->currencyFormatter()->formatCurrency($request->min_cost,'EUR')." <br>Average: ".
                 $service->currencyFormatter()->formatCurrency($request->avg_cost,'EUR')."
-                </i><br><br>";
+                </i> from you and ".((int)$request->crid-1)." other(s)<br><br>";
         }
         if($isobject){
             echo '<div class="alert alert-success">';
@@ -70,6 +70,9 @@ if(count($all_requests) > 0){
                                 echo $val;
                         }
                         echo ' )<br><br>';
+                }elseif($key == 'date' && $value !== ''){
+                   $dt = \Carbon\Carbon::parse($value);
+                   echo 'Date:'.$dt->toFormattedDateString().'</br><hr>';
                 }
                 else
                     echo str_replace('_','',title_case($key)).':'.$value.'<br><hr>';

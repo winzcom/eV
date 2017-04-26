@@ -101,6 +101,15 @@ abstract class BaseRepo implements RepoInterface {
             return collect($d);
     }
 
+    public function getTopVendors($state){
+        
+        return $this->model()->with('reviews','galleries')
+            ->leftJoin('bayesian_average','bayesian_average.review_for','=','companies.id')
+            ->addSelect('bayesian_average.*','companies.*')
+            ->where('companies.state',$state)
+            ->take(5)->orderBy('bayesian_average.bay_average','desc')->get();
+    }
+
     protected function returnWhereArrays(array $args){
         
         $array = [];

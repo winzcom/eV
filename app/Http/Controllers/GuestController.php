@@ -6,10 +6,9 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 
 use App\Service\Service;
-use App\Entities\User;
-use App\Entities\QuotesRequest;
+
 use Illuminate\Support\Facades\DB;
-use App\TreeNode\CategoryTree;
+
 use App\Repo\Interfaces\UserRepoInterface as UPI;
 use App\Events\NewRequestSentEvent;
 
@@ -36,12 +35,21 @@ class GuestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
-        //$city = json_decode(file_get_contents('http://freegeoip.net/json/'))->city;
-        //$some_quotes = $this->repo->getSomeRequestsAndAverage($city);
-        $companies = Service::getFiveCompanies();
+        $companies = [];
+        $state = session('user_state') ? session('user_state'):null;
+        if($state == "" || $state == null){
+             try{
+                    $state = json_decode(file_get_contents('http://freegeoip.net/json/'))->region_name;
+                    session(['user_state'=>$state]);
+                }catch(\ErrorException $e){
+                    $companies = [];
+                }
+            
+        }else $companies = $this->repo->getTopVendors($state);
+        //$some_quotes = $this->repo->getSomeRequestsAndAverage($state);
+        
         return view('landing',compact('companies'));
     }
 

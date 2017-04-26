@@ -1,4 +1,5 @@
-<div id="myModal" class="modal request_modal fade" role="dialog">
+<template>
+    <div id="myModal" class="modal request_modal fade" role="dialog">
   <div class="modal-dialog">
    <div class="modal-content">
     <div class="modal-body my-space">
@@ -248,3 +249,19 @@
    </div><!--Modal content-->
   </div><!--modal-dialog-->
 </div><!--#myModal-->
+
+</template>
+
+<script>
+    export default{
+        data(){
+            return {
+                companies:[]
+            }
+        },
+        /** attach the wizard plugin */
+        mounted(){
+
+        }
+    }
+</script>
