@@ -83,6 +83,7 @@ class GuestController extends Controller
         DB::transaction(function() use ($request,$client,$category,$state,$vicinity){
 
             $users = $this->getUserQuery($category,$state,$vicinity)->get();
+            $customer = null;
             
             if(!empty($users)){
 
@@ -97,24 +98,37 @@ class GuestController extends Controller
                                    return;
                             }
                                 
+                            try{
+                                    $customer = $this->repo->createModel('customer')->firstOrCreate([
+                                                'first_name'=>$client['first_name'],
+                                                'last_name'=>$client['last_name'],
+                                                'email'=>$client['email'],
+                                                'password'=>bcrypt($client['password'])
+                                            ]);
 
-                            $customer = $this->repo->createModel('customer')->firstOrCreate([
-                                            'first_name'=>$client['first_name'],
-                                            'last_name'=>$client['last_name'],
-                                            'email'=>$client['email'],
-                                            'password'=>bcrypt($client['password'])
-                                        ]);
-
+                            }catch(\Exception $e){
+                                echo json_encode(['error'=>'An error occured. Please try again']);
+                                return;
+                            }
+                            
                     }
                     if($vicinity == 'all' || $vicinity == '') $vicinity = 0;
-                    $request = $this->repo->createModel('quotes_request')->create([
-                        'category_id'=>$category['category'],
-                        'client_id'=>$id !== null ? $id:$customer->id,
-                        'count_available_vendors'=>count($users),
-                        'state'=>$state,
-                        'vicinity_id'=>$vicinity,
-                        'request'=>json_encode($request)
-                    ]);
+
+                    try{
+                            $request = $this->repo->createModel('quotes_request')->create([
+                            'category_id'=>$category['category'],
+                            'client_id'=>$id !== null ? $id:$customer->id,
+                            'count_available_vendors'=>count($users),
+                            'state'=>$state,
+                            'vicinity_id'=>$vicinity,
+                            'request'=>json_encode($request)
+                        ]);
+                    }catch(\Exception $e){
+                        $customer->delete();
+                        echo json_encode(['error'=>'An error occured in creating your request. Please try again']);
+                        return;
+                    }
+                    
 
                 $data = [
 

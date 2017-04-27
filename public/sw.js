@@ -79,6 +79,6 @@ self.addEventListener('notificationclick', function(event) {
     event.notification.close();
 
     event.waitUntil(
-      clients.openWindow('https://localhost/eventing/culogin')
+      clients.openWindow('http://localhost/eventing/culogin')
     );
 });

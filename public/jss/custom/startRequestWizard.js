@@ -12,12 +12,12 @@ $(document).ready(function() {
 
         var request_url = $('#myWizard').attr('action');
         var button;
-        var v_available = true;
+        var v_available = false;
         statee = null;
 
         $('#state').change(function() {
 
-            v_available = !v_available;
+            v_available = true;
             statee = $(this).val();
         })
 
@@ -57,7 +57,7 @@ $(document).ready(function() {
                                 alertify.closeLogOnClick(true).sucess(html);
                             }
                         } catch (e) {
-                            alertify.success('Reply Sent');
+                            alertify.success('Request Sent');
                         }
 
                     },
@@ -75,6 +75,9 @@ $(document).ready(function() {
 
             if ($('#category').val() == '') {
                 disableNextButton(true);
+            }else if($('#category').val() !== '' && v_available == true){
+                disableNextButton(true);
+                checkVendorAvailability($('#category').val(),statee,$('#vicinity').val())
             }
             var modal = $(this);
             button = $(event.relatedTarget);

@@ -30,9 +30,7 @@
     .request_modal{
 		margin-top:10%;
 	}
-	body{
-		overflow-x:hidden;
-	}
+	
 </style>
 
 </head>
@@ -252,9 +250,9 @@ window.customerUrl = window.location.origin+"/eventing/public\/";
 <script src="{{asset('js/validate.js')}}"></script>-->
 <script src="{{asset('js/tempo.js')}}"></script>
 <!--<script src="{{asset('js/main.js')}}"></script>-->	
-<script src="{{asset('jss/custom/profile.js')}}"></script>
+<!--<script src="{{asset('jss/custom/profile.js')}}"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-<script src="{{asset('vendor/js/dropzone/dropzone.js')}}"></script>
+<!--<script src="{{asset('vendor/js/dropzone/dropzone.js')}}"></script>-->
 <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
 <!--<script src="{{asset('js/app/app.js')}}"></script>-->
 
@@ -265,9 +263,9 @@ window.customerUrl = window.location.origin+"/eventing/public\/";
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
 <script src="{{asset('jss/combox.js')}}"></script>
-<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+<!--<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
 <script src="{{asset('jss/firebase_config.js')}}"></script>
-<script src="{{asset('jss/custom/firebase.js')}}"></script>
+<script src="{{asset('jss/custom/firebase.js')}}"></script>-->
 
 <-- standard version -->
 

@@ -239,8 +239,6 @@ class UserController extends Controller
                 'message'=>$request->message
             ]);
 
-          
-
             /*$datas = [
 
                     'request_data'=>$data,

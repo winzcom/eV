@@ -19,7 +19,7 @@ class Handler extends ExceptionHandler
         \Illuminate\Auth\Access\AuthorizationException::class,
         \Symfony\Component\HttpKernel\Exception\HttpException::class,
         \Illuminate\Database\Eloquent\ModelNotFoundException::class,
-        \Illuminate\Session\TokenMismatchException::class,
+        //\Illuminate\Session\TokenMismatchException::class,
         \Illuminate\Validation\ValidationException::class,
     ];
 
@@ -45,7 +45,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($e instanceof TokenMismatchException) {
+        if ($exception instanceof TokenMismatchException) {
             $request->session()->flush();
             return redirect('/')->with('message','Current Session has expired please login to continue');
         }

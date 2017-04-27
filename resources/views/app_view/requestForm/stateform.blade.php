@@ -5,7 +5,7 @@
                 <div class="form-group">
                     <select class="form-control input-lg" id="state" name="state" placeholder="State"
                         required >
-                        <option value=""></option>
+                        <option value="" disabled>State...</option>
                         @foreach ($states as $state)
                         <option value = "{{$state->state}}" data-id = "{{$state->id}}">{{$state->state}}</option>
                         @endforeach
