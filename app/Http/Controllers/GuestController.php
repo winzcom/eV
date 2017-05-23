@@ -5,8 +5,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 
+use Aws\Sns\SnsClient;
 use App\Service\Service;
-
+use App\Mail\SendVerificationMail;
 use Illuminate\Support\Facades\DB;
 
 use App\Repo\Interfaces\UserRepoInterface as UPI;
@@ -49,7 +50,6 @@ class GuestController extends Controller
             
         }else $companies = $this->repo->getTopVendors($state);
         //$some_quotes = $this->repo->getSomeRequestsAndAverage($state);
-        
         return view('landing',compact('companies'));
     }
 
@@ -60,6 +60,11 @@ class GuestController extends Controller
         $this->repo->createModel('reviews')
             ->create($data);
         return back();
+    }
+
+    public function testLoad(){
+
+        return $this->repo->getRequests();
     }
 
     private function getUserQuery($category,$state,$vicinity){
@@ -76,7 +81,7 @@ class GuestController extends Controller
         $vicinity = $request->vicinity;
         $client = $request->only(['first_name','last_name','email','password']);
         $category = $request->only(['category']);
-
+        dd($request->all());
         $request = $request->except(['category','firstname','','lastname','email','password','_token','state','vicinity']);
 
         
@@ -187,6 +192,40 @@ class GuestController extends Controller
             $model = $this->repo->createModel('customer');
             $model->where('id',Auth::guard('client')->id())->update(['firebase_endpoint'=>$request->token]);
         }
+    }
+
+    public function amazonSnS(){
+        $sns_client = new SnsClient(['region'=>env('AWS_REGION'),'version'=>'2010-03-31',
+            'credentials'=>[
+                'secret'=>env('AWS_SECRET'),
+                'key'=>env('AWS_KEY'),
+            ]
+        ]);
+
+        $json = json_decode(file_get_contents("php://input"),true);
+        try{
+            if(isset($json['Type'])){
+                if($json['Type'] === 'SubscriptionConfirmation'){
+                    $result = $sns_client->confirmSubscription(['Token'=>$json['Token'],'TopicArn'=>$json['TopicArn']]);
+                }elseif($json->Type === 'Notification'){
+
+                }
+            }elseif(isset($json['notificationType']) && $json['notificationType'] === 'Bounce'){
+                $bounced_recipient = $json['bouncedRecipients'];
+                //Loop through and set a flag on vendors email;
+                if(count($bounced_recipient) > 0){
+                    $emails = [];
+                    foreach($bounced_recipient as $obj){
+                        $emails[] = $obj->email;
+                    }
+                    DB::table('companies')->whereIn('email',$emails)
+                            ->update(['bounced'=>'1']);
+                }
+            }
+        }catch(\Exception $e){
+                    
+        }
+
     }
 }
 

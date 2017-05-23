@@ -47,6 +47,7 @@
 				<button type="submit" 
                     class="btn btn-primary btn-lg btn-block start"
                     data-toggle="modal" data-target="#myModal"
+					id="start"
 					data-state="{{$company->state}}",
 					data-vicinity="{{$company->vicinity_id}}"
                 >

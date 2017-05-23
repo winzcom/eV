@@ -419,3 +419,8 @@
 	<!-- section END -->
 
 @endsection
+
+@section('script')
+<!--<script src="{{asset('js/jquery.validate.min.js')}}"></script>
+<script src="{{asset('jss/jquery.steps.min.js')}}"></script>-->
+@endsection

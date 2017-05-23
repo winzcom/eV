@@ -32,7 +32,7 @@ class SendVerificationMail extends Mailable
      */
     public function build()
     {
-        return $this->from('eventing@gmail.com')
+        return $this->from('ebun@sandboxbfa0ca2fb4da461ea05bbab730cdde23.mailgun.org')
         ->view('app_view.email_view_folders.verification_mail')->with('user',$this->user);
     }
 }

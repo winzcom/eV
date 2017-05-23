@@ -90,7 +90,7 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
             left join quotes on quotes.rid=quotes_request.id and quotes.uid = companies.id
             left join (select rid,max(q1.cost) as ma,min(q1.cost) as mi,avg(cost) as cost_avg,count(rid) as crid from quotes q1 group by q1.rid) b on b.rid = quotes.rid
             left join dismiss on dismiss.rid = quotes_request.id and dismiss.uid = companies.id
-            where dismiss.rid is null and companies.id =:vendor_id group by quotes.id,quotes_request.category_id order by quotes_request.id desc"
+            where dismiss.rid is null and timestampdiff(DAY,companies.created_at,quotes_request.created_at) > 0 and companies.id =:vendor_id group by quotes_request.id,quotes_request.category_id order by quotes_request.id desc"
         ),array('vendor_id'=>Auth::id()));
 
         return collect($d);

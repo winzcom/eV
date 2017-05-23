@@ -41,6 +41,7 @@
                                 @foreach($events as $event)
                                     <option>{{$event->name}}</option>
                                 @endforeach
+                                
                             </select>
                         </div>
                 </div>
@@ -80,7 +81,7 @@
 
             <div class="row hide" data-step="4" data-title="This is the first step!" >
                 <div id="normalbudget">
-                    <label>What is Your Budget?</label>
+                    <label>What sort of service are you looking for?</label>
                     <div class="radio">
                         <label class="">
                             <div class="iradio_square">
@@ -195,15 +196,16 @@
 
             <div class="row hide" data-step="5" data-title="This is the first step!">
                 <div class="control-group" id="personalmessagae">
-                    <label class="control-label" for="inputCity">Personal Message</label>
+                    <label class="control-label" for="inputCity">Tell us more about your needs </label>
                         <div class="controls">
-                            <textarea name="personalmessage" class="form-control"  rows="5" placeholder="tell us more about the your event needs e.g type of meal(Africanna, buffet) it a standing event, customer are going to pay" required></textarea>
+                            <textarea name="personalmessage" class="form-control" id="personalmessage"  rows="5" placeholder="tell us more about the your event needs include key details e.g type of meal(Africanna, buffet) it a standing event, customer are going to pay" required></textarea>
                         </div>
                 </div>
             </div>
 
             @if(!Auth::guard('client')->check())
             <div class="row hide" data-step="6" data-title="This is the first step!" id="personal">
+                        <p><b>Contact details<small>(so you can be notified when vendors reply with quotes )</small></b></p>
                         <label class="control-label" for="inputCity">First Name</label>
                         <div class="controls">
                             <input name="first_name" class="form-control" type="text" required/>

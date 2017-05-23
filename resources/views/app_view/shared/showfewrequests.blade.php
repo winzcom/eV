@@ -53,29 +53,37 @@ if(count($all_requests) > 0){
                 >
                     Show Quote
                 </button>
-                &nbsp;<i class=\"btn btn-info btn-xs sq-corner\">Highest Cost: ".$service->currencyFormatter()->formatCurrency($request->max_cost,'EUR').
+                &nbsp;<i class=\"btn btn-info btn-xs sq-corner\"><img src=\"https://maxcdn.icons8.com/iOS7/PNG/25/Data/maximum_value-25.png\" title=\"Maximum Value\" width=\"25\" height=\"25\">".$service->currencyFormatter()->formatCurrency($request->max_cost,'EUR').
                 " Lowest Cost: ".$service->currencyFormatter()->formatCurrency($request->min_cost,'EUR')." <br>Average: ".
                 $service->currencyFormatter()->formatCurrency($request->avg_cost,'EUR')."
                 </i> from you and ".((int)$request->crid-1)." other(s)<br><br>";
         }
         if($isobject){
-            echo '<div class="alert alert-success">';
+            echo '<div class="alert alert-success row" style="padding:10 0 0 10px;">';
             foreach($ob as $key=>$value){
-                if(is_array($value)){
-                    echo 'Additional Services ( ';
-                        foreach($value as $val){
-                            if(is_numeric($val))
-                                echo $cats->where('id',$val)->first()->name;
+                if($key !== 'personalmessage'){
+                    echo '<div class="col-xs-6 col-md-4" style="padding-bottom:10px;">';
+                            if(is_array($value)){
+                                echo $key == 'extra'? 'Extras (': $key.'(';
+                                /*foreach($value as $val){
+                                    if(is_numeric($val))
+                                        echo $cats->where('id',$val)->first()->name;
+                                    else
+                                        echo $val;
+                                }*/
+                                echo implode(",",$value);
+                                echo ' )';
+                            }elseif($key == 'date' && $value !== ''){
+                                $dt = \Carbon\Carbon::parse($value);
+                                echo 'Date:'.$dt->toFormattedDateString();
+                            }
                             else
-                                echo $val;
-                        }
-                        echo ' )<br><br>';
-                }elseif($key == 'date' && $value !== ''){
-                   $dt = \Carbon\Carbon::parse($value);
-                   echo 'Date:'.$dt->toFormattedDateString().'</br><hr>';
+                                echo str_replace('_','',title_case($key)).':'.$value;
+                    echo'</div>';
+                }else{
+                    echo '<textarea rows="5" cols="60" disabled class="form-control input-md">'.$value.'</textarea>';
                 }
-                else
-                    echo str_replace('_','',title_case($key)).':'.$value.'<br><hr>';
+                
             }
             echo '</div>';
         }

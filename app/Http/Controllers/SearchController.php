@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 use App\Category;
 use App\Service\Service;
@@ -47,10 +48,12 @@ class SearchController extends Controller
        return $companies;
     }
 
-    public function browseByCategory($category = null){
-    
+    public function browseByCategory($category = null,Request $request){
+
         if($category){
-            $companies = $this->getVendors($category);
+            $companies = Cache::remember(url()->current(),1440,function() use ($category){
+                            return $this->getVendors($category);
+                        });
         
             if(count($companies) > 0){
                 return view('app_view.vendorbrowse')->with([

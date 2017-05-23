@@ -1,7 +1,11 @@
 window.onload = function(){
   if(checkNotificationPermission() == 'granted'){
-    var subscribe_button = document.getElementById('sb');
-    subscribe_button.style.display = 'none';
+    try{
+        var subscribe_button = document.getElementById('sb');
+        subscribe_button.style.display = 'none';
+    }catch(err){
+
+    }
   }
 }
 
@@ -64,38 +68,46 @@ messaging.onMessage(function(payload) {
 }
 
 function toggleSubscribeButton(){
-  var sb = document.getElementById('sb')
-  if(checkNotificationPermission() == 'granted'){
-    // dont display subscribe button;
-    sb.style.display = 'none';
-  }
-  else{
-    sb.style.display = '';
-    sb.disabled = false;
-  }
+  try{
+        var sb = document.getElementById('sb')
+        if(checkNotificationPermission() == 'granted'){
+          // dont display subscribe button;
+          sb.style.display = 'none';
+        }
+        else{
+          sb.style.display = '';
+          sb.disabled = false;
+        }
+    }catch(err){
+
+    }
 }
 
 function subscribeToPush(){
 
-    var sb = document.getElementById('sb');
-    sb.innerText = 'subscribing...';
-    sb.disabled = true;
+    try{
+        var sb = document.getElementById('sb');
+        sb.innerText = 'subscribing...';
+        sb.disabled = true;
 
-    if(checkNotificationPermission() !== 'granted'){
+        if(checkNotificationPermission() !== 'granted'){
 
-        messaging.requestPermission().then(function(){
-                    
-            messaging.getToken().then(function(token){
-                setServerToken(token);
-                sb.innerText = 'subscribed';
-                toggleSubscribeButton();
-                console.log(token)
-            }).catch(function(e){
-                console.log('Token not generated')
-            })   
-        }).catch(function(){
-            console.log('Notification not granted');
-        })
+            messaging.requestPermission().then(function(){
+                        
+                messaging.getToken().then(function(token){
+                    setServerToken(token);
+                    sb.innerText = 'subscribed';
+                    toggleSubscribeButton();
+                    console.log(token)
+                }).catch(function(e){
+                    console.log('Token not generated')
+                })   
+            }).catch(function(){
+                console.log('Notification not granted');
+            })
+        }
+    }catch(err){
+
     }
 }
 

@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendRequest extends Mailable
+class OrderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -17,22 +17,18 @@ class SendRequest extends Mailable
      * @return void
      */
 
-     protected $data;
-
-    public function __construct(Array $data)
+    public function __construct()
     {
-        //
-        $this->data = $data;
+    
     }
 
     /**
      * Build the message.
      *
-     * @return $this 
+     * @return $this
      */
     public function build()
     {
-        return $this->from('ebun68@gmail.com')->markdown('emails.requests.send_request')
-                    ->with('data',$this->data);
+        return $this->from('ebun68@gmail.com')->markdown('emails.orders.shipped');
     }
 }

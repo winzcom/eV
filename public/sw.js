@@ -13,9 +13,10 @@ firebase.initializeApp({
 const message = firebase.messaging();
 
 const CACHE = 'my-cache-v1';
+const CACHE2 = 'my-cache-v2';
 //message.onMessage.apply(window,f);
 
-var vendor_file_to_cache = [
+var files_to_cache = [
 
     'js/vendor/jquery.js',
     'js/vendor/bootstrap.js',
@@ -55,7 +56,7 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE).then(function(cache) {
       console.log('caching')
-      return cache.addAll(vendor_file_to_cache);
+      return cache.addAll(files_to_cache);
     })
   );
 });

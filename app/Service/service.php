@@ -41,7 +41,9 @@ class Service{
     public static function getCategories(){
 
            //return new \App\TreeNode\CategoryTree(0,'',-1);
-           return Category::all();
+           return Cache::remember('category',1440,function(){
+               return Category::all();
+           });
     }
 
     public static function getFiveCompanies(){
@@ -55,7 +57,12 @@ class Service{
             return  DB::table('states')->select('state')->OrderBy('state')->get();
         });*/
 
-         return  DB::table('states')->select('*')->OrderBy('state')->get();
+         return  Cache::remember('state',1440,function(){
+                    return DB::table('states')
+                    ->select('*')
+                    ->OrderBy('state')
+                    ->get();
+                });
     }
 
     public static function getImages($directory){
@@ -68,7 +75,12 @@ class Service{
     }
 
     public static function getEvents(){
-        return DB::table('events')->select('name','id')->OrderBy('name')->get();
+        return Cache::remember('events',1440,function(){
+               return DB::table('events')
+                ->select('name','id')
+                ->OrderBy('name')
+                ->get();
+            });
     }
 
     public static function createNewUser($data){
@@ -96,7 +108,9 @@ class Service{
     }
 
     public static function getVicinities(){
-        return Vicinity::OrderBy('name')->get();
+        return Cache::remember('vicinities',1440,function(){
+                 return Vicinity::OrderBy('name')->get();
+            });
     }
 
     public static function paginate($data,$per_page){

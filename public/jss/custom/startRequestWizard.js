@@ -6,9 +6,16 @@ $(document).ready(function() {
             //alert(user_state);
         }*/
 
-        $( "#datepicker" ).datepicker({
-            minDate:new Date(new Date().setDate(new Date().getDate()))
-        });
+        
+
+
+        try{
+            $( "#datepicker" ).datepicker({
+                minDate:new Date(new Date().setDate(new Date().getDate()))
+            });
+        }catch(err){
+
+        }
 
         var request_url = $('#myWizard').attr('action');
         var button;
@@ -26,14 +33,15 @@ $(document).ready(function() {
             btnPreviousHtml: 'Previous',
             btnNextHtml: 'Next',
             btnLastStepHtml: 'Complete',
-            disableNextButton: false,
             completeCallback: function() {
                 /*** Ajax Call To Submit Form **/
 
                 //console.log($('#myWizard').serialize())
                 alertify.delay(0).log("Request is been sent...").maxLogItems(1);
 
-                var formData = $('#myWizard').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
+                //var formData = $('#myWizard').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
+                var formData = $('#myWizard').serialize();
+                console.log(formData);
 
                 $.ajax({
                     url: request_url,
@@ -73,27 +81,27 @@ $(document).ready(function() {
 
         $('#myModal').on('shown.bs.modal', function(event) {
 
-            if ($('#category').val() == '') {
-                disableNextButton(true);
-            }else if($('#category').val() !== '' && v_available == true){
-                disableNextButton(true);
-                checkVendorAvailability($('#category').val(),statee,$('#vicinity').val())
-            }
             var modal = $(this);
             button = $(event.relatedTarget);
 
             if (button.data('state') !== undefined && button.data('state') !== '') {
+            	
                 var state = button.data('state');
                 var vicinity_id = null;
                 if (button.data('vicinity') !== '' && button.data('vicinity') !== undefined) vicinity_id = button.data('vicinity');
                 else vicinity_id = 0;
-
+                 $("#category").trigger("change");
+                 //checkVendorAvailability($('#category').val(),state,vicinity_id);
                 addStateLocality(state, vicinity_id);
             } else {
+                if ($('#category').val() == '') {
+                    disableNextButton(true);
+                }else if($('#category').val() !== '' && v_available == true){
+                    disableNextButton(true);
+                    checkVendorAvailability($('#category').val(),$('#state').val(),$('#vicinity').val())
+                }
                 addStateLocality();
             }
-
-
             //var cate = $('#category');
             //var c = $('#category option:selected').text().replace('- ','');
 
@@ -125,8 +133,8 @@ $(document).ready(function() {
 
             //var category = $('#category option:selected').text().replace(/\s+/g, '');
 
-            if (exists != null) {
-                addExtraFormElement(exists, self)
+            if (exists !== null) {
+                //addExtraFormElement(exists, self)
             }
         }) /***End of event Change Event operation */
 
@@ -140,6 +148,7 @@ $(document).ready(function() {
         $('#start_request').submit(function() {
 
             //display the form wizard;
+            
             return false;
 
         }); /***End of Jquery events changeOperation */
@@ -159,10 +168,10 @@ $(document).ready(function() {
         function checkVendorAvailability(cat_id, state = null, locality = null) {
 
             if (state == null || locality == null) {
-                state = button.data('state') || $('#state').val();
-                locality = button.data('vicinity') || $('#vicinity').val() || 0;
-                if (locality == 'all');
-                locality = 0;
+                state = $('#start').data('state') || $('#state').val();
+                locality = $('#start').data('vicinity') || $('#vicinity').val() || 0;
+                if (locality == 'all')
+                	locality = 0;
             }
             var vendor_available_span = $('.vendor_available');
             var data = { 'state': state, 'locality': locality, 'category': cat_id };
@@ -212,11 +221,15 @@ $(document).ready(function() {
             console.log(category)
 
             var data = formElements[category];
+            
             console.log(data);
             if (data) {
-                addAdditionalService(data, self);
+            	if(data.placeholder !== undefined){
+            		$('#personalmessage').attr('placeholder',data.placeholder);
+            	}
+                addAdditionalService(data, self,category);
             } else if ($.inArray(category, eventPlanning) != -1) {
-                addThemeColorInputElements($('#div_event'));
+                //addThemeColorInputElements($('#div_event'));
             } else if (category == 'Transport') {
                 addTransportInputs();
                 $('#venue').hide();
@@ -232,14 +245,12 @@ $(document).ready(function() {
 
             if (state1 !== null && vicinity_id !== null) {
 
-                state = state1;
-                locality = vicinity_id;
                 console.log(vicinity_id + ' ' + state1);
-                if (locality == 'all')
-                    locality = 0;
+                if (vicinity_id== 'all')
+                    vicinity_id= 0;
 
-                stateInput = $('<input type="hidden" name="state" value="' + state + '" ></input>');
-                localityInput = $('<input type="hidden" name="vicinity" value="' + locality + '"></input>');
+                stateInput = $('<input type="hidden" name="state" value="' + state1 + '" ></input>');
+                localityInput = $('<input type="hidden" name="vicinity" value="' + vicinity_id+ '"></input>');
                 $('#myWizard').append(stateInput);
                 $('#myWizard').append(localityInput);
             } else {
@@ -265,49 +276,96 @@ $(document).ready(function() {
         }
 
 
-        function addAdditionalService(data, ele) {
+        function addAdditionalService(data, ele,category) {
 
-            var divContainer = $(`<div class="control-group divContainer">
-                              <label class="control-label" for="inputCity">Do You Require Additional Service?</label>
-                             </div>
-                          `);
+            var divContainer = $('<div class="control-group divContainer" style="padding-left:10px;"></div>');
 
-            data.additional.forEach(function(element) {
+            if(data.additional !== undefined){
 
-                /**<div class="checkbox">
-												<label>
-													<input type="checkbox" value="">
-													Option one is this and that&mdash;be sure to include why it's great
-												</label>
-											</div>*/
+                var p = $('<p style="text-align:center;">Do you want this additional service(s)</p>');
+                if(category == 'SmallChops'){
+                    p.text('What do you want in the smallchops');
+                }
+                divContainer.html(p);
+                var outerDiv = $('<div class="row">');
+                 data.additional.forEach(function(element) {
 
+                
+                var divContent = $(`<div class="checkbox col-md-3 col-xs-6"></div>`);
+                var outerLabel = $('<label>');
+                var className = element.type === 'text' ? '':'';
+                var formInput = $('<input type="'+element.type+'" name="'+element.formname+'"  value="' + element.value + '">')
+                        // var formInput = $('<input type="checkbox" name="extra[]" class="" value="'+element.id+'">'+element.name+'</input>')
+                    outerLabel.append(formInput)
+                    outerLabel.append(element.name)
+                    divContent.append(outerLabel)
+                    outerDiv.append(divContent);
+                    //divContent.append();
+                    
+                    
 
-                var divContent = $(`<div class="checkbox"></div>`);
-                var outerLabel = $('<label></label');
-                var formInput = $('<input type="checkbox" name="extra[]"  value="' + element.id + '">' + element.name + '</input>')
-                    // var formInput = $('<input type="checkbox" name="extra[]" class="" value="'+element.id+'">'+element.name+'</input>')
-                outerLabel.append(formInput);
-                divContent.append(outerLabel);
+                }, this);
+                divContainer.append(outerDiv);
+            }
+            
 
-                //divContent.append();
-                divContainer.append(divContent)
-
-            }, this);
-
+            
+            
             if (data.extras != null) {
+                var oDiv = $('<div class="row">');
+                 var innerDiv = null;
+                var input = null;
                 data.extras.forEach(function(ele) {
-                    var input = $('<input>');
-                    var label = $('<label>')
-                    label.text(ele.name);
-                    divContainer.append(label);
+                    innerDiv = $('<div class="col-xs-6 col-md-4">')
+                    if(ele.type === 'text'){
+                         input = $('<input>');
+                         input.attr({
+                            name: ele.formname,
+                            class: 'form-control input-sm',
+                            value: ''
+                         }, this);
+                         var label = $('<label>')
+                         label.text(ele.name);
+                         innerDiv.append(label)
+                         innerDiv.append(input);
+                         oDiv.append(innerDiv);
+                    } else if(ele.type === 'select' && ele.children.length > 0){
+                        input = $('<select class="form-control input-sm" name="'+ele.formname+'">');
+                        ele.children.forEach(function(e){
+                            var option = $('<option>');
+                            option.attr({
+                                value:e.value
+                            })
+                            option.text(e.name);
+                            input.append(option);
+                        })
+                        var label = $('<label>')
+                        label.text(ele.name);
+                        innerDiv.append(label);
 
-                    input.attr({
-                        name: ele.formname,
-                        class: 'form-control input-lg',
-                        value: ''
-                    }, this).append('<br>');
-                    divContainer.append(input);
+                        innerDiv.append(input);
+                        oDiv.append(innerDiv);
+                    }else{
+                        input = $('<input>');
+                         input.attr({
+                            name: ele.formname,
+                            class: 'form-control input-sm',
+                            value: ele.value,
+                            type:ele.type
+                         }, this);
+                         var label = $('<label>')
+                         label.text(ele.name);
+                         innerDiv.append(label)
+                         innerDiv.append(input);
+                         oDiv.append(innerDiv);
+                    }
+                    
                 })
+                divContainer.append(oDiv);
+            }
+            if(data.placeholder !== ''){
+                var pmtextarea = $('#personalmessage');
+                pmtextarea.attr('placeholder',data.placeholder);
             }
             divContainer.insertAfter(ele)
         }

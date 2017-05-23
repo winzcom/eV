@@ -10,16 +10,28 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//ini_set('max_execution_time', 180);
 use  Illuminate\Http\Request;
+use App\Mail\OrderMail;
+use Illuminate\Support\Facades\Mail;
 
 
 Route::match(['post','get'],'/search','SearchController@search');
 
 Route::get('/type_search','SearchController@search_by_typing');
 
+Route::get('/load_request','GuestController@testLoad');
 
+Route::get('/aws_sns_message','GuestController@amazonSnS');
 
+Route::get('/testmail',function(Request $request){
+    
+    Mail::to('sholak@cedarviewng.com')->send(new OrderMail());
+});
+
+Route::get('/start',function(){
+    return view('app_view.start');
+});
 
 
 /*** General Routes **/

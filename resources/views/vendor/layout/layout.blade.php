@@ -30,7 +30,7 @@
     // Enable pusher logging - don't include this in production
     
 	//window.myUrl = "http:\/\/localhost/eventing/public\/";
-	window.myUrl = window.location.origin+"/eventing/public\/";
+	window.myUrl = window.location.origin+"/eventing22/public\/";
 
   </script>
 

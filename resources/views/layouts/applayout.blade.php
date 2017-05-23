@@ -12,26 +12,30 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<style>
+    .request_modal{
+		margin-top:10%;
+	}
+	
+</style>
+@yield('style')
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<!-- style.css is main stylesheet and all other sylesheets are being
 		 imported in this file. -->
 		 <!-- Latest compiled and minified CSS -->
+		 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
 
 	<link rel="stylesheet" href="{{asset('customcss/all.css')}}">
-	<link rel="stylesheet" href="{{asset('vendor/css/eazy.css')}}">
+	<!--<link rel="stylesheet" href="{{asset('vendor/css/eazy.css')}}">-->
+	<!--<link rel="stylesheet" href="{{asset('css/material-bootstrap-wizard.css')}}">-->
 
 	
 
 	<script src="{{asset('js/vendor/modernizr-2.8.3-respond-1.4.2.min.js')}}"></script>
 	<!--<script src="{{asset('jss/custom/googleautocomplete.js')}}"></script>-->
 	
-<style>
-    .request_modal{
-		margin-top:10%;
-	}
-	
-</style>
+
 
 </head>
 
@@ -56,7 +60,7 @@ window.customerUrl = window.location.origin+"/eventing/public\/";
 	<![endif]-->
 	
 @if(session('user_state') !== null)
-	<p style="display:none" id="user_state" data-user-state ="{{session('user_state')}}">session('user_state')</p>
+	<!--<p style="display:none" id="user_state" data-user-state ="{{session('user_state')}}">session('user_state')</p>-->
 @endif
 <!-- preloader START -->
 <div class="preloader">
@@ -85,7 +89,7 @@ window.customerUrl = window.location.origin+"/eventing/public\/";
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.html"><img src="{{asset('img/logos/tempo-dark.png')}}" alt="tempo"></a>
+			<a class="navbar-brand" href=""><img src="{{asset('img/logos/tempo-light.png')}}" alt="tempo"></a>
 		</div>		
 	
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -263,9 +267,9 @@ window.customerUrl = window.location.origin+"/eventing/public\/";
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
 <script src="{{asset('jss/combox.js')}}"></script>
-<!--<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
 <script src="{{asset('jss/firebase_config.js')}}"></script>
-<script src="{{asset('jss/custom/firebase.js')}}"></script>-->
+<script src="{{asset('jss/custom/firebase.js')}}"></script>
 
 <-- standard version -->
 
@@ -275,14 +279,9 @@ window.customerUrl = window.location.origin+"/eventing/public\/";
         async defer>
 </script>-->
 
-
-	
-<script>
-
-</script>
-
-
-
+<!--<script src="{{asset('js/jquery.validate.min.js')}}"></script>
+<script src="{{asset('js/jquery.bootstrap.js')}}"></script>
+<script src="{{asset('js/material-bootstrap-wizard.js')}}"></script>-->
 
 @yield('script')
 

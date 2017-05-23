@@ -4,7 +4,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Request Reply</h4>
-      </div>
+      </div><!-- modal-header-->
       <div class="modal-body">
         <form id="send_request_form">
             <div class="control-group" id="date">
@@ -21,14 +21,14 @@
                         <textarea class="form-control quo" rows="5" id="message" name="message" required></textarea>
                     </div>
             </div>
-         </form>
-            <!---->
-    </div>
+         </form><!-- form-->
+           
+    </div><!--modal-body-->
      
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="send_quote">Send Quote</button>
-      </div>
+      </div><!--footer-->
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div>
