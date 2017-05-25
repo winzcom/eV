@@ -43,7 +43,7 @@
 	]) 
 !!};
 	//window.customerUrl = "http:\/\/localhost/eventing/public\/";
-	window.customerUrl = window.location.origin+"/eventing/public\/";
+	window.customerUrl = window.location.origin+'/';
 	</script>
 </head>
 <body>

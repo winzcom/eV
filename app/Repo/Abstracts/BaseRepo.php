@@ -2,7 +2,7 @@
 namespace App\Repo\Abstracts;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Repo\interfaces\RepoInterface;
+
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +13,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use App\Entities\Review;
 
-abstract class BaseRepo implements RepoInterface {
+abstract class BaseRepo {
 
     protected $model;
     protected $app;

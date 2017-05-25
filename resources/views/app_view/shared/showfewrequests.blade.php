@@ -46,16 +46,16 @@ if(count($all_requests) > 0){
             }
         }
         else{
-                $cost = $service->currencyFormatter()->formatCurrency($request->cost,'EUR');
+                $cost = $service->currencyFormatter($request->cost);
                 echo "<button class='btn btn-success btn-xs request' id='reply' data-toggle='modal'
                     data-target='#reply_request' data-message = '$request->message'
                     data-cost ='$cost' data-uid = '$vendor_id' data-dp='$request->dp'
                 >
                     Show Quote
                 </button>
-                &nbsp;<i class=\"btn btn-info btn-xs sq-corner\"><img src=\"https://maxcdn.icons8.com/iOS7/PNG/25/Data/maximum_value-25.png\" title=\"Maximum Value\" width=\"25\" height=\"25\">".$service->currencyFormatter()->formatCurrency($request->max_cost,'EUR').
-                " Lowest Cost: ".$service->currencyFormatter()->formatCurrency($request->min_cost,'EUR')." <br>Average: ".
-                $service->currencyFormatter()->formatCurrency($request->avg_cost,'EUR')."
+                &nbsp;Highest Cost: ".$service->currencyFormatter($request->max_cost).
+                " Lowest Cost: ".$service->currencyFormatter($request->min_cost)." <br>Average: ".
+                $service->currencyFormatter($request->avg_cost)."
                 </i> from you and ".((int)$request->crid-1)." other(s)<br><br>";
         }
         if($isobject){

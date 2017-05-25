@@ -52,7 +52,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'auth.client' => \App\Http\Middleware\clientAuth::class,
+        'auth.client' => \App\Http\Middleware\ClientAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest.client'=>\App\Http\Middleware\RedirectIfClientAuthenticated::class,

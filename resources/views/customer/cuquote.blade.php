@@ -62,7 +62,7 @@
                     </button>
                         <span>Average Cost: 
                             <i>
-                               &#8358 {{$service->currencyFormatter()->formatCurrency($cost_avg,'EUR')}}
+                               &#8358 {{$service->currencyFormatter($cost_avg)}}
                             </i>
                         </span>
                     <br/>
@@ -98,8 +98,8 @@
                                             @endphp
                                             <h4>quote from {{$quote->first()->name}}</h4>
                                         </div>
-                                        <h3>&#8358 {{$service->currencyFormatter()->formatCurrency($quote->first()->cost,'EUR')}} </h3>
-                                        <h5>@if($down_payment !== null) DownPayment: &#8358 {{$service->currencyFormatter()->formatCurrency($down_payment,'EUR')}}@endif</h5>
+                                        <h3>&#8358 {{$service->currencyFormatter($quote->first()->cost)}} </h3>
+                                        <h5>@if($down_payment !== null) DownPayment: &#8358 {{$service->currencyFormatter($down_payment)}}@endif</h5>
                                         <p>{{$quote->first()->message}}</p>
                                         <!--<button class="btn btn-primary btn-sm" data-toggle="modal" 
                                              

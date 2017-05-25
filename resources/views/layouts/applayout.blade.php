@@ -47,9 +47,9 @@
 		'csrfToken' => csrf_token(),
 	]) 
 !!};
-window.myUrl = window.location.origin+"/eventing/public\/";
+window.myUrl = window.location.origin+'/';
 //alert(window.myUrl = window.location.origin);
-window.customerUrl = window.location.origin+"/eventing/public\/";
+window.customerUrl = window.location.origin+'/';
 
 </script>
 
@@ -140,75 +140,16 @@ window.customerUrl = window.location.origin+"/eventing/public\/";
 		<div class="row">
 			<div class="col-lg-4 col-sm-12">
 			
-				<h4 class="strong">About Tempo</h4>
+				<h4 class="strong">About eventpad</h4>
 				<p>We pride ourselves on being able to apply our creativity to every brief to deliver the right message. Ready to start a project want to learn more about our process and how we work with clients?</p>
 		<a href="contact1-single-location.html" title="Contact Us" class="btn btn-default btn-icon contact-btn"><i class="livicon" data-name="mail" data-color="#fff" data-hovercolor="false" data-size="18"></i> Contact Us</a>
 		
 			</div>
-			<div class="col-lg-2 col-sm-4 col-lg-offset-2">
-			
-				<h4 class="strong">Company</h4>
-				<ul class="ft-list">
-					<li><a href="javascript:void(0);" title="Link title here">About Us</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Whate We Do</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Our Process</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Careers</a></li>
-				</ul>
-				
-			</div>
-			<div class="col-lg-2 col-sm-4">
-			
-				<h4 class="strong">Services</h4>
-				<ul class="ft-list">
-					<li><a href="javascript:void(0);" title="Link title here">Graphics Design</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Front End Development</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">WordPress Development</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Theme &amp; Templates</a></li>
-				</ul>
-				
-			</div>
-			<div class="col-lg-2 col-sm-4">
-			
-				<h4 class="strong">Leagle</h4>
-				<ul class="ft-list">
-					<li><a href="javascript:void(0);" title="Link title here">Privacy</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Terms of Use</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">FAQ</a></li>
-				</ul>
-				
-			</div>
 		</div>
 		<hr>
-		<div class="row">
-			<div class="col-sm-8 hidden-xs">
-			
-				<ul class="list-inline">
-					<li><a href="javascript:void(0);" title="Link title here">Portfolio</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Downloads</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Gateways</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Blog</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Meetups</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Clients</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Coverage Map</a></li>
-				</ul>
-				
-			</div>
-			<div class="col-sm-4">
-			
-				<div class="ft-social text-right">
-					<a class="cst-btn-ten" href="javascript:void(0);"><i class="fa fa-pinterest-p"></i><span>p</span></a>
-					<a class="cst-btn-ten" href="javascript:void(0);"><i class="fa fa-facebook"></i><span>f</span></a>
-					<a class="cst-btn-ten" href="javascript:void(0);"><i class="fa fa-linkedin"></i><span>in</span></a>
-					<a class="cst-btn-ten" href="javascript:void(0);"><i class="fa fa-twitter"></i><span>t</span></a>
-					<a class="cst-btn-ten" href="javascript:void(0);"><i class="fa fa-dribbble"></i><span>d</span></a>
-				</div>
-				
-			</div>
-			<div class="col-lg-12 col-sm-6">
 			
 				<p class="copyright">© 2015 Tempo Pty Ltd.</p>
 				
-			</div>
 		</div>
 		
 	</div>
