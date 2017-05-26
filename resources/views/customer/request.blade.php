@@ -1,4 +1,4 @@
-@extends('vendor.layout.layout')
+@extends('customer.layout.layout')
 
 @section('content')
 @include('vendor.header.header',['title'=>'Requests'])
@@ -9,9 +9,9 @@
 			
 			<div class="container">
                 <div id="">
-                    @include('app_view.shared.showfewrequestforclient',['all_requests'=>$requests,'customer_id'=>Auth::guard('client')->id()])
+                    @include('app_view.shared.showfewrequestforclient',['all_requests'=>$client_requests,'customer_id'=>Auth::guard('client')->id()])
 					
-					{{$requests->setPath('curequests')->render()}}
+					{{$client_requests->setPath('curequest')->render()}}
                 </div>
             </div>
         </section>

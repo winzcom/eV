@@ -1,8 +1,8 @@
  <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
-@if(isset($requests))
-    @if(count($requests) > 0)
+@if(isset($all_requests))
+    @if(count($all_requests) > 0)
    
-        @foreach($requests as $key=>$request)
+        @foreach($all_requests as $key=>$request)
             <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="heading{{$key}}">
                         <h4 class="panel-title">

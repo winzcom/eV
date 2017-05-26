@@ -28,6 +28,12 @@ $(document).ready(function() {
             statee = $(this).val();
         })
 
+        function callback() {
+            var formElement = document.querySelector('#myWizard');
+            //var children = formElement.children();
+            //console.log(children);
+        }
+
         $('#myModal').modalSteps({
             btnCancelHtml: 'Cancel',
             btnPreviousHtml: 'Previous',
@@ -94,6 +100,7 @@ $(document).ready(function() {
                  //checkVendorAvailability($('#category').val(),state,vicinity_id);
                 addStateLocality(state, vicinity_id);
             } else {
+                 $("#category").trigger("change");
                 if ($('#category').val() == '') {
                     disableNextButton(true);
                 }else if($('#category').val() !== '' && v_available == true){

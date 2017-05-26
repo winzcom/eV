@@ -11,7 +11,7 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
-	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<link rel="shortcut icon" type="image/x-icon" href="favicon-32x32">
 	<style>
     .request_modal{
 		margin-top:10%;
@@ -29,7 +29,7 @@
 	<link rel="stylesheet" href="{{asset('customcss/all.css')}}">
 	<!--<link rel="stylesheet" href="{{asset('vendor/css/eazy.css')}}">-->
 	<!--<link rel="stylesheet" href="{{asset('css/material-bootstrap-wizard.css')}}">-->
-
+	<link red <link rel="shortcut icon" href="favicon-32x32.png" type="image/png">
 	
 
 	<script src="{{asset('js/vendor/modernizr-2.8.3-respond-1.4.2.min.js')}}"></script>
@@ -89,7 +89,7 @@ window.customerUrl = window.location.origin+'/';
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href=""><img src="{{asset('img/logos/tempo-light.png')}}" alt="tempo"></a>
+			<a class="navbar-brand" href=""><img src="{{asset('img/logos/logo.png')}}" alt="tempo"></a>
 		</div>		
 	
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -136,24 +136,24 @@ window.customerUrl = window.location.origin+'/';
 
 <!-- footer START -->
 <footer class="footer">
-	<div class="container">
+	<div class="">
 		<div class="row">
 			<div class="col-lg-4 col-sm-12">
 			
 				<h4 class="strong">About eventpad</h4>
 				<p>We pride ourselves on being able to apply our creativity to every brief to deliver the right message. Ready to start a project want to learn more about our process and how we work with clients?</p>
-		<a href="contact1-single-location.html" title="Contact Us" class="btn btn-default btn-icon contact-btn"><i class="livicon" data-name="mail" data-color="#fff" data-hovercolor="false" data-size="18"></i> Contact Us</a>
+		<a href="#" title="Contact Us" class="btn btn-default btn-icon contact-btn"><i class="livicon" data-name="mail" data-color="#fff" data-hovercolor="false" data-size="18"></i> Contact Us</a>
 		
 			</div>
 		</div>
 		<hr>
 			
-				<p class="copyright">© 2015 Tempo Pty Ltd.</p>
+				<p class="copyright">© 2015 eventpad.</p>
 				
 		</div>
 		
 	</div>
-	<div id="map"></div>
+	<!--<div id="map"></div>-->
 </footer>
 <!-- footer style1 END -->
 
@@ -211,8 +211,6 @@ window.customerUrl = window.location.origin+'/';
 <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
 <script src="{{asset('jss/firebase_config.js')}}"></script>
 <script src="{{asset('jss/custom/firebase.js')}}"></script>
-
-<-- standard version -->
 
 
 <!--<script src="{{asset('vendor/twitterwizard/js/modal.js')}}"></script>-->

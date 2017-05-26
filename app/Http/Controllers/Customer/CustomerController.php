@@ -83,7 +83,8 @@ class CustomerController extends Controller
 
     public function showRequests(){
         $d = $this->getRequests();
-        return view('customer.request')->with('requests',$d);
+        $paginator = $this->cust_repo->paginate($d,2);
+        return view('customer.request')->with('client_requests',$paginator);
     }
 
     public function contactVendor(Request $request){

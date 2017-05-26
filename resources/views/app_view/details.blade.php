@@ -177,57 +177,7 @@
 			</div>
 		</section>
 		<section class="section gray-bg">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">
-						<h5 class="page-header">Related Vendors</h5>
-						<div class="cbp-panel">
-					
-							<div  class="cbp related-products">
-								@foreach($similars as $sim)
-
-									<div class="cbp-item motion print">
-									<div class="thumbnail product">
-										<div class="thumb-wrapper">
-											<a href="{{url('/detail/')}}/{{$sim->name_slug}}" title="Single product">
-												<img src="{{$path}}/{{$sim->galleries()->pluck('image_name')->first()}}" class="img-one" alt="no image available">
-												<!--<img src="{{asset('img/shop/p1-alt.jpg')}}" class="img-two" alt="Thumbnail">-->
-												<!--<span class="sale">Sale!</span>-->
-											</a>
-											<div class="controls">
-												<a href="{{url('/detail/')}}/{{$sim->name_slug}}" class="view-details" title="View details" data-toggle="tooltip" data-placement="right"><i class="livicon" data-name="list" data-color="#fff" data-hovercolor="#fff" data-size="22"></i></a>
-												<!--<a href="javascript:void(0);" class="add-to-cart" title="Add to cart" data-toggle="tooltip" data-placement="right"><i class="livicon" data-name="shopping-cart" data-color="#fff" data-hovercolor="#fff" data-size="22"></i></a>-->
-												<a href="javascript:void(0);" class="like-this" title="Like this" data-toggle="tooltip" data-placement="right"><i class="livicon" data-name="heart" data-color="#fff" data-hovercolor="#fff" data-size="22"></i></a>
-											</div>
-										</div>
-										<div class="caption">
-											<h3><a href="{{url('/detail/')}}/{{$sim->name_slug}}" title="Single Product">{{$sim->name}}</a></h3>
-											<div class="product-cat">
-												<span class="strong small text-uppercase">Categories</span>: {{$sim->categories()->pluck('name')}}
-											</div>
-												@if($sim->reviews->avg('rating') !== null)
-													<div class="rating" data-rating="{{$sim->reviews->avg('rating')}}"></div>
-												@endif
-											<!--<div class="star-rating">
-												<i class="livicon" data-name="star-full" data-onparent="false" data-color="#f4c41c" data-hovercolor="#f4c41c" data-size="18"></i>
-												<i class="livicon" data-name="star-full" data-onparent="false" data-color="#f4c41c" data-hovercolor="#f4c41c" data-size="18"></i>
-												<i class="livicon" data-name="star-full" data-onparent="false" data-color="#f4c41c" data-hovercolor="#f4c41c" data-size="18"></i>
-												<i class="livicon" data-name="star-half" data-onparent="false" data-color="#f4c41c" data-hovercolor="#f4c41c" data-size="18"></i>
-												<i class="livicon" data-name="star-empty" data-onparent="false" data-color="#f4c41c" data-hovercolor="#f4c41c" data-size="18"></i>
-											</div>-->
-										</div>
-									</div>
-								</div><!-- cbp-item motion print-->
-
-								@endforeach
-								
-								
-							</div><!-- Class cbp related-products-->
-					
-						</div><!-- Panel-->
-					</div>
-				</div>
-			</div>
+			
 		</section>
 	<!-- section END -->
 	

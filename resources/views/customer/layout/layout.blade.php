@@ -7,7 +7,7 @@
 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>eVenting</title>
+	<title>eventpad</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -15,6 +15,7 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
 	<link rel="stylesheet" type="text/css" href="{{asset('vendor/css/slick.css')}}"/>
+	<link rel="shortcut icon" href="favicon-32x32.png" type="image/png">
 	<!-- style.css is main stylesheet and all other sylesheets are being
 		 imported in this file. -->
 	<link rel="stylesheet" href="{{asset('customcss/all.css')}}">
@@ -81,10 +82,10 @@
 	
 		<!-- brand (compnay logo) -->
 		<div class="navbar-header">
-			<a class="navbar-brand" href="{{url('/')}}"><img src="{{asset('img/logos/tempo-light.png')}}" alt="tempo"></a>
+			<a class="navbar-brand" href="{{url('/')}}"><img src="{{asset('./img/logos/tempo-light.png')}}" alt="tempo"></a>
 		</div>		
 		
-		<ul class="nav navbar-nav navbar-right search-cart">
+		<!--<ul class="nav navbar-nav navbar-right search-cart">
 				<li class="dropdown search">
 					<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="ion-ios-search-strong"></i></a>
 					<ul class="dropdown-menu" role="menu">
@@ -113,14 +114,14 @@
 							<div class="sub-total">
 
 							</div>
-							<!--<div class="shop-controls clearfix">
+							<div class="shop-controls clearfix">
 								<a href="javascript:void(0);" class="btn btn-primary btn-xs" title="View Cart">View Cart</a>
 								<a href="javascript:void(0);" class="btn btn-success btn-xs" title="Checkout">Checkout</a>
-							</div>-->
+							</div>
 						</li>
 					</ul>					
 				</li>
-		</ul>
+		</ul>-->
 	
 		<!-- vertical navigation START -->
 		<div class="nav-items">
@@ -133,17 +134,17 @@
 				<li class="dropdown">
 					<a href="{{url('/cuhome')}}" title="Home page default">Home</a>
 				</li>
-				<li class="dropdown">
+				<!--<li class="dropdown">
 					<a href="{{url('/cuprofile')}}" title="Template Features">Profile</a>
-				</li>
+				</li>-->
 
 				<li class="dropdown">
 					<a href="{{url('/curequest')}}" title="Extra Pages">Requests</a>
 				</li>
 
-				<li class="dropdown">
+				<!--<li class="dropdown">
 					<a href="javascript:void(0);" title="Home page default">Quotes</a>
-                </li>
+                </li>-->
 					
 			</ul>
 
@@ -165,83 +166,26 @@
 @yield('content')
 
 <!-- footer START -->
+<!-- footer START -->
 <footer class="footer">
-	<div class="container">
+	<div class="">
 		<div class="row">
 			<div class="col-lg-4 col-sm-12">
 			
-				<h4 class="strong">About Tempo</h4>
+				<h4 class="strong">About eventpad</h4>
 				<p>We pride ourselves on being able to apply our creativity to every brief to deliver the right message. Ready to start a project want to learn more about our process and how we work with clients?</p>
-		<a href="contact1-single-location.html" title="Contact Us" class="btn btn-default btn-icon contact-btn"><i class="livicon" data-name="mail" data-color="#fff" data-hovercolor="false" data-size="18"></i> Contact Us</a>
+		<a href="#" title="Contact Us" class="btn btn-default btn-icon contact-btn"><i class="livicon" data-name="mail" data-color="#fff" data-hovercolor="false" data-size="18"></i> Contact Us</a>
 		
-			</div>
-			<div class="col-lg-2 col-sm-4 col-lg-offset-2">
-			
-				<h4 class="strong">Company</h4>
-				<ul class="ft-list">
-					<li><a href="javascript:void(0);" title="Link title here">About Us</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Whate We Do</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Our Process</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Careers</a></li>
-				</ul>
-				
-			</div>
-			<div class="col-lg-2 col-sm-4">
-			
-				<h4 class="strong">Services</h4>
-				<ul class="ft-list">
-					<li><a href="javascript:void(0);" title="Link title here">Graphics Design</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Front End Development</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">WordPress Development</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Theme &amp; Templates</a></li>
-				</ul>
-				
-			</div>
-			<div class="col-lg-2 col-sm-4">
-			
-				<h4 class="strong">Leagle</h4>
-				<ul class="ft-list">
-					<li><a href="javascript:void(0);" title="Link title here">Privacy</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Terms of Use</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">FAQ</a></li>
-				</ul>
-				
 			</div>
 		</div>
 		<hr>
-		<div class="row">
-			<div class="col-sm-8 hidden-xs">
 			
-				<ul class="list-inline">
-					<li><a href="javascript:void(0);" title="Link title here">Portfolio</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Downloads</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Gateways</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Blog</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Meetups</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Clients</a></li>
-					<li><a href="javascript:void(0);" title="Link title here">Coverage Map</a></li>
-				</ul>
+				<p class="copyright">© 2015 eventpad.</p>
 				
-			</div>
-			<div class="col-sm-4">
-			
-				<div class="ft-social text-right">
-					<a class="cst-btn-ten" href="javascript:void(0);"><i class="fa fa-pinterest-p"></i><span>p</span></a>
-					<a class="cst-btn-ten" href="javascript:void(0);"><i class="fa fa-facebook"></i><span>f</span></a>
-					<a class="cst-btn-ten" href="javascript:void(0);"><i class="fa fa-linkedin"></i><span>in</span></a>
-					<a class="cst-btn-ten" href="javascript:void(0);"><i class="fa fa-twitter"></i><span>t</span></a>
-					<a class="cst-btn-ten" href="javascript:void(0);"><i class="fa fa-dribbble"></i><span>d</span></a>
-				</div>
-				
-			</div>
-			<div class="col-lg-12 col-sm-6">
-			
-				<p class="copyright">© 2015 Tempo Pty Ltd.</p>
-				
-			</div>
 		</div>
 		
 	</div>
+	<!--<div id="map"></div>-->
 </footer>
 <!-- footer style1 END -->
 
