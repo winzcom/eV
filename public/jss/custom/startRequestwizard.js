@@ -100,10 +100,11 @@ $(document).ready(function() {
                  //checkVendorAvailability($('#category').val(),state,vicinity_id);
                 addStateLocality(state, vicinity_id);
             } else {
-                 $("#category").trigger("change");
+                 
                 if ($('#category').val() == '') {
                     disableNextButton(true);
-                }else if($('#category').val() !== '' && v_available == true){
+                }else if(($('#category').val() !== '' && v_available == true) || $('#category').val() !== ''){
+                    $("#category").trigger("change");
                     disableNextButton(true);
                     checkVendorAvailability($('#category').val(),$('#state').val(),$('#vicinity').val())
                 }
