@@ -97,7 +97,11 @@
                                 }            
                     ?>
                             </td>
-                            <td>{{$review->created_at->toFormattedDateString()}}</td> 
+                            <td>
+                                @if($review->created_at !== null)
+                                    {{$review->created_at->toFormattedDateString()}}
+                                @endif
+                            </td> 
                             <td>{{$review->review}}</td>
                             <td class="reply" data-id="{{$review->id}}">{{$review->reply or ''}}</td>
                         </tr>
