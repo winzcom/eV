@@ -5,17 +5,57 @@ $(document).ready(function() {
             var user_state = document.getElementById('user_state').dataset.userState;
             //alert(user_state);
         }*/
-
         
-
-
-        try{
-            $( "#datepicker" ).datepicker({
-                minDate:new Date(new Date().setDate(new Date().getDate()))
+        function validateEmail(selector) {
+            selector.mailgun_validator({
+                api_key: 'pubkey-ca5312e0946a6a724c269a03cee39de7', // replace this with your Mailgun public API key
+                in_progress: validation_in_progress,
+                success: validation_success,
+                error: validation_error,
             });
-        }catch(err){
-
         }
+        
+        
+        
+        var reg = $('.email');
+        var register = $('#register') || $('a[href="#finish"]');
+        if(reg !== undefined) {
+            console.log('hala')
+            
+            register.attr('disabled', true);
+
+            validateEmail(reg);
+        }
+
+          function validation_in_progress() {
+                $('#status').html("Validating email....");
+                register.attr('disabled', true);
+            }
+
+            function validation_success(data) {
+                $('#status').html(get_suggestion_str(data['is_valid'], data['did_you_mean']));
+                if(data['is_valid']) {
+                    register.attr('disabled', false);
+                } 
+            }
+
+            function validation_error(error_message) {
+                $('#status').html(error_message);
+            }
+
+            function get_suggestion_str(is_valid, alternate) {
+                if (is_valid) {
+                    var result = '<span class="success">Address is valid.</span>';
+                    if (alternate) {
+                        result += '<span class="warning"> (Though did you mean <em>' + alternate + '</em>?)</span>';
+                    }
+                    return result
+                } else if (alternate) {
+                    return '<span class="warning">Did you mean <em>' +  alternate + '</em>?</span>';
+                } else {
+                    return '<span class="error">Email address is invalid.</span>';
+                }
+            }
 
         var request_url = $('#myWizard').attr('action');
         var button;
@@ -28,22 +68,108 @@ $(document).ready(function() {
             statee = $(this).val();
         })
 
-        function callback() {
-            var formElement = document.querySelector('#myWizard');
-            //var children = formElement.children();
-            //console.log(children);
-        }
+        var form = $("#myWizard");
+        form.validate({
+            errorPlacement: function errorPlacement(error, element) { element.before(error); },
+            rules: {
+                confirm: {
+                    equalTo: "#password"
+                }
+            }
+        });
+        form.steps({
+            headerTag: "h3",
+            bodyTag: "section",
+            transitionEffect: "slideLeft",
+            onInit: function() {
+                var next  = $('a[href="#next"]');
+                var previous = $('a[href="#previous"]')
+                var actions = $('.actions');
+                var finish =  $('a[href="#finish"]'); 
 
-        $('#myModal').modalSteps({
+                next.addClass('btn btn-success pull-right');
+                finish.addClass('btn btn-success pull-right');
+                previous.addClass('btn btn-danger');
+
+
+                //$('.modal-footer').append(actions);
+                
+            },
+            onStepChanging: function (event, currentIndex, newIndex)
+            {
+                if (currentIndex > newIndex)
+                {
+                    return true;
+                }
+                form.validate().settings.ignore = ":disabled,:hidden";
+                return form.valid();
+            },
+            onFinishing: function (event, currentIndex)
+            {
+                form.validate().settings.ignore = ":disabled";
+                return form.valid();
+            },
+            onFinished: function (event, currentIndex)
+            {
+                //console.log($('#myWizard').serialize())
+                /*alertify.delay(0).log("Request is been sent...").maxLogItems(1);
+
+                //var formData = $('#myWizard').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
+                var formData = $('#myWizard').serialize();
+                console.log(formData);
+
+                $.ajax({
+                    url: request_url,
+                    type: 'POST',
+                    data: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': Laravel.csrfToken,
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        try {
+
+                            var d = JSON.parse(data);
+                            if (d.error) {
+                                var html = "<p style='color:white'>Error: " + d.error + "</p>"
+                                alertify.closeLogOnClick(true).error(html, function(ev) {
+                                    $('#myModal').modal('show');
+                                });
+                            } else {
+                                var html = "<p style='color:white'>Error: " + d.message + "</p>"
+                                alertify.closeLogOnClick(true).sucess(html);
+                            }
+                        } catch (e) {
+                            alertify.success('Request Sent');
+                        }
+
+                    },
+                    error: function(err) {
+                        console.log(err.error);
+                        alertify.log(err.error);
+                    }
+                })*/
+            }//onFinished
+        });
+
+
+
+        /*$('#myModal').modalSteps({
             btnCancelHtml: 'Cancel',
             btnPreviousHtml: 'Previous',
             btnNextHtml: 'Next',
             btnLastStepHtml: 'Complete',
-            completeCallback: function() {
+            callbacks: {
+                '*': function() {
+                    console.log('haba')
+                    return false;
+                }
+            },
+            completeCallback: function() {*/
                 /*** Ajax Call To Submit Form **/
 
                 //console.log($('#myWizard').serialize())
-                alertify.delay(0).log("Request is been sent...").maxLogItems(1);
+                /*alertify.delay(0).log("Request is been sent...").maxLogItems(1);
 
                 //var formData = $('#myWizard').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
                 var formData = $('#myWizard').serialize();
@@ -89,6 +215,16 @@ $(document).ready(function() {
 
             var modal = $(this);
             button = $(event.relatedTarget);
+
+            try{
+            $( "#datepicker" ).datepicker({
+                minDate:new Date(new Date().setDate(new Date().getDate()+1))
+            });
+            }catch(err){
+
+            }
+
+            validateEmail($('#request_email'));
 
             if (button.data('state') !== undefined && button.data('state') !== '') {
             	
@@ -164,11 +300,14 @@ $(document).ready(function() {
         /***Start of vanilla functions */
 
         function disableNextButton(disable = false) {
-            d_orientations = $('.js-btn-step');
+            /*d_orientations = $('.js-btn-step');
             d_orientations.each(function(i, v) {
                 if (v.dataset.orientation == 'next')
                     v.disabled = disable;
-            })
+            })*/
+
+            var next_link = $('a[href="#next"]');
+            next_link.attr('disabled',disable);
         }
 
 

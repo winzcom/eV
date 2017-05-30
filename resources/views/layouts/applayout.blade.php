@@ -16,6 +16,50 @@
     .request_modal{
 		margin-top:10%;
 	}
+
+	section[class="body"] {
+		visibility: hidden;
+		opacity: 0;
+		transition: visibility 0s, opacity 0.5s linear;
+	}
+
+	section[class*="current"] {
+		visibility: visible;
+  		opacity: 1;
+	}
+
+	ul[role="menu"] {
+		margin-top:3px;
+	}
+
+	ul[role="menu"] > li {
+		cursor:pointer;
+		text-decoration:none;
+		list-style-type: none;
+		padding-right:5px;
+	}
+
+	ul[role="menu"] > li:first-child > a[href="#previous"] {
+		float:left;
+	}
+
+	ul[role="menu"] > li:last-child a[href="#next"] {
+		float:right;
+	}
+
+	ul[role="menu"] > li:last-child a[href="#finish"] {
+		float:right;
+	}
+
+
+	div[class^='steps'] {
+		display:none;
+	}
+
+	h3[class^='title'] {
+		display:none;
+	}
+	
 	
 </style>
 @yield('style')
@@ -135,7 +179,7 @@ window.customerUrl = window.location.origin+'/';
 
 
 <!-- footer START -->
-<footer class="footer">
+<footer class="footer" style="padding:20px 0px 10px 30px;">
 	<div class="">
 		<div class="row">
 			<div class="col-lg-4 col-sm-12">
@@ -160,7 +204,7 @@ window.customerUrl = window.location.origin+'/';
     
 <!-- jQuery plugins -->
 <script src="{{asset('js/vendor/jquery.js')}}"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="{{asset('js/vendor/bootstrap.js')}}"></script>
 <script src="{{asset('js/easing.js')}}"></script>
 <script src="{{asset('js/scrollbar.js')}}"></script>
@@ -200,7 +244,7 @@ window.customerUrl = window.location.origin+'/';
 <!--<script src="{{asset('vendor/js/dropzone/dropzone.js')}}"></script>-->
 <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
 <!--<script src="{{asset('js/app/app.js')}}"></script>-->
-
+<script src="{{ asset('js/mailgun_validator.js') }}"></script>
 <script src="{{asset('jss/custom/data/requestdata.js')}}"></script>
 <script src="{{asset('jss/custom/startRequestwizard.js')}}"></script>
 <script src="{{asset('vendor/js/createsteps/jquery-bootstrap-modal-steps.min.js')}}"></script>
@@ -218,8 +262,9 @@ window.customerUrl = window.location.origin+'/';
         async defer>
 </script>-->
 
-<!--<script src="{{asset('js/jquery.validate.min.js')}}"></script>
-<script src="{{asset('js/jquery.bootstrap.js')}}"></script>
+<script src="{{asset('js/jquery.validate.min.js')}}"></script>
+<script src="{{asset('vendor/js/jquery.steps.min.js')}}"></script>
+<!--<script src="{{asset('js/jquery.bootstrap.js')}}"></script>
 <script src="{{asset('js/material-bootstrap-wizard.js')}}"></script>-->
 
 @yield('script')

@@ -39,7 +39,7 @@
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                <input id="email" type="email" class="form-control email" name="email" value="{{ old('email') }}" required>
                                 <span id="status"></span>
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -88,52 +88,14 @@
 
 @section('script')
 
-<script src="{{ asset('js/mailgun_validator.js') }}"></script>
-<script>
+
+<!--<script>
     
     $(document).ready( function() {
 
-        var reg = $('#register');
-        reg.attr('disabled', true);
-
-        $('#email').mailgun_validator({
-          api_key: 'pubkey-ca5312e0946a6a724c269a03cee39de7', // replace this with your Mailgun public API key
-          in_progress: validation_in_progress,
-          success: validation_success,
-          error: validation_error,
-        });
-
-        function validation_in_progress() {
-            $('#status').html("Validating email....");
-        }
-
-        function validation_success(data) {
-            $('#status').html(get_suggestion_str(data['is_valid'], data['did_you_mean']));
-            if(data['is_valid']) {
-                reg.attr('disabled', false);
-            } 
-        }
-
-        function validation_error(error_message) {
-            $('#status').html(error_message);
-        }
-
-        function get_suggestion_str(is_valid, alternate) {
-            if (is_valid) {
-                var result = '<span class="success">Address is valid.</span>';
-                if (alternate) {
-                    result += '<span class="warning"> (Though did you mean <em>' + alternate + '</em>?)</span>';
-                }
-                return result
-            } else if (alternate) {
-                return '<span class="warning">Did you mean <em>' +  alternate + '</em>?</span>';
-            } else {
-                return '<span class="error">Email address is invalid.</span>';
-            }
-      }
-
+        
     })
 
-</script>
+</script>-->
 @endsection
 

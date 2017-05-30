@@ -1,4 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.applayout')
+
+
+
+<section class="page-title style1" data-path="{{asset('img/headers/header7.jpg')}}">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="strong">Password Reset</h1>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- page title style1 END -->
 
 <!-- Main Content -->
 @section('content')
