@@ -240,7 +240,7 @@ $(document).ready(function() {
                 });
 
                 amount.val(  slider_ranger.slider( "values", 0 ) +
-                     slider_ranger.slider( "values", 1 ) );
+                    " - " + slider_ranger.slider( "values", 1 ) );
             }
 
 
