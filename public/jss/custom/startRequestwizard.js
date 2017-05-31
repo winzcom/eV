@@ -111,7 +111,7 @@ $(document).ready(function() {
             },
             onFinished: function (event, currentIndex)
             {
-                //console.log($('#myWizard').serialize())
+                console.log($('#myWizard').serialize())
                 /*alertify.delay(0).log("Request is been sent...").maxLogItems(1);
 
                 //var formData = $('#myWizard').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
@@ -215,6 +215,37 @@ $(document).ready(function() {
 
             var modal = $(this);
             button = $(event.relatedTarget);
+
+
+            var slider_ranger = $( "#slider-range" ), amount = $( "#amount" );
+
+            if(slider_ranger !== undefined && amount !== undefined) {
+
+                slider_ranger.slider({
+                    range: true,
+                    min: 0,
+                    step:500,
+                    max: 1000000,
+                    values: [ 100000, 400000 ],
+                    slide: function( event, ui ) {
+                            var h_value = ui.values[1];
+
+                            if(ui.values[1] === 1000000) {
+                                h_value = ui.values[1]+"+";
+                            } else h_value = ui.values[1];
+                                amount.val(
+                                    ui.values[ 0 ] + " - " + h_value
+                                );
+                    }
+                });
+
+                amount.val( "$" + slider_ranger.slider( "values", 0 ) +
+                    " - $" + slider_ranger.slider( "values", 1 ) );
+            }
+
+
+
+
 
             try{
             $( "#datepicker" ).datepicker({
