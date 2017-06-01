@@ -220,8 +220,8 @@ $(document).ready(function() {
             var modal = $(this);
             button = $(event.relatedTarget);
 
-            var slider_ranger = document.getElementById('slider-range'), amount = document.getElementById('amount')
-
+            var slider_ranger = document.getElementById('slider-range'), amount = document.getElementById('amount');
+            
             noUiSlider.create(slider_ranger, {
                 start: [ 250000, 450000],
                 connect: true,

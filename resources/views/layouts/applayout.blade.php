@@ -59,6 +59,11 @@
 	h3[class^='title'] {
 		display:none;
 	}
+
+	.noUi-target  {
+		width:90%;
+		margin: 5% auto;
+	}
 	
 	
 </style>
