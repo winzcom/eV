@@ -220,41 +220,29 @@ $(document).ready(function() {
             var modal = $(this);
             button = $(event.relatedTarget);
 
+            var slider_ranger = document.getElementById('slider-range'), amount = document.getElementById('amount')
 
-            var slider_ranger = $( "#slider-range" ), amount = $( "#amount" );
-
-            if(slider_ranger !== undefined && amount !== undefined) {
-
-                slider_ranger.slider({
-                    range: true,
-                    min: 0,
-                    step:500,
-                    max: 1000000,
-                    values: [ 100000, 400000 ],
-                    slide: function( event, ui ) {
-                            var h_value = ui.values[1];
-
-                            if(ui.values[1] === 1000000) {
-                                h_value = ui.values[1]+"+";
-                            } else h_value = ui.values[1];
-                                amount.val(
-                                    ui.values[ 0 ] + " - " + h_value
-                                );
-                    }
-                });
-
-                if(mobileAndTabletcheck()) {
-                    $('.ui-slider-handle').draggable();
+            noUiSlider.create(slider_ranger, {
+                start: [ 250000, 450000],
+                connect: true,
+                step:100,
+                margin:100,
+                tooltip:true,
+                range: {
+                    'min': 0,
+                    'max': 1000000
                 }
+            });
 
-                amount.val(  slider_ranger.slider( "values", 0 ) +
-                    " - " + slider_ranger.slider( "values", 1 ) );
-            }
-
-
-
-
-
+            slider_ranger.noUiSlider.on('update', function( values, handle ) {
+                var value = values[handle];
+                var low = (+values[0]).toFixed(0), high = (+values[1]).toFixed(0);
+                if(high == 1000000) {
+                    high = high+'+';
+                }else high = high;
+                amount.value = low+'-'+high;
+        });
+            
             try{
             $( "#datepicker" ).datepicker({
                 minDate:new Date(new Date().setDate(new Date().getDate()+1))

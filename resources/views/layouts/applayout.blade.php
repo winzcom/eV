@@ -64,6 +64,7 @@
 </style>
 @yield('style')
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" type="" href="{{asset('vendor/css/nouislider.min.css')}}">
 	<!-- style.css is main stylesheet and all other sylesheets are being
 		 imported in this file. -->
 		 <!-- Latest compiled and minified CSS -->
@@ -265,6 +266,7 @@ window.customerUrl = window.location.origin+'/';
 
 <script src="{{asset('js/jquery.validate.min.js')}}"></script>
 <script src="{{asset('vendor/js/jquery.steps.min.js')}}"></script>
+<script src="{{asset('vendor/js/nouislider.min.js')}}"></script>
 <!--<script src="{{asset('js/jquery.bootstrap.js')}}"></script>
 <script src="{{asset('js/material-bootstrap-wizard.js')}}"></script>-->
 
