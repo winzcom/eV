@@ -61,8 +61,12 @@
 	}
 
 	.noUi-target  {
-		width:90%;
-		margin: 5% auto;
+		width:70%;
+		margin: 7% auto;
+	}
+
+	.delivery_option {
+		display:none;
 	}
 	
 	

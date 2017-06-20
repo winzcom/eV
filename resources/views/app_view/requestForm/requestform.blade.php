@@ -79,7 +79,7 @@
                     <div class="control-group" id="venue">
                         <label class="control-label" for="">Venue (leave blank if you don't have a confirmed venue yet')</label>
                             <div class="controls">
-                                <input id="pac-input" name="venue" type="text" class="form-control input-lg" placeholder="Enter a location"/>
+                                <input id="pac-input"  name="venue" type="text" class="form-control input-lg venue" placeholder="Enter a location"/>
                             </div>
                         <label class="control-label">Number of Guests</label>
                             <div class="controls">
@@ -88,6 +88,16 @@
 
                                 <!--<div class="spinedit"><i class="fa fa-chevron-up"></i><i class="fa fa-chevron-down"></i></div>-->
                             </div>
+                            <div id="delivery_option">
+                                <label class="control-label">Do you want delivery</label>
+                                <div class="controls">
+                                    <select name="delivery_option" class="form-control">
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
                     </div>
                 </section>
             <!--</div>--><!--step-3-->

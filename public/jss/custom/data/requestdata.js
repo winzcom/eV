@@ -73,25 +73,18 @@ var CateringExtras = [
                         //{name:'Allergies we need to know about',value:'',type:'text',formname:'allergies'}
 ]
 
-/*var CakeExtras = [
-                    {
-                      name:'Flavours',formname:'cake_flavours',type:'select',children:[
-                        {name:'Sugar',value:'Sugar'},
-                        {name:'Chocolate',value:'Chocolate'},
-                        {name:'Cocoa',value:'Cocoa'},
-                        {name:'Butter',value:'Butter'},
-                        {name:'Vanilla',value:'Vanilla'}
-                      ]
-                    }
-]*/
-
 var CakeExtras = [
+                    { name:'Number of Tier (the number of layers)',value:'',type:'text',formname:'cake_tier', placeholder:'1-tier, 2-tier (specifies the number of layers)'},
+]
+
+var CakeAdditional = [
                     {name:'Sugar',value:'Sugar',type:'checkbox',formname:'flavours[]',label:'Please select your flavour from the list'},
                     {name:'Chocolate',value:'Chocolate',type:'checkbox',formname:'flavours[]'},
                     {name:'Vanilla',value:'Vanilla',type:'checkbox',formname:'flavours[]'},
                     {name:'Butter',value:'Butter',type:'checkbox',formname:'flavours[]'},
                     {name:'Cocoa',value:'Cocoa',type:'checkbox',formname:'flavours[]'},
-                    {name:'Other(please type below other flavours you want)',value:'Other',type:'text',formname:'flavours_i_want_included'}
+                    {name:'Other(flavours)',value:'',type:'text',formname:'flavours_i_want_included'},
+                    
         
 ]
 
@@ -137,6 +130,7 @@ var eventPlanning = ['EventPlanner','WeddingPlanner']; var cateringPlaceholder =
                       placeholder:placeholder
                   },
       'CakeMakers':{
+                      'additional':CakeAdditional,
                       'extras':CakeExtras
                   },
       'BellTents': {

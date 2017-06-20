@@ -32,7 +32,9 @@ class SendRequest extends Mailable
      */
     public function build()
     {
-        return $this->from('ebun68@gmail.com')->markdown('emails.requests.send_request')
+        return $this->from('ebun68@gmail.com')
+                    ->subject('New Quote')
+                    ->markdown('emails.requests.send_request')
                     ->with('data',$this->data);
     }
 }

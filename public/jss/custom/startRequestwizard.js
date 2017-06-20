@@ -5,6 +5,7 @@ $(document).ready(function() {
             var user_state = document.getElementById('user_state').dataset.userState;
             //alert(user_state);
         }*/
+
         
         function validateEmail(selector) {
             selector.mailgun_validator({
@@ -63,12 +64,13 @@ $(document).ready(function() {
 
         var request_url = $('#myWizard').attr('action');
         var button;
-        var v_available = false;
+        var v_available = false, noUISliderCreated = false;
         statee = null;
 
         $('#state').change(function() {
 
             v_available = true;
+            
             statee = $(this).val();
         })
 
@@ -90,11 +92,13 @@ $(document).ready(function() {
                 var previous = $('a[href="#previous"]')
                 var actions = $('.actions');
                 var finish =  $('a[href="#finish"]'); 
+                var delivery_option = $('#delivery_option');
+
+                delivery_option.addClass('delivery_option');
 
                 next.addClass('btn btn-success pull-right');
-                finish.addClass('btn btn-success pull-right');
-                previous.addClass('btn btn-danger');
-
+                finish.addClass('btn-sm btn-success pull-right');
+                previous.addClass('btn-sm btn-danger');
 
                 //$('.modal-footer').append(actions);
                 
@@ -115,10 +119,12 @@ $(document).ready(function() {
             },
             onFinished: function (event, currentIndex)
             {
+                addStateLocality();
+
                 console.log($('#myWizard').serialize())
                 /*alertify.delay(0).log("Request is been sent...").maxLogItems(1);
 
-                //var formData = $('#myWizard').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
+                //var formData = $('#myWizard').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});*/
                 var formData = $('#myWizard').serialize();
                 console.log(formData);
 
@@ -152,11 +158,20 @@ $(document).ready(function() {
                         console.log(err.error);
                         alertify.log(err.error);
                     }
-                })*/
+                })
+                $('#myWizard')[0].reset();
             }//onFinished
+            
         });
 
-
+        $('.venue').on('input',function() {
+            console.log($(this).val().length)
+            if($(this).val().length > 10) {
+                $('#delivery_option').removeClass('delivery_option');
+            } else {
+                $('#delivery_option').addClass('delivery_option');
+            }
+        })
 
         /*$('#myModal').modalSteps({
             btnCancelHtml: 'Cancel',
@@ -222,22 +237,24 @@ $(document).ready(function() {
 
             var slider_ranger = document.getElementById('slider-range'), amount = document.getElementById('amount');
             
-            noUiSlider.create(slider_ranger, {
-                start: [ 250000, 450000],
-                connect: true,
-                step:100,
-                margin:100,
-                tooltip:true,
-                range: {
-                    'min': 0,
-                    'max': 1000000
-                }
-            });
+            if(noUISliderCreated === false) {
+                noUiSlider.create(slider_ranger, {
+                    start: [ 250000, 450000],
+                    connect: true,
+                    step:500,
+                    range: {
+                        'min': 1000,
+                        'max': 700000
+                    }
+                });
+                noUISliderCreated = true;
+            }
+            
 
             slider_ranger.noUiSlider.on('update', function( values, handle ) {
                 var value = values[handle];
                 var low = (+values[0]).toFixed(0), high = (+values[1]).toFixed(0);
-                if(high == 1000000) {
+                if(high == 700000) {
                     high = high+'+';
                 }else high = high;
                 amount.value = low+'-'+high;
@@ -260,18 +277,17 @@ $(document).ready(function() {
                 if (button.data('vicinity') !== '' && button.data('vicinity') !== undefined) vicinity_id = button.data('vicinity');
                 else vicinity_id = 0;
                  $("#category").trigger("change");
-                 //checkVendorAvailability($('#category').val(),state,vicinity_id);
+                 checkVendorAvailability($('#category').val(),state,vicinity_id);
                 addStateLocality(state, vicinity_id);
             } else {
                  
-                if ($('#category').val() == '') {
+                if ($('#category').val().length == '') {
                     disableNextButton(true);
-                }else if(($('#category').val() !== '' && v_available == true) || $('#category').val() !== ''){
+                }else if(v_available === true){
                     $("#category").trigger("change");
                     disableNextButton(true);
-                    checkVendorAvailability($('#category').val(),$('#state').val(),$('#vicinity').val())
+                    //checkVendorAvailability($('#category').val(),$('#state').val(),$('#vicinity').val())
                 }
-                addStateLocality();
             }
             //var cate = $('#category');
             //var c = $('#category option:selected').text().replace('- ','');
@@ -333,7 +349,7 @@ $(document).ready(function() {
                     v.disabled = disable;
             })*/
 
-            var next_link = $('a[href="#next"]');
+            var next_link = $('a[href="#next"]') || $('a[href="#finish"]');
             next_link.attr('disabled',disable);
         }
 
@@ -417,14 +433,17 @@ $(document).ready(function() {
 
             var state, locality, stateInput, localityInput, inputs;
 
+            $('#dynamic_state').remove();
+            $('#dynamic_vicinity').remove();
+
             if (state1 !== null && vicinity_id !== null) {
 
                 console.log(vicinity_id + ' ' + state1);
                 if (vicinity_id== 'all')
                     vicinity_id= 0;
 
-                stateInput = $('<input type="hidden" name="state" value="' + state1 + '" ></input>');
-                localityInput = $('<input type="hidden" name="vicinity" value="' + vicinity_id+ '"></input>');
+                stateInput = $('<input type="hidden" id="dynamic_state" name="state" value="' + state1 + '" ></input>');
+                localityInput = $('<input type="hidden" id="dynamic_vicinity" name="vicinity" value="' + vicinity_id+ '"></input>');
                 $('#myWizard').append(stateInput);
                 $('#myWizard').append(localityInput);
             } else {
@@ -459,6 +478,8 @@ $(document).ready(function() {
                 var p = $('<p style="text-align:center;">Do you want this additional service(s)</p>');
                 if(category == 'SmallChops'){
                     p.text('What do you want in the smallchops');
+                }else if(category === 'CakeMakers') {
+                    p.text('Please select flavours you want')
                 }
                 divContainer.html(p);
                 var outerDiv = $('<div class="row">');
@@ -496,7 +517,8 @@ $(document).ready(function() {
                          input.attr({
                             name: ele.formname,
                             class: 'form-control input-sm',
-                            value: ''
+                            value: '',
+                            placeholder:ele.placeholder || ''
                          }, this);
                          var label = $('<label>')
                          label.text(ele.name);
@@ -523,7 +545,7 @@ $(document).ready(function() {
                         input = $('<input>');
                          input.attr({
                             name: ele.formname,
-                            class: 'form-control input-sm',
+                            class: '',
                             value: ele.value,
                             type:ele.type
                          }, this);

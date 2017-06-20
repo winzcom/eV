@@ -81,7 +81,6 @@ class GuestController extends Controller
         $vicinity = $request->vicinity;
         $client = $request->only(['first_name','last_name','email','password']);
         $category = $request->only(['category']);
-        dd($request->all());
         $request = $request->except(['category','firstname','','lastname','email','password','_token','state','vicinity']);
 
         
