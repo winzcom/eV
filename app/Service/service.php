@@ -91,13 +91,13 @@ class Service{
         return $user;
     }
     
-    public static function deletePhotos(GalleryInterface $gallery,array $files,int $user_id){
+    public static function deletePhotos(GalleryInterface $gallery,array $files, $user_id){
 
         return $gallery->deletePhotos($files,$user_id);
             
     }
 
-    public static function uploadPhotos(GalleryInterface $gallery,array $files,array $captions = null,string $name_slug = null,int $user_id){
+    public static function uploadPhotos(GalleryInterface $gallery,array $files,array $captions = null,string $name_slug = null, $user_id){
 
         return $gallery->uploadPhotos($files,$captions,$name_slug);
     }
