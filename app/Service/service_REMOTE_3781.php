@@ -91,7 +91,7 @@ class Service{
         return $user;
     }
     
-    public static function deletePhotos(GalleryInterface $gallery,array $files, $user_id){
+    public static function deletePhotos(GalleryInterface $gallery,array $files,int $user_id){
 
         return $gallery->deletePhotos($files,$user_id);
             
@@ -148,7 +148,7 @@ class Service{
         $formatter->setSymbol(\NumberFormatter::CURRENCY_SYMBOL,'');
         $formatter->setAttribute(\NumberFormatter::MAX_FRACTION_DIGITS,0);
         return $formatter;*/
-	   return money_format('%i',$cost);
+	    //return money_format('%i',$cost);
     }
 
     public function showPopOverReviews($review,$reviewers_name,$reply,$rating){

@@ -97,7 +97,11 @@ class Service{
             
     }
 
+<<<<<<< HEAD
+    public static function uploadPhotos(GalleryInterface $gallery,array $files,array $captions = null,string $name_slug = null, $user_id){
+=======
     public static function uploadPhotos(GalleryInterface $gallery,$files,$captions = null,$name_slug = null,$user_id){
+>>>>>>> 8b086aa56dde7a69564731abebfbedaa11cef681
 
         return $gallery->uploadPhotos($files,$captions,$name_slug);
     }

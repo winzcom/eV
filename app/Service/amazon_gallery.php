@@ -28,7 +28,7 @@ class AmazonGallery implements GalleryInterface{
 
                 try{
                     
-                    if($file->storeAs('public',$names[$key][0],'s3')){
+                    if($file->storeAs('public',str_replace(' ','_',$names[$key][0]),'s3')){
                         Gallery::create(['image_name'=>$names[$key][0],'user_id'=>Auth::id(),'caption'=>htmlentities($captions[$i])]);
 
                     }

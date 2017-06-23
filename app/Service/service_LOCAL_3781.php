@@ -97,7 +97,7 @@ class Service{
             
     }
 
-    public static function uploadPhotos(GalleryInterface $gallery,$files,$captions = null,$name_slug = null,$user_id){
+    public static function uploadPhotos(GalleryInterface $gallery,array $files,array $captions = null,string $name_slug = null, $user_id){
 
         return $gallery->uploadPhotos($files,$captions,$name_slug);
     }
