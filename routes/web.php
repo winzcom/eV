@@ -48,7 +48,7 @@ Route::get('/browse_vendors/{category?}','SearchController@browseByCategory');
 
 Route::get('/password/show', 'GuestController@showPasswordCreate');
 
-Route::post('/password/create', 'GueestController@createPassword');
+Route::post('/password/create', 'GuestController@createPassword');
 
 Route::get('/send_verification_mail', 'GuestController@sendEmailTypeVerificationMail');
 

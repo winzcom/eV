@@ -189,7 +189,7 @@ class GuestController extends Controller
             return redirect("password/create?s=".$randomString)->with('email',$email);
         }*/
         $randomString = str_random(40);
-        return redirect("password/create?s=".$randomString)->with('email','ebudare@yahoo.com');
+        return redirect("password/show?s=".$randomString)->with('email','ebudare@yahoo.com');
     }
 
     public function sendEmailTypeVerificationMail() {
