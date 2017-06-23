@@ -148,7 +148,7 @@ class Service{
         $formatter->setSymbol(\NumberFormatter::CURRENCY_SYMBOL,'');
         $formatter->setAttribute(\NumberFormatter::MAX_FRACTION_DIGITS,0);
         return $formatter;*/
-	    //return money_format('%i',$cost);
+	   return money_format('%i',$cost);
     }
 
     public function showPopOverReviews($review,$reviewers_name,$reply,$rating){
