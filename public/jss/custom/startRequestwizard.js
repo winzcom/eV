@@ -478,7 +478,7 @@ $(document).ready(function() {
                 var p = $('<p style="text-align:center;">Do you want this additional service(s)</p>');
                 if(category == 'SmallChops'){
                     p.text('What do you want in the smallchops');
-                }else if(category === 'CakeMakers') {
+                }else if(category === 'Cake') {
                     p.text('Please select flavours you want')
                 }
                 divContainer.html(p);
