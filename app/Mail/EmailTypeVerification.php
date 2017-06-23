@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendVerificationMail extends Mailable
+class EmailTypeVerification extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -17,12 +17,12 @@ class SendVerificationMail extends Mailable
      * @return void
      */
 
-     protected $user;
+     private $url;
 
-    public function __construct($user)
+    public function __construct()
     {
         //
-        $this->user = $user;
+        $this->url = url("verify/vendor/email/");
     }
 
     /**
@@ -32,7 +32,6 @@ class SendVerificationMail extends Mailable
      */
     public function build()
     {
-        return $this->from('eventpad.ng')
-        ->view('app_view.email_view_folders.verification_mail')->with('user',$this->user);
+        return $this->from('mail@eventpad.ng')->subject('Email Verification')->markdown('emails.verification.emailtypeverifcation')->with('url',$this->url);
     }
 }

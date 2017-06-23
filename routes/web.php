@@ -46,6 +46,14 @@ Route::post('/write_review','GuestController@writeReview');
 
 Route::get('/browse_vendors/{category?}','SearchController@browseByCategory');
 
+Route::get('/password/show', 'GuestController@showPasswordCreate');
+
+Route::post('/password/create', 'GueestController@createPassword');
+
+Route::get('/send_verification_mail', 'GuestController@sendEmailTypeVerificationMail');
+
+Route::get('/verify/vendor/email/{email?}', 'GuestController@verifyVendorByEmail');
+
 /*Route::get('/category/{category}',function($category){
 
     return view('app_view.category')->with('companies',\App\User::whereHas('categories',function($query) use ($category){

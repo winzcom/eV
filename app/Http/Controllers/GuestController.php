@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Aws\Sns\SnsClient;
 use App\Service\Service;
 use App\Mail\SendVerificationMail;
+use App\Mail\EmailTypeVerification;
 use Illuminate\Support\Facades\DB;
 
 use App\Repo\Interfaces\UserRepoInterface as UPI;
@@ -23,12 +24,12 @@ class GuestController extends Controller
      * @return void
      */
 
-     private $repo;
+     private $userRepo;
 
-    public function __construct(UPI $repo)
+    public function __construct(UPI $userRepo)
     {
         
-        $this->repo = $repo;
+        $this->userRepo = $userRepo;
     }
 
     /**
@@ -48,8 +49,8 @@ class GuestController extends Controller
                     $companies = [];
                 }
             
-        }else $companies = $this->repo->getTopVendors($state);
-        //$some_quotes = $this->repo->getSomeRequestsAndAverage($state);
+        }else $companies = $this->userRepo->getTopVendors($state);
+        //$some_quotes = $this->userRepo->getSomeRequestsAndAverage($state);
         return view('landing',compact('companies'));
     }
 
@@ -57,19 +58,19 @@ class GuestController extends Controller
         
         $data = $request->except(['_token']);
         $data['reviewers_id'] = Auth::guard('client')->id();
-        $this->repo->createModel('reviews')
+        $this->userRepo->createModel('reviews')
             ->create($data);
         return back();
     }
 
     public function testLoad(){
 
-        return $this->repo->getRequests();
+        return $this->userRepo->getRequests();
     }
 
     private function getUserQuery($category,$state,$vicinity){
 
-        return $this->repo->createModel('vendor')->whereHas('categories',function($q) use ($category){
+        return $this->userRepo->getModel()->whereHas('categories',function($q) use ($category){
                     $q->where('categories.id',$category['category']);
                 })->StateVicinity($state,$vicinity);
     }
@@ -103,7 +104,7 @@ class GuestController extends Controller
                             }
                                 
                             try{
-                                    $customer = $this->repo->createModel('customer')->firstOrCreate([
+                                    $customer = $this->userRepo->createModel('customer')->firstOrCreate([
                                                 'first_name'=>$client['first_name'],
                                                 'last_name'=>$client['last_name'],
                                                 'email'=>$client['email'],
@@ -119,7 +120,7 @@ class GuestController extends Controller
                     if($vicinity == 'all' || $vicinity == '') $vicinity = 0;
 
                     try{
-                            $request = $this->repo->createModel('quotes_request')->create([
+                            $request = $this->userRepo->createModel('quotes_request')->create([
                             'category_id'=>$category['category'],
                             'client_id'=>$id !== null ? $id:$customer->id,
                             'count_available_vendors'=>count($users),
@@ -181,14 +182,47 @@ class GuestController extends Controller
         }
     }
 
+    public function verifyVendorByEmail($email) {
+        $count = $this->userRepo->getModel()->where('email',$email)->count();
+        if($count > 0) {
+            $randomString = str_random(40);
+            return redirect("password/create?s=".$randomString)->with('email',$email);
+        }
+    }
+
+    public function sendEmailTypeVerificationMail() {
+        //$users = $this->userRepo->getModel()->where('confirmed', 0);
+
+        Mail::to('ebudare@yahoo.com')->send(new EmailTypeVerification());
+    }
+
+    public function showPasswordCreate(Request $request) {
+        if(!$request->has('s'))
+            return redirect('/login');
+        return view('app_view.showpasswordcreate')->with('email',session('email'));
+    }
+
+    public function createPassword(Request $request) {
+        $this->validate($request, [
+            'email' => 'required|exists:companies|max:255',
+            'password' => 'required|confirmed',
+        ]);
+
+        $model = $this->userRepo->getModel()->where('email',$request->email)->first();
+        $model->password = bcrypt($request->password);
+        $model->save();
+
+        return redirect('login');
+    }
+
     public function setFirebaseNotificationEndPoint(Request $request){
         $model = null;
         if(Auth::check()){
-            $model = $this->repo->createModel('vendor');
+            $model = $this->userRepo->getModel();
             $model->where('id',Auth::id())->update(['firebase_endpoint'=>$request->token]);
         }
         elseif(Auth::guard('client')->check()){
-            $model = $this->repo->createModel('customer');
+            $model = $this->userRepo->createModel('customer');
             $model->where('id',Auth::guard('client')->id())->update(['firebase_endpoint'=>$request->token]);
         }
     }

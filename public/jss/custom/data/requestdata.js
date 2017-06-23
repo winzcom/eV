@@ -33,7 +33,7 @@ var CateringAdditionals = [
                             
                             //{name:'Catering Equipment',value:'Catering Equipment',type:'checkbox',formname:'extra[]',label:'Do you need this additional service'},
                             {name:'TableWare',value:'Catering Equipment',type:'checkbox',formname:'extra[]'},
-                            {name:'Waiting Staffs',value:'Catering Equipment',type:'checkbox',formname:'extra[]'},
+                            {name:'Service Staffs',value:'Catering Equipment',type:'checkbox',formname:'extra[]'},
                             {name:'Bar Service',value:'Bar Service',type:'checkbox',formname:'extra[]'},
                             //{name:'Rental/Setup',value:'Rental/Setup',type:'checkbox',formname:'extra[]'},
                             //{name:'Chair Covers',value:'Chair Covers',type:'checkbox',formname:'extra[]'}
@@ -129,7 +129,7 @@ var eventPlanning = ['EventPlanner','WeddingPlanner']; var cateringPlaceholder =
                       extras:CateringExtras,
                       placeholder:placeholder
                   },
-      'CakeMakers':{
+      'Cake':{
                       'additional':CakeAdditional,
                       'extras':CakeExtras
                   },

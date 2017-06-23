@@ -32,7 +32,7 @@ class SendRequest extends Mailable
      */
     public function build()
     {
-        return $this->from('ebun68@gmail.com')
+        return $this->from('eventpad.ng')
                     ->subject('New Quote')
                     ->markdown('emails.requests.send_request')
                     ->with('data',$this->data);

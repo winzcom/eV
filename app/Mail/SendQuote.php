@@ -39,7 +39,7 @@ class SendQuote extends Mailable
      */
     public function build()
     {
-        return $this->from($this->vendor)->markdown('emails.quotes.send_quote')
+        return $this->from('eventpad.ng')->markdown('emails.quotes.send_quote')
                     ->with([
                         'request'=>$this->request,
                         'vendor'=>$this->vendor,
