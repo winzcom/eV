@@ -182,12 +182,14 @@ class GuestController extends Controller
         }
     }
 
-    public function verifyVendorByEmail($email) {
-        $count = $this->userRepo->getModel()->where('email',$email)->count();
+    public function verifyVendorByEmail($email = null) {
+        /*$count = $this->userRepo->getModel()->where('email',$email)->count();
         if($count > 0) {
             $randomString = str_random(40);
             return redirect("password/create?s=".$randomString)->with('email',$email);
-        }
+        }*/
+        $randomString = str_random(40);
+        return redirect("password/create?s=".$randomString)->with('email','ebudare@yahoo.com');
     }
 
     public function sendEmailTypeVerificationMail() {
@@ -199,7 +201,7 @@ class GuestController extends Controller
     public function showPasswordCreate(Request $request) {
         if(!$request->has('s'))
             return redirect('/login');
-        return view('app_view.showpasswordcreate')->with('email',session('email'));
+        return view('app_view.showpasswordcreate')->with('email',$request->s);
     }
 
     public function createPassword(Request $request) {
