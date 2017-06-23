@@ -212,6 +212,7 @@ class GuestController extends Controller
 
         $model = $this->userRepo->getModel()->where('email',$request->email)->first();
         $model->password = bcrypt($request->password);
+        $model->confirmed = 1;
         $model->save();
 
         return redirect('login');
