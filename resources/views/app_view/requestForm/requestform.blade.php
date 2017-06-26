@@ -110,25 +110,25 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="budget" id="optionsRadios2" value="I want a Premium Service"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="budget" id="optionsRadios2" value="Basic Budget"><ins class="iCheck-helper"></ins>
                                 </div>
-                            I want a Premium Service
+                             Basic Budget
                             </label>
                         </div>
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="budget" id="optionsRadios2" value="Budget and Service are Important."><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="budget" id="optionsRadios2" value="Standard Budget"><ins class="iCheck-helper"></ins>
                                 </div>
-                                Budget and Service are Important.
+                               Standard Budget
                             </label>
                         </div>
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="budget" id="optionsRadios2" value=" Budget is My Concern"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="budget" id="optionsRadios2" value=" Premium Budget"><ins class="iCheck-helper"></ins>
                                 </div>
-                            Budget is My Concern
+                            Premium Budget
                             </label>
                         </div>
 

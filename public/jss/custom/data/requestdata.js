@@ -69,7 +69,25 @@ var placeholder = `please tell us about the type of meal, dietery requirement we
 
 
 var CateringExtras = [
-                        //{name:'Dietary requirement',value:'',type:'text',formname:'dietary_requirement'},
+                        {name:'Dietary requirement',value:'',type:'text',formname:'dietary_requirement', placeholder:'vegan, vegetarian'},
+                        {
+                              name:'Do you want starter and desserts',formname:'starters_desserts',type:'select',children:[
+                                {name:'Starters',value:'Starters'},
+                                {name:'Desserts',value:'Desserts'},
+                                {name:'Both',value:'Both'},
+                                {name:'None',value:'None'}
+                
+                              ]
+                        },
+                        {
+                              name:'Venue type',formname:'venue_type',type:'select',children:[
+                                {name:'Outdoors',value:'Outdoors'},
+                                {name:'Indoors with domestic kitchen facilities',value:'Indoors with domestic kitchen facilities'},
+                                {name:'Indoors with commercial kitchen facilities',value:'Indoors with commercial kitchen facilities'},
+                                {name:'Indoors without domestic kitchen facilities',value:'Indoors without domestic kitchen facilities'}
+                
+                              ]
+                        }
                         //{name:'Allergies we need to know about',value:'',type:'text',formname:'allergies'}
 ]
 

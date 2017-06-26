@@ -91,11 +91,7 @@ class Service{
         return $user;
     }
     
-<<<<<<< HEAD
-    public static function deletePhotos(GalleryInterface $gallery,array $files, $user_id){
-=======
     public static function deletePhotos(GalleryInterface $gallery,array $files,$user_id){
->>>>>>> 1555479caa335a50008e453770516ddbe2b190d2
 
         return $gallery->deletePhotos($files,$user_id);
             
