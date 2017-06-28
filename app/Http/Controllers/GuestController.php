@@ -153,7 +153,7 @@ class GuestController extends Controller
 
                 
                 return response()->json([
-                    'message'=>'No Vendors Available we will try and get for this search query'
+                    'message'=>'No Vendors Available'
                 ]);
             }
             
@@ -167,10 +167,10 @@ class GuestController extends Controller
         $category = $request->only(['category']);
         $available = $this->getUserQuery($category,$request->state,$request->locality)->count();
         if($available == 0) {
-            $request->locality = $request->locality == 'all' ? 0 : $request->locality;
-            DB::table('no_vendor_log')->insert(
-                ['category_id' => $request->category, 'state' => $request->state, 'vicinity_id' => $request->locality]
-            );
+            // $request->locality = $request->locality == 'all' ? 0 : $request->locality;
+            // DB::table('no_vendor_log')->insert(
+            //     ['category_id' => $request->category, 'state' => $request->state, 'vicinity_id' => $request->locality]
+            // );
         }
         return response()->json([
             'available'=>$available
