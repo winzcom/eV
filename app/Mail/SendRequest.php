@@ -32,8 +32,8 @@ class SendRequest extends Mailable
      */
     public function build()
     {
-        return $this->from('eventpad.ng')
-                    ->subject('New Quote')
+        return $this->from('Request@eventpad.ng')
+                    ->subject('New Request')
                     ->markdown('emails.requests.send_request')
                     ->with('data',$this->data);
     }

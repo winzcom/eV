@@ -7,7 +7,7 @@
              <!--<div>-->
              <!--<div class="row hide" data-step="1" data-title="This is the first step!">-->
                 <h3>Step 1</h3>
-                <section>
+                <section class="currentSection">
                      <div class="control-group" >
                     <label class="control-label" for="inputCity">
                          What are you looking for? (*)
@@ -83,7 +83,7 @@
                             </div>
                         <label class="control-label">Number of Guests</label>
                             <div class="controls">
-                                <input type="text" required class="form-control spin spinedit noSelect" id="spinMd" name="numberofguests">
+                                <input type="text" required class="form-control no_of_guest"  name="numberofguests">
                                 <!--<input type="number" name="numberofguests" class="form-control input-lg"/>-->
 
                                 <!--<div class="spinedit"><i class="fa fa-chevron-up"></i><i class="fa fa-chevron-down"></i></div>-->
@@ -110,25 +110,25 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="budget" id="optionsRadios2" value="I want a Premium Service"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="budget[]" id="optionsRadios2" value="Basic Service"><ins class="iCheck-helper"></ins>
                                 </div>
-                            I want a Premium Service
+                             Basic Service
                             </label>
                         </div>
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="budget" id="optionsRadios2" value="Budget and Service are Important."><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="budget[]" id="optionsRadios2" value="Standard Service"><ins class="iCheck-helper"></ins>
                                 </div>
-                                Budget and Service are Important.
+                               Standard Service
                             </label>
                         </div>
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="budget" id="optionsRadios2" value=" Budget is My Concern"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="budget[]" id="optionsRadios2" value=" Premium Service"><ins class="iCheck-helper"></ins>
                                 </div>
-                            Budget is My Concern
+                            Premium Service
                             </label>
                         </div>
 

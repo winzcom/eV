@@ -36,26 +36,29 @@
                                 
                                 foreach($obj as $key=>$value){
                                     if(is_array($value)){
-                                        echo 'Additional Services ( ';
+                                        /*echo str_replace('_',' ',title_case($key)).'( ';
                                             foreach($value as $val){
                                                 if(is_numeric($val))
                                                     echo $cats->where('id',$val)->first()->name;
                                                 else
                                                     echo $val;
                                             }
-                                            echo ' )<br><br>';
+                                            echo ' )<br><br>';*/
+                                         echo $key == 'extra'? 'Extras: (': title_case($key).': (';
+                                         echo implode(', ',$value);
+                                         echo ' )<br><hr>';
                                     }elseif($key == 'date'){
                                         $dt = null;
                                         try{
                                             $dt = \Carbon\Carbon::parse($value);
-                                            echo str_replace('_','',title_case($key)).':'.$dt->toFormattedDateString().'<br><hr>';
+                                            echo str_replace('_',' ',title_case($key)).':'.$dt->toFormattedDateString().'<br><hr>';
                                         }catch(\Exception $e){
                                             echo 'Date: Date of event not specified<br><hr>';
                                         }
                                         
                                     }
                                     else
-                                        echo str_replace('_','',title_case($key)).':'.$value.'<br><hr>';
+                                        echo str_replace('_',' ',title_case($key)).':'.$value.'<br><hr>';
                                 }
                             }
                             else{

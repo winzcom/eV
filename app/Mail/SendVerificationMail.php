@@ -32,7 +32,8 @@ class SendVerificationMail extends Mailable
      */
     public function build()
     {
-        return $this->from('eventpad.ng')
-        ->view('app_view.email_view_folders.verification_mail')->with('user',$this->user);
+        return $this->from('EmailVerification@eventpad.ng')
+                 ->subject('Email Verification')
+                ->view('app_view.email_view_folders.verification_mail')->with('user',$this->user);
     }
 }
