@@ -153,7 +153,7 @@ class GuestController extends Controller
 
                 
                 return response()->json([
-                    'message'=>'No Vendors Available we will try and get for this search query'
+                    'message'=>'No Vendors Available'
                 ]);
             }
             
