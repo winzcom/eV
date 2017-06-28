@@ -52,6 +52,19 @@ var SmallChopsAdditional = [
                             // {name:'tell us more',type:'text',formname:'iwantthisincludedalsointhesmallchops',value:''}
 ]
 
+var DrinksAdditional = [
+  {
+    name :'Alcohol', value: 'Alcohol', type:'checkbox', formname:'drinks[]', id:'Alcohol', clickAction:{
+      name:'Number of Alcohol Drinks you want', formname:'number_of_alcohol_drinks',value:'', id:'number_of_alcohol'
+    }
+  },
+  {
+    name :'Non-Alcohol', value: 'Non-Alcohol', type:'checkbox', id:'Non-Alcohol', formname:'drinks[]', clickAction:{
+       name:'Number of Non-Alcohol Drinks you want', formname:'number_of_non_alcohol_drinks',value:'', id:'number_of_non_alcohol'
+    }
+  }
+]
+
 var eventPlannerAdditional = [
                             {name:'MC',value:'MC',type:'checkbox',formname:'extra[]',label:'Do you need this additional service'},
                             {name:'Catering',value:'Catering',type:'checkbox',formname:'extra[]'},
@@ -116,65 +129,69 @@ var eventPlanning = ['EventPlanner','WeddingPlanner']; var cateringPlaceholder =
 
     var formElements = {
       'Caterers':{
-                    'additional':CateringAdditionals,
+                    additional:CateringAdditionals,
                      extras:CateringExtras,
                      placeholder:cateringPlaceholder 
                 },
+        'Drinks':{
+          additional:DrinksAdditional
+        },
       'SmallChops':{
-                      'additional':SmallChopsAdditional,
+                      additional:SmallChopsAdditional,
                       placeholder:placeholder
       },
       'Canapes':{
-                     'additional':CateringAdditionals,
+                     additional:CateringAdditionals,
                       extras:CateringExtras,
                       placeholder:placeholder 
                   },
       'VegetarianandVeganCatering':{
-                     'additional':CateringAdditionals,
+                     additional:CateringAdditionals,
                       extras:CateringExtras,
                       placeholder:placeholder 
                   },
       'TableWare':{
-                     'additional':CateringAdditionals
+                     additional:CateringAdditionals
                   },
       'CorporateEventCatering':{
-                     'additional':CateringAdditionals,
+                     additional:CateringAdditionals,
                       extras:CateringExtras,
                       placeholder:placeholder
                   },
       'Buffet':{
-                     'additional':CateringAdditionals,
+                     additional:CateringAdditionals,
                       extras:CateringExtras,
                       placeholder:placeholder
                   },
       'Cake':{
-                      'additional':CakeAdditional,
-                      'extras':CakeExtras
+                      additional:CakeAdditional,
+                      extra:CakeExtras
                   },
+      
       'BellTents': {
-                          'additional':MargueeAditional,
-                          'extras':MargueeExtras
+                          additional:MargueeAditional,
+                          extra:MargueeExtras
                   },
         'EventPlanner':{
-                          'additional':CateringAdditionals.concat(eventPlannerAdditional),
-                          'extras':MargueeExtras
+                          additional:CateringAdditionals.concat(eventPlannerAdditional),
+                          extra:MargueeExtras
         },
        'BusinessLunchCatering':{
-                                      'additional':CateringAdditionals,
-                                       'extras':CateringExtras,
+                                      additional:CateringAdditionals,
+                                       extra:CateringExtras,
                                        placeholder:placeholder
                                 },
       'PartyTents':{
-                        'additional':MargueeAditional,
-                          'extras':MargueeExtras
+                        additional:MargueeAditional,
+                          extra:MargueeExtras
                     },
         'TipiHire':{
-                          'additional':MargueeAditional,
-                          'extras':MargueeExtras
+                          additional:MargueeAditional,
+                          extra:MargueeExtras
                    },
         'Transport':{
 
-                        'extras':[
+                        extra:[
 
                                 {
                                   name:'Pick-up Location',formname:'pickuplocation',type:'text'

@@ -151,8 +151,9 @@ class GuestController extends Controller
 
             else{
 
+                
                 return response()->json([
-                    'message'=>'No Vendors Available'
+                    'message'=>'No Vendors Available we will try and get for this search query'
                 ]);
             }
             
@@ -165,7 +166,12 @@ class GuestController extends Controller
         //dd($request->all());
         $category = $request->only(['category']);
         $available = $this->getUserQuery($category,$request->state,$request->locality)->count();
-        
+        if($available == 0) {
+            $request->locality = $request->locality == 'all' ? 0 : $request->locality;
+            DB::table('no_vendor_log')->insert(
+                ['category_id' => $request->category, 'state' => $request->state, 'vicinity_id' => $request->locality]
+            );
+        }
         return response()->json([
             'available'=>$available
         ]);
@@ -195,7 +201,7 @@ class GuestController extends Controller
     public function sendEmailTypeVerificationMail() {
         //$users = $this->userRepo->getModel()->where('confirmed', 0);
 
-        Mail::to('ebudare@yahoo.com')->send(new EmailTypeVerification());
+        Mail::to('ebun68@gmail.com')->send(new EmailTypeVerification());
     }
 
     public function showPasswordCreate(Request $request) {
@@ -211,6 +217,7 @@ class GuestController extends Controller
         ]);
 
         $model = $this->userRepo->getModel()->where('email',$request->email)->first();
+        $model->name_slug = str_slug($model->company_name,'_');
         $model->password = bcrypt($request->password);
         $model->confirmed = 1;
         $model->save();

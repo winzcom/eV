@@ -25,7 +25,7 @@ $(document).ready(function() {
         var reg = $('.email');
         var register = $('#register') || $('a[href="#finish"]');
         if(reg !== undefined) {
-            console.log('hala')
+            console.log(register)
             
             register.attr('disabled', true);
 
@@ -109,6 +109,11 @@ $(document).ready(function() {
                 {
                     return true;
                 }
+                register = $('a[href="#finish"]');
+                if(register.attr('aria-hidden') == true) {
+                     register.attr('disabled', true);
+                } 
+                   
                 form.validate().settings.ignore = ":disabled,:hidden";
                 return form.valid();
             },
@@ -283,9 +288,9 @@ $(document).ready(function() {
                  
                 if ($('#category').val().length == '') {
                     disableNextButton(true);
-                }else if(v_available === true){
+                }else {
                     $("#category").trigger("change");
-                    disableNextButton(true);
+                    //disableNextButton(true);
                     //checkVendorAvailability($('#category').val(),$('#state').val(),$('#vicinity').val())
                 }
             }
@@ -488,15 +493,49 @@ $(document).ready(function() {
                 
                 var divContent = $(`<div class="checkbox col-md-3 col-xs-6"></div>`);
                 var outerLabel = $('<label>');
-                var className = element.type === 'text' ? '':'';
-                var formInput = $('<input type="'+element.type+'" name="'+element.formname+'"  value="' + element.value + '">')
+               // var className = element.type === 'text' ? '':'';
+                var formInput = $('<input type="'+element.type+'" id="'+element.id+'"name="'+element.formname+'"  value="' + element.value + '">')
                         // var formInput = $('<input type="checkbox" name="extra[]" class="" value="'+element.id+'">'+element.name+'</input>')
                     outerLabel.append(formInput)
                     outerLabel.append(element.name)
                     divContent.append(outerLabel)
                     outerDiv.append(divContent);
                     //divContent.append();
+                    console.log(formInput); 
                     
+                     if(element.clickAction !== undefined) {
+                            
+                            var div = $('<div class="controls"></div>');
+                            var no_of_guest = $('.no_of_guest').parent();
+                        (function(formInput){
+                            formInput.on('click', function(event) {
+                                var label = $('<label>Please specify  '+element.name+' needed e.g coke 20 bottles, orijin 30 cartons </label> ')
+                                var obj = element.clickAction;
+                                $('#'+obj.id).prev().remove()
+                                $('#'+obj.id).remove();
+                                var input = $('<input/>');
+                                input.attr({
+                                    type:'text',
+                                    class:'form-control',
+                                    name:obj.formname,
+                                    id:obj.id
+                                })
+                                
+                                if(event.target.checked){
+                                    div.append(label);
+                                    div.append(input);
+                                }
+                                else {
+                                    $('#'+obj.id).prev().remove();
+                                    $('#'+obj.id).remove();
+                                    
+                                }
+                            });
+                        })(formInput);
+
+                        div.insertAfter(no_of_guest);
+                        
+                    }
                     
 
                 }, this);

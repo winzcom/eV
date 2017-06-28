@@ -41,9 +41,10 @@ class Service{
     public static function getCategories(){
 
            //return new \App\TreeNode\CategoryTree(0,'',-1);
-           return Cache::remember('category',1440,function(){
-               return Category::all();
-           });
+        //    return Cache::remember('category',1440,function(){
+        //        return Category::all();
+        //    });
+        return Category::all();
     }
 
     public static function getFiveCompanies(){

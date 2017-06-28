@@ -40,21 +40,19 @@ class SearchController extends Controller
     private function getVendors($cat){
         $companies = $this->user_repo->createModel('vendor')->with('reviews','galleries','bay_average')->whereHas('categories',function($q) use ($cat){
             $q->where('categories.id',$cat);
-        })->where([
-            ['first_name','!=','null'],
-            ['last_name','!=','null'],
-            ['phone_no','!=','null']
-        ])->paginate(10);
+        })->paginate(10);
        return $companies;
     }
 
     public function browseByCategory($category = null,Request $request){
 
         if($category){
-            $companies = Cache::remember(url()->current(),1440,function() use ($category){
-                            return $this->getVendors($category);
-                        });
-        
+            // $companies = Cache::remember(url()->current(),1440,function() use ($category){
+            //                 return $this->getVendors($category);
+            //             });
+            
+            $companies = $this->getVendors($category);
+
             if(count($companies) > 0){
                 return view('app_view.vendorbrowse')->with([
                     'companies'=>$companies,
