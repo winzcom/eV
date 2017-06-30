@@ -62,7 +62,7 @@
 
                         <label class="control-label" for="inputCity">Start Time</label>
                             <div class="controls">
-                                <input type="time" required name="estimatedtime" class="form-control input-lg"/>
+                                <input type="time"id="start_time" required name="estimated_time" class="form-control input-lg"/>
                             </div>
                         <label class="control-label" for="inputCity">Duration in hours</label>
                             <div class="controls">
@@ -83,7 +83,7 @@
                             </div>
                         <label class="control-label">Number of Guests</label>
                             <div class="controls">
-                                <input type="text" required class="form-control no_of_guest"  name="numberofguests">
+                                <input type="text" required class="form-control no_of_guest"  name="number_of_guests">
                                 <!--<input type="number" name="numberofguests" class="form-control input-lg"/>-->
 
                                 <!--<div class="spinedit"><i class="fa fa-chevron-up"></i><i class="fa fa-chevron-down"></i></div>-->
@@ -92,8 +92,8 @@
                                 <label class="control-label">Do you want delivery</label>
                                 <div class="controls">
                                     <select name="delivery_option" class="form-control">
-                                        <option value="Yes">Yes</option>
                                         <option value="No">No</option>
+                                        <option value="No">Yes</option>
                                     </select>
                                 </div>
                             </div>
@@ -209,7 +209,7 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="whatstage" id="optionsRadios2" value="Need to book asap"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="what_stage" id="optionsRadios2" value="Need to book asap"><ins class="iCheck-helper"></ins>
                                 </div>
                             Need to book asap
                             </label>
@@ -217,7 +217,7 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="whatstage" id="optionsRadios2" value="Just need Quotes"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="what_stage" id="optionsRadios2" value="Just need Quotes"><ins class="iCheck-helper"></ins>
                                 </div>
                         Just interested in quotes
                             </label>
@@ -233,7 +233,7 @@
                     <div class="control-group" id="personalmessagae">
                         <label class="control-label" required for="inputCity">Tell us more about your needs (*)</label>
                             <div class="controls">
-                                <textarea name="personalmessage" class="form-control" id="personalmessage"  rows="5" placeholder="tell us more about the your event needs include key details e.g type of meal(Africanna, buffet) it a standing event, customer are going to pay" required></textarea>
+                                <textarea name="personal_message" class="form-control" id="personalmessage"  rows="5" placeholder="tell us more about the your event needs include key details e.g type of meal(Africanna, buffet) it a standing event, customer are going to pay" required></textarea>
                             </div>
                      </div>
                 </section>

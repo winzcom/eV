@@ -58,12 +58,19 @@ class Service{
             return  DB::table('states')->select('state')->OrderBy('state')->get();
         });*/
 
-         return  Cache::remember('state',1440,function(){
-                    return DB::table('states')
+        //  return  Cache::remember('state',1440,function(){
+        //             return DB::table('states')
+        //             ->select('*')
+        //             ->whereIn('name',['Lagos','Abuja','Rivers','Edo'])
+        //             ->OrderBy('state')
+        //             ->get();
+        //         });
+
+       return DB::table('states')
                     ->select('*')
+                    ->whereIn('state',['Lagos','Abuja','Rivers','Edo'])
                     ->OrderBy('state')
                     ->get();
-                });
     }
 
     public static function getImages($directory){
@@ -149,7 +156,8 @@ class Service{
         $formatter->setSymbol(\NumberFormatter::CURRENCY_SYMBOL,'');
         $formatter->setAttribute(\NumberFormatter::MAX_FRACTION_DIGITS,0);
         return $formatter;*/
-	   return money_format('%i',$cost);
+       setlocale(LC_MONETARY, 'en_US');
+	   return number_format($cost);
     }
 
     public function showPopOverReviews($review,$reviewers_name,$reply,$rating){

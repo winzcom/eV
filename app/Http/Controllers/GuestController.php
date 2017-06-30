@@ -40,18 +40,22 @@ class GuestController extends Controller
     public function index(Request $request)
     {
         $companies = [];
-        $state = session('user_state') ? session('user_state'):null;
-        if($state == "" || $state == null){
+        if(session('user_state') == null){
+            
              try{
                     $state = json_decode(file_get_contents('http://freegeoip.net/json/'))->region_name;
                     session(['user_state'=>$state]);
                 }catch(\ErrorException $e){
                     $companies = [];
                 }
+
+            return view('landing')->with(['companies'=>$companies,'state'=>$state]);
             
-        }else $companies = $this->userRepo->getTopVendors($state);
-        //$some_quotes = $this->userRepo->getSomeRequestsAndAverage($state);
-        return view('landing',compact('companies'));
+        }
+            $state = session('user_state');
+            $companies = $this->userRepo->getTopVendors($state);
+            return view('landing')->with(['companies'=>$companies,'state'=>$state]);
+        //$some_quotes = $this->userRepo->getSomeRequestsAndAverage($state)
     }
 
     public function writeReview(Request $request){

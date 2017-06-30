@@ -58,12 +58,13 @@ class SearchController extends Controller
                     'companies'=>$companies,
                     'category_id'=>$category,
                     'path'=>$this->path,
-                    'cat_name'=>$companies->first()->categories->find($category)->name
+                    'cat_name'=>$companies->first()->categories->find($category)->name,
+                    'state'=>session('user_state')
                 ]);
             }
-            return view('app_view.vendorbrowse')->with('category_id',$category);
+            //return view('app_view.vendorbrowse')->with('category_id',$category);
         }
-        return view('app_view.vendorbrowse')->with('category_id',$category);   
+        return view('app_view.vendorbrowse')->with(['category_id'=>$category,'state'=>session('user_state')]);   
         
     }
 

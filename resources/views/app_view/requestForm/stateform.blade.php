@@ -5,9 +5,15 @@
                 <div class="form-group">
                     <select class="form-control input-lg" id="state" name="state" placeholder="State"
                         required >
+                        
                         <option value="" disabled>State...</option>
                         @foreach ($states as $state)
-                        <option value = "{{$state->state}}" data-id = "{{$state->id}}">{{$state->state}}</option>
+                        <option 
+                            value = "{{$state->state}}" data-id = "{{$state->id}}"
+                            <?php echo $state->state == $current_state ? 'selected' : ''?> 
+                        >
+                            {{$state->state}}
+                        </option>
                         @endforeach
                     </select>
                     <!--<input type="text" class="form-control input-lg" id="yourName" placeholder="State" name="state" >-->

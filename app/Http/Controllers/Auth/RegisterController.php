@@ -119,7 +119,7 @@ class RegisterController extends Controller
         $user = $this->user_repo->createNewUser($data);
         $user->confirm_token = $this->generateToken();
         $user->save();
-        //$this->sendVerificationMail($user);
+        $this->sendVerificationMail($user);
         return $user;
     }
 

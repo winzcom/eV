@@ -10,7 +10,7 @@
 				<div class="col-lg-12 col-sm-12 text-center">
 					<section class="form-elements">
 						<h1 style="font-size: 36px; font-weight: 300; width: 70%; margin: 0 auto;" class="light-color wow fadeInUp" data-wow-delay="0.5">Receive tailored quotes from  vendors around you with a single request!</h1>
-						@include('app_view.requestForm.stateform')
+						@include('app_view.requestForm.stateform',['current_state'=>$state])
 					</section>
 					<small class="form-disclaimer light-color"><strong></strong></small>
 				</div>
@@ -65,7 +65,6 @@
 	<!-- section END -->
 	
 	<!-- section START top vendors  -->
-		@include('app_view.topvendors')
 	<!-- section END -->
 	
 	<!-- section START Some Quotes-->
