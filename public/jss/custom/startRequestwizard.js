@@ -93,7 +93,7 @@ $(document).ready(function() {
                 var actions = $('.actions');
                 var finish =  $('a[href="#finish"]'); 
                 var delivery_option = $('#delivery_option');
-
+                
                 delivery_option.addClass('delivery_option');
 
                 next.addClass('btn btn-success pull-right');
@@ -113,6 +113,14 @@ $(document).ready(function() {
                 if(register.attr('aria-hidden') == true) {
                      register.attr('disabled', true);
                 } 
+
+                /** newest change to accomodate having event type first */
+                if(currentIndex == 0 )
+                    if($('#category').val() == '')
+                        disableNextButton(true);
+                    else $('#category').trigger('change');
+                /**end of event type change */
+                console.log(currentIndex);
                    
                 form.validate().settings.ignore = ":disabled,:hidden";
                 return form.valid();
@@ -124,14 +132,15 @@ $(document).ready(function() {
             },
             onFinished: function (event, currentIndex)
             {
-                addStateLocality();
-
-                console.log($('#myWizard').serialize())
+                //addStateLocality();
                 /*alertify.delay(0).log("Request is been sent...").maxLogItems(1);
 
                 //var formData = $('#myWizard').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});*/
                 var formData = $('#myWizard').serialize();
                 console.log(formData);
+                var finish =  $('a[href="#finish"]'); 
+                finish.html('sending request...');
+                finish.addClass('disabled');
 
                 $.ajax({
                     url: request_url,
@@ -142,35 +151,40 @@ $(document).ready(function() {
                     },
                     success: function(data) {
                         console.log(data);
+                        $('#myWizard')[0].reset();
                         try {
 
                             var d = JSON.parse(data);
                             if (d.error) {
                                 var html = "<p style='color:white'>Error: " + d.error + "</p>"
                                 alertify.closeLogOnClick(true).error(html, function(ev) {
+                                    
                                     $('#myModal').modal('show');
                                 });
                             } else {
-                                var html = "<p style='color:white'>Error: " + d.message + "</p>"
-                                alertify.closeLogOnClick(true).sucess(html);
+                               
+                                var html = "<p style='color:white'>Success: " + d.message + "</p>"
+                                alertify.closeLogOnClick(true).success(html);
                             }
                         } catch (e) {
+                            
                             alertify.success('Request Sent');
                         }
 
+                        finish.html('finish');
+                        finish.removeClass('disabled');
                     },
                     error: function(err) {
                         console.log(err.error);
                         alertify.log(err.error);
                     }
                 })
-                $('#myWizard')[0].reset();
+                
             }//onFinished
             
         });
 
         $('.venue').on('input',function() {
-            console.log($(this).val().length)
             if($(this).val().length > 10) {
                 $('#delivery_option').removeClass('delivery_option');
             } else {
@@ -240,6 +254,7 @@ $(document).ready(function() {
             var modal = $(this);
             button = $(event.relatedTarget);
 
+            
             var slider_ranger = document.getElementById('slider-range'), amount = document.getElementById('amount');
             
             if(noUISliderCreated === false) {
@@ -279,17 +294,18 @@ $(document).ready(function() {
             	
                 var state = button.data('state');
                 var vicinity_id = null;
-                if (button.data('vicinity') !== '' && button.data('vicinity') !== undefined) vicinity_id = button.data('vicinity');
-                else vicinity_id = 0;
-                 $("#category").trigger("change");
-                 checkVendorAvailability($('#category').val(),state,vicinity_id);
+                vicinity_id = button.data('vicinity');
+                vicinity_id = vicinity_id == 'all' ? 0 : vicinity_id;
+
+                $("#category").trigger("change");
+                //checkVendorAvailability($('#category').val(),state,vicinity_id);
                 addStateLocality(state, vicinity_id);
             } else {
                  
                 if ($('#category').val().length == '') {
-                    disableNextButton(true);
+                    
                 }else {
-                    $("#category").trigger("change");
+                    //$("#category").trigger("change");
                     //disableNextButton(true);
                     //checkVendorAvailability($('#category').val(),$('#state').val(),$('#vicinity').val())
                 }
@@ -325,9 +341,9 @@ $(document).ready(function() {
 
             //var category = $('#category option:selected').text().replace(/\s+/g, '');
 
-            if (exists !== null) {
-                //addExtraFormElement(exists, self)
-            }
+            
+            //exists !== null ? addExtraFormElement(exists, self) : null;
+
         }) /***End of event Change Event operation */
 
         $('#browsevendor').change(function() {
@@ -365,6 +381,7 @@ $(document).ready(function() {
             if (state == null || locality == null) {
                 state = $('#start').data('state') || $('#state').val();
                 locality = $('#start').data('vicinity') || $('#vicinity').val() || 0;
+                cat_id = $('#category').val();
                 if (locality == 'all')
                 	locality = 0;
             }
@@ -407,8 +424,8 @@ $(document).ready(function() {
             category = category.replace(/\s+/g, '');
 
 
-            var state = $('#state').val();
-            var locality = $('#vicinity').val();
+            var state = $('#state').val() || $('.state').data('state');
+            var locality = $('#vicinity').val() || $('.state').data('vicinity');
             checkVendorAvailability(self.val(), state, locality)
 
 
@@ -438,14 +455,14 @@ $(document).ready(function() {
 
             var state, locality, stateInput, localityInput, inputs;
 
-            $('#dynamic_state').remove();
-            $('#dynamic_vicinity').remove();
+            // $('#dynamic_state').remove();
+            // $('#dynamic_vicinity').remove();
 
             if (state1 !== null && vicinity_id !== null) {
 
                 console.log(vicinity_id + ' ' + state1);
-                if (vicinity_id== 'all')
-                    vicinity_id= 0;
+                if (vicinity_id == 'all')
+                    vicinity_id = 0;
 
                 stateInput = $('<input type="hidden" id="dynamic_state" name="state" value="' + state1 + '" ></input>');
                 localityInput = $('<input type="hidden" id="dynamic_vicinity" name="vicinity" value="' + vicinity_id+ '"></input>');
@@ -453,24 +470,16 @@ $(document).ready(function() {
                 $('#myWizard').append(localityInput);
             } else {
 
-                state = $('#state').val()
-                locality = $('#vicinity').val();
+                    state = $('#state').val();
+                    locality = $('#vicinity').val();
 
-                if (state == undefined || state == '') {
+                    locality = locality == 'all' ? 0 : locality;
 
-                    $('#myModal').modal('hide');
-                    alertify.alert('Please select a state and locality')
-
-                } else {
-
-                    if (locality == 'all')
-                        locality = 0;
                     stateInput = $('<input type="hidden" name="state" value="' + state + '" ></input>');
                     localityInput = $('<input type="hidden" name="vicinity" value="' + locality + '"></input>');
                     $('#myWizard').append(stateInput);
                     $('#myWizard').append(localityInput);
                 }
-            }
         }
 
 

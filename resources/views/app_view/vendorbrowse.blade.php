@@ -12,7 +12,7 @@
 						<h4 class="strong text-uppercase" style="color:white;">
 							Get Quotes for {{$cat_name or ''}}
 						</h4>
-						@include('app_view.requestForm.stateform')
+						@include('app_view.requestForm.stateform',['current_state'=>$state])
                 @endif
 			</div>
 		</div>

@@ -79,6 +79,7 @@
 		 <!-- Latest compiled and minified CSS -->
 		 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
 	<link rel="stylesheet" href="{{asset('customcss/all.css')}}">
 	<!--<link rel="stylesheet" href="{{asset('vendor/css/eazy.css')}}">-->
@@ -90,7 +91,7 @@
 	<!--<script src="{{asset('jss/custom/googleautocomplete.js')}}"></script>-->
 	
 
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 </head>
 
 <script>
@@ -202,7 +203,7 @@ window.customerUrl = window.location.origin+'/';
 		</div>
 		<hr>
 			
-				<p class="copyright">© 2015 eventpad.</p>
+				<p class="copyright">© {{date('Y')}} eventpad.</p>
 				
 		</div>
 		

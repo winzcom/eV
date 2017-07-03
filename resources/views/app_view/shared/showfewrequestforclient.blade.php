@@ -1,3 +1,5 @@
+ @inject('service','App\Service\Service')
+
  <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
 @if(isset($all_requests))
     @if(count($all_requests) > 0)
@@ -36,14 +38,6 @@
                                 
                                 foreach($obj as $key=>$value){
                                     if(is_array($value)){
-                                        /*echo str_replace('_',' ',title_case($key)).'( ';
-                                            foreach($value as $val){
-                                                if(is_numeric($val))
-                                                    echo $cats->where('id',$val)->first()->name;
-                                                else
-                                                    echo $val;
-                                            }
-                                            echo ' )<br><br>';*/
                                          echo $key == 'extra'? 'Extras: (': title_case($key).': (';
                                          echo implode(', ',$value);
                                          echo ' )<br><hr>';
@@ -56,9 +50,17 @@
                                             echo 'Date: Date of event not specified<br><hr>';
                                         }
                                         
+                                    } elseif($key == 'price_range') {
+
+                                        list($lower, $higher) = explode('-',$value);
+                                        echo str_replace('_',' ',title_case($key)).': &#8358;'.
+                                        $service->currencyFormatter($lower).'- &#8358;'.$service->currencyFormatter($higher).'<br><br><hr>';
+
+                                    } elseif($key == 'personal_message' || $key == 'personalmessage') {
+                                        echo str_replace('_',' ',title_case($key)).': <textarea disabled class="form-control">'.$value.'</textarea><br><br><hr>';
                                     }
                                     else
-                                        echo str_replace('_',' ',title_case($key)).':'.$value.'<br><hr>';
+                                        echo str_replace('_',' ',title_case($key)).':'.$value.'<br><br><hr>';
                                 }
                             }
                             else{

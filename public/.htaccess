@@ -7,7 +7,7 @@
 
     #http to https
     RewriteCond %{SERVER_PORT} 80
-    RewriteRule ^(.*)$ https://eventpad.ng/$1 [R,L]
+    RewriteRule ^(.*)$ https://eventpad.ng/$1 [R,L]	
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
@@ -21,6 +21,7 @@
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+	
 </IfModule>
 
 <IfModule mod_deflate.c>

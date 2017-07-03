@@ -6,15 +6,33 @@
              {{ csrf_field() }}
              <!--<div>-->
              <!--<div class="row hide" data-step="1" data-title="This is the first step!">-->
+                 <h3></h3>
+                 <section>
+                     <div class="control-group" id="eventtype">
+                        <label class="control-label" for="inputCity">
+                        Hello what type of event are you planning? (*)
+                        </label>
+                            <div class="controls" id="div_event">
+                                <select class="form-control input-lg select2" required name="event" id="event" placeholder="pick the type of event">
+                                    
+                                    @foreach($events as $event)
+                                        <option>{{$event->name}}</option>
+                                    @endforeach
+                                    
+                                </select>
+                            </div>
+                    </div>
+
+                 </section>
                 <h3>Step 1</h3>
                 <section class="currentSection">
                      <div class="control-group" >
                     <label class="control-label" for="inputCity">
-                         What are you looking for? (*)
+                         Please select a category you want from the options? (*)
                          <span ><i class="vendor_available"></i></span>
                     </label>
                         <div class="controls">
-                            <select class="form-control input-lg " required name="category" id="category" placeholder="select a category">
+                            <select class="form-control input-lg select2" required name="category" id="category" placeholder="select a category">
                                 <option></option>
                                 @foreach ($categories as $cate)
                                     @if(isset($category_id))
@@ -39,21 +57,6 @@
             <!--<div class="row hide" data-step="2" data-title="This is the first step!">-->
                 <h3>Step 2</h3>
                 <section>
-                    <div class="control-group" id="eventtype">
-                        <label class="control-label" for="inputCity">
-                        What type of Event? (*)
-                        </label>
-                            <div class="controls" id="div_event">
-                                <select class="form-control input-lg" required name="event" id="event" placeholder="pick the type of event">
-                                    
-                                    @foreach($events as $event)
-                                        <option>{{$event->name}}</option>
-                                    @endforeach
-                                    
-                                </select>
-                            </div>
-                    </div>
-
                     <div class="control-group" id="date">
                         <label class="control-label" for="inputCity">Event Date (*)</label>
                             <div class="controls">
@@ -62,7 +65,7 @@
 
                         <label class="control-label" for="inputCity">Start Time</label>
                             <div class="controls">
-                                <input type="time" required name="estimatedtime" class="form-control input-lg"/>
+                                <input type="time"id="start_time" required name="estimated_time" class="form-control input-lg"/>
                             </div>
                         <label class="control-label" for="inputCity">Duration in hours</label>
                             <div class="controls">
@@ -83,7 +86,7 @@
                             </div>
                         <label class="control-label">Number of Guests</label>
                             <div class="controls">
-                                <input type="text" required class="form-control no_of_guest"  name="numberofguests">
+                                <input type="text" required class="form-control no_of_guest"  name="number_of_guests">
                                 <!--<input type="number" name="numberofguests" class="form-control input-lg"/>-->
 
                                 <!--<div class="spinedit"><i class="fa fa-chevron-up"></i><i class="fa fa-chevron-down"></i></div>-->
@@ -92,8 +95,8 @@
                                 <label class="control-label">Do you want delivery</label>
                                 <div class="controls">
                                     <select name="delivery_option" class="form-control">
-                                        <option value="Yes">Yes</option>
                                         <option value="No">No</option>
+                                        <option value="No">Yes</option>
                                     </select>
                                 </div>
                             </div>
@@ -106,7 +109,7 @@
                 <h3>Step 4</h3>
                 <section>
                      <div id="normalbudget">
-                        <label>What sort of service are you looking for? (*)</label>
+                       <!-- <label>What sort of service are you looking for? (*)</label>
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
@@ -130,7 +133,7 @@
                                 </div>
                             Premium Service
                             </label>
-                        </div>
+                        </div>-->
 
                         <p>
                             <label for="amount">Price range:</label>
@@ -209,7 +212,7 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="whatstage" id="optionsRadios2" value="Need to book asap"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="what_stage" id="optionsRadios2" value="Need to book asap"><ins class="iCheck-helper"></ins>
                                 </div>
                             Need to book asap
                             </label>
@@ -217,7 +220,7 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="whatstage" id="optionsRadios2" value="Just need Quotes"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="what_stage" id="optionsRadios2" value="Just need Quotes"><ins class="iCheck-helper"></ins>
                                 </div>
                         Just interested in quotes
                             </label>
@@ -233,7 +236,7 @@
                     <div class="control-group" id="personalmessagae">
                         <label class="control-label" required for="inputCity">Tell us more about your needs (*)</label>
                             <div class="controls">
-                                <textarea name="personalmessage" class="form-control" id="personalmessage"  rows="5" placeholder="tell us more about the your event needs include key details e.g type of meal(Africanna, buffet) it a standing event, customer are going to pay" required></textarea>
+                                <textarea name="personal_message" class="form-control" id="personalmessage"  rows="5" placeholder="tell us more about the your event needs include key details e.g type of meal(Africanna, buffet) it a standing event, customer are going to pay" required></textarea>
                             </div>
                      </div>
                 </section>

@@ -10,7 +10,7 @@
 				<div class="col-lg-12 col-sm-12 text-center">
 					<section class="form-elements">
 						<h1 style="font-size: 36px; font-weight: 300; width: 70%; margin: 0 auto;" class="light-color wow fadeInUp" data-wow-delay="0.5">Receive tailored quotes from  vendors around you with a single request!</h1>
-						@include('app_view.requestForm.stateform')
+						@include('app_view.requestForm.stateform',['current_state'=>$state])
 					</section>
 					<small class="form-disclaimer light-color"><strong></strong></small>
 				</div>
@@ -49,14 +49,14 @@
 					<div class="icon-box style7">
 						<i class="livicon" data-name="umbrella" data-color="#F1C40F" data-hovercolor="false" data-size="48" data-onparent="true"></i>
 						<h4 class="box-title strong">Receive Quotes</h4>
-						<p>Receive quotes from vendors</p>
+						<p>Receive quotes, recommendations from vendors</p>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="icon-box style7">
 						<i class="livicon" data-name="star-full" data-color="#E74C3C" data-hovercolor="false" data-size="48" data-onparent="true"></i>
-						<h4 class="box-title strong">Compare</h4>
-						<p>Compare prices from  vendors and hire the best</p>
+						<h4 class="box-title strong">Hire</h4>
+						<p>Compare quotes from  vendors and hire the best</p>
 					</div>
 				</div>
 			</div>
@@ -65,7 +65,6 @@
 	<!-- section END -->
 	
 	<!-- section START top vendors  -->
-		@include('app_view.topvendors')
 	<!-- section END -->
 	
 	<!-- section START Some Quotes-->

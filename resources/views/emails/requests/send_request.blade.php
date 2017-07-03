@@ -1,30 +1,38 @@
+@extends('emails.layout.email')
 
-        @component('mail::message')
-        
-        @component('mail::panel')
-        
-                        New Request From {{ $data['customer']->first_name }} {{ $data['customer']->last_name }} for 
-                        {{ $data['users_data']->first()->categories()->where('categories.id',$data['category'])->first()->name }}
+@section('content')
+
+   @inject('service','App\Service\Service')
+
+           <table cellpadding="0" cellspacing="0" border="0" align="center">
+                <h3>
+                    New Request From {{ $first_name }} {{ $last_name }} for 
+                    {{ $category }}
+                </h3><br><br>
+
                 
+                    @foreach( $requests as $key => $value )
+                        <tr>
+                            @php 
+                                if(is_array($value)) {
+                                    echo '<td width="200" valign="top">'.ucfirst(str_replace('_',' ',title_case($key))).'(';
+                                        echo implode(',',$value);
+                                    echo ')</td>';
+                                    continue;
+                                } elseif($key == 'price_range') {
+                                        list($lower, $higher) = explode('-',$value);
+                                        echo str_replace('_',' ',title_case($key)).': &#8358;'.$service->currencyFormatter($lower).'- &#8358;'.$service->currencyFormatter($higher).'<br><br>';
+                                        continue;
+                                }
+                                
+                            @endphp
+                        <td>{{ ucfirst(str_replace('_',' ',title_case($key))) }} : {{ $value }}</td>
+                        </tr><br><hr><br>
+                    @endforeach
+                
+                Thanks,
+                {{ config('app.name') }}
+            </table>
 
-
-                @foreach( $data['request'] as $key => $value )
-                        @php 
-                            if(is_array($value)) {
-                                echo $key.'(';
-                                    echo implode(',',$value);
-                                echo ')<br>';
-                                continue;
-                            }
-                            
-                        @endphp
-                    {{ ucfirst(str_replace('_',' ',title_case($key))) }} : {{ $value }}<hr>
-                @endforeach
-            @component('mail::button',['url' => ''])
-                Login to reply
-            @endcomponent
-            Thanks,<br>
-            {{ config('app.name') }}
-            @endcomponent
-        @endcomponent
-
+@endsection
+        

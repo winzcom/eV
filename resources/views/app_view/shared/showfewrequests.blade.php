@@ -14,7 +14,7 @@ if(count($all_requests) > 0){
             echo '<i class="fa fa-check-circle-o"></i>&nbsp';
         }
         echo 'request from '.$request->client_name.' for '.$cats->where('id',$request->category_id)->first()->name.'</h3>';
-     echo (int)$request->count_available_vendors !== 0 ? '<h5><i>(sent to '.((int)$request->count_available_vendors-1).' other vendors)</i></h5>':'';
+        echo (int)$request->count_available_vendors !== 0 ? '<h5><i>(sent to '.((int)$request->count_available_vendors-1).' other vendors)</i></h5>':'';
 
         echo '<div>';
         if(is_null($rid) && !isset($customer)){
@@ -65,23 +65,23 @@ if(count($all_requests) > 0){
                     echo '<div class="col-xs-6 col-md-4" style="padding-bottom:10px;">';
                             if(is_array($value)){
                                 echo $key == 'extra'? 'Extras (': $key.'(';
-                                /*foreach($value as $val){
-                                    if(is_numeric($val))
-                                        echo $cats->where('id',$val)->first()->name;
-                                    else
-                                        echo $val;
-                                }*/
                                 echo implode(",",$value);
                                 echo ' )';
                             }elseif($key == 'date' && $value !== ''){
                                 $dt = \Carbon\Carbon::parse($value);
                                 echo 'Date:'.$dt->toFormattedDateString();
-                            }
+                            } elseif($key == 'price_range') {
+                                        
+                                        list($lower, $higher) = explode('-',$value);
+                                        echo str_replace('_',' ',title_case($key)).': &#8358;'.
+                                        $service->currencyFormatter($lower).'- &#8358;'.$service->currencyFormatter($higher).'<br><br><hr>';
+
+                             }
                             else
                                 echo str_replace('_','',title_case($key)).':'.$value;
                     echo'</div>';
                 }else{
-                    echo '<textarea rows="5" cols="60" disabled class="form-control input-md">'.$value.'</textarea>';
+                    echo '<textarea disabled class="form-control input-md">'.$value.'</textarea>';
                 }
                 
             }

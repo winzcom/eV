@@ -35,6 +35,11 @@ class SendRequest extends Mailable
         return $this->from('Request@eventpad.ng')
                     ->subject('New Request')
                     ->markdown('emails.requests.send_request')
-                    ->with('data',$this->data);
+                    ->with([
+                        'data'=>$this->data,
+                        'category'=>$this->data['users_data']->first()->categories()->where('categories.id',$this->data['category'])->first()->name,
+                        'first_name'=>$this->data['customer']->first_name, 'last_name'=>$this->data['customer']->last_name,
+                        'requests'=>$this->data['request']
+                    ]);
     }
 }

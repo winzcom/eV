@@ -1,6 +1,5 @@
 
 
-@if(!Auth::check())
     @if(Auth::guard('client')->check())
        @php 
             if((!in_array(Auth::guard('client')->user()->email,$reviews->pluck('reviewers_email')->all())
@@ -12,11 +11,10 @@
             }
        @endphp
         
-    @else
+    @elseif(!Auth::check())
        
         <a href="{{url('/culogin')}}"><button class="btn btn-default btn-sm">Login To Write a Review</button></a>
     @endif
-@endif
 
 <span>Average Rating {{number_format($avg,1)}}/5<span>
                     @foreach($reviews as $review)
