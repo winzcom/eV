@@ -93,7 +93,7 @@ $(document).ready(function() {
                 var actions = $('.actions');
                 var finish =  $('a[href="#finish"]'); 
                 var delivery_option = $('#delivery_option');
-
+                
                 delivery_option.addClass('delivery_option');
 
                 next.addClass('btn btn-success pull-right');
@@ -113,6 +113,14 @@ $(document).ready(function() {
                 if(register.attr('aria-hidden') == true) {
                      register.attr('disabled', true);
                 } 
+
+                /** newest change to accomodate having event type first */
+                if(currentIndex == 0 )
+                    if($('#category').val() == '')
+                        disableNextButton(true);
+                    else $('#category').trigger('change');
+                /**end of event type change */
+                console.log(currentIndex);
                    
                 form.validate().settings.ignore = ":disabled,:hidden";
                 return form.valid();
@@ -246,7 +254,7 @@ $(document).ready(function() {
             var modal = $(this);
             button = $(event.relatedTarget);
 
-            $('#start_time').timepicker();
+            
             var slider_ranger = document.getElementById('slider-range'), amount = document.getElementById('amount');
             
             if(noUISliderCreated === false) {
@@ -295,9 +303,9 @@ $(document).ready(function() {
             } else {
                  
                 if ($('#category').val().length == '') {
-                    disableNextButton(true);
+                    
                 }else {
-                    $("#category").trigger("change");
+                    //$("#category").trigger("change");
                     //disableNextButton(true);
                     //checkVendorAvailability($('#category').val(),$('#state').val(),$('#vicinity').val())
                 }

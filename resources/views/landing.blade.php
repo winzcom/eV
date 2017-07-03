@@ -49,14 +49,14 @@
 					<div class="icon-box style7">
 						<i class="livicon" data-name="umbrella" data-color="#F1C40F" data-hovercolor="false" data-size="48" data-onparent="true"></i>
 						<h4 class="box-title strong">Receive Quotes</h4>
-						<p>Receive quotes from vendors</p>
+						<p>Receive quotes, recommendations from vendors</p>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="icon-box style7">
 						<i class="livicon" data-name="star-full" data-color="#E74C3C" data-hovercolor="false" data-size="48" data-onparent="true"></i>
-						<h4 class="box-title strong">Compare</h4>
-						<p>Compare prices from  vendors and hire the best</p>
+						<h4 class="box-title strong">Hire</h4>
+						<p>Compare quotes from  vendors and hire the best</p>
 					</div>
 				</div>
 			</div>

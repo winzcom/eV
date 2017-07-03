@@ -6,15 +6,33 @@
              {{ csrf_field() }}
              <!--<div>-->
              <!--<div class="row hide" data-step="1" data-title="This is the first step!">-->
+                 <h3></h3>
+                 <section>
+                     <div class="control-group" id="eventtype">
+                        <label class="control-label" for="inputCity">
+                        Hello what type of event are you planning? (*)
+                        </label>
+                            <div class="controls" id="div_event">
+                                <select class="form-control input-lg select2" required name="event" id="event" placeholder="pick the type of event">
+                                    
+                                    @foreach($events as $event)
+                                        <option>{{$event->name}}</option>
+                                    @endforeach
+                                    
+                                </select>
+                            </div>
+                    </div>
+
+                 </section>
                 <h3>Step 1</h3>
                 <section class="currentSection">
                      <div class="control-group" >
                     <label class="control-label" for="inputCity">
-                         What are you looking for? (*)
+                         Please select a category you want from the options? (*)
                          <span ><i class="vendor_available"></i></span>
                     </label>
                         <div class="controls">
-                            <select class="form-control input-lg " required name="category" id="category" placeholder="select a category">
+                            <select class="form-control input-lg select2" required name="category" id="category" placeholder="select a category">
                                 <option></option>
                                 @foreach ($categories as $cate)
                                     @if(isset($category_id))
@@ -39,21 +57,6 @@
             <!--<div class="row hide" data-step="2" data-title="This is the first step!">-->
                 <h3>Step 2</h3>
                 <section>
-                    <div class="control-group" id="eventtype">
-                        <label class="control-label" for="inputCity">
-                        What type of Event? (*)
-                        </label>
-                            <div class="controls" id="div_event">
-                                <select class="form-control input-lg" required name="event" id="event" placeholder="pick the type of event">
-                                    
-                                    @foreach($events as $event)
-                                        <option>{{$event->name}}</option>
-                                    @endforeach
-                                    
-                                </select>
-                            </div>
-                    </div>
-
                     <div class="control-group" id="date">
                         <label class="control-label" for="inputCity">Event Date (*)</label>
                             <div class="controls">
@@ -106,7 +109,7 @@
                 <h3>Step 4</h3>
                 <section>
                      <div id="normalbudget">
-                        <label>What sort of service are you looking for? (*)</label>
+                       <!-- <label>What sort of service are you looking for? (*)</label>
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
@@ -130,7 +133,7 @@
                                 </div>
                             Premium Service
                             </label>
-                        </div>
+                        </div>-->
 
                         <p>
                             <label for="amount">Price range:</label>
