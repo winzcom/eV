@@ -156,6 +156,7 @@ class Service{
         $formatter->setSymbol(\NumberFormatter::CURRENCY_SYMBOL,'');
         $formatter->setAttribute(\NumberFormatter::MAX_FRACTION_DIGITS,0);
         return $formatter;*/
+        /** add service.php**/
        setlocale(LC_MONETARY, 'en_US');
 	   return number_format($cost);
     }
