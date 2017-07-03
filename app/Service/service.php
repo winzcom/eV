@@ -96,7 +96,7 @@ class Service{
 
    
 
-    public static function deletePhotos(GalleryInterface $gallery,array $files,$user_id){
+   
 
 
     public static function deletePhotos(GalleryInterface $gallery,array $files,$user_id){
