@@ -21,6 +21,7 @@
                                     
                                 </select>
                             </div>
+                            <small>popular events <i>Birthday | Party | Wedding | Conferences | Concert</i></small>
                     </div>
 
                  </section>
@@ -49,7 +50,9 @@
                                     @endif
                                 @endforeach
                                 
-                            </select></div>
+                            </select>
+                            <small>popular categories: <i>Cake | SmallChops | Caterers | Decoration | CupCakes</i></small>
+                        </div>
                                 
                 </section>
                
@@ -69,7 +72,7 @@
                             </div>
                         <label class="control-label" for="inputCity">Duration in hours</label>
                             <div class="controls">
-                                <input type="number" required name="duration" class="form-control input-lg"/>
+                                <input type="number" required name="duration_in_hours" class="form-control input-lg"/>
                             </div>
                     </div>
                 </section>

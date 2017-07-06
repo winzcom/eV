@@ -65,6 +65,11 @@ var DrinksAdditional = [
   }
 ]
 
+var DecoratorAdditional = [
+  { name :'Event Theme(eg traditional)', value:'', type:'text', formname: 'event_theme',label: 'Any particular theme in mind'},
+  {name:'Theme Color', value:'', type:'color', formname:'theme_color',label: 'Please select a color'}
+]
+
 var eventPlannerAdditional = [
                             {name:'MC',value:'MC',type:'checkbox',formname:'extra[]',label:'Do you need this additional service'},
                             {name:'Catering',value:'Catering',type:'checkbox',formname:'extra[]'},
@@ -138,7 +143,7 @@ var eventPlanning = ['EventPlanner','WeddingPlanner']; var cateringPlaceholder =
         },
       'SmallChops':{
                       additional:SmallChopsAdditional,
-                      placeholder:placeholder
+                      placeholder:'What do you want in the smallchops'
       },
       'Canapes':{
                      additional:CateringAdditionals,
@@ -151,7 +156,7 @@ var eventPlanning = ['EventPlanner','WeddingPlanner']; var cateringPlaceholder =
                       placeholder:placeholder 
                   },
       'TableWare':{
-                     additional:CateringAdditionals
+//additional:CateringAdditionals
                   },
       'CorporateEventCatering':{
                      additional:CateringAdditionals,
@@ -163,6 +168,10 @@ var eventPlanning = ['EventPlanner','WeddingPlanner']; var cateringPlaceholder =
                       extras:CateringExtras,
                       placeholder:placeholder
                   },
+      'Decorator':{
+        extras:DecoratorAdditional,
+        placeholder:'Any particular theme and color'
+      },
       'Cake':{
                       additional:CakeAdditional,
                       extra:CakeExtras

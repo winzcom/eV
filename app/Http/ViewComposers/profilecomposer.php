@@ -41,7 +41,7 @@ class ProfileComposer
         $profile_updated = false;
 
         if(Auth::check()) {
-            $profile_updated = !is_null(Auth::user()->first_name) ? true:false;
+            $profile_updated = !is_null(Auth::user()->state) ? true:false;
         }
         $view->with([
             'requests'=> $this->user_repo->getRequests(),

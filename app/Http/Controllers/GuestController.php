@@ -39,10 +39,11 @@ class GuestController extends Controller
      */
     public function index(Request $request)
     {
-        $companies = [];
+        $companies = []; $state = null;
         if(session('user_state') == null){
             
              try{
+                    
                     $state = json_decode(file_get_contents('http://freegeoip.net/json/'))->region_name;
                     session(['user_state'=>$state]);
                 }catch(\ErrorException $e){
@@ -116,7 +117,8 @@ class GuestController extends Controller
                                             ]);
 
                             }catch(\Exception $e){
-                                echo json_encode(['error'=>'An error occured. Please try again']);
+
+                                echo json_encode(['error'=>'An error occured. Please try again'.$e]);
                                 return;
                             }
                             
@@ -134,7 +136,7 @@ class GuestController extends Controller
                         ]);
                     }catch(\Exception $e){
                         $customer->delete();
-                        echo json_encode(['error'=>'An error occured in creating your request. Please try again']);
+                        echo json_encode(['error'=>'An error occured in creating your request. Please try again'.$e]);
                         return;
                     }
                     
@@ -171,10 +173,26 @@ class GuestController extends Controller
         $category = $request->only(['category']);
         $available = $this->getUserQuery($category,$request->state,$request->locality)->count();
         if($available == 0) {
-            // $request->locality = $request->locality == 'all' ? 0 : $request->locality;
-            // DB::table('no_vendor_log')->insert(
-            //     ['category_id' => $request->category, 'state' => $request->state, 'vicinity_id' => $request->locality]
-            // );
+             $request->locality = $request->locality == 'all' ? 0 : $request->locality;
+            
+             $no_log = DB::table('no_vendor_log')->where('category_id',$request->category)
+                        ->where('state',$request->state)
+                        ->where('vicinity_id',$request->locality)
+                        ->count();
+            if($no_log > 0) 
+                DB::table('no_vendor_log')->where('category_id',$request->category)
+                        ->where('state',$request->state)
+                        ->where('vicinity_id',$request->locality)
+                        ->increment('count');
+            else{
+
+                DB::table('no_vendor_log')->insert(
+                    [
+                        'category_id' => $request->category, 'state' => $request->state, 
+                        'vicinity_id' => $request->locality, 'count' => 1
+                    ]
+                );
+            }
         }
         return response()->json([
             'available'=>$available
@@ -205,7 +223,7 @@ class GuestController extends Controller
     public function sendEmailTypeVerificationMail() {
         //$users = $this->userRepo->getModel()->where('confirmed', 0);
 
-        Mail::to('ebun68@gmail.com')->send(new EmailTypeVerification());
+        Mail::to('sholak@cedarviewng.com')->send(new EmailTypeVerification());
     }
 
     public function showPasswordCreate(Request $request) {
