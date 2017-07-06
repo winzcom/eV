@@ -196,7 +196,7 @@ window.customerUrl = window.location.origin+'/';
 			<div class="col-lg-4 col-sm-12">
 			
 				<h4 class="strong">About eventpad</h4>
-				<p>We pride ourselves on being able to apply our creativity to every brief to deliver the right message. Ready to start a project want to learn more about our process and how we work with clients?</p>
+				<p>We pride ourselves on being able to apply our creativity to every brief to deliver the right message. Ready to take advantage of this service and how we work with clients?</p>
 		<a href="#" title="Contact Us" class="btn btn-default btn-icon contact-btn"><i class="livicon" data-name="mail" data-color="#fff" data-hovercolor="false" data-size="18"></i> Contact Us</a>
 		
 			</div>

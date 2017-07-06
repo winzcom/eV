@@ -97,7 +97,7 @@ $(document).ready(function() {
                 delivery_option.addClass('delivery_option');
 
                 next.addClass('btn btn-success pull-right');
-                finish.addClass('btn-sm btn-success pull-right');
+                finish.addClass('btn btn-success pull-right');
                 previous.addClass('btn-sm btn-danger');
 
                 //$('.modal-footer').append(actions);
@@ -107,6 +107,9 @@ $(document).ready(function() {
             {
                 if (currentIndex > newIndex)
                 {
+                    if(currentIndex == 1) {
+                        disableNextButton();
+                    }
                     return true;
                 }
                 register = $('a[href="#finish"]');
@@ -114,13 +117,19 @@ $(document).ready(function() {
                      register.attr('disabled', true);
                 } 
 
+                console.log(currentIndex + ' '+newIndex+' '+event)
+
                 /** newest change to accomodate having event type first */
-                if(currentIndex == 0 )
+                if(currentIndex == 0 ){
                     if($('#category').val() == '')
                         disableNextButton(true);
-                    else $('#category').trigger('change');
+                    else {
+                        $('#category').trigger('change');
+                    }
+                } else disableNextButton();
+                    
                 /**end of event type change */
-                console.log(currentIndex);
+                console.log(currentIndex + ' '+newIndex);
                    
                 form.validate().settings.ignore = ":disabled,:hidden";
                 return form.valid();
@@ -151,7 +160,7 @@ $(document).ready(function() {
                     },
                     success: function(data) {
                         console.log(data);
-                        $('#myWizard')[0].reset();
+                        
                         try {
 
                             var d = JSON.parse(data);
@@ -165,6 +174,8 @@ $(document).ready(function() {
                                
                                 var html = "<p style='color:white'>Success: " + d.message + "</p>"
                                 alertify.closeLogOnClick(true).success(html);
+                                $('#myWizard')[0].reset();
+                                $('#myWizard').hide();
                             }
                         } catch (e) {
                             
@@ -261,10 +272,10 @@ $(document).ready(function() {
                 noUiSlider.create(slider_ranger, {
                     start: [ 250000, 450000],
                     connect: true,
-                    step:500,
+                    step:1000,
                     range: {
                         'min': 1000,
-                        'max': 700000
+                        'max': 500000
                     }
                 });
                 noUISliderCreated = true;
@@ -301,11 +312,11 @@ $(document).ready(function() {
                 //checkVendorAvailability($('#category').val(),state,vicinity_id);
                 addStateLocality(state, vicinity_id);
             } else {
-                 
+                 addStateLocality();
                 if ($('#category').val().length == '') {
                     
                 }else {
-                    //$("#category").trigger("change");
+                    $("#category").trigger("change");
                     //disableNextButton(true);
                     //checkVendorAvailability($('#category').val(),$('#state').val(),$('#vicinity').val())
                 }
@@ -490,10 +501,8 @@ $(document).ready(function() {
             if(data.additional !== undefined){
 
                 var p = $('<p style="text-align:center;">Do you want this additional service(s)</p>');
-                if(category == 'SmallChops'){
-                    p.text('What do you want in the smallchops');
-                }else if(category === 'Cake') {
-                    p.text('Please select flavours you want')
+                if(data.placeholder){
+                    p.text(data.placeholder);
                 }
                 divContainer.html(p);
                 var outerDiv = $('<div class="row">');
@@ -564,7 +573,7 @@ $(document).ready(function() {
                          input = $('<input>');
                          input.attr({
                             name: ele.formname,
-                            class: 'form-control input-sm',
+                            class: 'form-control',
                             value: '',
                             placeholder:ele.placeholder || ''
                          }, this);

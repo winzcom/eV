@@ -59,10 +59,11 @@ if(count($all_requests) > 0){
                 </i> from you and ".((int)$request->crid-1)." other(s)<br><br>";
         }
         if($isobject){
-            echo '<div class="alert alert-success row" style="padding:10 0 0 10px;">';
+            $pm = null;
+            echo '<div class="row list-group" style="padding:10 0 0 10px;">';
             foreach($ob as $key=>$value){
-                if($key !== 'personalmessage'){
-                    echo '<div class="col-xs-6 col-md-4" style="padding-bottom:10px;">';
+                echo '<div class="col-xs-6 col-md-4 list-group-item list-group-item-action" style="padding-bottom:10px;">';
+                if($key !== 'personal_message'){
                             if(is_array($value)){
                                 echo $key == 'extra'? 'Extras (': $key.'(';
                                 echo implode(",",$value);
@@ -74,18 +75,17 @@ if(count($all_requests) > 0){
                                         
                                         list($lower, $higher) = explode('-',$value);
                                         echo str_replace('_',' ',title_case($key)).': &#8358;'.
-                                        $service->currencyFormatter($lower).'- &#8358;'.$service->currencyFormatter($higher).'<br><br><hr>';
+                                        $service->currencyFormatter($lower).'- &#8358;'.$service->currencyFormatter($higher);
 
                              }
                             else
-                                echo str_replace('_','',title_case($key)).':'.$value;
-                    echo'</div>';
+                                echo str_replace('_',' ',title_case($key)).':'.$value;
                 }else{
-                    echo '<textarea disabled class="form-control input-md">'.$value.'</textarea>';
+                    $pm = '<br><hr><textarea disabled class="form-control input-md">'.$value.'</textarea>';
                 }
-                
+                 echo'</div>';
             }
-            echo '</div>';
+            echo $pm.'</div>';
         }
         else echo $request->request;
     }

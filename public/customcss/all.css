@@ -90,6 +90,9 @@ html{
 	letter-spacing:0.04em;
 	word-spacing:1px;
 }
+body{
+	overflow-x:hidden;
+}
 h1,
 h2,
 .h1,
