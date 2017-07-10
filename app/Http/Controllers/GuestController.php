@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use Aws\Sns\SnsClient;
 use App\Service\Service;
+use GuzzleHttp\Client;
 use App\Mail\SendVerificationMail;
 use App\Mail\EmailTypeVerification;
 use Illuminate\Support\Facades\DB;
@@ -40,16 +41,18 @@ class GuestController extends Controller
     public function index(Request $request)
     {
         $companies = []; $state = null;
+        
         if(session('user_state') == null){
-            
-             try{
-                    
-                    $state = json_decode(file_get_contents('http://freegeoip.net/json/'))->region_name;
-                    session(['user_state'=>$state]);
-                }catch(\ErrorException $e){
-                    $companies = [];
-                }
-
+            try {
+                // $client = new Client(['base_uri'=>'http://freegeoip.net']);
+                // $response = $client->request('GET','json');
+                // $state = json_decode($response->getBody()->getContents())->region_name;
+                // session(['user_state'=>$state]);
+                // $companies = $this->userRepo->getTopVendors($state);
+            }catch(Exception $e) {
+                $companies = [];
+            }
+                
             return view('landing')->with(['companies'=>$companies,'state'=>$state]);
             
         }
@@ -222,8 +225,8 @@ class GuestController extends Controller
 
     public function sendEmailTypeVerificationMail() {
         //$users = $this->userRepo->getModel()->where('confirmed', 0);
-
-        Mail::to('sholak@cedarviewng.com')->send(new EmailTypeVerification());
+        //Mail::to($users)->send(new EmailTypeVerification());
+        Mail::to('ebudare@yahoo.com')->send(new EmailTypeVerification());
     }
 
     public function showPasswordCreate(Request $request) {
@@ -243,7 +246,9 @@ class GuestController extends Controller
         $model->password = bcrypt($request->password);
         $model->confirmed = 1;
         $model->save();
-
+        if(Auth::attempt(['email'=>$request->email,'password'=>$request->password,'confirmed'=>1])) {
+            return redirect('home');
+        }
         return redirect('login');
     }
 

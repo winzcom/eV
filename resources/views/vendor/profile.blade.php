@@ -57,15 +57,23 @@
                                 
                             </div>
                             <div class="content">
-                                {{Form::model($user,['url'=>"profile/edit",'enctype'=>"multipart/form-data"])}}
+                                {{Form::model($user,['url'=>"profile/edit",'id'=>'profile_form','enctype'=>"multipart/form-data"])}}
                         {{ csrf_field() }}
                         <div id="accordion">
                             @foreach($formInputs as $key=>$val)
+                               
                                <h3 style="background-color:#333;padding:5px 5px 5px 5px; color:white;" class="container-fluid">{{$key}}</h3>
+                               
                                     <div>
                                         @foreach($val as $input)
                                         <div class="form-group{{ $errors->has($input) ? ' has-error' : '' }}">
-                                        <label for="name" class="col-md-4 control-label">{{ucwords(str_replace('_',' ',$input))}}</label>
+                                        @if($input == 'vicinity_id')
+                                        <label for="name" class="col-md-4 control-label">Vicinity<small style="color:red"> *</small></label>
+                                         @elseif($input == 'first_name' || $input == 'last_name')
+                                         <label for="name" class="col-md-4 control-label">{{ucwords(str_replace('_',' ',$input))}}</label>
+                                        @else
+                                        <label for="name" class="col-md-4 control-label">{{ucwords(str_replace('_',' ',$input))}}<small style="color:red"> *</small></label>
+                                        @endif
                                         @if($input == 'password' || $input == 'password_confirm')
                                         
                                             <div class="form-group form-group-md">
@@ -74,7 +82,7 @@
                                             </div>
                                         @elseif($input == 'category')
                                         
-                                            <select  multiple ="true" class="form-control chzn-select" id="combobox" name="category[]" >
+                                            <select  multiple ="true" class="form-control chzn-select" required id="combobox" name="category[]" >
                                                     <option>...</option>
                                                     @foreach ($categories as $cate)
                                                         <option value = "{{$cate->id}}" <?php 
@@ -102,7 +110,7 @@
                                             </select>
 
                                     @elseif($input == 'vicinity_id')
-                                        <select   class="form-control" id="vicinity" name="vicinity_id">
+                                        <select   class="form-control" id="vicinity" name="vicinity_id" required>
                                                 <option></option>
                                                 @foreach ($vicinities as $vicinity)
                                                 <option value = "{{$vicinity->id}}"
@@ -126,10 +134,14 @@
                                             <input type="file" name="company_image" id="image-upload" />
                                         </div>
                                         
-                                    @else
+                                    @elseif($input == 'first_name' || $input == 'last_name')
                                         <div class="form-group form-group-md">
                                             {{Form::text($input,$user->$input,['class'=>'form-control'])}}
                                         </div>
+                                    @else
+                                    <div class="form-group form-group-md">
+                                            {{Form::text($input,$user->$input,['class'=>'form-control','required'])}}
+                                    </div>
                                     @endif
                                     @if ($errors->has($input))
                                         <span class="help-block">
@@ -192,7 +204,16 @@
 <script src="{{asset('vendor/js/uploadpreview/uploadpreview.js')}}"></script>
 <script src="{{asset('jss/combox.js')}}"></script>
 <script src="{{asset('jss/custom/profilepage.js')}}"></script>
-<script>
+<script src="{{asset('js/jquery.validate.min.js')}}"></script>
 
+<script>
+    $('#profile_form').validate({
+            errorPlacement: function errorPlacement(error, element) { element.before(error); },
+            rules: {
+                confirm: {
+                    equalTo: "#password"
+                }
+            }
+        });
 </script>
 @endsection

@@ -9649,7 +9649,7 @@ left: 290px;
 }
 .landing-intro form .form-control,
 .landing-intro form .form-control:focus{
-	border-color:#fff;
+	/*border-color:#fff;*/
 }
 .landing-intro .app-img-wrap{
 	margin:40px auto -80px;

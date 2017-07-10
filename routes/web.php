@@ -54,6 +54,10 @@ Route::get('/send_verification_mail', 'GuestController@sendEmailTypeVerification
 
 Route::get('/verify/vendor/email/{email?}', 'GuestController@verifyVendorByEmail');
 
+Route::get('/about_us',function() {
+    return view('about');
+});
+
 /*Route::get('/category/{category}',function($category){
 
     return view('app_view.category')->with('companies',\App\User::whereHas('categories',function($query) use ($category){

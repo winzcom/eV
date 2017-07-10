@@ -27,19 +27,25 @@ class DetailsController extends Controller
                 'reviews'=>function($q){
                     $q->orderBy('id','desc');
                 },
+                'categories',
                 'galleries'
             ]
         )->where('name_slug',$slug)->first();
 
-        $category_name = '';
+        $category_name = ''; $cat_id = null;
 
         $similars = User::whereHas('categories',function($q) use ($user){
             $q->whereIn('categories.id',$user->categories()->pluck('categories.id'));
         })->where('id','!=',$user->id)->orderBy('id','desc')->take(3)->get();
 
         if(!is_null($id)){
-            $category_name = $user->categories->find($id)->name;
-            $cat_id = $user->categories->find($id)->id; 
+            $category = $user->categories->find($id);
+            $category_name = $category->name;
+            $cat_id = $category->id; 
+        }else {
+            $category = $user->categories->first();
+            $category_name = $category->name;
+            $cat_id = $category->id;
         }
             
         

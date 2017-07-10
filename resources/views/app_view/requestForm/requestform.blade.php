@@ -10,7 +10,7 @@
                  <section>
                      <div class="control-group" id="eventtype">
                         <label class="control-label" for="inputCity">
-                        Hello what type of event are you planning? (*)
+                        Hello what type of event are you planning? <small style="color:red">*</small>
                         </label>
                             <div class="controls" id="div_event">
                                 <select class="form-control input-lg select2" required name="event" id="event" placeholder="pick the type of event">
@@ -29,7 +29,7 @@
                 <section class="currentSection">
                      <div class="control-group" >
                     <label class="control-label" for="inputCity">
-                         Please select a category you want from the options? (*)
+                         Please select a category you want from the options? <small style="color:red">*</small>
                          <span ><i class="vendor_available"></i></span>
                     </label>
                         <div class="controls">
@@ -61,18 +61,18 @@
                 <h3>Step 2</h3>
                 <section>
                     <div class="control-group" id="date">
-                        <label class="control-label" for="inputCity">Event Date (*)</label>
+                        <label class="control-label" for="inputCity">Event Date <small style="color:red">*</small></label>
                             <div class="controls">
                                 <input type="text" required name="date" id="datepicker" class="form-control input-lg"/>
                             </div>
 
-                        <label class="control-label" for="inputCity">Start Time</label>
+                        <label class="control-label" for="inputCity">Start Time <small style="color:red">*</small></label>
                             <div class="controls">
                                 <input type="time"id="start_time" required name="estimated_time" class="form-control input-lg"/>
                             </div>
                         <label class="control-label" for="inputCity">Duration in hours</label>
                             <div class="controls">
-                                <input type="number" required name="duration_in_hours" class="form-control input-lg"/>
+                                <input type="number" name="duration_in_hours" class="form-control input-lg"/>
                             </div>
                     </div>
                 </section>
@@ -83,11 +83,11 @@
                 <h3>Step 3</h3>
                 <section>
                     <div class="control-group" id="venue">
-                        <label class="control-label" for="">Venue (leave blank if you don't have a confirmed venue yet')</label>
+                        <label class="control-label" for="">Venue <small style="color:red">*</small></label>
                             <div class="controls">
-                                <input id="pac-input"  name="venue" type="text" class="form-control input-lg venue" placeholder="Enter a location"/>
+                                <input id="pac-input"  required name="venue" type="text" class="form-control input-lg venue" placeholder="Enter a location"/>
                             </div>
-                        <label class="control-label">Number of Guests</label>
+                        <label class="control-label">Number of Guests <small style="color:red">*</small></label>
                             <div class="controls">
                                 <input type="text" required class="form-control no_of_guest"  name="number_of_guests">
                                 <!--<input type="number" name="numberofguests" class="form-control input-lg"/>-->
@@ -167,11 +167,11 @@
                     </div>-->
 
                     <div id="publicbudget">
-                        <label>How do You Want to Work With Vendors? (*)</label>
+                        <label>How do You Want to Work With Vendors? <small style="color:red">*</small></label>
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="budget" id="optionsRadios2" value="We will pay vendors"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="budget" id="optionsRadios2" required value="We will pay vendors"><ins class="iCheck-helper"></ins>
                                 </div>
                             We will pay vendors
                             </label>
@@ -211,11 +211,11 @@
                     </div><!-- id publicbudget-->
 
                     <div id="whatstage">
-                        <label>What Stage (*)</label>
+                        <label>What Stage <small style="color:red">*</small></label>
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="what_stage" id="optionsRadios2" value="Need to book asap"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" required name="what_stage" id="optionsRadios2" value="Need to book asap"><ins class="iCheck-helper"></ins>
                                 </div>
                             Need to book asap
                             </label>
@@ -229,20 +229,22 @@
                             </label>
                         </div>
                     </div><!--whatstage-->
+                    <!--personal message-->
+                    <div class="control-group" id="personalmessagae">
+                        <label class="control-label" required for="inputCity">Tell us more about your needs </label>
+                            <div class="controls">
+                                <textarea name="personal_message" class="form-control" id="personalmessage"  rows="5" placeholder="tell us more about the your event needs include key details e.g type of meal(fried rice, small chops, jollof rice) it a standing event, customer are going to pay" ></textarea>
+                            </div>
+                     </div><!--personal message end -->
                 </section>
                 
         <!-- </div>--> <!--step-4-->
 
             <!--<div class="row hide" data-step="5" data-title="This is the first step!">-->
-                <h3>Step 5</h3>
+                <!--<h3>Step 5</h3>
                 <section>
-                    <div class="control-group" id="personalmessagae">
-                        <label class="control-label" required for="inputCity">Tell us more about your needs (*)</label>
-                            <div class="controls">
-                                <textarea name="personal_message" class="form-control" id="personalmessage"  rows="5" placeholder="tell us more about the your event needs include key details e.g type of meal(Africanna, buffet) it a standing event, customer are going to pay" required></textarea>
-                            </div>
-                     </div>
-                </section>
+                    
+                </section>-->
                 
             <!--</div>-->
 
@@ -251,7 +253,7 @@
                 
                 <h3>Step 6</h3>
                 <section>
-                    <p><b>Contact details<small>(so you can be notified when vendors reply with quotes and login to see quotes)</small></b></p>
+                    <p><b>Contact details<small>(so you can be notified when vendors reply with quotes and login to see quotes)</small><small style="color:red">*</small></b></p>
                     <label class="control-label" for="inputCity">First Name</label>
                     <div class="controls">
                         <input  name="first_name" class="form-control" type="text" required/>

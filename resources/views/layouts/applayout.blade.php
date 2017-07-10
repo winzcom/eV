@@ -68,7 +68,10 @@
 	.delivery_option {
 		display:none;
 	}
-	
+	.select2-container {
+		display:block;
+		width:100% !important;
+	}
 	
 </style>
 @yield('style')
@@ -81,7 +84,9 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />	
 	<link rel="stylesheet" href="{{asset('customcss/all.css')}}">
+
 	<!--<link rel="stylesheet" href="{{asset('vendor/css/eazy.css')}}">-->
 	<!--<link rel="stylesheet" href="{{asset('css/material-bootstrap-wizard.css')}}">-->
 	<link red <link rel="shortcut icon" href="favicon-32x32.png" type="image/png">
@@ -190,29 +195,9 @@ window.customerUrl = window.location.origin+'/';
 
 
 <!-- footer START -->
-<footer class="footer" style="padding:20px 0px 10px 30px;">
-	<div class="">
-		<div class="row">
-			<div class="col-lg-4 col-sm-12">
-			
-				<h4 class="strong">About eventpad</h4>
-				<p>We pride ourselves on being able to apply our creativity to every brief to deliver the right message. Ready to take advantage of this service and how we work with clients?</p>
-		<a href="#" title="Contact Us" class="btn btn-default btn-icon contact-btn"><i class="livicon" data-name="mail" data-color="#fff" data-hovercolor="false" data-size="18"></i> Contact Us</a>
-		
-			</div>
-		</div>
-		<hr>
-			
-				<p class="copyright">© {{date('Y')}} eventpad.</p>
-				
-		</div>
-		
-	</div>
-	<!--<div id="map"></div>-->
-</footer>
-<!-- footer style1 END -->
 
-    
+@include('layouts.footer')
+<!--Footer end --> 
 <!-- jQuery plugins -->
 <script src="{{asset('js/vendor/jquery.js')}}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>

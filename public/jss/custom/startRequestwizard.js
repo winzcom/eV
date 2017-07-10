@@ -6,7 +6,34 @@ $(document).ready(function() {
             //alert(user_state);
         }*/
 
-        
+        /**Code to comment out */
+        // var observer = new MutationObserver(function(mutations) {
+        //     mutations.forEach(function(mutation) {
+        //     //addedNodes contains all detected new controls
+        //         if (mutation && mutation.addedNodes) {
+        //             mutation.addedNodes.forEach(function(elm) {
+        //             //only apply select2 to select elements
+        //                 if (elm && elm.nodeName === "SELECT" && ($(elm).attr('id') == 'menu')) {
+        //                     console.log(elm)
+        //                     var label = $('<label>')
+        //                     label.html('Select Menus');
+        //                     label.insertBefore(elm);
+        //                     $(elm).select2();
+        //                 }
+        //             });
+        //         }
+        //     });
+        // });
+
+        // observer.observe(
+        //     document.querySelector('#myWizard'),
+        //     {
+        //         characterData:true,
+        //         subtree:true
+        //     }
+        // )
+        /** end of mutationobserver */
+
         function validateEmail(selector) {
             selector.mailgun_validator({
                 api_key: 'pubkey-ca5312e0946a6a724c269a03cee39de7', // replace this with your Mailgun public API key
@@ -93,7 +120,8 @@ $(document).ready(function() {
                 var actions = $('.actions');
                 var finish =  $('a[href="#finish"]'); 
                 var delivery_option = $('#delivery_option');
-                
+                var menu = $('.menu') || null;
+
                 delivery_option.addClass('delivery_option');
 
                 next.addClass('btn btn-success pull-right');
@@ -105,11 +133,10 @@ $(document).ready(function() {
             },
             onStepChanging: function (event, currentIndex, newIndex)
             {
+                console.log(currentIndex+' '+newIndex);
                 if (currentIndex > newIndex)
                 {
-                    if(currentIndex == 1) {
-                        disableNextButton();
-                    }
+                    disableNextButton();
                     return true;
                 }
                 register = $('a[href="#finish"]');
@@ -117,16 +144,14 @@ $(document).ready(function() {
                      register.attr('disabled', true);
                 } 
 
+                if(currentIndex == 1 ){
+                        if($('#category').val() == '')
+                            disableNextButton(true);
+                }
+
                 console.log(currentIndex + ' '+newIndex+' '+event)
 
-                /** newest change to accomodate having event type first */
-                if(currentIndex == 0 ){
-                    if($('#category').val() == '')
-                        disableNextButton(true);
-                    else {
-                        $('#category').trigger('change');
-                    }
-                } else disableNextButton();
+                
                     
                 /**end of event type change */
                 console.log(currentIndex + ' '+newIndex);
@@ -313,10 +338,10 @@ $(document).ready(function() {
                 addStateLocality(state, vicinity_id);
             } else {
                  addStateLocality();
-                if ($('#category').val().length == '') {
-                    
+                if ($('#category').val() !== '') {
+                     $("#category").trigger("change");
                 }else {
-                    $("#category").trigger("change");
+                    
                     //disableNextButton(true);
                     //checkVendorAvailability($('#category').val(),$('#state').val(),$('#vicinity').val())
                 }
@@ -497,11 +522,14 @@ $(document).ready(function() {
         function addAdditionalService(data, ele,category) {
 
             var divContainer = $('<div class="control-group divContainer" style="padding-left:10px;"></div>');
+            var menu = $('.menu')
+            menu.remove();
+            $('select2-selection').parents('select2').remove();
 
-            if(data.additional !== undefined){
+            if(data.hasOwnProperty('additional')){
 
                 var p = $('<p style="text-align:center;">Do you want this additional service(s)</p>');
-                if(data.placeholder){
+                if(data.hasOwnProperty('placeholder')){
                     p.text(data.placeholder);
                 }
                 divContainer.html(p);
@@ -521,7 +549,7 @@ $(document).ready(function() {
                     //divContent.append();
                     console.log(formInput); 
                     
-                     if(element.clickAction !== undefined) {
+                     if(element.hasOwnProperty('clickAction')) {
                             
                             var div = $('<div class="controls"></div>');
                             var no_of_guest = $('.no_of_guest').parent();
@@ -563,12 +591,34 @@ $(document).ready(function() {
 
             
             
-            if (data.extras != null) {
+            if (data.hasOwnProperty('extra')) {
                 var oDiv = $('<div class="row">');
                  var innerDiv = null;
                 var input = null;
-                data.extras.forEach(function(ele) {
-                    innerDiv = $('<div class="col-xs-6 col-md-4">')
+                data.extra.forEach(function(ele) {
+                    innerDiv = $('<div class="col-sm-4 col-md-3 col-lg-4">')
+                    
+                    /** Code likely to comment out */
+                    if(ele.name == 'Menu') {
+                        innerDiv = $('<div class="menu">')
+                        input = $('<select class="form-control" id = "menu" multiple name="'+ele.formname+'">');
+                        ele.children.forEach(function(e){
+                            var option = $('<option>');
+                            option.attr({
+                                value:e.value
+                            })
+                            option.text(e.name);
+                            input.append(option);
+                        })
+                        var label = $('<label>')
+                        label.html(ele.name);
+                        var eventElement = document.querySelector('#date');
+                        innerDiv.append(input);
+                        innerDiv.insertBefore(eventElement);
+                        input.select2();
+                        label.insertBefore(input);
+                        return;
+                    }/** end of code to comment out */
                     if(ele.type === 'text'){
                          input = $('<input>');
                          input.attr({

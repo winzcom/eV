@@ -33,13 +33,11 @@ class RegisterFormRequest extends FormRequest implements RequestInterface
             'name' => 'required|max:255',
             'password' => 'required|min:6',
             'password_confirm'=>'required|min:6|same:password',
-            'phone_no'=>'required|numeric',
+            'phone_no'=>'required',
             'house_no'=>'required',
             'street_name'=>'required',
             'state'=>'required',
             'description'=>'required',
-            'first_name'=>'required',
-            'last_name'=>'required'
         ];
 
         
