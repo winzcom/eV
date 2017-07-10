@@ -179,7 +179,7 @@ Email on Acid - http://www.emailonacid.com/blog/details/C18/doctype_-_the_black_
 			</tr>
 		</table>-->
 		 <img src="https://eventpad.ng/img/logos/logo.png" alt=""/>
-        @yield('content');
+        @yield('content')
 		<!-- End example table -->
 
 		<!-- Yahoo Link color fix updated: Simply bring your link styling inline. -->

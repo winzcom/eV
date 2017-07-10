@@ -8,7 +8,7 @@
 
 
 
-var MargueeExtras = [
+var Margueeextra = [
                             
                             {name:'Style of Party',formname:'party_style',type:'select',children:[
                               {name:'Banquet Party(e.g seat with round table)',value:'Banquet Party'},
@@ -46,9 +46,9 @@ var SmallChopsAdditional = [
                              {name:'Gizzard',value:'Gizzard',type:'checkbox',formname:'extra[]'},
                              {name:'Fish',value:'Fish',type:'checkbox',formname:'extra[]'},
                              {name:'Chicken',value:'Chicken',type:'checkbox',formname:'extra[]'},
-                             {name:'Meat',value:'Mosa',type:'checkbox',formname:'extra[]'},
+                             {name:'Asun',value:'Mosa',type:'checkbox',formname:'extra[]'},
                              {name:'Puff Puff',value:'Puff Puff',type:'checkbox',formname:'extra[]'},
-                             {name:'Beer Battered Fish',value:'Beer Battered Fish',type:'checkbox',formname:'extra[]'}
+                            //  {name:'Beer Battered Fish',value:'Beer Battered Fish',type:'checkbox',formname:'extra[]'}
                             // {name:'tell us more',type:'text',formname:'iwantthisincludedalsointhesmallchops',value:''}
 ]
 
@@ -86,7 +86,7 @@ var placeholder = `please tell us about the type of meal, dietery requirement we
 
 
 
-var CateringExtras = [
+var Cateringextra = [
                         {name:'Dietary requirement',value:'',type:'text',formname:'dietary_requirement', placeholder:'vegan, vegetarian'},
                         {
                               name:'Do you want starter and desserts',formname:'starters_desserts',type:'select',children:[
@@ -100,17 +100,53 @@ var CateringExtras = [
                         {
                               name:'Venue type',formname:'venue_type',type:'select',children:[
                                 {name:'Outdoors',value:'Outdoors'},
-                                {name:'Indoors with domestic kitchen facilities',value:'Indoors with domestic kitchen facilities'},
-                                {name:'Indoors with commercial kitchen facilities',value:'Indoors with commercial kitchen facilities'},
-                                {name:'Indoors without domestic kitchen facilities',value:'Indoors without domestic kitchen facilities'}
+                                { name: 'Indoor', value:'Indoor'}
+                                // {name:'Indoors with domestic kitchen facilities',value:'Indoors with domestic kitchen facilities'},
+                                // {name:'Indoors with commercial kitchen facilities',value:'Indoors with commercial kitchen facilities'},
+                                // {name:'Indoors without domestic kitchen facilities',value:'Indoors without domestic kitchen facilities'}
                 
                               ]
+                        },
+                        {
+                          name:'Menu', formname:'menu[]',type:'select',class:'menu',children:[
+                            { name:'Jollof Rice',value:'Jollof Rice'},
+                            { name:'Fried Rice',value:'Fried Rice'},
+                            { name:'Fried Plantain',value:'Fried Plantain'},
+                            { name:'Assorted Meats in Stews',value:'Assorted Meats in Stews'},
+                            { name:'Chicken in Stew',value:'Chicken in Stew'},
+                            { name:'Ofada Rice',value:'Ofada Rice'},
+                            { name:'Moin Moin',value:'Moin Moin'},
+                            { name:'Pounded Yam',value:'Pounded Yam'},
+                            { name:'Amala',value:'Amala'},
+                            { name:'Starch',value:'Starch'},
+                            { name:'Efo- riro',value:'Efo- riro'},
+                            { name:'Small Chops – Puff Puff, Spring Rolls, Asun, Samosa',value:'Small Chops – Puff Puff, Spring Rolls, Asun, Samosa'}
+                            
+                          ]
                         }
                         //{name:'Allergies we need to know about',value:'',type:'text',formname:'allergies'}
 ]
 
-var CakeExtras = [
-                    { name:'Number of Tier (the number of layers)',value:'',type:'text',formname:'cake_tier', placeholder:'1-tier, 2-tier (specifies the number of layers)'},
+var Cakeextra = [
+                    //{ name:'Number of Tier (the number of layers)',value:'',type:'text',formname:'cake_tier', placeholder:'1-tier, 2-tier (specifies the number of layers)'},
+                    { name: 'Cake Shape', value:'', type:'select', formname:'cake_Shape', children:[
+                      { name:'Oval',value:'Oval'},
+                      { name:'Round',value:'Round'},
+                      { name:'Heart',value:'Heart'},
+                      { name:'Square',value:'Square'}
+                    ]
+                  },
+                  { name:'Other Shape',value:'Other Shape', value:'', type:'text'},
+                  { name: 'Cake Size', value:'', type:'select', formname:'cake_Size', children:[
+                      { name:'6" inches',value:'6" inches'},
+                      { name:'8" inches',value:'8" inches'},
+                      { name:'10" inches',value:'10" inches'},
+                      { name:'12" inches',value:'12" inches'},
+                      { name:'14" inches',value:'14" inches'},
+                      { name:'18" inches',value:'18" inches'},
+                      { name:'20" inches',value:'20" inches'},
+                    ]
+                  },
 ]
 
 var CakeAdditional = [
@@ -119,7 +155,7 @@ var CakeAdditional = [
                     {name:'Vanilla',value:'Vanilla',type:'checkbox',formname:'flavours[]'},
                     {name:'Butter',value:'Butter',type:'checkbox',formname:'flavours[]'},
                     {name:'Cocoa',value:'Cocoa',type:'checkbox',formname:'flavours[]'},
-                    {name:'Other(flavours)',value:'',type:'text',formname:'flavours_i_want_included'},
+                    {name:'Custom(flavours)',value:'',type:'text',formname:'flavours_i_want_included'},
                     
         
 ]
@@ -135,11 +171,13 @@ var eventPlanning = ['EventPlanner','WeddingPlanner']; var cateringPlaceholder =
     var formElements = {
       'Caterers':{
                     additional:CateringAdditionals,
-                     extras:CateringExtras,
-                     placeholder:cateringPlaceholder 
+                     extra:Cateringextra,
+                     placeholder:'Do you want this additonal service' 
                 },
         'Drinks':{
-          additional:DrinksAdditional
+          additional:DrinksAdditional,
+          /**Code to comment out */
+          /** */
         },
       'SmallChops':{
                       additional:SmallChopsAdditional,
@@ -147,12 +185,12 @@ var eventPlanning = ['EventPlanner','WeddingPlanner']; var cateringPlaceholder =
       },
       'Canapes':{
                      additional:CateringAdditionals,
-                      extras:CateringExtras,
+                      extra:Cateringextra,
                       placeholder:placeholder 
                   },
       'VegetarianandVeganCatering':{
                      additional:CateringAdditionals,
-                      extras:CateringExtras,
+                      extra:Cateringextra,
                       placeholder:placeholder 
                   },
       'TableWare':{
@@ -160,43 +198,44 @@ var eventPlanning = ['EventPlanner','WeddingPlanner']; var cateringPlaceholder =
                   },
       'CorporateEventCatering':{
                      additional:CateringAdditionals,
-                      extras:CateringExtras,
+                      extra:Cateringextra,
                       placeholder:placeholder
                   },
       'Buffet':{
                      additional:CateringAdditionals,
-                      extras:CateringExtras,
+                      extra:Cateringextra,
                       placeholder:placeholder
                   },
       'Decorator':{
-        extras:DecoratorAdditional,
+        extra:DecoratorAdditional,
         placeholder:'Any particular theme and color'
       },
       'Cake':{
                       additional:CakeAdditional,
-                      extra:CakeExtras
+                      extra:Cakeextra,
+                      placeholder:'Select from the following options '
                   },
       
       'BellTents': {
                           additional:MargueeAditional,
-                          extra:MargueeExtras
+                          extra:Margueeextra
                   },
         'EventPlanner':{
                           additional:CateringAdditionals.concat(eventPlannerAdditional),
-                          extra:MargueeExtras
+                          extra:Margueeextra
         },
        'BusinessLunchCatering':{
                                       additional:CateringAdditionals,
-                                       extra:CateringExtras,
+                                       extra:Cateringextra,
                                        placeholder:placeholder
                                 },
       'PartyTents':{
                         additional:MargueeAditional,
-                          extra:MargueeExtras
+                          extra:Margueeextra
                     },
         'TipiHire':{
                           additional:MargueeAditional,
-                          extra:MargueeExtras
+                          extra:Margueeextra
                    },
         'Transport':{
 

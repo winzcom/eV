@@ -71,13 +71,14 @@
 
 		<section class="section">
 		<div class="container">
-			
+			@include('app_view.topvendors',['companies'=>$companies])
 		</div>
 		</section>
 	<!-- section END -->
 	
 	<!-- section START -->
 	<section class="section gray-bg" id="testimonials">
+		
 	</section>
 	<!-- section END -->
 	
@@ -294,7 +295,7 @@
 					<div class="thumbnail style1">
 						<div class="thumb-wrapper">
 							<img src="img/thumbnails/thumb2.jpg" alt="Thumbnail">
-							<a title="Video title here" class="nivo-lightbox play-btn cbutton cbutton--effect-ivana wow fadeIn" data-wow-delay="0.5s" href="http://vimeo.com/70301553"><i class="fa fa-play"></i></a>
+							<a title="Video title here" class="nivo-lightbox play-btn cbutton cbutton-effect-ivana wow fadeIn" data-wow-delay="0.5s" href="http://vimeo.com/70301553"><i class="fa fa-play"></i></a>
 							<a href="javascript:void(0);" class="post-author" data-toggle="tooltip" title="Author Name"><img src="img/authors/author3.jpg" alt="Post Author"></a>
 						</div>
 						<div class="caption">
@@ -314,7 +315,6 @@
 		</div>
 	</section>-->
 	<!-- section END -->
-	
 	<!-- section START -->
 	<section>
 		<a class="info-box bg-success text-center no-margin wow flipInX" data-wow-delay="0.5s" href="javascript:void(0);">
@@ -335,4 +335,7 @@
 @section('script')
 <!--<script src="{{asset('js/jquery.validate.min.js')}}"></script>
 <script src="{{asset('jss/jquery.steps.min.js')}}"></script>-->
+<script>
+	
+</script>
 @endsection

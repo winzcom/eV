@@ -175,7 +175,7 @@
 
 			<ul class="social-links">
 				<li class="">
-					<a href="{{url('/')}}" title="Home page default">Eventing</a>
+					<a href="{{url('/')}}" title="Home page default">EventPad</a>
                 </li>
 				<li class="">
 					<a href="{{url('/logout')}}" title="Home page default">Logout</a>
@@ -191,26 +191,7 @@
 @yield('content')
 
 <!-- footer START -->
-<footer class="footer" style="padding:20px 0px 10px 30px;">
-	<div class="">
-		<div class="row">
-			<div class="col-lg-4 col-sm-12">
-			
-				<h4 class="strong">About eventpad</h4>
-				<p>We pride ourselves on being able to apply our creativity to every brief to deliver the right service. Ready to take advantage of this service and how we work with clients?</p>
-		<a href="#" title="Contact Us" class="btn btn-default btn-icon contact-btn"><i class="livicon" data-name="mail" data-color="#fff" data-hovercolor="false" data-size="18"></i> Contact Us</a>
-		
-			</div>
-		</div>
-		<hr>
-			
-				<p class="copyright">© {{date('Y')}} eventpad.</p>
-				
-		</div>
-		
-	</div>
-	<!--<div id="map"></div>-->
-</footer>
+@include('layouts.footer')
 <!-- footer style1 END -->
  
  <!-- Custom Script -- >
