@@ -28,8 +28,8 @@
 <!-- page title style1 START -->
 <section class="page-title style1" data-path="{{asset('img/headers/header7.jpg')}}">
 	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
+		<div class="">
+			<div class="">
 				<h1 class="strong">About Us</h1>
 			</div>
 		</div>
@@ -37,10 +37,10 @@
 </section>
 <!-- page title style1 END -->
     <div class="">
-		<div class="row">
-			<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+		<div class="">
+			<div class="">
 				<div class="card">
-					<div class="list-group-item list-group-item-info">
+					<div class="list-group-item">
 						<h4>Who we are</h4>
 						We pride ourselves on being able to apply our creativity 
 						to every brief to deliver the right message. 
@@ -50,9 +50,9 @@
 				</div>
 				
 			</div>
-			<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+			<div class="">
 				<div class="card">
-					<div class="list-group-item list-group-item-warning">
+					<div class="list-group-item">
 						<h4>Why EventPad</h4>
 							To complement your effort in getting new customers, 
 							Eventpad makes it possible for Individuals and Event Organizers to reach out to you when in need of your service. 
@@ -62,9 +62,9 @@
 					</div>
 					</div>
 			</div>
-			<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+			<div class="">
 				<div class="card">
-					<div class="list-group-item list-group-item-success">
+					<div class="list-group-item">
 						<h4>Benefits</h4>
 						<ul>
 							<li class="">More user outreach as you receive request based on your service and location</li>
@@ -76,9 +76,9 @@
 				</div>
 				
 			</div>
-			<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+			<div class="">
 				<div class="card">
-					<div class="list-group-item list-group-item-warning">
+					<div class="list-group-item">
 						<h4>How it works</h4>
 							<h5>Each request received will contain the following</h5> 
 								<ol>
@@ -105,14 +105,16 @@
 									<li>	The customers first name and last name</li>
 								</ol>
 
-    					<p>The request may also contain some additional information pertaining to the service the client selects.
+    					<p>The request may also contain some additional information pertaining to the service the client selects.</p>
+						<p>A sample request is shown below.</p><br>
+						<img src="https://eventpad.ng/img/sample_request.JPG" alt="">
 
 					</div>
 					</div>
 			</div>
-			<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+			<div class="">
 				<div class="card">
-					<div class="list-group-item list-group-item-success">
+					<div class="list-group-item">
 						<p>
 							With this information you can then reply with your quotes that should contain the following
 						</p>
@@ -132,9 +134,11 @@
 			</div>
 		</div>
 		<div class="card">
-			<h4>Contact Us</h4>
-			email: (info@eventpad.ng)
-			phone: (09020628153)
+			<h4 style="padding-left:10px;">For more information you can contact Us</h4>
+			<div style="padding-left:10px;">
+				email: (info@eventpad.ng)
+				phone: (09020628153)
+			</div> 
 		</div>
     </div>
 @endsection

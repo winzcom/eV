@@ -15,15 +15,22 @@
     </p><br>
     <p style="text-align:center;">
         Here is a sample request. <br>
-        <img src="https://eventpad.ng/img/sample_request.jpg" alt="">
+        <a href="https://eventpad.ng/about_us"><img src="https://eventpad.ng/img/sample_request.JPG" alt=""></a>
     </p>
     <p>
         <h4>What do you stand to gain</h4>
         <ol class="list-group">
-            <li class="list-group-item">Wider customer reach as you receive requests based on your service and location</li>
-            <li class="list-group-item">No need to worry about been on top listing or first page of listing</li>
-            <li class="list-group-item">Can reply to user reviews about your service</li>
             <li class="list-group-item">
+                <img src="https://png.icons8.com/ok/ultraviolet/20" title="Ok" width="20" height="20">&nbsp;
+                Wider customer reach as you receive requests based on your service and location</li>
+            <li class="list-group-item">
+                <img src="https://png.icons8.com/ok/ultraviolet/20" title="Ok" width="20" height="20">&nbsp;
+                No need to worry about been on top listing or first page of listing</li>
+            <li class="list-group-item">
+                <img src="https://png.icons8.com/ok/ultraviolet/20" title="Ok" width="20" height="20">&nbsp;
+                Can reply to user reviews about your service</li>
+            <li class="list-group-item">
+                <img src="https://png.icons8.com/ok/ultraviolet/20" title="Ok" width="20" height="20">&nbsp;
                 With each request received you can get a better pricing data that can help you make better 
                 pricing decisions on and off the platform
             </li>
@@ -34,11 +41,13 @@
         </p>
     </p>
     <br>
-    You can get started with us by clicking the button below
-    <a style="text-align:center;" class="btn btn-lg btn-primary" href="https://eventpad.ng/verify/vendor/email"><button type="">Join Now</button></a>
+    You can get started with us by clicking the button below <br><br><br>
+    <a style="text-align:center; padding:16px 10px 16px 10px;" href="https://eventpad.ng/verify/vendor/email"><button type="button" class="btn btn-lg btn-primary">Join Now</button></a>
     <br><hr>
-    <p>Eventpad sends request to vendors meeting these requirements: service, location</p><br>
-    <p>Make sure to update your profile when you are logged in to the platform</p>
+    <p>
+        Eventpad sends request to vendors meeting these requirements: service, location 
+        so make sure to update your profile when you are logged in to the platform
+    </p>
     <p>You can read more <a href="https://eventpad.ng/about_us">here</a></p>
 
 
