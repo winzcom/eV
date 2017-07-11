@@ -28,6 +28,10 @@ Email on Acid - http://www.emailonacid.com/blog/details/C18/doctype_-_the_black_
 		INLINE: Yes.
 		***********/
 		/* Client-specific Styles */
+		.mailfont {
+			font-family:sans-serif,Arial,Helvetica;
+			font-weight:normal;
+		}
 		#outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
 		body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:25px;}
 		/* Prevent Webkit and Windows Mobile platforms from changing default font sizes, while not breaking desktop design. */
@@ -41,13 +45,23 @@ Email on Acid - http://www.emailonacid.com/blog/details/C18/doctype_-_the_black_
 		3. Updated the common Gmail/Hotmail image display fix: Gmail and Hotmail unwantedly adds in an extra space below images when using non IE browsers. You may not always want all of your images to be block elements. Apply the "image_fix" class to any image you need to fix.
 		Bring inline: Yes.
 		*/
+		.list-group{padding-left:0;margin-bottom:20px}
+		.btn-lg{padding:16px 16px 16px 16px;font-size:18px;line-height:1.7;border-radius:6px}
+		.list-group-item{position:relative;display:block;padding:10px 15px;margin-bottom:-1px;background-color:#fff;border:1px solid #ddd}
+		ul,ol {
+			list-style-type:none;
+		}
+		ol > li {
+			font-family:sans-serif,Arial,Helvetica;
+			font-weight:normal;
+		}
 		img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
 		a img {border:none;}
 		.image_fix {display:block;}
 		/** Yahoo paragraph fix: removes the proper spacing or the paragraph (p) tag. To correct we set the top/bottom margin to 1em in the head of the document. Simple fix with little effect on other styling. NOTE: It is also common to use two breaks instead of the paragraph tag but I think this way is cleaner and more semantic. NOTE: This example recommends 1em. More info on setting web defaults: http://www.w3.org/TR/CSS21/sample.html or http://meiert.com/en/blog/20070922/user-agent-style-sheets/
 		Bring inline: Yes.
 		**/
-		p {margin: 1em 0;}
+		p {margin: 1em 0; font-family:sans-serif,Arial,Helvetica; font-weight:normal;}
 		/** Hotmail header color reset: Hotmail replaces your header color styles with a green color on H2, H3, H4, H5, and H6 tags. In this example, the color is reset to black for a non-linked header, blue for a linked header, red for an active header (limited support), and purple for a visited header (limited support).  Replace with your choice of color. The !important is really what is overriding Hotmail's styling. Hotmail also sets the H1 and H2 tags to the same size.
 		Bring inline: Yes.
 		**/
@@ -167,7 +181,7 @@ Email on Acid - http://www.emailonacid.com/blog/details/C18/doctype_-_the_black_
 <body>
 	<!-- Wrapper/Container Table: Use a wrapper table to control the width and the background color consistently of your email. Use this approach instead of setting attributes on the body tag. -->
 	<table cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
-	<tr>
+	<tr style="text-align:center;">
 		<td>
 
 		<!-- Tables are the most common way to format your email consistently. Set your table widths inside cells and in most cases reset cellpadding, cellspacing, and border to zero. Use nested tables as a way to space effectively in your message. -->

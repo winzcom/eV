@@ -103,12 +103,12 @@ $(document).ready(function() {
 
         var form = $("#myWizard");
         form.validate({
-            errorPlacement: function errorPlacement(error, element) { element.before(error); },
-            rules: {
-                confirm: {
-                    equalTo: "#password"
-                }
-            }
+            errorPlacement: function errorPlacement(error, element) { element.before(error); console.log(error) },
+            // rules: {
+            //     confirm: {
+            //         equalTo: "#password"
+            //     }
+            // }
         });
         form.steps({
             headerTag: "h3",
@@ -120,8 +120,7 @@ $(document).ready(function() {
                 var actions = $('.actions');
                 var finish =  $('a[href="#finish"]'); 
                 var delivery_option = $('#delivery_option');
-                var menu = $('.menu') || null;
-
+                
                 delivery_option.addClass('delivery_option');
 
                 next.addClass('btn btn-success pull-right');
@@ -133,34 +132,24 @@ $(document).ready(function() {
             },
             onStepChanging: function (event, currentIndex, newIndex)
             {
-                console.log(currentIndex+' '+newIndex);
+                console.log(event)
                 if (currentIndex > newIndex)
                 {
                     disableNextButton();
                     return true;
                 }
-                register = $('a[href="#finish"]');
-                if(register.attr('aria-hidden') == true) {
-                     register.attr('disabled', true);
-                } 
-
-                if(currentIndex == 1 ){
-                        if($('#category').val() == '')
-                            disableNextButton(true);
+                else if(currentIndex == 1 && $('#category').val() == ''){
+                    disableNextButton(true);
                 }
-
-                console.log(currentIndex + ' '+newIndex+' '+event)
-
-                
                     
                 /**end of event type change */
-                console.log(currentIndex + ' '+newIndex);
                    
                 form.validate().settings.ignore = ":disabled,:hidden";
                 return form.valid();
             },
             onFinishing: function (event, currentIndex)
             {
+                console.log('finishing')
                 form.validate().settings.ignore = ":disabled";
                 return form.valid();
             },
@@ -168,7 +157,7 @@ $(document).ready(function() {
             {
                 //addStateLocality();
                 /*alertify.delay(0).log("Request is been sent...").maxLogItems(1);
-
+                
                 //var formData = $('#myWizard').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});*/
                 var formData = $('#myWizard').serialize();
                 console.log(formData);
@@ -615,7 +604,7 @@ $(document).ready(function() {
                         var eventElement = document.querySelector('#date');
                         innerDiv.append(input);
                         innerDiv.insertBefore(eventElement);
-                        input.select2();
+                        //input.select2();
                         label.insertBefore(input);
                         return;
                     }/** end of code to comment out */

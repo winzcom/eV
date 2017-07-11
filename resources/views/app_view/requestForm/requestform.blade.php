@@ -98,7 +98,7 @@
                                 <label class="control-label">Do you want delivery</label>
                                 <div class="controls">
                                     <select name="delivery_option" class="form-control">
-                                        <option value="No">No</option>
+                                        <option value="No" selected>No</option>
                                         <option value="No">Yes</option>
                                     </select>
                                 </div>
@@ -171,7 +171,7 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="budget" id="optionsRadios2" required value="We will pay vendors"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="budget" id="optionsRadios2" value="We will pay vendors"><ins class="iCheck-helper"></ins>
                                 </div>
                             We will pay vendors
                             </label>
@@ -215,7 +215,7 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" required name="what_stage" id="optionsRadios2" value="Need to book asap"><ins class="iCheck-helper"></ins>
+                                    <input type="radio"  name="what_stage" id="optionsRadios2" value="Need to book asap"><ins class="iCheck-helper"></ins>
                                 </div>
                             Need to book asap
                             </label>
@@ -231,7 +231,7 @@
                     </div><!--whatstage-->
                     <!--personal message-->
                     <div class="control-group" id="personalmessagae">
-                        <label class="control-label" required for="inputCity">Tell us more about your needs </label>
+                        <label class="control-label" for="inputCity">Tell us more about your needs </label>
                             <div class="controls">
                                 <textarea name="personal_message" class="form-control" id="personalmessage"  rows="5" placeholder="tell us more about the your event needs include key details e.g type of meal(fried rice, small chops, jollof rice) it a standing event, customer are going to pay" ></textarea>
                             </div>

@@ -38,7 +38,7 @@
 <!-- page title style1 END -->
     <div class="">
 		<div class="row">
-			<div class="col-md-4 col-sm-6 col-xs-12 col-lg-4">
+			<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 				<div class="card">
 					<div class="list-group-item list-group-item-info">
 						<h4>Who we are</h4>
@@ -50,7 +50,7 @@
 				</div>
 				
 			</div>
-			<div class="col-md-4 col-sm-6 col-xs-12 col-lg-4">
+			<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 				<div class="card">
 					<div class="list-group-item list-group-item-warning">
 						<h4>Why EventPad</h4>
@@ -62,7 +62,7 @@
 					</div>
 					</div>
 			</div>
-			<div class="col-md-4 col-sm-6 col-xs-12 col-lg-4">
+			<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 				<div class="card">
 					<div class="list-group-item list-group-item-success">
 						<h4>Benefits</h4>
@@ -71,6 +71,60 @@
 							<li class="">No need to worry about been on top listing or first page of listing.</li>
 							<li class="">Can reply to user reviews about your service</li>
 						</ul>
+					</div>
+					
+				</div>
+				
+			</div>
+			<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+				<div class="card">
+					<div class="list-group-item list-group-item-warning">
+						<h4>How it works</h4>
+							<h5>Each request received will contain the following</h5> 
+								<ol>
+									<li>	The category ( i.e the service needed like catering, drinks )</li>
+
+									<li>	The type of event to be organized</li>
+
+									<li>	The event date</li>
+
+									<li>	The start time (i.e time the service will be required)</li>
+
+									<li>	May contain number of hours your service is needed</li>
+
+									<li>	The event venue</li>
+
+									<li>	The estimated number of guest</li>
+
+									<li>	Their budget</li>
+
+									<li>	The stage of the request (i.e are they looking book immediately or just interested in quotes)</li>
+
+									<li>	Additional message regarding the service they need</li>
+
+									<li>	The customers first name and last name</li>
+								</ol>
+
+    					<p>The request may also contain some additional information pertaining to the service the client selects.
+
+					</div>
+					</div>
+			</div>
+			<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+				<div class="card">
+					<div class="list-group-item list-group-item-success">
+						<p>
+							With this information you can then reply with your quotes that should contain the following
+						</p>
+
+						<ol>
+							<li>	Your estimated cost </li>
+
+							<li>	Your down payment in percentage (optional) e.g 2%</li>
+
+							<li>	Your message that will contain a cost break-down and/or a recommendation to the customer</li>
+						</ol>
+
 					</div>
 					
 				</div>
