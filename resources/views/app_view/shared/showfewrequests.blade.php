@@ -65,7 +65,7 @@ if(count($all_requests) > 0){
                 echo '<div class="col-xs-6 col-md-4 list-group-item list-group-item-action" style="padding-bottom:10px;">';
                 if($key !== 'personal_message'){
                             if(is_array($value)){
-                                echo $key == 'extra'? 'Extras (': $key.'(';
+                                echo $key == 'extra'? 'Extras: (': ucwords($key).': (';
                                 echo implode(",",$value);
                                 echo ' )';
                             }elseif($key == 'date' && $value !== ''){

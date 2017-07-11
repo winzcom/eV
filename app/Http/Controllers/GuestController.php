@@ -112,16 +112,24 @@ class GuestController extends Controller
                             }
                                 
                             try{
+                                $customer = $this->userRepo->createModel('customer')->where('email',$client['email'])->first();
+                                if(!is_null($customer)) {
+                                    $customer->password = bcrypt($client['password']);
+                                    $customer->first_name = $client['first_name'];
+                                    $customer->last_name = $client['last_name'];
+                                    $customer->save();
+                                } else {
                                     $customer = $this->userRepo->createModel('customer')->firstOrCreate([
-                                                'first_name'=>$client['first_name'],
-                                                'last_name'=>$client['last_name'],
-                                                'email'=>$client['email'],
-                                                'password'=>bcrypt($client['password'])
-                                            ]);
+                                            'first_name'=>$client['first_name'],
+                                            'last_name'=>$client['last_name'],
+                                            'email'=>$client['email'],
+                                            'password'=>bcrypt($client['password'])
+                                        ]);
+                                }
 
                             }catch(\Exception $e){
 
-                                echo json_encode(['error'=>'An error occured. Please try again'.$e]);
+                                echo json_encode(['error'=>'An error occured. Please try again']);
                                 return;
                             }
                             
@@ -138,8 +146,8 @@ class GuestController extends Controller
                             'request'=>json_encode($request)
                         ]);
                     }catch(\Exception $e){
-                        $customer->delete();
-                        echo json_encode(['error'=>'An error occured in creating your request. Please try again'.$e]);
+                        //$customer->delete();
+                        echo json_encode(['error'=>'An error occured in creating your request. Please try again']);
                         return;
                     }
                     
@@ -152,7 +160,7 @@ class GuestController extends Controller
                     'customer'=>$customer
                 ];
 
-                event(new NewRequestSentEvent($data));
+                //event(new NewRequestSentEvent($data));
 
                 echo json_encode(['message'=>'Request Sent']);
                 return;
@@ -226,7 +234,7 @@ class GuestController extends Controller
     public function sendEmailTypeVerificationMail() {
         //$users = $this->userRepo->getModel()->where('confirmed', 0);
         //Mail::to($users)->send(new EmailTypeVerification());
-        Mail::to('ebudare@yahoo.com')->send(new EmailTypeVerification());
+        Mail::to(['ebudare@yahoo.com','ebun68@gmail.com'])->send(new EmailTypeVerification());
     }
 
     public function showPasswordCreate(Request $request) {

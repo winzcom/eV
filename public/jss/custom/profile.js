@@ -1,7 +1,5 @@
 $(document).ready(function(){
 
-    
-
     $('#reply_request').on('show.bs.modal',function(event){
 
          var button = $(event.relatedTarget);
@@ -173,8 +171,14 @@ $(document).ready(function(){
         .confirm('Are You Sure You Want to Dismiss This Request',function(){
              var url = myUrl+'dismiss_request/'+r_id+'/'+c_id;
              $.get(url,{},function(data){
-                 if(data.status == undefined || data.status == null)
-                    location.reload(true);
+                 if(data.status == undefined || data.status == null) {
+                     setTimeout(function(){
+                         location.reload(true);
+                    },100)
+                    alertify.success('Request Dismissed');
+                 }
+                   
+                   
                 else{}
             })
         },
@@ -209,11 +213,10 @@ $(document).ready(function(){
                         $('#reply_request').modal('hide');
                         var italic = $('<i>').attr('class','fa fa-check-circle-o');
                         $('cbp-caption-defaultWrap').prepend(italic);
-                        alertify.log('Reply Sent');
-                        /*setTimeout(function(){
-                            window.location.reload();
-                        });
-                       */
+                        setTimeout(function() {
+                            location.href = location.href+'#messages';
+                        }, 100);
+                        alertify.log('Reply Sent ');
                     },
                     error:function(err){
                         alertify.alert('An error occured, quote could not be sent ');

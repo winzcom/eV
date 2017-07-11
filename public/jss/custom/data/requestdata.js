@@ -32,7 +32,7 @@ var Margueeextra = [
 var CateringAdditionals = [
                             
                             //{name:'Catering Equipment',value:'Catering Equipment',type:'checkbox',formname:'extra[]',label:'Do you need this additional service'},
-                            {name:'TableWare',value:'Catering Equipment',type:'checkbox',formname:'extra[]'},
+                            {name:'TableWare',value:'TableWare',type:'checkbox',formname:'extra[]'},
                             {name:'Service Staffs',value:'Catering Equipment',type:'checkbox',formname:'extra[]'},
                             {name:'Bar Service',value:'Bar Service',type:'checkbox',formname:'extra[]'},
                             //{name:'Rental/Setup',value:'Rental/Setup',type:'checkbox',formname:'extra[]'},
@@ -89,10 +89,10 @@ var placeholder = `please tell us about the type of meal, dietery requirement we
 var Cateringextra = [
                         {name:'Dietary requirement',value:'',type:'text',formname:'dietary_requirement', placeholder:'vegan, vegetarian'},
                         {
-                              name:'Do you want starter and desserts',formname:'starters_desserts',type:'select',children:[
-                                {name:'Starters',value:'Starters'},
-                                {name:'Desserts',value:'Desserts'},
-                                {name:'Both',value:'Both'},
+                              name:'Do you want starter and desserts',formname:'do_you_want_starters_and_desserts',type:'select',children:[
+                                {name:'Starters Only',value:'Starters Only'},
+                                {name:'Desserts Only',value:'Desserts Only'},
+                                {name:'Both',value:'Both Starters and Desserts'},
                                 {name:'None',value:'None'}
                 
                               ]
