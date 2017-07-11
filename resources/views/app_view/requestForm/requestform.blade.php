@@ -68,7 +68,7 @@
 
                         <label class="control-label" for="inputCity">Start Time <small style="color:red">*</small></label>
                             <div class="controls">
-                                <input type="time"id="start_time" required name="estimated_time" class="form-control input-lg"/>
+                                <input type="time"id="start_time" required name="start_time" class="form-control input-lg"/>
                             </div>
                         <label class="control-label" for="inputCity">Duration in hours</label>
                             <div class="controls">
@@ -140,7 +140,7 @@
 
                         <p>
                             <label for="amount">Price range:</label>
-                            <input type="text" name ="price_range" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                            <input type="text" name ="their_budget" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
                         </p>
                         <div id="slider-range"></div>
 

@@ -71,7 +71,7 @@ if(count($all_requests) > 0){
                             }elseif($key == 'date' && $value !== ''){
                                 $dt = \Carbon\Carbon::parse($value);
                                 echo 'Date:'.$dt->toFormattedDateString();
-                            } elseif($key == 'price_range') {
+                            } elseif($key == 'price_range' || $key == 'their_budget') {
                                         
                                         list($lower, $higher) = explode('-',$value);
                                         echo str_replace('_',' ',title_case($key)).': &#8358;'.
