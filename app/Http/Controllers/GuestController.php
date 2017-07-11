@@ -234,7 +234,7 @@ class GuestController extends Controller
     public function sendEmailTypeVerificationMail() {
         //$users = $this->userRepo->getModel()->where('confirmed', 0);
         //Mail::to($users)->send(new EmailTypeVerification());
-        Mail::to(['ebudare@yahoo.com','ebun68@gmail.com'])->send(new EmailTypeVerification());
+        Mail::to(['ebudare@yahoo.com'])->send(new EmailTypeVerification());
     }
 
     public function showPasswordCreate(Request $request) {
