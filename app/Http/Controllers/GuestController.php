@@ -137,7 +137,7 @@ class GuestController extends Controller
                     if($vicinity == 'all' || $vicinity == '') $vicinity = 0;
 
                     try{
-                            $request = $this->userRepo->createModel('quotes_request')->create([
+                            $req = $this->userRepo->createModel('quotes_request')->create([
                             'category_id'=>$category['category'],
                             'client_id'=>$id !== null ? $id:$customer->id,
                             'count_available_vendors'=>count($users),
@@ -155,7 +155,7 @@ class GuestController extends Controller
                 $data = [
 
                     'users_data'=>$users,
-                    'request'=>json_decode($request->request),
+                    'request'=>json_decode($req->request),
                     'category'=>$category['category'],
                     'customer'=>$customer
                 ];
@@ -234,7 +234,12 @@ class GuestController extends Controller
     public function sendEmailTypeVerificationMail() {
         //$users = $this->userRepo->getModel()->where('confirmed', 0);
         //Mail::to($users)->send(new EmailTypeVerification());
-        Mail::to(['ebudare@yahoo.com'])->send(new EmailTypeVerification());
+        Mail::to(
+                [
+                    'ebudare@yahoo.com'
+                ]
+            )
+            ->send(new EmailTypeVerification());
     }
 
     public function showPasswordCreate(Request $request) {

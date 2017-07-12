@@ -188,7 +188,7 @@ $(document).ready(function() {
                                
                                 var html = "<p style='color:white'>Success: " + d.message + "</p>"
                                 alertify.closeLogOnClick(true).success(html);
-                                $('#myWizard')[0].reset();
+                                $('#myWizard').reset();
                                 $('#myWizard').hide();
                             }
                         } catch (e) {
