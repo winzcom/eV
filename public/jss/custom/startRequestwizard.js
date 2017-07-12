@@ -457,7 +457,7 @@ $(document).ready(function() {
 
             console.log(category)
 
-            var data = formElements[category];
+            var data = formElements[category] || null;
             
             console.log(data);
             if (data) {
@@ -604,7 +604,7 @@ $(document).ready(function() {
                         var eventElement = document.querySelector('#date');
                         innerDiv.append(input);
                         innerDiv.insertBefore(eventElement);
-                        //input.select2();
+                        input.select2();
                         label.insertBefore(input);
                         return;
                     }/** end of code to comment out */

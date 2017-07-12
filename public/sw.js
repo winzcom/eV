@@ -61,6 +61,20 @@ self.addEventListener('install', function(event) {
   );
 });
 
+
+self.addEventListener('fetch',function(event) {
+    event.respondWith(
+      caches.open(CACHE).then(function(cache) {
+        return cache.match(event.request).then(function(resp) {
+          return resp || fetch(event.request).then(function(resp) {
+            cache.put(event.request,resp.clone());
+            return resp;
+          })
+        })
+      })
+    )
+});
+
 message.setBackgroundMessageHandler(function(payload) {
   console.log('[firebase-messaging-sw.js] Received background message ', payload.data.messsage);
   // Customize notification here
