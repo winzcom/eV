@@ -3,11 +3,16 @@
 @section('content')
 <br><br>
 <div style="color:#4d4d4d;">
-     <small><i>This is a sample mail, feedback will be appreciated</i></small>
+     <small><i>This is a sample mail feedback will be appreciated</i></small>
     <p  style="text-align:center;">
         <b>Hello </b>
         <br>
-        <img src="https://eventpad.ng/img/email-header.JPG" alt="">
+        <img src="https://eventpad.ng/img/email-header.jpg" alt=""><br><br>
+        Eventpad is not just a listing platform. We offer a request/reply form of communication 
+        between you and those that need your services. They make a request on our platform and you get notified via email, and if you are interested you login and reply with your quote.
+        <!--To complement your effort in getting new customers, Eventpad makes it possible for Individuals and Event Organizers to reach out to you when in need of your service. 
+        This works by making requests from individuals and event organizers accessible to you. 
+        You can then decide to respond to them provided you are interested in making them your customers-->
     </p><br>
     <p style="text-align:center;">
         <h4>Here is a sample request.</h4> <br>
