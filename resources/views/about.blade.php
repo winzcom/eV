@@ -3,22 +3,23 @@
 @section('style')
 <style>
 	.card {
-    /* Add shadows to create the "card" effect */
+    /* Add shadows to create the "" effect */
 		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 		transition: 0.3s;
 		margin:10px 10px 10px 10px;
 		padding:5px 10px 5px 5px;
 	}
 
+	.spacing {
+		padding: 16px 0 16px 0;
+	}
+
 	/* On mouse-over, add a deeper shadow */
-	.card:hover {
+	.:hover {
 		box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 	}
 
-	/* Add some padding inside the card container */
-	.container {
-		padding: 2px 16px;
-	}
+	/* Add some padding inside the  container */
 </style>
 
 @endsection
@@ -27,7 +28,7 @@
 @section('content')
 <!-- page title style1 START -->
 <section class="page-title style1" data-path="{{asset('img/headers/header7.jpg')}}">
-	<div class="container">
+	<div class="">
 		<div class="">
 			<div class="">
 				<h1 class="strong">About Us</h1>
@@ -36,11 +37,11 @@
 	</div>
 </section>
 <!-- page title style1 END -->
-    <div class="">
+    <div class="container spacing">
 		<div class="">
 			<div class="">
-				<div class="card">
-					<div class="list-group-item">
+				<div class="">
+					<div class="">
 						<h4>Who we are</h4>
 						We pride ourselves on being able to apply our creativity 
 						to every brief to deliver the right message. 
@@ -51,8 +52,8 @@
 				
 			</div>
 			<div class="">
-				<div class="card">
-					<div class="list-group-item">
+				<div class="">
+					<div class="">
 						<h4>Why EventPad</h4>
 							To complement your effort in getting new customers, 
 							Eventpad makes it possible for Individuals and Event Organizers to reach out to you when in need of your service. 
@@ -63,8 +64,8 @@
 					</div>
 			</div>
 			<div class="">
-				<div class="card">
-					<div class="list-group-item">
+				<div class="">
+					<div class="">
 						<h4>Benefits</h4>
 						<ul>
 							<li class="">More user outreach as you receive request based on your service and location</li>
@@ -77,10 +78,11 @@
 				
 			</div>
 			<div class="">
-				<div class="card">
-					<div class="list-group-item">
+				<div class="">
+					<div class="">
 						<h4>How it works</h4>
-							<h5>Each request received will contain the following</h5> 
+							<h5>Customer makes a request</h5>
+							<small>Each request received will contain the following</small>
 								<ol>
 									<li>	The category ( i.e the service needed like catering, drinks )</li>
 
@@ -113,8 +115,9 @@
 					</div>
 			</div>
 			<div class="">
-				<div class="card">
-					<div class="list-group-item">
+				<div class="">
+					<div class="">
+						<h5>You reply if interested</h5>
 						<p>
 							With this information you can then reply with your quotes that should contain the following
 						</p>
@@ -133,7 +136,7 @@
 				
 			</div>
 		</div>
-		<div class="card">
+		<div class="">
 			<h4 style="padding-left:10px;">For more information you can contact Us</h4>
 			<div style="padding-left:10px;">
 				email: (info@eventpad.ng)

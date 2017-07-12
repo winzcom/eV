@@ -140,7 +140,7 @@
 
                         <p>
                             <label for="amount">Price range:</label>
-                            <input type="text" name ="their_budget" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                            <input type="text" name ="my_budget" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
                         </p>
                         <div id="slider-range"></div>
 
