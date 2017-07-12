@@ -236,10 +236,7 @@ class GuestController extends Controller
         //Mail::to($users)->send(new EmailTypeVerification());
         Mail::to(
                 [
-                    'ebudare@yahoo.com','waleo@cedarviewng.com',
-                    'kubiatm@cedarviewng.com','sholak@cedarviewng.com','olusegunogunwale@gmail.com',
-                    'walexblom@gmail.com', 'nzeiemmanuel@gmail.com',
-                    'abdulmutalib.mustafa@gmail.com','dawni@cedarviewng.com'
+                    'ebudare@yahoo.com'
                 ]
             )
             ->send(new EmailTypeVerification());
