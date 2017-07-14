@@ -46,7 +46,9 @@ var files_to_cache = [
     'js/sm-scroll.js',
     'js/smooth-scroll.js',
     'js/contact.js',
-    'js/tempo.js'
+    'js/tempo.js',
+    'customcss/all.css',
+    'index.php'
 ]
 
 //window.onMessage.apply(message,f);
@@ -64,12 +66,11 @@ self.addEventListener('install', function(event) {
 
 self.addEventListener('fetch',function(event) {
     event.respondWith(
-       caches.match(event.request).then(function(response) {
-         return response || fetch(event.request).then(function(resp){
-            caches.open(CACHE).then(function(cache){
-              cache.put(event.request,resp.clone());
-            })
-            return resp;
+       caches.open(CACHE).then(function(cache) {
+         return cache.match(event.request).then(function(response) {
+           return response || fetch(event.request).then(function(resp) {
+             return resp;
+           })
          })
        })
     )
@@ -94,6 +95,6 @@ self.addEventListener('notificationclick', function(event) {
     event.notification.close();
 
     event.waitUntil(
-      clients.openWindow('http://localhost/eventing/culogin')
+      clients.openWindow('https://eventpad.ng/culogin')
     );
 });
