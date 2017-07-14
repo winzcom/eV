@@ -232,7 +232,7 @@ class GuestController extends Controller
     }
 
     public function sendEmailTypeVerificationMail() {
-        $users = $this->userRepo->getModel()->where('confirmed', 0)->get();
+        $users = $this->userRepo->getModel()->where('confirmed', 0)->where('id','>=',56)->get();
         // $collection = collect([['name'=>'ebun','email'=>'ebudare@yahoo.com'],['name'=>'Dare','email'=>'ebun68@gmail.com']]);
         $users->each(function($user,$key) {
            Mail::to($user->email)->send(new EmailTypeVerification($user->name));
