@@ -95,6 +95,10 @@ class User extends Authenticatable
        return $this->belongsToMany('App\Entities\Category','company_category','company_id','category_id');
     }
 
+    public function categoriesCount() {
+         return $this->categories()->count();
+    }
+
     public function addresses(){
         $this->hasMany('App\Entities\Address');
     }
@@ -126,7 +130,7 @@ class User extends Authenticatable
     }
 
     public function hasGalleries(){
-        return false;
+        return $this->galleries()->count() > 0;
     }
 
     public function scopeStateVicinity($query,$state = null,$vicinity = null){
