@@ -17,12 +17,13 @@ class EmailTypeVerification extends Mailable
      * @return void
      */
 
-     private $url;
+     public $url; public $name;
 
-    public function __construct()
+    public function __construct($name = null)
     {
         //
         $this->url = url("verify/vendor/email/");
+        $this->name = $name;
     }
 
     /**
@@ -32,6 +33,8 @@ class EmailTypeVerification extends Mailable
      */
     public function build()
     {
-        return $this->from('Invite@eventpad.ng')->subject('Welcome to Eventpad')->markdown('emails.verification.emailtypeverifcation')->with('url',$this->url);
+        return $this->from('Invite@eventpad.ng')
+        ->subject('Welcome to Eventpad')
+        ->markdown('emails.verification.testmail');
     }
 }

@@ -68,7 +68,7 @@ class GuestController extends Controller
         $data['reviewers_id'] = Auth::guard('client')->id();
         $this->userRepo->createModel('reviews')
             ->create($data);
-        return back();
+        return redirect(back().'#horizontalTab12');
     }
 
     public function testLoad(){
@@ -91,8 +91,8 @@ class GuestController extends Controller
         $client = $request->only(['first_name','last_name','email','password']);
         $category = $request->only(['category']);
         $request = $request->except(['category','firstname','','lastname','email','password','_token','state','vicinity']);
-
-        
+        $request = $request->filter();
+  
         DB::transaction(function() use ($request,$client,$category,$state,$vicinity){
 
             $users = $this->getUserQuery($category,$state,$vicinity)->get();
@@ -100,7 +100,7 @@ class GuestController extends Controller
             
             if(!empty($users)){
 
-                    $id = null; $customer = null;
+                    $id = null; 
                     if(Auth::guard('client')->check()){
                         $id = Auth::guard('client')->id();
                         $customer = Auth::guard('client')->user();
@@ -232,17 +232,19 @@ class GuestController extends Controller
     }
 
     public function sendEmailTypeVerificationMail() {
-        //$users = $this->userRepo->getModel()->where('confirmed', 0);
+        $users = $this->userRepo->getModel()->where('confirmed', 0)->get();
+        // $collection = collect([['name'=>'ebun','email'=>'ebudare@yahoo.com'],['name'=>'Dare','email'=>'ebun68@gmail.com']]);
+        $users->each(function($user,$key) {
+           Mail::to($user->email)->send(new EmailTypeVerification($user->name));
+        });
         //Mail::to($users)->send(new EmailTypeVerification());
-        Mail::to(
-                [
-                    'waleo@cedarviewng.com','olusegunogunwale@gmail.com',
-                    'walexblom@gmail.com', 'nzeiemmanuel@gmail.com',
-                    'abdulmutalib.mustafa@gmail.com','rolaneg@yahoo.com',
-                    'ebun68@gmail.com'
-                ]
-            )
-            ->send(new EmailTypeVerification());
+        // Mail::to(
+        //         [
+        //             'ebun68@gmail.com',
+        //             'rolaneg@yahoo.com'
+        //         ]
+        //     )
+        //     ->send(new EmailTypeVerification());
     }
 
     public function showPasswordCreate(Request $request) {
@@ -258,7 +260,7 @@ class GuestController extends Controller
         ]);
 
         $model = $this->userRepo->getModel()->where('email',$request->email)->first();
-        $model->name_slug = str_slug($model->company_name,'_');
+        $model->name_slug = str_slug($model->name,'_');
         $model->password = bcrypt($request->password);
         $model->confirmed = 1;
         $model->save();

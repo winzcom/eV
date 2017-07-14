@@ -64,14 +64,14 @@ self.addEventListener('install', function(event) {
 
 self.addEventListener('fetch',function(event) {
     event.respondWith(
-      caches.open(CACHE).then(function(cache) {
-        return cache.match(event.request).then(function(resp) {
-          return resp || fetch(event.request).then(function(resp) {
-            cache.put(event.request,resp.clone());
+       caches.match(event.request).then(function(response) {
+         return response || fetch(event.request).then(function(resp){
+            caches.open(CACHE).then(function(cache){
+              cache.put(event.request,resp.clone());
+            })
             return resp;
-          })
-        })
-      })
+         })
+       })
     )
 });
 
