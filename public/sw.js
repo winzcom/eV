@@ -47,7 +47,8 @@ var files_to_cache = [
     'js/smooth-scroll.js',
     'js/contact.js',
     'js/tempo.js',
-    'customcss/all.css'
+    'customcss/all.css',
+    'index.php'
 ]
 
 //window.onMessage.apply(message,f);
@@ -94,6 +95,6 @@ self.addEventListener('notificationclick', function(event) {
     event.notification.close();
 
     event.waitUntil(
-      clients.openWindow('http://localhost/eventing/culogin')
+      clients.openWindow('https://eventpad.ng/culogin')
     );
 });
