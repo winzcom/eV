@@ -293,14 +293,14 @@ class GuestController extends Controller
 
         $json = json_decode(file_get_contents("php://input"),true);
         try{
-            if(isset($json['Type'])){
-                if($json['Type'] === 'SubscriptionConfirmation'){
-                    $result = $sns_client->confirmSubscription(['Token'=>$json['Token'],'TopicArn'=>$json['TopicArn']]);
+            if(isset($json->Type)){
+                if($json->Type === 'SubscriptionConfirmation'){
+                    $result = $sns_client->confirmSubscription(['Token'=>$json->Token,'TopicArn'=>$json->TopicArn]);
                 }elseif($json->Type === 'Notification'){
 
                 }
-            }elseif(isset($json['notificationType']) && $json['notificationType'] === 'Bounce'){
-                $bounced_recipient = $json['bouncedRecipients'];
+            }elseif(isset($json->notificationType) && $json->notificationType === 'Bounce'){
+                $bounced_recipient = $json->bouncedRecipients;
                 //Loop through and set a flag on vendors email;
                 if(count($bounced_recipient) > 0){
                     $emails = [];
