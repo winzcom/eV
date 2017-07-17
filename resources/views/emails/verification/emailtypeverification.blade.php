@@ -3,16 +3,17 @@
 @section('content')
 <br><br>
 <div style="color:#4d4d4d;">
-     <small><i>This is a sample mail feedback will be appreciated</i></small>
+     <!--<small><i>This is a sample mail feedback will be appreciated</i></small>-->
     <p  style="text-align:center;">
         <b>Hello </b>
         <br>
         <img src="https://eventpad.ng/img/email-header.jpg" alt=""><br><br>
-        Eventpad is not just a listing platform. We offer a request/reply form of communication 
-        between you and those that need your services. They make a request on our platform and you get notified via email, and if you are interested you login and reply with your quote.
-        <!--To complement your effort in getting new customers, Eventpad makes it possible for Individuals and Event Organizers to reach out to you when in need of your service. 
+        Business like yours make our events memorable. But like every other business getting new customers is key to your success. 
+        We know this at Eventpad. That is why we are taking a new approach in bringing customer to businesses like yours.<br><br>
+
+        To complement your effort in getting new customers, Eventpad makes it possible for Individuals and Event Organizers to reach out to you when in need of your service. 
         This works by making requests from individuals and event organizers accessible to you. 
-        You can then decide to respond to them provided you are interested in making them your customers-->
+        You can then decide to respond to them provided you are interested in making them your customers.
     </p><br>
     <p style="text-align:center;">
         <h4>Here is a sample request.</h4> <br>
@@ -42,15 +43,19 @@
         </p>
     </p>
     <br>
-    You can get started with us by clicking the button below <br><br><br>
+    Creating an account with us will enable Eventpad send you specific customer requests based on location, service and budget. <br><br>
+    Let us transform the way you get customers to your business in minutes by clicking the button below. <br><br>
     <a style="text-align:center; padding:16px 10px 16px 10px;" href="https://eventpad.ng/verify/vendor/email"><button type="button" class="btn btn-lg btn-primary">Join Now</button></a>
     <br><hr>
     <p>
-        Eventpad sends request to vendors meeting these requirements: service and location,
-        so make sure you update your profile when you are logged in to the platform
+       <i>Please note that Eventpad sends request to vendors meeting these requirements: service and location,
+        so make sure you update your profile when you are logged in to the platform</i> 
     </p>
-    <p>You can read more <a href="https://eventpad.ng/about_us">here</a></p>
-
+    <p>You can read more <a href="https://eventpad.ng/about_us">here</a></p><br><br>
+    <small>For more information see contact below:</small><br>
+        Name: <b>Ebun</b> <br>
+        Phone Number: <b>08180002816</b><br>
+        Email: <b>ebudare@yahoo.com</b><br>
 
 </div>
 

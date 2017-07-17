@@ -35,6 +35,6 @@ class EmailTypeVerification extends Mailable
     {
         return $this->from('Invite@eventpad.ng')
         ->subject('Welcome to Eventpad')
-        ->markdown('emails.verification.testmail');
+        ->markdown('emails.verification.emailtypeverification');
     }
 }
