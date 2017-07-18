@@ -1,3 +1,10 @@
+@extends('emails.layout.email')
+
+@section('content')
+
+
+@endsection
+
 @component('mail::message')
 
  @inject('service','App\Service\Service')

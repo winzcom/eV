@@ -250,7 +250,7 @@ class UserController extends Controller
 
 
             if(!is_null($id)){
-                   //event(new NewQuoteSent($request_data,Auth::user(),$request->cost,$request->message));
+                   event(new NewQuoteSent($request_data,Auth::user(),$request->cost,$request->message));
                    return response()->json([
                         'status'=>'Quotes Sent Successfully to '.$request_data->first_name.' '.$request_data->last_name
                         ]);

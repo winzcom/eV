@@ -163,7 +163,7 @@ class GuestController extends Controller
                     'customer'=>$customer
                 ];
 
-                //event(new NewRequestSentEvent($data));
+                event(new NewRequestSentEvent($data));
 
                 echo json_encode(['message'=>'Request Sent']);
                 return;

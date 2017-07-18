@@ -39,8 +39,11 @@ class NewQuotesSentListener
        $client_firebase_endpoint = $this->repo->createModel('customer')->find($event->request->user_id)->firebase_endpoint;
        if($client_firebase_endpoint !== null)
             $this->push_message->pushMessage($client_firebase_endpoint,$event->vendor,$event->request->name);
-        Mail::to($event->request->email)
+        else {
+            Mail::to($event->request->email)
                ->send(new SendQuote($event->request,$event->vendor,$event->cost,$event->message));
+        }
+        
 
         //Send A Push notification
 
