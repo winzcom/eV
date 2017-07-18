@@ -48,7 +48,6 @@ var files_to_cache = [
     'js/contact.js',
     'js/tempo.js',
     'customcss/all.css',
-    'index.php'
 ]
 
 //window.onMessage.apply(message,f);
@@ -64,15 +63,15 @@ self.addEventListener('install', function(event) {
 });
 
 
-self.addEventListener('fetch',function(event) {
-    event.respondWith(
-       caches.open(CACHE).then(function(cache){
-         return cache.match(event.request).then(function(resp) {
-           return resp;
-         })
-       })
-    )
-});
+//self.addEventListener('fetch',function(event) {
+  //  event.respondWith(
+    //   caches.open(CACHE).then(function(cache){
+      //   return cache.match(event.request).then(function(resp) {
+        //   return resp || fetch(event.request);
+        // })
+      // })
+   // )
+//});
 
 message.setBackgroundMessageHandler(function(payload) {
   console.log('[firebase-messaging-sw.js] Received background message ', payload.data.messsage);
