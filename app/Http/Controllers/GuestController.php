@@ -91,7 +91,11 @@ class GuestController extends Controller
         $client = $request->only(['first_name','last_name','email','password']);
         $category = $request->only(['category']);
         $request = $request->except(['category','firstname','','lastname','email','password','_token','state','vicinity']);
-  
+        
+        $request = array_filter($request,function($val,$key){
+            return $val !== '' && $val !== null && !empty($val);
+        },ARRAY_FILTER_USE_BOTH);
+
         DB::transaction(function() use ($request,$client,$category,$state,$vicinity){
 
             $users = $this->getUserQuery($category,$state,$vicinity)->get();

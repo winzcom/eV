@@ -109,7 +109,7 @@ var CakeAdditional = [
                     {name:'Vanilla',value:'Vanilla',type:'checkbox',formname:'flavours[]'},
                     {name:'Butter',value:'Butter',type:'checkbox',formname:'flavours[]'},
                     {name:'Cocoa',value:'Cocoa',type:'checkbox',formname:'flavours[]'},
-                    {name:'Other(flavour)',value:'Other',type:'text',formname:'flavours_i_want_included'}
+                    {name:'Other(flavour)',value:'',type:'text',formname:'flavours_i_want_included'}
         
 ]
 
