@@ -82,6 +82,7 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
         return $d;
     }
     public function getRequests(){
+	
         $d = DB::select(DB::raw(
             "select quotes_request.*,users.first_name as client_name,quotes.rid as rid,quotes.cost as cost,
             quotes.message as message, quotes.down_payment as dp,b.ma as max_cost,b.mi as min_cost,b.cost_avg as avg_cost,

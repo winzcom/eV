@@ -63,9 +63,9 @@ self.addEventListener('install', function(event) {
 });
 
 
-<<<<<<< HEAD
+
 //self.addEventListener('fetch',function(event) {
-  //  event.respondWith(
+   //event.respondWith(
     //   caches.open(CACHE).then(function(cache){
       //   return cache.match(event.request).then(function(resp) {
         //   return resp || fetch(event.request);
@@ -73,17 +73,7 @@ self.addEventListener('install', function(event) {
       // })
    // )
 //});
-=======
-self.addEventListener('fetch',function(event) {
-    event.respondWith(
-       caches.match(event.request).then(function(resp) {
-          return resp || fetch(event.request).then(function(response) {
-            return response;
-          })
-       })
-    )
-});
->>>>>>> 8746ba72c1f3c1530dacbcbd52249afadfac6f87
+
 
 message.setBackgroundMessageHandler(function(payload) {
   console.log('[firebase-messaging-sw.js] Received background message ', payload.data.messsage);
