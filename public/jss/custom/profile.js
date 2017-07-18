@@ -73,6 +73,9 @@ $(document).ready(function(){
              
              var form = $('#send_request_form');
              var inputs = form.find('.quo');
+
+             $(this).attr('disabled',true);
+             $(this).html('sending quote..');
         
              inputs.each(function(i,v){
                  if($(this).val() == ''){
@@ -215,6 +218,7 @@ $(document).ready(function(){
                         $('cbp-caption-defaultWrap').prepend(italic);
                         setTimeout(function() {
                             location.href = location.href+'#messages';
+                            location.reload(true);
                         }, 100);
                         alertify.log('Reply Sent ');
                     },

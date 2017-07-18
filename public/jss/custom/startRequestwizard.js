@@ -192,8 +192,8 @@ $(document).ready(function() {
                                 $('#myWizard').hide();
                             }
                         } catch (e) {
-                            
-                            alertify.success('Request Sent');
+                            $('#myWizard').hide();
+                            //alertify.success('Request Sent');
                         }
 
                         finish.html('finish');

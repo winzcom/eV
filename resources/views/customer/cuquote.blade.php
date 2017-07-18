@@ -121,12 +121,21 @@
                                         >
                                             Details
                                         </button>
-                                        @if($quote->first()->contact == 0)
+                                        <!--@if($quote->first()->contact == 0)
                                             <button class="btn btn-default contact_vendor" data-target="#contact_vendor" data-toggle='modal' data-v-id="{{$quote->first()->id}}" data-r-id="{{$quote->first()->rid}}">
                                                 Contact
                                             </button>
-                                        @endif
-                                        
+                                        @endif-->
+                                        @php 
+                                            echo 'contact vendor:';
+                                            if($quote->first()->phone_no){
+                                                $phones = explode(',',$quote->first()->phone_no);
+                                                foreach($phones as $phone){
+                                                    echo "<a href=\"tel:$phone\" type=\"button\">".$phone."</a>";
+                                                }
+                                            }
+                                        @endphp
+                    
                                         <div class="rating" data-rating="{{$quote->first()->avg}}"></div> <span class="reviews-link">({{number_format($quote->first()->avg,1)}} From {{$quote->first()->count}} reviews)</span>
                                     </div>
                                 </div>

@@ -27,7 +27,7 @@
                                 
                             @endphp
                         <td>{{ ucfirst(str_replace('_',' ',title_case($key))) }} : {{ $value }}</td>
-                        </tr><br><hr><br>
+                        </tr><hr><br>
                     @endforeach
                 
                 Thanks,

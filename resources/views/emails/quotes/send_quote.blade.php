@@ -1,25 +1,21 @@
-@component('mail::message')
+@extends('emails.layout.email')
 
-    @component('mail::panel')
-        Quote Received From {{$vendor->name}} For {{$request->name}}
-        Cost: {{$cost}}
-    Message: {{$message}}
-
-    @endcomponent
-
-    @component('mail::subcopy')
-
+@section('content')
+         <h5>Quote Received From {{$vendor->name}} For {{$request->name}}</h5> 
+       <p><h5> Cost:</h5> {{$cost}}</p> <br>
+       <p><h5>Message:</h5> {{$message}}</p>
+    <br>
+       <hr>
+       <h5>Your request:</h5><br>
         @if(is_object($ob = json_decode($request->request)))
 
             @foreach($ob as $key=>$value)
                     @php
                         if(is_array($value)){
-                            foreach($value as $key=>$val){
-                                echo $val.' ';
-                            }
+                            echo '<b>'.ucfirst($key).'</b>: ('.implode(',',$value).')<br><br>';
                         }
                         else{
-                            echo $key.' '.$value;
+                            echo '<b>'.ucfirst(str_replace('_',' ',title_case($key))).'</b> : '.$value.'<br><br>';
                         } 
                     @endphp                
             @endforeach
@@ -31,7 +27,4 @@
                 
         @endif
 
-    @endcomponent
-
-
-@endcomponent
+@endsection
