@@ -94,11 +94,11 @@ class RegisterController extends Controller
         return redirect('/login')->with('status','An Email has been sent to You');
     }*/
 
-    private function sendVerificationMail($user){
+    private function sendVerificationMail($user,$token){
 
         try{
             Mail::to($user->email)
-                ->send(new SendVerificationMail($user,$this->generateToken()));
+                ->send(new SendVerificationMail($user,$token));
         }catch(\Swift_TransportException $e){
 
         }
@@ -119,7 +119,7 @@ class RegisterController extends Controller
         $user = $this->user_repo->createNewUser($data);
         $user->confirm_token = $this->generateToken();
         $user->save();
-        $this->sendVerificationMail($user);
+        $this->sendVerificationMail($user,$user->confirm_token);
         return $user;
     }
 
