@@ -7,7 +7,7 @@
 
    #Http to Https
 	RewriteCond %{SERVER_PORT} 80 
-	RewriteRule ^(.*)$ https://eventpad.dev/$1 [R,L]
+	RewriteRule ^(.*)$ https://eventpad.ng/$1 [R,L]
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
