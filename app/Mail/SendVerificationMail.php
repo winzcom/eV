@@ -17,12 +17,13 @@ class SendVerificationMail extends Mailable
      * @return void
      */
 
-     protected $user;
+     public $user; public $token;
 
-    public function __construct($user)
+    public function __construct($user,$token)
     {
         //
         $this->user = $user;
+        $this->token = $token;
     }
 
     /**
@@ -34,6 +35,6 @@ class SendVerificationMail extends Mailable
     {
         return $this->from('EmailVerification@eventpad.ng')
                  ->subject('Email Verification')
-                ->view('app_view.email_view_folders.verification_mail')->with('user',$this->user);
+                ->view('app_view.email_view_folders.verification_mail');
     }
 }
