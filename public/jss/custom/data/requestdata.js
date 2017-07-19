@@ -131,7 +131,8 @@ var cakeExtras = [
             {name:'14"inches',value:'14"inches'},
             {name:'20"inches',value:'20"inches'},
         ]
-    }
+    },
+    {name:'Number of Tier',value:'',type:'text',formname:'number_of_tier'}
 ]
 
 var drinkAdditional = [
