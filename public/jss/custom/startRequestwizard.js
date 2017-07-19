@@ -378,10 +378,10 @@ $(document).ready(function() {
         })
 
 
-        $('#start_request').submit(function() {
+        $('#start_request').submit(function(e) {
 
             //display the form wizard;
-            
+            e.preventDefault();
             return false;
 
         }); /***End of Jquery events changeOperation */
