@@ -33,4 +33,8 @@ class QuotesRequest extends Model
     public function quote(){
         return $this->hasMany('App\Entities\Quote','rid');
     }
+
+    public function client() {
+        return $this->belongsTo('App\Entities\Customer','client_id');
+    }
 }

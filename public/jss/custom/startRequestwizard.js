@@ -588,9 +588,15 @@ $(document).ready(function() {
                     innerDiv = $('<div class="col-sm-4 col-md-3 col-lg-4">')
                     
                     /** Code likely to comment out */
-                    if(ele.name == 'Menu') {
-                        innerDiv = $('<div class="menu">')
-                        input = $('<select class="form-control" id = "menu" multiple name="'+ele.formname+'">');
+                    if(ele.hasOwnProperty('attach')) {
+                        if(ele.name == 'Menu') {
+                            innerDiv = $('<div class="menu">')
+                            input = $('<select class="form-control" id = "menu" multiple name="'+ele.formname+'">');
+                        }
+                        else {
+                            innerDiv = $('<div class="menu">')
+                            input = $('<select class="form-control" name="'+ele.formname+'">');
+                        }
                         ele.children.forEach(function(e){
                             var option = $('<option>');
                             option.attr({

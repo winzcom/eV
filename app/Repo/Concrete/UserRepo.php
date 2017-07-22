@@ -33,6 +33,15 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
         return $this->model;
     }
 
+    public function getUsers() {
+        $args = func_get_args();
+        if(!empty($args)) {
+            $array = $this->returnWhereArrays($args); 
+            return $this->model->where($array)->get();
+        }
+        return $this->model->get();
+    }
+
     public function createNewUser($data){
         $filtered =  array_except($data,['password_confirm','_token']);
         $filtered['password'] = bcrypt($filtered['password']);
@@ -98,6 +107,12 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
         ),array('vendor_id'=>Auth::id()));
 
         return collect($d);
+    }
+
+    public function getUserQuery($category,$state,$vicinity) {
+      return $this->getModel()->whereHas('categories',function($q) use ($category){
+                    $q->where('categories.id',$category['category']);
+                })->StateVicinity($state,$vicinity);
     }
 
     public function getRequest($id){

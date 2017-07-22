@@ -6,7 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-
+use App\Entities\QuotesRequest;
+use App\Entities\DismissedRequest;
 
 class User extends Authenticatable
 {
@@ -101,6 +102,43 @@ class User extends Authenticatable
 
     public function addresses(){
         $this->hasMany('App\Entities\Address');
+    }
+
+    public function dismissedRequestsId() {
+        return DismissedRequest::where('uid',$this->id)->get();
+    }
+
+    private function manyThrough($related,$through,$foreign_key_in_related,$foreign_key_in_through) {
+        $requests = new $related; $through = new $through;
+        $pivot_table = $through->getTable(); $table = $requests->getTable();
+        return $requests
+                    ->with('quote','client')
+                    ->join($pivot_table,$pivot_table.'.'.$foreign_key_in_related,'=',$table.'.'.$foreign_key_in_related)
+                    ->where($foreign_key_in_through,$this->id);
+                    
+        
+    }
+
+    private function getDismissedRequests() {
+
+    }
+
+    public function requests() {
+        return $this->manyThrough(
+            'App\Entities\QuotesRequest','App\Entities\CategoryCompany','category_id','company_id'
+        )
+            ->where('state',$this->state)
+            ->whereIn('vicinity_id',[0,$this->vicinity_id])
+            ->get();
+    }
+
+    public function dismissedRequest() {
+        $request_model =   app('App\Entities\QuotesRequest');
+        return $request_model
+            ->with('quote','client')
+            ->join('dismiss',$request_model->getTable().'.id','dismiss.rid')
+            ->where('dismiss.uid',$this->id)
+            ->get();
     }
 
     public function galleries(){

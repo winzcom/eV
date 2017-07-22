@@ -25,12 +25,12 @@ class GuestController extends Controller
      * @return void
      */
 
-     private $userRepo;
+     private $uRepo;
 
-    public function __construct(UPI $userRepo)
+    public function __construct(UPI $uRepo)
     {
         
-        $this->userRepo = $userRepo;
+        $this->uRepo = $uRepo;
     }
 
     /**
@@ -48,7 +48,7 @@ class GuestController extends Controller
                 // $response = $client->request('GET','json');
                 // $state = json_decode($response->getBody()->getContents())->region_name;
                 // session(['user_state'=>$state]);
-                // $companies = $this->userRepo->getTopVendors($state);
+                // $companies = $this->uRepo->getTopVendors($state);
             }catch(Exception $e) {
                 $companies = [];
             }
@@ -57,30 +57,28 @@ class GuestController extends Controller
             
         }
             $state = session('user_state');
-            $companies = $this->userRepo->getTopVendors($state);
+            $companies = $this->uRepo->getTopVendors($state);
             return view('landing')->with(['companies'=>$companies,'state'=>$state]);
-        //$some_quotes = $this->userRepo->getSomeRequestsAndAverage($state)
+        //$some_quotes = $this->uRepo->getSomeRequestsAndAverage($state)
     }
 
     public function writeReview(Request $request){
         
         $data = $request->except(['_token']);
         $data['reviewers_id'] = Auth::guard('client')->id();
-        $this->userRepo->createModel('reviews')
+        $this->uRepo->createModel('reviews')
             ->create($data);
         return redirect(back().'#horizontalTab12');
     }
 
     public function testLoad(){
 
-        return $this->userRepo->getRequests();
+        return $this->uRepo->getRequests();
     }
 
     private function getUserQuery($category,$state,$vicinity){
 
-        return $this->userRepo->getModel()->whereHas('categories',function($q) use ($category){
-                    $q->where('categories.id',$category['category']);
-                })->StateVicinity($state,$vicinity);
+        return $this->uRepo->getUserQuery($category,$state,$vicinity);
     }
 
     public function quotesRequest(Request $request){
@@ -115,14 +113,14 @@ class GuestController extends Controller
                             }
                                 
                             try{
-                                $customer = $this->userRepo->createModel('customer')->where('email',$client['email'])->first();
+                                $customer = $this->uRepo->createModel('customer')->where('email',$client['email'])->first();
                                 if(!is_null($customer)) {
                                     $customer->password = bcrypt($client['password']);
                                     $customer->first_name = $client['first_name'];
                                     $customer->last_name = $client['last_name'];
                                     $customer->save();
                                 } else {
-                                    $customer = $this->userRepo->createModel('customer')->firstOrCreate([
+                                    $customer = $this->uRepo->createModel('customer')->firstOrCreate([
                                             'first_name'=>$client['first_name'],
                                             'last_name'=>$client['last_name'],
                                             'email'=>$client['email'],
@@ -140,7 +138,7 @@ class GuestController extends Controller
                     if($vicinity == 'all' || $vicinity == '') $vicinity = 0;
 
                     try{
-                            $req = $this->userRepo->createModel('quotes_request')->create([
+                            $req = $this->uRepo->createModel('quotes_request')->create([
                             'category_id'=>$category['category'],
                             'client_id'=>$id !== null ? $id:$customer->id,
                             'count_available_vendors'=>count($users),
@@ -189,23 +187,11 @@ class GuestController extends Controller
         if($available == 0) {
              $request->locality = $request->locality == 'all' ? 0 : $request->locality;
             
-             $no_log = DB::table('no_vendor_log')->where('category_id',$request->category)
-                        ->where('state',$request->state)
-                        ->where('vicinity_id',$request->locality)
-                        ->count();
+             $no_log = $this->uRepo->getCountNoTimesVendorsNotAvailable();
             if($no_log > 0) 
-                DB::table('no_vendor_log')->where('category_id',$request->category)
-                        ->where('state',$request->state)
-                        ->where('vicinity_id',$request->locality)
-                        ->increment('count');
+                $this->uRepo->setNoLogVendorsNotAvailable('increment');
             else{
-
-                DB::table('no_vendor_log')->insert(
-                    [
-                        'category_id' => $request->category, 'state' => $request->state, 
-                        'vicinity_id' => $request->locality, 'count' => 1
-                    ]
-                );
+                 $this->uRepo->setNoLogVendorsNotAvailable();                
             }
         }
         return response()->json([
@@ -225,7 +211,7 @@ class GuestController extends Controller
     }
 
     public function verifyVendorByEmail($email = null) {
-        /*$count = $this->userRepo->getModel()->where('email',$email)->count();
+        /*$count = $this->uRepo->getModel()->where('email',$email)->count();
         if($count > 0) {
             $randomString = str_random(40);
             return redirect("password/create?s=".$randomString)->with('email',$email);
@@ -235,16 +221,24 @@ class GuestController extends Controller
     }
 
     public function sendEmailTypeVerificationMail() {
-        $users = $this->userRepo->getModel()
-           ->where([
-                ['confirmed','=',0],
-                ['email','!=','']
-           ])->get();
+        // $users = $this->uRepo->getModel()
+        //    ->where([
+        //         ['confirmed','=',0],
+        //         ['email','!=','']
+        //    ])->get();
+        // $users->each(function($user,$key) {
+        //    Mail::to($user->email)->send(new EmailTypeVerification($user->name));
+        // });
+
+        $users = $this->uRepo->getUsers(
+                ['confirmed','=',0],['email','!=','']
+            );
+
         $users->each(function($user,$key) {
            Mail::to($user->email)->send(new EmailTypeVerification($user->name));
         });
 
-        // $users = $this->userRepo->getModel()->where([
+        // $users = $this->uRepo->getModel()->where([
         //     ['email','ebudare@yahoo.com']
         // ])->first();
 
@@ -263,7 +257,8 @@ class GuestController extends Controller
             'password' => 'required|confirmed',
         ]);
 
-        $model = $this->userRepo->getModel()->where('email',$request->email)->first();
+        $model = $user->uRepo->findFirstByWhere(['email','=',$request->email]);
+        //$model = $this->uRepo->getModel()->where('email',$request->email)->first();
         $model->name_slug = str_slug($model->name,'_');
         $model->password = bcrypt($request->password);
         $model->confirmed = 1;
@@ -277,11 +272,11 @@ class GuestController extends Controller
     public function setFirebaseNotificationEndPoint(Request $request){
         $model = null;
         if(Auth::check()){
-            $model = $this->userRepo->getModel();
+            $model = $this->uRepo->getModel();
             $model->where('id',Auth::id())->update(['firebase_endpoint'=>$request->token]);
         }
         elseif(Auth::guard('client')->check()){
-            $model = $this->userRepo->createModel('customer');
+            $model = $this->uRepo->createModel('customer');
             $model->where('id',Auth::guard('client')->id())->update(['firebase_endpoint'=>$request->token]);
         }
     }

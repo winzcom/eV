@@ -52,6 +52,10 @@ var SmallChopsAdditional = [
                             // {name:'tell us more',type:'text',formname:'iwantthisincludedalsointhesmallchops',value:''}
 ]
 
+var SmallChopsExtra = [
+    {name:'Or you can tell us the items and number', value:'',type:'text'}
+]
+
 var eventPlannerAdditional = [
                             {name:'MC',value:'MC',type:'checkbox',formname:'extra[]',label:'Do you need this additional service'},
                             {name:'Catering',value:'Catering',type:'checkbox',formname:'extra[]'},
@@ -81,12 +85,16 @@ var CateringExtras = [
                         {name:'Dessert Only',value:'Dessert Only'},
                         {name:'Both',value:'Both'},
                     ]},
-                    {name:'Menu',type:'select',formname:'Menu',children:[
+                    {name:'Menu',type:'select',attach:'next',formname:'Menu',children:[
                         {name:'Jollof Rice',value:'Jollof Rice'},
                         {name:'Fried Rice',value:'Fried Rice'},
                         {name:'Amala',value:'Amala'},
                         {name:'Pounded Yam',value:'Pounded Yam'},
                         {name:'Egusi',value:'Egusi'}
+                    ]},
+                    {name:'Do you want caterer to buy Items',attach:'next',type:'select',formname:'do_you_want_caterer_to_buy_items',children:[
+                        {name:'No',value:'No'},
+                        {name:'Yes',value:'Yes'}
                     ]}
                         //{name:'Allergies we need to know about',value:'',type:'text',formname:'allergies'}
 ]
@@ -160,7 +168,8 @@ var eventPlanning = ['EventPlanner','WeddingPlanner']; var cateringPlaceholder =
                 },
       'SmallChops':{
                       additional:SmallChopsAdditional,
-                      placeholder:placeholder
+                      placeholder:'Pick what you want included',
+                      extra:SmallChopsExtra
       },
       'Drinks':{
         additional:drinkAdditional
