@@ -65,6 +65,10 @@ var eventPlannerAdditional = [
                             {name:'Outfits',value:'Outfits',type:'checkbox',formname:'extra[]'}
 ]
 
+var eventPlannerExtra = [
+    {name:'Theme for the Event e.g Traditional', type:'text', formname:'theme'}
+]
+
 var placeholder = `please tell us about the type of meal, dietery requirement we need to know about if any, 
                    do you want the food cooked before the event and stored in a warm container or cooked on site
                    tell us about water access any catering equipment you want
@@ -207,7 +211,7 @@ var eventPlanning = ['EventPlanner','WeddingPlanner']; var cateringPlaceholder =
                   },
         'EventPlanner':{
                           additional:CateringAdditionals.concat(eventPlannerAdditional),
-                          extra:MargueeExtras
+                          extra:MargueeExtras.concat(eventPlannerExtra)
         },
        'BusinessLunchCatering':{
                                       additional:CateringAdditionals,
