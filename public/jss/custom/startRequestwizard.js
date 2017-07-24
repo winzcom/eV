@@ -603,7 +603,7 @@ $(document).ready(function() {
                         }
                         else {
                             innerDiv = $('<div class="menu">')
-                            input = $('<select class="form-control" name="'+ele.formname+'">');
+                            input = $('<input class="form-control" name="'+ele.formname+'">');
                         }
                         var label = $('<label>')
                         label.html(ele.name);
