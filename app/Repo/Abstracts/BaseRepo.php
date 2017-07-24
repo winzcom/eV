@@ -39,6 +39,29 @@ abstract class BaseRepo {
         return $this->model->find($id);
     }
 
+    public function setNoLogVendorsNotAvailable($increment = '') {
+        if($increment == 'increment') {
+            DB::table('no_vendor_log')->where('category_id',request()->category)
+                        ->where('state',request()->state)
+                        ->where('vicinity_id',request()->locality)
+                        ->increment('count');
+        } else {
+            DB::table('no_vendor_log')->insert(
+                    [
+                        'category_id' => request()->category, 'state' => request()->state, 
+                        'vicinity_id' => request()->locality, 'count' => 1
+                    ]
+                );
+        }
+    }
+
+    public function getCountNoTimesVendorsNotAvailable() {
+        return DB::table('no_vendor_log')->where('category_id',request()->category)
+                        ->where('state',request()->state)
+                        ->where('vicinity_id',request()->locality)
+                        ->count();
+    }
+
     public function findWith($id,$relations){
         
         return $this->model->with($relations)->find($id);

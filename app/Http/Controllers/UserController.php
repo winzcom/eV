@@ -32,8 +32,9 @@ class UserController extends Controller
     }
 
     public function home(){
- 
+        
         $user = $this->user_repo->findWith(Auth::id(),['galleries','categories']);
+        //dd($user->requests());
         list($total_avg,$reviews) = $this->getFiveReviews();
         return view('vendor.home')->with([
                 'user'=>$user,'path'=>$this->path,

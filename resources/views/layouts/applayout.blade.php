@@ -155,14 +155,14 @@ window.customerUrl = window.location.origin+'/';
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse navscroll" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="{{url('/')}}">Home</a></li>
+				<li><a href="{{url('/')}}">Eventpad</a></li>
 				<li><a href="{{url('/browse_vendors')}}">Browse Vendors</a></li>
 				<!--<li><a href="#">Request Quotes</a></li>-->
 				
 				@if(Auth::check())
-					<li><a href="{{url('/home')}}">DashBoard</a></li>
+					<li><a href="{{url('/home')}}">Home</a></li>
 				@elseif (Auth::guard('client')->check())
-					<li><a href="{{url('/cuhome')}}">DashBoard</a></li>
+					<li><a href="{{url('/cuhome')}}">Home</a></li>
 				@else
 					<li><a href="{{url('/register')}}">Join as Vendor</a></li>
 					<!--<li><a href="{{url('/login')}}">Sign In</a></li>-->

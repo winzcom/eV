@@ -12,4 +12,8 @@ class Quote extends Model
     protected $fillable = [
         'rid','uid','cost','message','contact','client_id'
     ];
+
+    public function requests() {
+        $this->belongsTo('App\Entities\QuotesRequest','rid');
+    }
 }
