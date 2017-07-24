@@ -66,7 +66,7 @@ var eventPlannerAdditional = [
 ]
 
 var eventPlannerExtra = [
-    {name:'Theme for the Event e.g Traditional', type:'text', formname:'theme'}
+    {name:'Theme for the Event e.g Traditional', type:'text', formname:'theme',attach:'next'}
 ]
 
 var placeholder = `please tell us about the type of meal, dietery requirement we need to know about if any, 
