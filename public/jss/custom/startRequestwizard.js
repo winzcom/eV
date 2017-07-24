@@ -589,28 +589,28 @@ $(document).ready(function() {
                     
                     /** Code likely to comment out */
                     if(ele.hasOwnProperty('attach')) {
-                        if(ele.name == 'Menu') {
+                        if(ele.hasOwnProperty('children')) {
                             innerDiv = $('<div class="menu">')
                             input = $('<select class="form-control" id = "menu" multiple name="'+ele.formname+'">');
+                            ele.children.forEach(function(e){
+                                var option = $('<option>');
+                                option.attr({
+                                    value:e.value
+                                })
+                                option.text(e.name);
+                                input.append(option);
+                            });
                         }
                         else {
                             innerDiv = $('<div class="menu">')
                             input = $('<select class="form-control" name="'+ele.formname+'">');
                         }
-                        ele.children.forEach(function(e){
-                            var option = $('<option>');
-                            option.attr({
-                                value:e.value
-                            })
-                            option.text(e.name);
-                            input.append(option);
-                        })
                         var label = $('<label>')
                         label.html(ele.name);
                         var eventElement = document.querySelector('#date');
                         innerDiv.append(input);
                         innerDiv.insertBefore(eventElement);
-                        input.select2();
+                        ele.type == 'select' ? input.select2() : null;
                         label.insertBefore(input);
                         return;
                     }/** end of code to comment out */
