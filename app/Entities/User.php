@@ -119,10 +119,6 @@ class User extends Authenticatable
         
     }
 
-    private function getDismissedRequests() {
-
-    }
-
     public function requests() {
         return $this->manyThrough(
             'App\Entities\QuotesRequest','App\Entities\CategoryCompany','category_id','company_id'
@@ -133,7 +129,7 @@ class User extends Authenticatable
     }
 
     public function dismissedRequest() {
-        $request_model =   app('App\Entities\QuotesRequest');
+        $request_model = app('App\Entities\QuotesRequest');
         return $request_model
             ->with('quote','client')
             ->join('dismiss',$request_model->getTable().'.id','dismiss.rid')
