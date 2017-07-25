@@ -68,7 +68,7 @@ class Service{
 
        return DB::table('states')
                     ->select('*')
-                    ->whereIn('state',['Lagos','Abuja','Rivers','Edo'])
+                    ->whereIn('state',['Lagos','Abuja','Rivers','Edo','Delta'])
                     ->OrderBy('state')
                     ->get();
     }
