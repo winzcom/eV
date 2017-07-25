@@ -7,7 +7,7 @@
 			<div class="col-lg-6 col-sm-6 col-md-4 col-lg-3">
 				<small>
 					Contact Us
-					email: (info@eventpad.ng) phone: (09020628153)
+					email: (eventpadinfo@gmail.com) phone: (09020628153)
 				</small>
 			</div>
 		</div>
