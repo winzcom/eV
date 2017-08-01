@@ -220,32 +220,21 @@ class GuestController extends Controller
     }
 
     public function sendEmailTypeVerificationMail() {
-        // $users = $this->uRepo->getModel()
-        //    ->where([
-        //         ['confirmed','=',0],
-        //         ['email','!=','']
-        //    ])->get();
-        // $users->each(function($user,$key) {
-        //    Mail::to($user->email)->send(new EmailTypeVerification($user->name));
-        // });
-
+        
         // $users = $this->uRepo->getUsers(
         //         ['confirmed','=',0],['email','!=',''],
-        //         ['bounced','!=',1]
+        //         ['bounced','!=',1],['email','like','%@gmail.com']
         //     );
-        $users = $this->uRepo->getUsers(
-                ['email','=','ebudare@yahoo.com']
-            );
-
+        $users = $this->uRepo->getModel()->where([
+            ['confirmed','=',0],['email','!=',''],
+            ['bounced','!=',1],['email','like','%@gmail.com']
+        ])->orWhere([
+            ['confirmed','=',0],['email','!=',''],
+            ['bounced','!=',1],['email','like','%@yahoo.com']
+        ]);
         $users->each(function($user,$key) {
            Mail::to($user->email)->send(new EmailTypeVerification($user->name));
         });
-
-        // $users = $this->uRepo->getModel()->where([
-        //     ['email','ebudare@yahoo.com']
-        // ])->first();
-
-        //  Mail::to($users->email)->send(new EmailTypeVerification($users->name));
     }
 
     public function showPasswordCreate(Request $request) {
