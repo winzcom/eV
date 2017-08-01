@@ -47,6 +47,8 @@
                        <hr><br>
                     @endforeach
                 </ul>
+                <br>
+                <a href="https://eventpad.ng/login" style="text-align:center;"><button class="btn btn-primary" type="">Login</button></a><br>
                 Thanks,
                 {{ config('app.name') }}
 

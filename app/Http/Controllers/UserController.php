@@ -181,7 +181,7 @@ class UserController extends Controller
         $id = $request->review_id;
         $reply = $request->reply;
         if($id !== '' && $reply !== ''){
-                 $this->user_repo->createModel('reviews')->where('id','=',$id)->update(['reply'=>$reply]);
+                 Review::where('id','=',$id)->update(['reply'=>$reply]);
 
         if($request->ajax()){
                  /*** Send email to reviewer */

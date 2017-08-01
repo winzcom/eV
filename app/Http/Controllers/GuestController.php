@@ -12,6 +12,9 @@ use App\Mail\SendVerificationMail;
 use App\Mail\EmailTypeVerification;
 use Illuminate\Support\Facades\DB;
 use App\Entities\User;
+use App\Entities\Customer;
+use App\Entities\Review;
+use App\Entities\QuotesRequest;
 
 use App\Repo\Interfaces\UserRepoInterface as UPI;
 use App\Events\NewRequestSentEvent;
@@ -67,8 +70,7 @@ class GuestController extends Controller
         
         $data = $request->except(['_token']);
         $data['reviewers_id'] = Auth::guard('client')->id();
-        $this->uRepo->createModel('reviews')
-            ->create($data);
+        Review::create($data);
         return redirect(back().'#horizontalTab12');
     }
 
@@ -114,14 +116,14 @@ class GuestController extends Controller
                             }
                                 
                             try{
-                                $customer = $this->uRepo->createModel('customer')->where('email',$client['email'])->first();
+                                $customer = Customer::where('email',$client['email'])->first();
                                 if(!is_null($customer)) {
                                     $customer->password = bcrypt($client['password']);
                                     $customer->first_name = $client['first_name'];
                                     $customer->last_name = $client['last_name'];
                                     $customer->save();
                                 } else {
-                                    $customer = $this->uRepo->createModel('customer')->firstOrCreate([
+                                    $customer = Customer::firstOrCreate([
                                             'first_name'=>$client['first_name'],
                                             'last_name'=>$client['last_name'],
                                             'email'=>$client['email'],
@@ -139,7 +141,7 @@ class GuestController extends Controller
                     if($vicinity == 'all' || $vicinity == '') $vicinity = 0;
 
                     try{
-                            $req = $this->uRepo->createModel('quotes_request')->create([
+                            $req = QuotesRequest::create([
                             'category_id'=>$category['category'],
                             'client_id'=>$id !== null ? $id:$customer->id,
                             'count_available_vendors'=>count($users),
@@ -226,7 +228,7 @@ class GuestController extends Controller
         //         ['confirmed','=',0],['email','!=',''],
         //         ['bounced','!=',1],['email','like','%@gmail.com']
         //     );
-        $users = $this->uRepo->getModel()->where([
+        $users = User::where([
             ['confirmed','=',0],['email','!=',''],
             ['bounced','=',0],['email','like','%@gmail.com']
         ])->orWhere([
@@ -265,12 +267,12 @@ class GuestController extends Controller
     public function setFirebaseNotificationEndPoint(Request $request){
         $model = null;
         if(Auth::check()){
-            $model = $this->uRepo->getModel();
-            $model->where('id',Auth::id())->update(['firebase_endpoint'=>$request->token]);
+            //$model = $this->uRepo->getModel();
+            User::where('id',Auth::id())->update(['firebase_endpoint'=>$request->token]);
         }
         elseif(Auth::guard('client')->check()){
-            $model = $this->uRepo->createModel('customer');
-            $model->where('id',Auth::guard('client')->id())->update(['firebase_endpoint'=>$request->token]);
+            //$model = $this->uRepo->createModel('customer');
+            Customer::where('id',Auth::guard('client')->id())->update(['firebase_endpoint'=>$request->token]);
         }
     }
 
