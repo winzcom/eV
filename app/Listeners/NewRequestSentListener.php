@@ -28,7 +28,6 @@ class NewRequestSentListener
      */
     public function handle(NewRequestSentEvent $event)
     {
-        //
         Mail::to($event->data['users_data'])
                 ->send(new SendRequest($event->data));
        

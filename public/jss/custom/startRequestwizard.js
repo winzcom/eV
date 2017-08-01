@@ -34,6 +34,12 @@ $(document).ready(function() {
         // )
         /** end of mutationobserver */
 
+        function numberFormat(n) {
+            n.toFixed(2).replace(/./g,function(c,i,a){
+                return i && c!=="." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+            })
+        }
+
         function validateEmail(selector) {
             selector.mailgun_validator({
                 api_key: 'pubkey-ca5312e0946a6a724c269a03cee39de7', // replace this with your Mailgun public API key
@@ -93,6 +99,10 @@ $(document).ready(function() {
         var button;
         var v_available = false, noUISliderCreated = false;
         statee = null;
+
+        $(".price_budget").keyup(function(){
+            console.log('na waa');
+        })
 
         $('#state').change(function() {
 
@@ -189,10 +199,10 @@ $(document).ready(function() {
                                 var html = "<p style='color:white'>Success: " + d.message + "</p>"
                                 alertify.closeLogOnClick(true).success(html);
                                 $('#myWizard').reset();
-                                $('#myWizard').hide();
+                                $('#myModal').modal('hide');
                             }
                         } catch (e) {
-                            $('#myWizard').hide();
+                            $('#myModal').hide();
                             //alertify.success('Request Sent');
                         }
 
@@ -280,30 +290,30 @@ $(document).ready(function() {
             button = $(event.relatedTarget);
 
             
-            var slider_ranger = document.getElementById('slider-range'), amount = document.getElementById('amount');
+        //     var slider_ranger = document.getElementById('slider-range'), amount = document.getElementById('amount');
             
-            if(noUISliderCreated === false) {
-                noUiSlider.create(slider_ranger, {
-                    start: [ 250000, 450000],
-                    connect: true,
-                    step:1000,
-                    range: {
-                        'min': 1000,
-                        'max': 500000
-                    }
-                });
-                noUISliderCreated = true;
-            }
+        //     if(noUISliderCreated === false) {
+        //         noUiSlider.create(slider_ranger, {
+        //             start: [ 250000, 450000],
+        //             connect: true,
+        //             step:1000,
+        //             range: {
+        //                 'min': 1000,
+        //                 'max': 500000
+        //             }
+        //         });
+        //         noUISliderCreated = true;
+        //     }
             
 
-            slider_ranger.noUiSlider.on('update', function( values, handle ) {
-                var value = values[handle];
-                var low = (+values[0]).toFixed(0), high = (+values[1]).toFixed(0);
-                if(high == 700000) {
-                    high = high+'+';
-                }else high = high;
-                amount.value = low+'-'+high;
-        });
+        //     slider_ranger.noUiSlider.on('update', function( values, handle ) {
+        //         var value = values[handle];
+        //         var low = (+values[0]).toFixed(0), high = (+values[1]).toFixed(0);
+        //         if(high == 700000) {
+        //             high = high+'+';
+        //         }else high = high;
+        //         amount.value = low+'-'+high;
+        // });
             
             try{
             $( "#datepicker" ).datepicker({
@@ -372,9 +382,9 @@ $(document).ready(function() {
         }) /***End of event Change Event operation */
 
         $('#browsevendor').change(function() {
-            var cat = $(this).val();
+            var cat = $(this).val(); var state = $('#state').val();
             if (!isNaN(cat))
-                window.location.href = myUrl + 'browse_vendors/' + cat;
+                window.location.href = myUrl + 'browse_vendors/' + cat+'/'+state;
         })
 
 

@@ -6,6 +6,7 @@
      
     <p>
         Hello {{ $name or ''}}, <br>
+        <img src="https://eventpad.ng/img/gmc.png" alt=""><br><br>
         Eventpad is a new platform that offers a different approach to vendor sourcing. We are not just a listing platform. We offer a request/reply form of communication 
         between you and those that need your services.
         i.e those in need of a particular service can make a request from our platform 

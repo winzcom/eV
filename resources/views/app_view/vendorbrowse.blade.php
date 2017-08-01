@@ -12,7 +12,7 @@
 						<h4 class="strong text-uppercase" style="color:white;">
 							Get Quotes for {{$cat_name or ''}}
 						</h4>
-						@include('app_view.requestForm.stateform',['current_state'=>$state])
+						@include('app_view.requestForm.stateform',['current_state'=>$cur_state])
                 @endif
 			</div>
 		</div>
@@ -27,30 +27,54 @@
 <div class="">
     <!--<h3 class="pull-left">Featured Items</h3>-->
     <div id="filters-container" class="cbp-l-filters-dropdown">
-        <div class="cbp-l-filters-dropdownWrap">
-        <p><b>Select a Category</b></p>
-            <div class="outPopUp">
-                <select class="form-control input-lg " name="category" id="browsevendor">
-                    <option>...</option>
-                    @foreach ($categories as $cate)
-                        @if(isset($category_id))
-                            <option value = "{{$cate->id}}" <?php 
-                                if($cate->id== $category_id)
-                                    echo 'selected'
-                            ?>>
-                                {{$cate->name}}
-                            </option>
-                        @else
-                        <option value = "{{$cate->id}}">
-                                {{$cate->name}}
-                            </option>
-                        @endif
-                    @endforeach
-                </select>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="cbp-l-filters-dropdownWrap">
+                    <p><b>Select State</b></p>
+                    <div class="outPopUp">
+                        <select class="form-control input-lg " name="state" id="state">
+                            <option value="">...</option>
+                            @foreach ($states as $state)
+                            
+                                <option 
+                                    value = "{{$state->state}}" data-id = "{{$state->id}}"
+                                    <?php echo $state->state == $cur_state ? 'selected' : ''?> 
+                                >
+                                    {{$state->state}}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="cbp-l-filters-dropdownWrap">
+                    <p><b>Select a Category</b></p>
+                    <div class="outPopUp">
+                        <select class="form-control input-lg " name="category" id="browsevendor">
+                            <option>...</option>
+                            @foreach ($categories as $cate)
+                                @if(isset($category_id))
+                                    <option value = "{{$cate->id}}" <?php 
+                                        if($cate->id== $category_id)
+                                            echo 'selected'
+                                    ?>>
+                                        {{$cate->name}}
+                                    </option>
+                                @else
+                                <option value = "{{$cate->id}}">
+                                        {{$cate->name}}
+                                    </option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+        
+  </div>
 </div>
 
 </section>

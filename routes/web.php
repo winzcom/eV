@@ -44,7 +44,7 @@ Route::get('/check_vendor_availabity','GuestController@checkVendorAvailability')
 
 Route::post('/write_review','GuestController@writeReview');
 
-Route::get('/browse_vendors/{category?}','SearchController@browseByCategory');
+Route::get('/browse_vendors/{category?}/{state?}','SearchController@browseByCategory');
 
 Route::get('/password/show', 'GuestController@showPasswordCreate');
 

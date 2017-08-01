@@ -181,7 +181,6 @@ class GuestController extends Controller
 
     public function checkVendorAvailability(Request $request){
 
-        //dd($request->all());
         $category = $request->only(['category']);
         $available = $this->getUserQuery($category,$request->state,$request->locality)->count();
         if($available == 0) {
@@ -230,8 +229,12 @@ class GuestController extends Controller
         //    Mail::to($user->email)->send(new EmailTypeVerification($user->name));
         // });
 
+        // $users = $this->uRepo->getUsers(
+        //         ['confirmed','=',0],['email','!=',''],
+        //         ['bounced','!=',1]
+        //     );
         $users = $this->uRepo->getUsers(
-                ['confirmed','=',0],['email','!=','']
+                ['email','=','ebudare@yahoo.com']
             );
 
         $users->each(function($user,$key) {

@@ -105,66 +105,36 @@
                             </div>
                             
                     </div>
-                </section>
-            <!--</div>--><!--step-3-->
-
-           <!-- <div class="row hide" data-step="4" data-title="This is the first step!" >-->
-                <h3>Step 4</h3>
-                <section>
-                     <div id="normalbudget">
-                       <!-- <label>What sort of service are you looking for? (*)</label>
-                        <div class="radio">
-                            <label class="">
-                                <div class="iradio_square">
-                                    <input type="radio" name="budget[]" id="optionsRadios2" value="Basic Service"><ins class="iCheck-helper"></ins>
-                                </div>
-                             Basic Service
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label class="">
-                                <div class="iradio_square">
-                                    <input type="radio" name="budget[]" id="optionsRadios2" value="Standard Service"><ins class="iCheck-helper"></ins>
-                                </div>
-                               Standard Service
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label class="">
-                                <div class="iradio_square">
-                                    <input type="radio" name="budget[]" id="optionsRadios2" value=" Premium Service"><ins class="iCheck-helper"></ins>
-                                </div>
-                            Premium Service
-                            </label>
-                        </div>-->
-
+                    <div id="normalbudget">
                         <p>
                             <label for="amount">Price range:</label>
-                            <input type="text" name ="my_budget" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="amount">Min:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            &#8358;
+                                        </span>
+                                        <input type="number" class="form-control price_budget" name ="my_budget[]" id="min_amount">
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="amount">Max:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            &#8358;
+                                        </span>
+                                        <input type="number" class="form-control price_budget" name ="my_budget[]" id="max_amount">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
                         </p>
                         <div id="slider-range"></div>
 
                     </div>
-
-                    <!--<div id="delivery_service">
-                        <label>How do you want to get it</label>
-                        <div class="radio">
-                            <label class="">
-                                <div class="iradio_square">
-                                    <input type="radio" name="delivery_service" id="optionsRadios2" value="I would Want it Delivered"><ins class="iCheck-helper"></ins>
-                                </div>
-                            Delivery
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label class="">
-                                <div class="iradio_square">
-                                    <input type="radio" name="delivery_service" id="optionsRadios2" value="I would Come to Collect When Ready"><ins class="iCheck-helper"></ins>
-                                </div>
-                                Collecting
-                            </label>
-                        </div>
-                    </div>-->
 
                     <div id="publicbudget">
                         <label>How do You Want to Work With Vendors? <small style="color:red">*</small></label>
@@ -209,6 +179,12 @@
                             </label>
                         </div>
                     </div><!-- id publicbudget-->
+                </section>
+            <!--</div>--><!--step-3-->
+
+           <!-- <div class="row hide" data-step="4" data-title="This is the first step!" >-->
+                <h3>Step 4</h3>
+                <section>
 
                     <div id="whatstage">
                         <label>What Stage <small style="color:red">*</small></label>

@@ -45,7 +45,13 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
     public function createNewUser($data){
         $filtered =  array_except($data,['password_confirm','_token']);
         $filtered['password'] = bcrypt($filtered['password']);
-        $user =  $this->model()->create($filtered);
+        $user = $this->model()->where('email',$filtered['email'])->where('password','')->first();
+        if($user != null) {
+            $user->fill([
+                'password'=>$filtered['password']
+            ])->save();
+        } else $user =  $this->model()->create($filtered);
+        
 
         return $user;
     }

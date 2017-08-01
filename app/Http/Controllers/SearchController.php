@@ -37,21 +37,22 @@ class SearchController extends Controller
        return $companies;
     }
 
-    private function getVendors($cat){
-        $companies = $this->user_repo->createModel('vendor')->with('reviews','galleries','bay_average')->whereHas('categories',function($q) use ($cat){
+    private function getVendors($cat,$state = ''){
+        $companies = $this->user_repo->getModel()->with('reviews','galleries','bay_average')->whereHas('categories',function($q) use ($cat){
             $q->where('categories.id',$cat);
-        })->paginate(10);
+        });
+        
+        $state !== '' ? $companies = $companies->StateVicinity($state,'')->paginate(15) : $companies = $companies->paginate(15);
        return $companies;
     }
 
-    public function browseByCategory($category = null,Request $request){
-
+    public function browseByCategory($category = null, $state = '', Request $request){
         if($category){
             // $companies = Cache::remember(url()->current(),1440,function() use ($category){
             //                 return $this->getVendors($category);
             //             });
             
-            $companies = $this->getVendors($category);
+            $companies = $this->getVendors($category,$state);
 
             if(count($companies) > 0){
                 return view('app_view.vendorbrowse')->with([
@@ -59,19 +60,19 @@ class SearchController extends Controller
                     'category_id'=>$category,
                     'path'=>$this->path,
                     'cat_name'=>$companies->first()->categories->find($category)->name,
-                    'state'=>session('user_state')
+                    'cur_state'=> $state
                 ]);
             }
             //return view('app_view.vendorbrowse')->with('category_id',$category);
         }
-        return view('app_view.vendorbrowse')->with(['category_id'=>$category,'state'=>session('user_state')]);   
+        return view('app_view.vendorbrowse')->with(['category_id'=>$category,'cur_state'=> $state]);   
         
     }
 
 
     public function search_by_typing(Request $request){
         $name = $request->name;
-        $companies = $this->user_repo->createModel('vendor')->with('categories','reviews')->where('name','like',$name."%")->paginate(10);
+        $companies = $this->user_repo->getModel()->with('categories','reviews')->where('name','like',$name."%")->paginate(10);
         return view('app_view.display_list')->with(['companies'=>$companies,'request'=>$request,
             'events'=>Service::getEvents()
         ]);
