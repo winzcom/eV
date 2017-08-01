@@ -2,7 +2,7 @@
 
 @section('content')
 <br><br>
-<div style="color:#4d4d4d">
+<div style="color:#4d4d4d; text-align:center;">
      
     <p>
         Hello {{ $name or ''}}, <br>
@@ -84,14 +84,14 @@
     <a href="https://eventpad.ng/verify/vendor/email"><button class="btn btn-primary" type="">Join Now</button></a>
     <p>
         <b>
-            <i>Also note that the system pushes the request to all vendors that meet the customers search query, 
+            <i>Also note that the system pushes the request to all vendors that meet the customers search, 
         which are category, the state and the locality.
             </i>
         </b><br>
         <small>For more information see contact below:</small><br>
         Name: <b>Ebun</b> <br>
         Phone Number: <b>08180002816</b><br>
-        Email: <b>ebudare@yahoo.com</b><br>
+        Email: <b>eventpadinfo@gmail.com</b><br>
     </p>
 
 </div>
