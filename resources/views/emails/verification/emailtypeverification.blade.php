@@ -7,7 +7,7 @@
     <p  style="text-align:center;">
         <b>Hello </b>
         <br>
-        <img src="https://eventpad.ng/img/email-header.jpg" alt=""><br><br>
+        <img src="https://eventpad.ng/img/gmc.png" alt=""><br><br>
         Business like yours make our events memorable. But like every other business getting new customers is key to your success. 
         We know this at Eventpad. That is why we are taking a new approach in bringing customer to businesses like yours.<br><br>
 
