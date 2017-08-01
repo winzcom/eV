@@ -60,9 +60,9 @@ $(document).ready(function() {
         if(reg !== undefined) {
             console.log(register)
             
-            register.attr('disabled', true);
+            //register.attr('disabled', true);
 
-            validateEmail(reg);
+            //validateEmail(reg);
         }
 
           function validation_in_progress() {

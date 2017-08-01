@@ -11,6 +11,7 @@ use GuzzleHttp\Client;
 use App\Mail\SendVerificationMail;
 use App\Mail\EmailTypeVerification;
 use Illuminate\Support\Facades\DB;
+use App\Entities\User;
 
 use App\Repo\Interfaces\UserRepoInterface as UPI;
 use App\Events\NewRequestSentEvent;
@@ -227,10 +228,10 @@ class GuestController extends Controller
         //     );
         $users = $this->uRepo->getModel()->where([
             ['confirmed','=',0],['email','!=',''],
-            ['bounced','!=',1],['email','like','%@gmail.com']
+            ['bounced','=',0],['email','like','%@gmail.com']
         ])->orWhere([
             ['confirmed','=',0],['email','!=',''],
-            ['bounced','!=',1],['email','like','%@yahoo.com']
+            ['bounced','=',0],['email','like','%@yahoo.com']
         ]);
         $users->each(function($user,$key) {
            Mail::to($user->email)->send(new EmailTypeVerification($user->name));
