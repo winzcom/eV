@@ -3,36 +3,52 @@
 @section('content')
 
    @inject('service','App\Service\Service')
-
-           <table cellpadding="0" cellspacing="0" border="0" align="center">
-                <h3>
+                <h3 style="text-align:center;">
                     New Request From {{ $first_name }} {{ $last_name }} for 
                     {{ $category }}
-                </h3><br><br>
+                </h3><br>
 
+                <ul class="list-group">
+                    
                 
                     @foreach( $requests as $key => $value )
-                        <tr>
+                        
                             @php 
-                                if(is_array($value)) {
-                                    echo '<td width="200" valign="top">'.ucfirst(str_replace('_',' ',title_case($key))).'(';
-                                        echo implode(',',$value);
-                                    echo ')</td>';
-                                    continue;
-                                } elseif($key == 'price_range') {
+                                if(is_array($value)){
+                                    if($key == 'my_budget'){
+                                        echo str_replace('_',' ',title_case($key));
+                                        echo ': &#8358;'.$service->currencyFormatter($value[0]).'- &#8358;'.$service->currencyFormatter($value[1]);
+                                    }else {
+                                        echo $key == 'extra'? 'Extras: (': ucwords($key).': (';
+                                        echo implode(",",$value);
+                                        echo ' )';
+                                    }
+                                    
+                                }
+                                elseif($key == 'date'){
+                                    $dt = null;
+                                    try{
+                                        $dt = \Carbon\Carbon::parse($value);
+                                        echo str_replace('_',' ',title_case($key)).':'.$dt->toFormattedDateString().'<br><hr>';
+                                    }catch(\Exception $e){
+                                        echo 'Date: Date of event not specified<br><hr>';
+                                    }
+                                    
+                                }
+                                elseif($key == 'price_range') {
                                         list($lower, $higher) = explode('-',$value);
-                                        echo str_replace('_',' ',title_case($key)).': &#8358;'.$service->currencyFormatter($lower).'- &#8358;'.$service->currencyFormatter($higher).'<br><br>';
+                                        echo '<li>'.str_replace('_',' ',title_case($key)).': &#8358;'.$service->currencyFormatter($lower).'- &#8358;'.$service->currencyFormatter($higher).'<li><br><br>';
                                         continue;
                                 }
-                                
+                                else
+                                   echo '<li>'. ucfirst(str_replace('_',' ',title_case($key))).' : '. $value.'</li>';
                             @endphp
-                        <td>{{ ucfirst(str_replace('_',' ',title_case($key))) }} : {{ $value }}</td>
-                        </tr><hr><br>
+                        
+                       <hr><br>
                     @endforeach
-                
+                </ul>
                 Thanks,
                 {{ config('app.name') }}
-            </table>
 
 @endsection
         

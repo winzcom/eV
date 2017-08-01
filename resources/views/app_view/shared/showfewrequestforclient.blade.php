@@ -38,10 +38,17 @@
                                 
                                 foreach($obj as $key=>$value){
                                     if(is_array($value)){
-                                         echo $key == 'extra'? 'Extras: (': title_case($key).': (';
-                                         echo implode(', ',$value);
-                                         echo ' )<br><hr>';
-                                    }elseif($key == 'date'){
+                                        if($key == 'my_budget'){
+                                            echo str_replace('_',' ',title_case($key));
+                                            echo ': &#8358;'.$service->currencyFormatter($value[0]).'- &#8358;'.$service->currencyFormatter($value[1]);
+                                        }else {
+                                            echo $key == 'extra'? 'Extras: (': ucwords($key).': (';
+                                            echo implode(",",$value);
+                                            echo ' )';
+                                        }
+                                        
+                                    }
+                                    elseif($key == 'date'){
                                         $dt = null;
                                         try{
                                             $dt = \Carbon\Carbon::parse($value);

@@ -89,7 +89,7 @@ var CateringExtras = [
                         {name:'Dessert Only',value:'Dessert Only'},
                         {name:'Both',value:'Both'},
                     ]},
-                    {name:'Menu',type:'select',attach:'next',formname:'Menu',children:[
+                    {name:'Menu',type:'select',attach:'next',formname:'Menu[]',children:[
                         {name:'Jollof Rice',value:'Jollof Rice'},
                         {name:'Fried Rice',value:'Fried Rice'},
                         {name:'Amala',value:'Amala'},

@@ -108,20 +108,22 @@ class User extends Authenticatable
         return DismissedRequest::where('uid',$this->id)->get();
     }
 
-    private function manyThrough($related,$through,$foreign_key_in_related,$foreign_key_in_through) {
+    private function manyThrough($related,$through,$foreign_key_in_related,$foreign_key_in_through,$withs = []) {
         $requests = new $related; $through = new $through;
         $pivot_table = $through->getTable(); $table = $requests->getTable();
+        count($withs) != 0 ?: $requests = $requests->with(implode(',',$withs));
         return $requests
-                    ->with('quote','client')
                     ->join($pivot_table,$pivot_table.'.'.$foreign_key_in_related,'=',$table.'.'.$foreign_key_in_related)
                     ->where($foreign_key_in_through,$this->id);
+                
                     
         
     }
 
     public function requests() {
         return $this->manyThrough(
-            'App\Entities\QuotesRequest','App\Entities\CategoryCompany','category_id','company_id'
+            'App\Entities\QuotesRequest','App\Entities\CategoryCompany','category_id','company_id',
+            ['quote','client']
         )
             ->where('state',$this->state)
             ->whereIn('vicinity_id',[0,$this->vicinity_id])
