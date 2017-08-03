@@ -88,18 +88,18 @@ var CateringExtras = [
                         {name:'Starter Only',value:'Starter Only'},
                         {name:'Dessert Only',value:'Dessert Only'},
                         {name:'Both',value:'Both'},
-                    ]},
-                    {name:'Menu',type:'select',attach:'next',formname:'Menu[]',children:[
-                        {name:'Jollof Rice',value:'Jollof Rice'},
-                        {name:'Fried Rice',value:'Fried Rice'},
-                        {name:'Amala',value:'Amala'},
-                        {name:'Pounded Yam',value:'Pounded Yam'},
-                        {name:'Egusi',value:'Egusi'}
-                    ]},
-                    {name:'Do you want caterer to buy Items',attach:'next',type:'select',formname:'do_you_want_caterer_to_buy_items',children:[
-                        {name:'No',value:'No'},
-                        {name:'Yes',value:'Yes'}
                     ]}
+                    // {name:'Menu',type:'select',attach:'next',formname:'Menu[]',children:[
+                    //     {name:'Jollof Rice',value:'Jollof Rice'},
+                    //     {name:'Fried Rice',value:'Fried Rice'},
+                    //     {name:'Amala',value:'Amala'},
+                    //     {name:'Pounded Yam',value:'Pounded Yam'},
+                    //     {name:'Egusi',value:'Egusi'}
+                    // ]}
+                    // {name:'Do you want caterer to buy Items',attach:'next',type:'select',formname:'do_you_want_caterer_to_buy_items',children:[
+                    //     {name:'No',value:'No'},
+                    //     {name:'Yes',value:'Yes'}
+                    // ]}
                         //{name:'Allergies we need to know about',value:'',type:'text',formname:'allergies'}
 ]
 
@@ -148,11 +148,14 @@ var cakeExtras = [
 ]
 
 var drinkAdditional = [
+    // {
+    //     name:'Alcohol', value:'Alcohol',type:'checkbox',formname:'drink[]',clickAction:{id:'alcohol',formname:'alcohol_needed'},
+    // },
+    // {
+    //     name:'Non-Alcohol', value:'Non-Alcohol',type:'checkbox',formname:'drink[]',clickAction:{id:'non-alcohol',formname:'non_alcohol_needed'}
+    // },
     {
-        name:'Alcohol', value:'Alcohol',type:'checkbox',formname:'drink[]',clickAction:{id:'alcohol',formname:'alcohol_needed'},
-    },
-    {
-        name:'Non-Alcohol', value:'Non-Alcohol',type:'checkbox',formname:'drink[]',clickAction:{id:'non-alcohol',formname:'non_alcohol_needed'}
+        name:'Bar Service', value:'Yes',type:'checkbox',formname:'bar_service'
     }
 ]
 
@@ -168,7 +171,7 @@ var eventPlanning = ['EventPlanner','WeddingPlanner']; var cateringPlaceholder =
       'Caterers':{
                     additional:CateringAdditionals,
                      extra:CateringExtras,
-                     placeholder:cateringPlaceholder 
+                     //placeholder:cateringPlaceholder 
                 },
       'SmallChops':{
                       additional:SmallChopsAdditional,
