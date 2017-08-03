@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Cache;
 
 use App\Category;
 use App\Service\Service;
+use App\Entities\User;
 use App\Repo\Interfaces\UserRepoInterface as UPI;
 use App\Interfaces\GalleryInterface as GI;
 
@@ -27,7 +28,7 @@ class SearchController extends Controller
     public function search(Request $request){
 
         $categories = implode(',',$request->query('category'));
-        $companies = $this->user_repo->createModel('vendor')->with('reviews')->whereHas('categories',function($q) use ($request){
+        $companies = User::with('reviews')->whereHas('categories',function($q) use ($request){
             $q->whereIn('categories.id',$request->input('category'));
         })->StateVicinity($request->state,$request->vicinity)->where('name','!=','null')->paginate(15);
        /*return view('app_view.browsevendors')->with(['companies'=>$companies,'request'=>$request,
@@ -38,7 +39,7 @@ class SearchController extends Controller
     }
 
     private function getVendors($cat,$state = ''){
-        $companies = $this->user_repo->getModel()->with('reviews','galleries','bay_average')->whereHas('categories',function($q) use ($cat){
+        $companies = User::with('reviews','galleries','bay_average')->whereHas('categories',function($q) use ($cat){
             $q->where('categories.id',$cat);
         });
         
@@ -72,7 +73,7 @@ class SearchController extends Controller
 
     public function search_by_typing(Request $request){
         $name = $request->name;
-        $companies = $this->user_repo->getModel()->with('categories','reviews')->where('name','like',$name."%")->paginate(10);
+        $companies = User::with('categories','reviews')->where('name','like',$name."%")->paginate(10);
         return view('app_view.display_list')->with(['companies'=>$companies,'request'=>$request,
             'events'=>Service::getEvents()
         ]);
