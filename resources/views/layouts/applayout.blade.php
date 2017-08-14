@@ -12,68 +12,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
 	<link rel="shortcut icon" type="image/x-icon" href="favicon-32x32">
-	<style>
-    .request_modal{
-		margin-top:10%;
-	}
-
-	section[class="body"] {
-		visibility: hidden;
-		opacity: 0;
-		transition: visibility 0s, opacity 0.5s linear;
-	}
-
-	section[class*="current"] {
-		visibility: visible;
-  		opacity: 1;
-	}
-
-	ul[role="menu"] {
-		margin-top:3px;
-	}
-
-	ul[role="menu"] > li {
-		cursor:pointer;
-		text-decoration:none;
-		list-style-type: none;
-		padding-right:5px;
-	}
-
-	ul[role="menu"] > li:first-child > a[href="#previous"] {
-		float:left;
-	}
-
-	ul[role="menu"] > li:last-child a[href="#next"] {
-		float:right;
-	}
-
-	ul[role="menu"] > li:last-child a[href="#finish"] {
-		float:right;
-	}
-
-
-	div[class^='steps'] {
-		display:none;
-	}
-
-	h3[class^='title'] {
-		display:none;
-	}
-
-	.noUi-target  {
-		width:70%;
-		margin: 7% auto;
-	}
-
-	.delivery_option {
-		display:none;
-	}
-	.select2-container {
-		display:block;
-		width:100% !important;
-	}
-	
-</style>
 @yield('style')
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" type="" href="{{asset('vendor/css/nouislider.min.css')}}">
@@ -97,6 +35,12 @@
 	
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<style>
+body {
+	overflow-x:hidden !important;
+	box-sizing:border-box;
+}
+</style>
 </head>
 
 <script>

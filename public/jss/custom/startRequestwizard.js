@@ -624,7 +624,7 @@ $(document).ready(function() {
                         label.insertBefore(input);
                         return;
                     }/** end of code to comment out */
-                    if(ele.type === 'text'){
+                    else if(ele.type === 'text'){
                          input = $('<input>');
                          input.attr({
                             name: ele.formname,

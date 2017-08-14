@@ -50,10 +50,16 @@ Email on Acid - http://www.emailonacid.com/blog/details/C18/doctype_-_the_black_
 		.list-group-item{position:relative;display:block;padding:10px 15px;margin-bottom:-1px;background-color:#fff;border:1px solid #ddd}
 		ul,ol {
 			list-style-type:none;
+			border: 1px solid #000;
+			padding:16px;
 		}
-		ol > li {
+		ul,ol > li:last-child {
+			border-bottom:none;
+		}
+		ul,ol > li {
 			font-family:sans-serif,Arial,Helvetica;
 			font-weight:normal;
+			border:1px solid #000;
 		}
 		img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
 		a img {border:none;}

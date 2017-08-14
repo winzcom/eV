@@ -144,7 +144,13 @@ var cakeExtras = [
             {name:'20"inches',value:'20"inches'},
         ]
     },
-    {name:'Number of Tier',value:'',type:'text',formname:'number_of_tier'}
+    {name:'Cake Flavour',value:'',type:'select',formname:'cake_size',children:[
+            {name:'Sugar',value:'Sugar'},
+            {name:'Chocolate',value:'Chocolate'},
+            {name:'Vanilla',value:'Vanilla'},
+            {name:'Butter',value:'Butter'},
+        ]
+    },{name:'Number of Tier',value:'',type:'text',formname:'number_of_tier'},
 ]
 
 var drinkAdditional = [
@@ -205,16 +211,17 @@ var eventPlanning = ['EventPlanner','WeddingPlanner']; var cateringPlaceholder =
                       placeholder:placeholder
                   },
       'Cake':{
-                      additional:CakeAdditional,
-                      extra:cakeExtras
+                    //   additional:CakeAdditional,
+                      extra:cakeExtras,
+                      placeholder:'Select Flavour'
                   },
       'BellTents': {
                           additional:MargueeAditional,
                           extra:MargueeExtras
                   },
         'EventPlanner':{
-                          additional:CateringAdditionals.concat(eventPlannerAdditional),
-                          extra:MargueeExtras.concat(eventPlannerExtra)
+                        //   additional:CateringAdditionals.concat(eventPlannerAdditional),
+                        //   extra:MargueeExtras.concat(eventPlannerExtra)
         },
        'BusinessLunchCatering':{
                                       additional:CateringAdditionals,
