@@ -1,0 +1,68 @@
+.request_modal{
+		margin-top:10%;
+	}
+
+	section[class="body"] {
+		visibility: hidden;
+		opacity: 0;
+		transition: visibility 0s, opacity 0.5s linear;
+	}
+
+	section[class*="current"] {
+		visibility: visible;
+  		opacity: 1;
+	}
+
+	ul[role="menu"] {
+		margin-top:3px;
+	}
+
+	ul[role="menu"] > li {
+		cursor:pointer;
+		text-decoration:none;
+		list-style-type: none;
+		padding-right:5px;
+	}
+
+	ul[role="menu"] > li:first-child > a[href="#previous"] {
+		float:left;
+	}
+
+	ul[role="menu"] > li:last-child a[href="#next"] {
+        float:right;
+        padding:16px;
+	}
+
+	ul[role="menu"] > li:last-child a[href="#finish"] {
+        float:right;
+        padding:16px;
+	}
+
+
+	div[class^='steps'] {
+		display:none;
+	}
+
+	h3[class^='title'] {
+		display:none;
+	}
+
+	.noUi-target  {
+		width:70%;
+		margin: 7% auto;
+	}
+
+	.delivery_option {
+		display:none;
+	}
+	.select2-container {
+		display:block;
+		width:100% !important;
+	}
+	
+
+
+#myModal {
+    overflow-y: scroll;
+    box-sizing:border-box;
+}

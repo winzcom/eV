@@ -106,14 +106,14 @@
                                                     @endphp
                                                     @foreach($file_name as $key=>$value)
                                                         <div class="item">
-                                                            <img src="{{$path}}/{{$value}}" alt="Thumbnail" width="300" height="300">
+                                                            <img src="{{$path}}/{{$value}}" alt="Thumbnail" style="width:100%;">
                                                         </div>
                                                     @endforeach
                                                     </div>
                                                 @elseif(count($company->galleries) == 1)
                                                     <div class="item">
 
-                                                    <img src="{{$path}}/{{$company->galleries->first()->image_name}}" alt="" width="300" height="300"/>
+                                                    <img src="{{$path}}/{{$company->galleries->first()->image_name}}" alt="" style="width:100%;"/>
                                                     </div>
                                                 @endif
                                             

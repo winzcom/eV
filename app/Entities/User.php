@@ -123,7 +123,7 @@ class User extends Authenticatable
     public function requests() {
         return $this->manyThrough(
             'App\Entities\QuotesRequest','App\Entities\CategoryCompany','category_id','company_id',
-            ['quote','client']
+            ['quote','client','category']
         )
             ->where('state',$this->state)
             ->whereIn('vicinity_id',[0,$this->vicinity_id])

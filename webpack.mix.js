@@ -29,7 +29,8 @@ mix.styles([
     "public/owl-carousel/assets/owl.carousel.css",
     "public/owl-carousel/assets/owl.theme.default.min.css",
     "public/css/theme.css",
-    "public/css/color.css"
+    "public/css/color.css",
+    "public/customcss/custom.css"
 ],"public/customcss/all.css");
 
 
