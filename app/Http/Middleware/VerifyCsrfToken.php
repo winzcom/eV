@@ -13,6 +13,7 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         //
-        'reply_request'
+        'reply_request',
+        'aws_sns_message'
     ];
 }
