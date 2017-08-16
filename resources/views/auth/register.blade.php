@@ -15,12 +15,12 @@
 <!-- page title style2 END -->
 <div class="container" style="padding-top:10px;">
     <div class="row">
-        <div class="col-md-4 col-sm-12">
+        <!-- <div class="col-md-4 col-sm-12">
             <div class="e-book_section">
                 <h4>E-book Make Your EventPlanning Great</h4>
                 <p>Register to get a copy</p>
             </div>
-        </div>
+        </div> -->
         <div class="col-md-8 col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Register</div>
