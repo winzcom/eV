@@ -24,21 +24,21 @@
 								<span class="step">{{count($requests->where('rid','!=',null))}}</span>
 								<i class="icon icon-coffee"></i>
 							</div>
-							<h3 class="title">Answered Requests</h3>
+							<h3 class="">Answered Requests</h3>
 						</div>
 						<div class="process-wrap">
 							<div class="icon-wrap">
 								<span class="step">{{count($requests->where('rid',null))}}</span>
 								<i class="icon icon-web text-info"></i>
 							</div>
-							<h3 class="title">Unanswered Requests</h3>
+							<h3 class="">Unanswered Requests</h3>
 						</div>
 						<div class="process-wrap">
 							<div class="icon-wrap">
 								<span class="step">{{count($requests)}}</span>
 								<i class="icon icon-coding text-danger"></i>
 							</div>
-							<h3 class="title">Total Requests</h3>
+							<h3 class="">Total Requests</h3>
 						</div>
 
 				</div>

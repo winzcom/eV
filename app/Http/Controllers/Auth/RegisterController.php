@@ -132,8 +132,9 @@ class RegisterController extends Controller
         $user->confirm_token = null;
         $user->confirmed = 1;
         $user->save();
-        return redirect('login')->with('message','Please Login');
-        //$this->guard()->login($user);
+        //return redirect('login')->with('message','Please Login');
+        $this->guard()->login($user);
+        redirect($this->redirectPath());
     }
 
     public function messages()

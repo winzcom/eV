@@ -66,3 +66,9 @@
     overflow-y: scroll;
     box-sizing:border-box;
 }
+
+.e-book_section {
+	padding:16px;
+	border: 1px solid #000;
+	height:300px;
+}
