@@ -33,6 +33,10 @@ Route::get('/start',function(){
     return view('app_view.start');
 });
 
+Route::get('/d_eb',function() {
+    return response()->download(public_path().'/file/Eventpad_Project.docx');
+});
+
 
 /*** General Routes **/
 

@@ -26,5 +26,8 @@
                                         
                 
         @endif
-
+        You can Login to see more details
+    <a href="https://eventpad.ng/culogin" style="text-align:center;"><button class="btn btn-primary" type="">Login</button></a><br>
+                Thanks,
+                {{ config('app.name') }}
 @endsection
