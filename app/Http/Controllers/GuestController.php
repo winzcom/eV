@@ -288,7 +288,9 @@ class GuestController extends Controller
         try{
             if(isset($json->Type)){
                 if($json->Type === 'SubscriptionConfirmation'){
-                    $result = $sns_client->confirmSubscription(['Token'=>$json->Token,'TopicArn'=>$json->TopicArn]);
+                    $client = new Client();
+                    $res = $client->request('GET',$json->SubscribeURL);
+                    // $result = $sns_client->confirmSubscription(['Token'=>$json->Token,'TopicArn'=>$json->TopicArn]);
                 }elseif($json->Type === 'Notification'){
 
                 }
