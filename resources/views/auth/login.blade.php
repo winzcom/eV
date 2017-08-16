@@ -23,7 +23,7 @@
                 <div class="panel-body">
                 @if(session('message'))
                     <div class="alert alert-success">{{session('message')}} <br>
-                        <a href="{{url('/d_eb')}}">Please Click to download your e-book copy</a>
+                        <!-- <a href="{{url('/d_eb')}}">Please Click to download your e-book copy</a> -->
                     </div>
                 @endif
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
