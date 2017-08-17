@@ -229,6 +229,7 @@
                 
                 <h3>Step 6</h3>
                 <section>
+                    <span class="message"></span>
                     <p><b>Contact details<small>(so you can be notified when vendors reply with quotes and login to see quotes)</small><small style="color:red">*</small></b></p>
                     <label class="control-label" for="inputCity">First Name</label>
                     <div class="controls">
@@ -249,6 +250,10 @@
                     <label class="control-label" for="inputCity" id="step5password">Password</label>
                     <div class="controls">
                         <input name="password" class="form-control" type="password" id="step5password" required/>
+                    </div>
+                    <label class="control-label" for="inputCity" id="step5password">Phone Number</label>
+                    <div class="controls">
+                        <input name="phone_no" min="0" class="form-control" type="number" id="step5password" required/>
                     </div>
                 </section>
 

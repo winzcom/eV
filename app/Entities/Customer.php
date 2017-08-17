@@ -21,7 +21,8 @@ class Customer extends Authenticatable
 
     protected $table = "users";
     protected $fillable = [
-        'name','email','password','first_name','last_name','firebase_endpoint'
+        'name','email','password','first_name','last_name','firebase_endpoint',
+        'phone_no'
     ];
 
     public function sendPasswordResetNotification($token)

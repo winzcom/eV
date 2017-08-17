@@ -189,20 +189,24 @@ $(document).ready(function() {
 
                             var d = JSON.parse(data);
                             if (d.error) {
-                                var html = "<p style='color:white'>Error: " + d.error + "</p>"
-                                alertify.closeLogOnClick(true).error(html, function(ev) {
-                                    
-                                    $('#myModal').modal('show');
-                                });
+                                var html = "<p>Error: " + d.error + "</p>"
+                                // alertify.closeLogOnClick(true).error(html, function(ev) {
+                                //     $('.message').html(html);
+                                //     $('#myModal').modal('show');
+                                // });
+                                  $('.message').html(html);
+                                //   $('#myModal').modal('show');  
                             } else {
                                
-                                var html = "<p style='color:white'>Success: " + d.message + "</p>"
-                                alertify.closeLogOnClick(true).success(html);
-                                $('#myWizard').reset();
-                                $('#myModal').modal('hide');
+                                var html = "<p style='color:green;'>Success: " + d.message + "</p>"
+                                // alertify.closeLogOnClick(true).success(html);
+                                $('#myWizard')[0].reset();
+                                $('.message').html(html);
                             }
                         } catch (e) {
-                            $('#myModal').hide();
+                             var html = "<p style='color:green;'>Message: Request Sent</p>"
+                            $('.message').html(html);
+                            $('#myWizard')[0].reset();
                             //alertify.success('Request Sent');
                         }
 
