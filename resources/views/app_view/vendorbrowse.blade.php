@@ -121,7 +121,9 @@
                                         <div class="caption">
                                             <h3>{{$company->name}}</h3>
                                             <p>{{$service->limitWords($company->description,15)}}...</p>
+                                            @if($company->name_slug != null)
                                             <a href="{{url('/detail/')}}/{{$company->name_slug}}/{{$category_id}}" class="btn btn-primary btn-sm" title="Thumbnail link">Read More</a>
+                                            @endif
 
                                         </div>
                                     </div>
