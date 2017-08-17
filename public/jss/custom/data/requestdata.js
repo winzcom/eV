@@ -88,14 +88,15 @@ var CateringExtras = [
                         {name:'Starter Only',value:'Starter Only'},
                         {name:'Dessert Only',value:'Dessert Only'},
                         {name:'Both',value:'Both'},
+                    ]},
+                    {name:'Dish you like',type:'select',attach:'next',formname:'Menu_Type[]',children:[
+                        {name:'Yoruba ',value:'Yoruba '},
+                        {name:'Igbo',value:'Igbo '},
+                        {name:'Hausa',value:'Hausa'},
+                        {name:'Chinese',value:'Chinese'},
+                        {name:'Continental',value:'Continental'},
+                       
                     ]}
-                    // {name:'Menu',type:'select',attach:'next',formname:'Menu[]',children:[
-                    //     {name:'Jollof Rice',value:'Jollof Rice'},
-                    //     {name:'Fried Rice',value:'Fried Rice'},
-                    //     {name:'Amala',value:'Amala'},
-                    //     {name:'Pounded Yam',value:'Pounded Yam'},
-                    //     {name:'Egusi',value:'Egusi'}
-                    // ]}
                     // {name:'Do you want caterer to buy Items',attach:'next',type:'select',formname:'do_you_want_caterer_to_buy_items',children:[
                     //     {name:'No',value:'No'},
                     //     {name:'Yes',value:'Yes'}

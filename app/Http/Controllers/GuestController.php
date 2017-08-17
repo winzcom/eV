@@ -89,7 +89,7 @@ class GuestController extends Controller
         $users = null; $customer= null;
         $state = $request->state;
         $vicinity = $request->vicinity;
-        $client = $request->only(['first_name','last_name','email','password']);
+        $client = $request->only(['first_name','last_name','email','password','phone_no']);
         $category = $request->only(['category']);
         $request = $request->except(['category','firstname','','lastname','email','password','_token','state','vicinity']);
         
@@ -121,18 +121,20 @@ class GuestController extends Controller
                                     $customer->password = bcrypt($client['password']);
                                     $customer->first_name = $client['first_name'];
                                     $customer->last_name = $client['last_name'];
+                                    $customer->phone_no = $client['phone_no'];
                                     $customer->save();
+                                    
                                 } else {
                                     $customer = Customer::firstOrCreate([
                                             'first_name'=>$client['first_name'],
                                             'last_name'=>$client['last_name'],
                                             'email'=>$client['email'],
+                                            'phone_no'=>$client['phone_no'],
                                             'password'=>bcrypt($client['password'])
                                         ]);
                                 }
 
                             }catch(\Exception $e){
-
                                 echo json_encode(['error'=>'An error occured. Please try again']);
                                 return;
                             }

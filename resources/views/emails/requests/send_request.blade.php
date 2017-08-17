@@ -25,6 +25,8 @@
                                     }
                                     
                                 }
+                                elseif($key == 'phone_no')
+                                    continue;
                                 elseif($key == 'date'){
                                     $dt = null;
                                     try{
