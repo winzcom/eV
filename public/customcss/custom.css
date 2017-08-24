@@ -145,3 +145,10 @@ h3[class^='title'] {
 .input-group-btn {
 	display: inline!important;
 }
+
+.what_we_do{
+	position:relative;
+	background-color: #FBFCFC;
+	padding:30px;
+	z-index: 0.3;
+}
