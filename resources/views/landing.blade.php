@@ -65,6 +65,24 @@
 	<!-- section END -->
 	
 	<!-- section START top vendors  -->
+	<section class="container">
+		<div class="row">
+			<div class="col-md-6 col-sm-12">
+				<h2>About Us</h2>
+				<p>
+					EventPad is an event sourcing platform that offers a request-response form of communication
+					between event vendors and individuals who needs their services
+				</p>
+			</div>
+			<div class="col-md-6 col-sm-12">
+				<h2>What we do</h2>
+				<p>
+					We offer a simple approach that allows individuals or organizations to access multiple quotes from 
+					vendors with a single request.
+				</p>
+			</div>
+		</div>
+	</section>
 	<!-- section END -->
 	
 	<!-- section START Some Quotes-->
@@ -94,6 +112,7 @@
 	<!-- section END -->
 	
 	<!-- section START -->
+	
 	<!--<section class="section" id="pricing">
 		<div class="container">
 			<div class="row">

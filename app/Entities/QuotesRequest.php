@@ -31,7 +31,15 @@ class QuotesRequest extends Model
     }
 
     public function quote(){
-        return $this->hasMany('App\Entities\Quote','rid');
+        return $this->hasMany('App\Entities\Quote','rid')->with('vendor');
+    }
+
+    public function publicQuote() {
+        return $this->quote()->where('public','yes');
+    }
+
+    public function privateQuote() {
+        return $this->quote()->where('public','no');
     }
 
     public function client() {

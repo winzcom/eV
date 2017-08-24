@@ -17,6 +17,7 @@ if(count($all_requests) > 0){
         echo (int)$request->count_available_vendors !== 0 ? '<h5><i>(sent to '.((int)$request->count_available_vendors-1).' other vendors)</i></h5>':'';
 
         echo '<div>';
+        //echo "<a href='show_quotes/$request->id'><button type='' class='btn btn-info btn-sm show_others_quotes'>Show Quotes from Others</button></a> &nbsp;";
         if(is_null($rid) && !isset($customer)){
             if($isobject){
                 if(strtotime($ob->date)>strtotime(date('Y-m-d'))){

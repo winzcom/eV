@@ -23,7 +23,9 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/culogin') }}">
                         {{ csrf_field() }}
-
+                        @if($redirectUrl !== null)
+                            <input type="hidden" name="redirectUrl" value="{{$redirectUrl}}">
+                        @endif
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 

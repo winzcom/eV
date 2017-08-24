@@ -14,6 +14,10 @@ class Quote extends Model
     ];
 
     public function requests() {
-        $this->belongsTo('App\Entities\QuotesRequest','rid');
+        return $this->belongsTo('App\Entities\QuotesRequest','rid');
+    }
+
+    public function vendor() {
+        return $this->belongsTo('App\Entities\User','uid');
     }
 }

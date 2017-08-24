@@ -14,9 +14,9 @@ class EloquentClientAuthProvider extends  EloquentUserProvider
 
             $hasher = new BcryptHasher();
             parent::__construct($hasher,'\App\Entities\Customer');
-        }
-        public function retrieveByCredentials(array $credentials){
-            $user = parent::retrieveByCredentials($credentials);
-            return $user;
-        }
+    }
+    public function retrieveByCredentials(array $credentials){
+        $user = parent::retrieveByCredentials($credentials);
+        return $user;
+    }
 }

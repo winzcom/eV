@@ -14,7 +14,7 @@ use App\Service\Service;
 use App\Interfaces\GalleryInterface;
 
 use App\Entities\Category;
-use App\Entities\OffDays;
+use App\Entities\QuotesRequest;
 use App\Events\NewQuoteSent;
 
 
@@ -204,7 +204,7 @@ class UserController extends Controller
     public function showRequests(){
 
         $req = $this->getRequests();
-        $paginator = $this->user_repo->paginate($req,3);
+        $paginator = $this->user_repo->paginate($req,5);
         return view('vendor.requests')->with(['reqs'=>$paginator,
             
             'cats'=>Service::getCategories()
@@ -295,5 +295,10 @@ class UserController extends Controller
          return response()->json([
              'Bad request'
          ],401);
+    }
+
+    public function getQuotesFromOthers() {
+        $req_id = request()->rid;
+        return QuotesRequest::with('publicQuote')->where('id', $req_id)->get();
     }
 }

@@ -24,13 +24,16 @@ class CustomerAuthController extends Controller
     }
 
     public function login(Request $request){
-
+   
         $this->validate($request,[
             'email'=>'bail|required',
             'password'=>'required'
         ],$this->messages());
 
         if(Auth::guard('client')->attempt($request->only(['email','password']))){
+            if($request->redirectUrl !== null) {
+                return redirect($request->redirectUrl);
+            }
             return redirect($this->redirect);
         }
         else return redirect('/culogin')
@@ -40,8 +43,13 @@ class CustomerAuthController extends Controller
     }
 
     public function showLoginForm(){
-
-        return view('customer.login');
+        $referer = null;
+        if(request()->headers->get('referer')!== null) {
+            if(strpos(request()->headers->get('referer'),'detail') !== false) {
+                $referer = request()->headers->get('referer');
+            }
+        }
+        return view('customer.login')->with('redirectUrl',$referer);
     }
 
     protected function messages(){

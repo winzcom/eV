@@ -35,7 +35,7 @@ $(document).ready(function() {
         /** end of mutationobserver */
 
         function numberFormat(n) {
-            n.toFixed(2).replace(/./g,function(c,i,a){
+           return n.toFixed(2).replace(/./g,function(c,i,a){
                 return i && c!=="." && ((a.length - i) % 3 === 0) ? ',' + c : c;
             })
         }
@@ -182,6 +182,20 @@ $(document).ready(function() {
                     headers: {
                         'X-CSRF-TOKEN': Laravel.csrfToken,
                     },
+                    statusCode:{
+                        500: function() {
+                            var html = "<p style='color:red;'>Message: Request could not be sent an error occured</p>"
+                            $('.message').html(html);
+                            //alertify.log('An error occurred request can not be sent at the moment');
+                            finish.html('finish');
+                            finish.removeClass('disabled');
+                        },
+                        401:function() {
+                            alert('session has expired, please login again');
+                            finish.html('finish');
+                            finish.removeClass('disabled');
+                        }
+                    },
                     success: function(data) {
                         console.log(data);
                         
@@ -215,7 +229,9 @@ $(document).ready(function() {
                     },
                     error: function(err) {
                         console.log(err.error);
-                        alertify.log(err.error);
+                        $('.message').html(html);
+                        alertify.log('An Error occurred request can not be sent at the moment');
+                        finish.html('finish');
                     }
                 })
                 
