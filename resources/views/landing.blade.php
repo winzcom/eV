@@ -65,16 +65,16 @@
 	<!-- section END -->
 	
 	<!-- section START top vendors  -->
-	<section class="container">
-		<div class="row">
-			<div class="col-md-6 col-sm-12">
+	<section class="container-fluid">
+		<div class="row what_we_do">
+			<div class="col-md-6 col-sm-12 what_we_do_content">
 				<h2>About Us</h2>
 				<p>
 					EventPad is an event sourcing platform that offers a request-response form of communication
 					between event vendors and individuals who needs their services
 				</p>
 			</div>
-			<div class="col-md-6 col-sm-12">
+			<div class="col-md-6 col-sm-12 what_we_do_content">
 				<h2>What we do</h2>
 				<p>
 					We offer a simple approach that allows individuals or organizations to access multiple quotes from 
