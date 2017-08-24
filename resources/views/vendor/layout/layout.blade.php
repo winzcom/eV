@@ -187,6 +187,25 @@
 	</div><!-- /.container -->
 </nav>
 <!-- main navigation END -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="soq_modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Quotes</h4>
+      </div>
+      <div class="modal-body" id="quotes_modal_body">
+		<p id="getting_quotes">Getting quotes...</p>
+		<div id="quotes">
+			
+		</div> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 @yield('content')
 

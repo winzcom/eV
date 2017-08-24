@@ -46,6 +46,8 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/quotes','UserController@showQuotes');
 
     Route::post('/company_profile','UserController@uploadCompanyProfile');
+
+    Route::get('/show_quotes/{rid}', 'UserController@getQuotesFromOthers');
 });// end of middleware=>auth grouping
 
 ?>

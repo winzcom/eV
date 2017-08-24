@@ -25,15 +25,15 @@
                                     }
                                     
                                 }
-                                elseif($key == 'phone_no')
-                                    continue;
+                                /*elseif($key == 'phone_no')
+                                    continue;*/
                                 elseif($key == 'date'){
                                     $dt = null;
                                     try{
                                         $dt = \Carbon\Carbon::parse($value);
                                         echo str_replace('_',' ',title_case($key)).':'.$dt->toFormattedDateString().'<br><hr>';
                                     }catch(\Exception $e){
-                                        echo 'Date: Date of event not specified<br><hr>';
+                                        echo 'Date: Date of event not specified<br>';
                                     }
                                     
                                 }
@@ -50,7 +50,7 @@
                     @endforeach
                 </ul>
                 <br>
-                <a href="https://eventpad.ng/login" style="text-align:center;"><button class="btn btn-primary" type="">Login</button></a><br>
+                <a href="https://eventpad.ng/login" style="text-align:center;"><button class="btn btn-primary" type="">Login to submit quote</button></a><br>
                 Thanks,
                 {{ config('app.name') }}
 

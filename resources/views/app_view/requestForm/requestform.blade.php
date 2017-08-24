@@ -107,13 +107,13 @@
                     </div>
                     <div id="normalbudget">
                         <p>
-                            <label for="amount">Price range:</label>
+                            <span style="text-align:center; color:green;">Price range:</span>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label for="amount">Min:</label>
                                     <div class="input-group">
                                         <span class="input-group-btn">
-                                            &#8358;
+                                            '&#8358';
                                         </span>
                                         <input type="number" class="form-control price_budget" name ="my_budget[]" id="min_amount">
                                     </div>
@@ -123,7 +123,7 @@
                                     <label for="amount">Max:</label>
                                     <div class="input-group">
                                         <span class="input-group-btn">
-                                            &#8358;
+                                            '&#8358';
                                         </span>
                                         <input type="number" class="form-control price_budget" name ="my_budget[]" id="max_amount">
                                     </div>

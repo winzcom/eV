@@ -230,5 +230,66 @@ $(document).ready(function(){
         /**End ajax call */
     }
 
+     $('#soq_modal').on('hidden.bs.modal', function(e) {
+         document.querySelector('#getting_quotes').innerHTML = 'Getting Quotes...';
+         document.querySelector('#quotes').innerHTML = '';
+     })
+
+    $('.show_others_quotes').click(function(e) {
+        e.preventDefault();
+        $('#soq_modal').modal('show')
+        $.ajax({
+            url:e.target.parentNode.getAttribute('href'),
+            dataType:'JSON',
+            method:'GET',
+            headers:{
+						'X-CSRF-TOKEN':$("meta[name='csrf-token']").attr("content")
+                    },
+            statusCode:{
+                500: function() {
+                    alert('Request Cannot be processed at this time please try again later');
+                },
+                401:function() {
+                    alert('session has expired, please login again');
+                }
+            },
+            success: function(data) {
+                var outerContent = '<ul class="list-group">';
+                var content = '';
+                if(data.length > 0) {
+                    content = data[0].public_quote.map(function(quote) {
+                        var li = '<li class="list-group-item quote_li"><h3 class="">'+quote.vendor.name+'</h3>';
+                        if(quote.vendor.company_image !== null)
+                            li+='<img src="'+myUrl+'storage/images/'+quote.vendor.company_image+'" class="quote_img">';
+                        else
+                            li+='<img src="'+myUrl+'img/gmc.png" class="quote_img">';
+                        var cost = numberFormat(+quote.cost);
+                        li+='<div class="quote_content">'
+                        li+='<h3>Price: &#8358;'+cost+'</h3>';
+                        li+='</div>';
+                        li+='</li>';
+                        return li;
+                    }).reduce(function(over,quote) {
+                        return over+=quote;
+                    },'')
+                } else content = '<li>No Quotes Yet</li>';
+                var div = document.querySelector('#quotes');
+                var getting_quotes = document.querySelector('#getting_quotes');
+                getting_quotes.innerHTML = '';
+                outerContent+=content;
+                div.insertAdjacentHTML('afterbegin',outerContent);
+                console.log(content);
+            },
+            error: function(jqxhr,err,textErr) {
+                console.log(textErr);
+            }
+        });
+    })
+
+    function numberFormat(n) {
+        return n.toFixed(2).replace(/./g,function(c,i,a){
+            return i && c!=="." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+        });
+    }
     
 })

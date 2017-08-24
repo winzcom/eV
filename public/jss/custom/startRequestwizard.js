@@ -35,7 +35,7 @@ $(document).ready(function() {
         /** end of mutationobserver */
 
         function numberFormat(n) {
-            n.toFixed(2).replace(/./g,function(c,i,a){
+           return n.toFixed(2).replace(/./g,function(c,i,a){
                 return i && c!=="." && ((a.length - i) % 3 === 0) ? ',' + c : c;
             })
         }
