@@ -179,6 +179,7 @@ $(document).ready(function() {
                     url: request_url,
                     type: 'POST',
                     data: formData,
+                    dataType:"json",
                     headers: {
                         'X-CSRF-TOKEN': Laravel.csrfToken,
                     },

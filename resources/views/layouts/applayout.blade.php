@@ -196,12 +196,12 @@ window.customerUrl = window.location.origin+'/';
 <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
 <script src="{{asset('jss/firebase_config.js')}}"></script>
 <script src="{{asset('jss/custom/firebase.js')}}"></script>
-
+<script src="{{asset('jss/custom/googleautocomplete.js')}}"></script>
 
 <!--<script src="{{asset('vendor/twitterwizard/js/modal.js')}}"></script>-->
-<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7SGP6giYEwQUUJXWbBffqhe9AIbp1ciY&libraries=places&callback=initAutoComplete,initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7SGP6giYEwQUUJXWbBffqhe9AIbp1ciY&libraries=places&callback=initAutoComplete"
         async defer>
-</script>-->
+</script>
 
 <script src="{{asset('js/jquery.validate.min.js')}}"></script>
 <script src="{{asset('vendor/js/jquery.steps.min.js')}}"></script>

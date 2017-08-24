@@ -26,15 +26,15 @@
 		autocomplete.addListener('place_changed',function(){
 			var place = autocomplete.getPlace();
 			console.log(place.address_components);
-            //fillInAddress(autocomplete);
+            fillInAddress(autocomplete);
 		})
 
-		var auto = new google.maps.places.Autocomplete(autocomplete2,options);
-		auto.addListener('place_changed',function(){
-			var place = auto.getPlace();
-			console.log(place.address_components);
-            fillInAddress(auto);
-		})
+		// var auto = new google.maps.places.Autocomplete(autocomplete2,options);
+		// auto.addListener('place_changed',function(){
+		// 	var place = auto.getPlace();
+		// 	console.log(place.address_components);
+    //         fillInAddress(auto);
+		// })
 	}
 	/***End of Google Map and Autocomplete */
 
