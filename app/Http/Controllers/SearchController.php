@@ -42,8 +42,8 @@ class SearchController extends Controller
         $companies = User::with('reviews','galleries','bay_average')->whereHas('categories',function($q) use ($cat){
             $q->where('categories.id',$cat);
         });
-        
-        $state !== '' ? $companies = $companies->StateVicinity($state,'')->paginate(15) : $companies = $companies->paginate(15);
+        $state !== '' ? $companies = $companies->StateVicinity($state,'') : $companies;
+        $companies = $companies->where('password','!=','')->where('password','!=',null)->paginate(15);
        return $companies;
     }
 

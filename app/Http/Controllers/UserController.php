@@ -95,18 +95,14 @@ class UserController extends Controller
 
     public function uploadPhotos(Request $request){
       
-        
         $this->validate($request,[
             'photo.*'=>'mimes:jpeg,bmp,png,jfif,gif',
             'size'=>'5000'
         ],['size'=>'size must be less than 5MB']);
 
-        
-
         $names = Service::uploadPhotos($this->gallery,$request->photo,$request->caption,Auth::user()->name_slug,Auth::id());
         if($request->ajax()){
-
-                return json_encode(array('status'=>'Success','paths'=>$names));
+            return json_encode(array('status'=>'Success','paths'=>$names));
         }
         
         return back();
@@ -297,8 +293,34 @@ class UserController extends Controller
          ],401);
     }
 
+    private function canViewOthersQuote() {
+        return true;
+    }
+
     public function getQuotesFromOthers() {
-        $req_id = request()->rid;
-        return QuotesRequest::with('publicQuote')->where('id', $req_id)->get();
+        if($this->canViewOthersQuote()) {
+            if(!is_null(request()->rid)) {
+                $data = QuotesRequest::with('quote')->where('id', request()->rid)->first();
+                return response()->json($data);
+            } else {
+                return response()->json([
+                    'error'=>[
+                        'message'=>'Bad Request',
+                        'code'=>400
+                    ]
+                ],400);
+            }    
+            
+        }
+        return response()->json([
+            'error'=>[
+                'message'=>'You are not allowed to view others quotes',
+                'code'=>422
+            ]
+        ],422);
+    }
+
+    function templateRendering() {
+
     }
 }

@@ -31,7 +31,9 @@ class QuotesRequest extends Model
     }
 
     public function quote(){
-        return $this->hasMany('App\Entities\Quote','rid')->with('vendor');
+        return $this->hasMany('App\Entities\Quote','rid')->with(['vendor'=>function($query){
+            $query->where('companies.id','!=',request()->user()->id);
+        }]);
     }
 
     public function publicQuote() {
