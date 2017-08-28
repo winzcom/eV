@@ -15,9 +15,12 @@ if(count($all_requests) > 0){
         }
         echo 'request from '.$request->client_name.' for '.$cats->where('id',$request->category_id)->first()->name.'</h3>';
         echo (int)$request->count_available_vendors !== 0 ? '<h5><i>(sent to '.((int)$request->count_available_vendors-1).' other vendors)</i></h5>':'';
-
+        $num = $rid ? ((int)$request->crid-1) : (int)$request->crid;
         echo '<div>';
-        //echo "<a href='show_quotes/$request->id'><button type='' class='btn btn-info btn-sm show_others_quotes'>Show Quotes from Others</button></a> &nbsp;";
+        /*echo "<a href='show_quotes/$request->id'>
+        <button type='' class='btn btn-info btn-sm show_others_quotes'>
+            Show Quotes from Others($num)
+        </button></a> &nbsp;";*/
         if(is_null($rid) && !isset($customer)){
             if($isobject){
                 if(strtotime($ob->date)>strtotime(date('Y-m-d'))){
@@ -39,7 +42,7 @@ if(count($all_requests) > 0){
             }
             else 
                 echo "<div class='row'><div class='alert alert-warning col-sm-4'>Event Schedule Date has Passed</div>
-                <div class='col-sm-6'><button class='btn btn-danger btn-sm col-sm-1 col-md-4 request dismiss' data-rid = '$request->id'
+                <div class='col-sm-6'><button class='btn btn-danger btn-sm col-md-4 request dismiss' data-rid = '$request->id'
                     data-cid = '$request->client_id'>
                     Dismiss
                     

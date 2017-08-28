@@ -251,28 +251,35 @@ $(document).ready(function(){
                 },
                 401:function() {
                     alert('session has expired, please login again');
+                },
+                400:function() {
+                    alert('Bad request'); 
                 }
             },
             success: function(data) {
                 var outerContent = '<ul class="list-group">';
                 var content = '';
-                if(data.length > 0) {
-                    content = data[0].public_quote.map(function(quote) {
-                        var li = '<li class="list-group-item quote_li"><h3 class="">'+quote.vendor.name+'</h3>';
-                        if(quote.vendor.company_image !== null)
-                            li+='<img src="'+myUrl+'storage/images/'+quote.vendor.company_image+'" class="quote_img">';
-                        else
-                            li+='<img src="'+myUrl+'img/gmc.png" class="quote_img">';
-                        var cost = numberFormat(+quote.cost);
-                        li+='<div class="quote_content">'
-                        li+='<h3>Price: &#8358;'+cost+'</h3>';
-                        li+='</div>';
-                        li+='</li>';
-                        return li;
+                if(data.quote.length > 0) {
+                    content = data.quote.map(function(quote) {
+                        if(quote.vendor !== null) {
+                            var li = '<li class="list-group-item quote_li"><h3 class="">'+quote.vendor.name+'</h3>';
+                            if(quote.vendor.company_image !== null)
+                                li+='<img src="'+myUrl+'storage/images/'+quote.vendor.company_image+'" class="quote_img">';
+                            else
+                                li+='<img src="'+myUrl+'img/gmc.png" class="quote_img">';
+                            var cost = numberFormat(+quote.cost);
+                            li+='<div class="quote_content">'
+                            li+='<h3>Price: &#8358;'+cost+'</h3>';
+                            li+='</div>';
+                            li+='</li>';
+                            return li;
+                        }
+                        return '';
+                        
                     }).reduce(function(over,quote) {
                         return over+=quote;
                     },'')
-                } else content = '<li>No Quotes Yet</li>';
+                } else content = '<li class="no_quotes">No Quotes Yet</li>';
                 var div = document.querySelector('#quotes');
                 var getting_quotes = document.querySelector('#getting_quotes');
                 getting_quotes.innerHTML = '';
