@@ -115,6 +115,11 @@
 
                                                     <img src="{{$path}}/{{$company->galleries->first()->image_name}}" alt="" style="width:100%;max-height:250px;"/>
                                                     </div>
+                                                @elseif($company->company_image !== '')
+                                                    <div class="item">
+
+                                                    <img src="{{asset('storage/images')}}/{{$company->company_image}}" alt="" style="width:100%; max-height:250px;"/>
+                                                    </div>
                                                 @else
                                                     <div class="item">
 
