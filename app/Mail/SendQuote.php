@@ -21,15 +21,16 @@ class SendQuote extends Mailable
      protected $vendor;
      protected $cost;
      protected $message;
+     protected $attachment;
 
-
-    public function __construct($request,$vendor,$cost,$message)
+    public function __construct($request,$vendor,$cost,$message,$attachment = null)
     {
         //
         $this->request = $request;
         $this->vendor = $vendor;
         $this->cost = $cost;
         $this->message = $message;
+        $this->attachment = $attachment;
     }
 
     /**
@@ -39,8 +40,11 @@ class SendQuote extends Mailable
      */
     public function build()
     {
-        return $this->from('quote@eventpad.ng')->markdown('emails.quotes.send_quote')
-                    ->with([
+        $mailer = $this->from('quote@eventpad.ng')->markdown('emails.quotes.send_quote');
+        if( $this->attachment !== null ) {
+            $mailer->attach(public_path().'/file_quote\/'.$this->attachment);
+        }
+           return $mailer->with([
                         'request'=>$this->request,
                         'vendor'=>$this->vendor,
                         'cost'=>$this->cost,

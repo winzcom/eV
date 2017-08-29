@@ -25,14 +25,15 @@ class NewQuoteSent
      protected $cost;
      protected $message;
 
-    public function __construct($request,$vendor,$cost,$message)
+    public function __construct($request,$vendor,$quote)
     {
         //
        
         $this->request = $request;
         $this->vendor = $vendor;
-        $this->cost = $cost;
-        $this->message = $message;
+        $this->cost = $quote->cost;
+        $this->message = $quote->message;
+        $this->attachment = $quote->file_name;
     }
 
     public function __get($name){

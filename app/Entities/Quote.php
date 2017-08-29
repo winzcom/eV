@@ -10,7 +10,7 @@ class Quote extends Model
 
     protected $table = 'quotes';
     protected $fillable = [
-        'rid','uid','cost','message','contact','client_id'
+        'rid','uid','cost','message','contact','client_id','file_name'
     ];
 
     public function requests() {

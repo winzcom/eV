@@ -44,7 +44,7 @@
 	<a href="#content" class="arrow bounce" title="Scroll Down"><i class="fa fa-angle-down"></i></a>
 </section>
 <!-- page title style6 END -->
-@include('app_view.requestForm.show_quote',['request'=>$quotes->first()->pluck('qrequest')->first()])
+@include('app_view.requestForm.show_quote',['request'=>$quotes->first()->pluck('qrequest')->first(),'cats'=>$cats])
 
 
 <!-- page content START -->
