@@ -40,14 +40,8 @@ class NewQuotesSentListener
        if($client_firebase_endpoint !== null)
             $this->push_message->pushMessage($client_firebase_endpoint,$event->vendor,$event->request->name);
         else {
-            Mail::to($event->request->email)
-               ->send(new SendQuote($event->request,$event->vendor,$event->cost,$event->message));
+            $mailer = Mail::to($event->request->email);
+               $mailer->send(new SendQuote($event->request,$event->vendor,$event->cost,$event->message, $event->attachment));
         }
-        
-
-        //Send A Push notification
-
-        
-       
     }
 }

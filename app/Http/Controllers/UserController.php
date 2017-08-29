@@ -15,6 +15,7 @@ use App\Interfaces\GalleryInterface;
 
 use App\Entities\Category;
 use App\Entities\QuotesRequest;
+use App\Entities\Quote;
 use App\Events\NewQuoteSent;
 
 
@@ -50,9 +51,9 @@ class UserController extends Controller
         $file = $request->file('company_image');
         $filtered = $request->except(['password_confirm','category','_token','company_image']);
         $filtered['password'] = bcrypt($filtered['password']);
-        if($file !== null && $file->isValid()){
+        if( $file !== null && $file->isValid() ){
             $filtered['company_image'] = Auth::user()->name.$file->getClientOriginalName();
-            $file->storeAs('images',$filtered['company_image'],'public');
+            $file->storeAs('storage/images',$filtered['company_image'],'public');
         }
         
         
@@ -222,19 +223,45 @@ class UserController extends Controller
     public function replyRequest(Request $request){
         
         $id = null; $client = null;
-       
+       $content =  [
+            'rid'=>$request->rid,
+            'uid'=>Auth::id(),
+            'client_id'=>$request->client_id,
+            'cost'=>$request->cost,
+            'down_payment'=>$request->down_payment !== null ? $request->down_payment:0,
+            'message'=>$request->message
+        ];
 
-        DB::transaction(function() use ($request,$id){
+        if( $request->hasFile('quote_file') && $request->file('quote_file')->isValid() ) {
+            $file = $request->file('quote_file');
+            $content = array_merge($content, ['file_name' => $file->getClientOriginalName()]);
+            $file->storeAs('file_quote',$file->getClientOriginalName(),'my_public');
+        }
+
+        $quote = Quote::create($content);
+      
+        if($quote !== null ) {
             $request_data = $this->user_repo->getRequest($request->rid);
+            event(new NewQuoteSent($request_data,Auth::user(),$quote));
+                    return response()->json([
+                        'status'=>'Quotes Sent Successfully to '.$request_data->first_name.' '.$request_data->last_name
+                    ]);
+        } else {
+            return response()->json([
+                'status' => 'Reply could not be sent'
+            ], 402);
+        }
+        // DB::transaction(function() use ($request,$id){
+        //     $request_data = $this->user_repo->getRequest($request->rid);
             
-            $id = DB::table('quotes')->insertGetId([
-                'rid'=>$request->rid,
-                'uid'=>Auth::id(),
-                'client_id'=>$request->client_id,
-                'cost'=>$request->cost,
-                'down_payment'=>$request->down_payment !== null ? $request->down_payment:0,
-                'message'=>$request->message
-            ]);
+            // $id = DB::table('quotes')->insertGetId([
+            //     'rid'=>$request->rid,
+            //     'uid'=>Auth::id(),
+            //     'client_id'=>$request->client_id,
+            //     'cost'=>$request->cost,
+            //     'down_payment'=>$request->down_payment !== null ? $request->down_payment:0,
+            //     'message'=>$request->message
+            // ]);
 
             /*$datas = [
 
@@ -246,19 +273,19 @@ class UserController extends Controller
 
 
 
-            if(!is_null($id)){
-                   event(new NewQuoteSent($request_data,Auth::user(),$request->cost,$request->message));
-                   return response()->json([
-                        'status'=>'Quotes Sent Successfully to '.$request_data->first_name.' '.$request_data->last_name
-                        ]);
-                    }
-                else{
-                    return response()->json([
-                        'status'=>'Error Sending Please try again'
-                    ],401);
-                }
+        //     if(!is_null($id)){
+        //            event(new NewQuoteSent($request_data,Auth::user(),$request->cost,$request->message));
+        //            return response()->json([
+        //                 'status'=>'Quotes Sent Successfully to '.$request_data->first_name.' '.$request_data->last_name
+        //                 ]);
+        //             }
+        //         else{
+        //             return response()->json([
+        //                 'status'=>'Error Sending Please try again'
+        //             ],402);
+        //         }
 
-        });
+        // });
         
     }
 

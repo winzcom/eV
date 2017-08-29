@@ -229,7 +229,6 @@
                 
                 <h3>Step 6</h3>
                 <section>
-                    <span class="message"></span>
                     <p><b>Contact details<small>(so you can be notified when vendors reply with quotes and login to see quotes)</small><small style="color:red">*</small></b></p>
                     <label class="control-label" for="inputCity">First Name</label>
                     <div class="controls">
@@ -272,6 +271,7 @@
         </form>
         <div class="modal-footer">
             <button type="button" class="btn-xs btn-default js-btn-step pull-left" data-orientation="cancel" data-dismiss="modal">Cancel</button>
+            <span class="message"></span>
             <!--<button type="button" class="btn btn-warning js-btn-step" data-orientation="previous"></button>
             <button type="button" class="btn btn-success js-btn-step" data-orientation="next"></button>-->
         </div>

@@ -90,17 +90,18 @@
             foreach($obj as $key=>$value){
 
                 if(is_array($value)){
-                    echo 'Additional Services ( ';
-                        foreach($value as $val){
-                            if(is_numeric($val))
-                                echo $cats->where('id',$val)->first()->name.' ';
-                            else
-                                echo $val.' ';
-                        }
-                        echo ' )<br><br>';
+                    if($key == 'my_budget'){
+                        echo str_replace('_',' ',title_case($key));
+                        echo ': &#8358;'.$service->currencyFormatter($value[0]).'- &#8358;'.$service->currencyFormatter($value[1]);
+                        echo '<br><hr>';
+                    }else {
+                        echo $key == 'extra'? 'Extras: (': ucwords($key).': (';
+                        echo implode(",",$value);
+                        echo ' )';
+                    }
                 }
                 else
-                    echo title_case($key).':'.$value.'<br><hr>';
+                    echo str_replace('_',' ',title_case($key)).':'.$value.'<br><hr>';
             }
         }
         else{

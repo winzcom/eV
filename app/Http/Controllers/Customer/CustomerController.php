@@ -77,7 +77,8 @@ class CustomerController extends Controller
         $cost_avg = $d->data->first()->pluck('cost_avg')->first();
         return view('customer.cuquote')->with(['quotes'=>$quotes,
                                                 'amazon_path'=>$this->amazon_path,
-                                                'cost_avg'=>$cost_avg
+                                                'cost_avg'=>$cost_avg,
+                                                'cats'=>Category::all(),
                                             ]);
     }
 

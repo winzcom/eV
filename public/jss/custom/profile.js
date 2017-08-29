@@ -1,5 +1,10 @@
 $(document).ready(function(){
 
+    var file_quote = document.querySelector('#quote_file');
+    if(file_quote !== null && file_quote !== undefined) {
+        file_quote.addEventListener('change', handleFiles, false);
+        var quote_file = null;
+    }
     $('#reply_request').on('show.bs.modal',function(event){
 
          var button = $(event.relatedTarget);
@@ -73,13 +78,11 @@ $(document).ready(function(){
              
              var form = $('#send_request_form');
              var inputs = form.find('.quo');
-
-             $(this).attr('disabled',true);
-             $(this).html('sending quote..');
         
              inputs.each(function(i,v){
-                 if($(this).val() == ''){
+                 if($(this).val() == '' && ( $(this).attr('name') !== 'quote_file' && $(this).attr('name') !== 'down_payment') ){
                      this.focus();
+                     $(this).css('border-bottom','solid 1px red');
                      valid = false;
                  }
                  else{
@@ -98,13 +101,14 @@ $(document).ready(function(){
 
                 fd.append('rid',rid);
                 fd.append('client_id',client_id);
-               
+                if(quote_file !== null )
+                    fd.append('quote_file', quote_file);
                 //fd.append('uid',vendor_id);
                 var data = fd;
                 submitRequest(data,self,url,button);
-             }
-            
-            
+                $(this).html('sending quote..');
+                $(this).attr('disabled',true);
+             }             
              //self.modal('hide');
          })
     });// shown.bs.modal ends
@@ -205,9 +209,9 @@ $(document).ready(function(){
         $.ajax({
 					url:myUrl+'reply_request',
 					type:"POST",
+                    data:data,
+                    contentType:false,
                     processData:false,
-					data:data,
-					contentType:false,
 					headers:{
 						'X-CSRF-TOKEN':$("meta[name='csrf-token']").attr("content")
 					},
@@ -220,7 +224,7 @@ $(document).ready(function(){
                             location.href = location.href+'#messages';
                             location.reload(true);
                         }, 100);
-                        alertify.log('Reply Sent ');
+                        alertify.log('Reply Sent');
                     },
                     error:function(err){
                         alertify.alert('An error occured, quote could not be sent ');
@@ -299,4 +303,29 @@ $(document).ready(function(){
         });
     }
     
+    function handleFiles() {
+        var header = $('#reply_header');
+        var send_quote_button = $('#send_quote');
+        var text = header.text();
+        header.text('Request Reply');
+        var text = header.text();
+        var imageType = /^image\//, pdfType = /^pdf\//;
+        if(this.files.length > 0) {
+            var file = this.files[0];
+            var size = file.size;
+            sizeInKb = (+size)/1000;
+            fileType = file.type;
+            console.log(fileType);
+            if(sizeInKb > 100) {
+                header.text(text+' Size exceeds 100kb');
+                send_quote_button.attr('disabled', true)
+            } else if(!imageType.test(fileType) && !pdfType.test(fileType) ) {
+                header.text(text+' File not of type image or pdf');
+                send_quote_button.attr('disabled', true)
+            } else {
+                send_quote_button.attr('disabled', false);
+            }
+            quote_file = file;
+        }
+    }
 })

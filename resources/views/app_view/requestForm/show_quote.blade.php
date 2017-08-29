@@ -6,7 +6,7 @@
         <h4 class="modal-title">Request</h4>
       </div>
       <div class="modal-body">
-        @include('app_view.shared.showfewrequestforclient',['request'=>$request])
+        @include('app_view.shared.showfewrequestforclient',['request'=>$request,'cats'=>$cats])
      </div>
       <div class="modal-footer">
         <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
