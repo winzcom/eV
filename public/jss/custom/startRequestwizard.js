@@ -225,6 +225,11 @@ $(document).ready(function() {
                             //alertify.success('Request Sent');
                         }
 
+                        setTimeout(function() {
+                            $('.message').html('');
+                            $('.vendor_available').html('');
+                        }, 200);
+
                         finish.html('finish');
                         finish.removeClass('disabled');
                     },

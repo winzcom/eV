@@ -3,7 +3,7 @@
 @section('content')
 
    @inject('service','App\Service\Service')
-                <h3 style="text-align:center;">
+                <h3 style="text-align:center; margin-top:16px;">
                     New Request From {{ $first_name }} {{ $last_name }} for 
                     {{ $category }}
                 </h3><br>
@@ -31,7 +31,7 @@
                                     $dt = null;
                                     try{
                                         $dt = \Carbon\Carbon::parse($value);
-                                        echo str_replace('_',' ',title_case($key)).':'.$dt->toFormattedDateString().'<br><hr>';
+                                        echo str_replace('_',' ',title_case($key)).':'.$dt->toFormattedDateString().'<br>';
                                     }catch(\Exception $e){
                                         echo 'Date: Date of event not specified<br>';
                                     }
@@ -42,6 +42,10 @@
                                         echo '<li>'.str_replace('_',' ',title_case($key)).': &#8358;'.$service->currencyFormatter($lower).'- &#8358;'.$service->currencyFormatter($higher).'<li><br><br>';
                                         continue;
                                 }
+                                elseif($key === 'personal_message') {
+                                    echo '<label>'.ucfirst(str_replace('_',' ',title_case($key))).'</label>';
+                                    echo '<textarea rows="10" cols="40" readonly>'.$value.'</textarea>';
+                                }
                                 else
                                    echo '<li>'. ucfirst(str_replace('_',' ',title_case($key))).' : '. $value.'</li>';
                             @endphp
@@ -50,7 +54,7 @@
                     @endforeach
                 </ul>
                 <br>
-                <a href="https://eventpad.ng/login" style="text-align:center;"><button class="btn btn-primary" type="">Login to submit quote</button></a><br>
+                <a href="https://eventpad.ng/login" style="text-align:center;"><button class="btn btn-primary login_to_reply" type="">Login to submit quote</button></a><br><br>
                 Thanks,
                 {{ config('app.name') }}
 

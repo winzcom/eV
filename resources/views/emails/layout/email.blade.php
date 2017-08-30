@@ -33,7 +33,12 @@ Email on Acid - http://www.emailonacid.com/blog/details/C18/doctype_-_the_black_
 			font-weight:normal;
 		}
 		#outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
-		body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:25px;}
+		body{
+			width:100% !important; 
+			-webkit-text-size-adjust:100%; 
+			-ms-text-size-adjust:100%; margin:0; 
+			padding:25px;
+		}
 		/* Prevent Webkit and Windows Mobile platforms from changing default font sizes, while not breaking desktop design. */
 		.ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
 		.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
@@ -50,16 +55,31 @@ Email on Acid - http://www.emailonacid.com/blog/details/C18/doctype_-_the_black_
 		.list-group-item{position:relative;display:block;padding:10px 15px;margin-bottom:-1px;background-color:#fff;border:1px solid #ddd}
 		ul,ol {
 			list-style-type:none;
-			border: 1px solid #000;
+			border: 1px solid #DCDCDC;
+			border-radius:5px;
+			box-shadow:1px 1px 20px #888888;
 			padding:16px;
+		}
+		.login_to_reply {
+			padding:25px;
+		}
+		ul,ol > li:even {
+			background-color: #F8F8FF;
 		}
 		ul,ol > li:last-child {
 			border-bottom:none;
+		}
+		textarea {
+			font-family:Arial, sans-serif;
+			padding:5px;
+			word-wrap:break-word;
+			overflow:scroll;
 		}
 		ul,ol > li {
 			font-family:sans-serif,Arial,Helvetica;
 			font-weight:normal;
 			border:1px solid #000;
+			padding:16px!important;
 		}
 		img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
 		a img {border:none;}
