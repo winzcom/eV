@@ -33,7 +33,7 @@ var CateringAdditionals = [
                             
                             //{name:'Catering Equipment',value:'Catering Equipment',type:'checkbox',formname:'extra[]',label:'Do you need this additional service'},
                             {name:'TableWare',value:'Catering Equipment',type:'checkbox',formname:'extra[]'},
-                            {name:'Waiting Staffs',value:'Catering Equipment',type:'checkbox',formname:'extra[]'},
+                            {name:'Waiting Staffs',value:'Waiting Staffs',type:'checkbox',formname:'extra[]'},
                             {name:'Bar Service',value:'Bar Service',type:'checkbox',formname:'extra[]'},
                             //{name:'Rental/Setup',value:'Rental/Setup',type:'checkbox',formname:'extra[]'},
                             //{name:'Chair Covers',value:'Chair Covers',type:'checkbox',formname:'extra[]'}
@@ -83,7 +83,7 @@ var CateringExtras = [
                             {name:'Outdoor',value:'Outdoor'}
                         ],
                     },
-                    {name:'Do you need starter and dessert',type:'select',formname:'starter_dessert',children:[
+                    {name:'Do you need starter and dessert',type:'select',formname:'starter_or_dessert',children:[
                         {name:'None',value:'None'},
                         {name:'Starter Only',value:'Starter Only'},
                         {name:'Dessert Only',value:'Dessert Only'},
