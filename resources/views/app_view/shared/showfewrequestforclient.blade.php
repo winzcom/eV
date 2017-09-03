@@ -98,6 +98,7 @@
                         echo $key == 'extra'? 'Extras: (': ucwords($key).': (';
                         echo implode(",",$value);
                         echo ' )';
+                        echo '<br><hr>';
                     }
                 }
                 else
