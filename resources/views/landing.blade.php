@@ -60,6 +60,10 @@
 					</div>
 				</div>
 			</div>
+			<!-- description for vendors -->
+			<div class="row">
+				
+			</div>
 		</div>
 	</section>
 	<!-- section END -->

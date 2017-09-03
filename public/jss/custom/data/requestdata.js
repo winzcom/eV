@@ -151,7 +151,7 @@ var cakeExtras = [
             {name:'Vanilla',value:'Vanilla'},
             {name:'Butter',value:'Butter'},
         ]
-    },{name:'Number of Tier',value:'',type:'text',formname:'number_of_tier'},
+    },{name:'Other flavour',value:'',type:'text',formname:'other_flavour'},
 ]
 
 var drinkAdditional = [
