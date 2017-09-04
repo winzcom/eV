@@ -20,6 +20,7 @@ Email on Acid - http://www.emailonacid.com/blog/details/C18/doctype_-_the_black_
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>Your Message Subject or Title</title>
+	<link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
 	<style type="text/css">
 		/***********
 		Originally based on The MailChimp Reset from Fabio Carneiro, MailChimp User Experience Design
@@ -59,6 +60,16 @@ Email on Acid - http://www.emailonacid.com/blog/details/C18/doctype_-_the_black_
 			border-radius:5px;
 			box-shadow:1px 1px 20px #888888;
 			padding:16px;
+		}
+
+		#freg_div {
+			margin:auto;
+			padding:20px;
+		}
+
+		#freg_div > p {
+			font-family:'Work Sans', sans-serif;
+			line-height:130%;
 		}
 		.login_to_reply {
 			padding:25px;

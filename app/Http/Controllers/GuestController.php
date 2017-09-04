@@ -9,6 +9,7 @@ use Aws\Sns\SnsClient;
 use App\Service\Service;
 use GuzzleHttp\Client;
 use App\Mail\SendVerificationMail;
+use App\Mail\ThankYouMail;
 use App\Mail\EmailTypeVerification;
 use Illuminate\Support\Facades\DB;
 use App\Entities\User;
@@ -312,6 +313,16 @@ class GuestController extends Controller
                     
         }
 
+    }
+
+    public function sendFollowUpThanksMail() {
+        $users = User::where('password', '!=', '')
+            ->get();
+        if($users->isNotEmpty()) {
+            $users->each(function($user) {
+                Mail::to($user->email)->send(new ThankYouMail($user->name));
+            });
+        }
     }
 }
 

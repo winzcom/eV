@@ -37,6 +37,8 @@ Route::get('/d_eb',function() {
     return response()->download(public_path().'/file/Eventpad_Project.docx');
 });
 
+Route::get('/send_follow_up_thanks', 'GuestController@sendFollowUpThanksMail');
+
 
 /*** General Routes **/
 
