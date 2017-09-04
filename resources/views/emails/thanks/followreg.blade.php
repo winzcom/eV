@@ -7,7 +7,7 @@
     <p>
         Thank you for registering your business on eventpad.ng. By taking this initial step, 
         you are already well on your way to getting more customers to your business.
-        For our registered vendors,
+        For our users,
         Eventpad makes requests from individuals and event organizers accessible to you, You can then decide to respond to them provided you are interested in making them your customers.
         Please let us know how we can help you by emailing us at eventpadinfo@gmail.com
         <!-- This works by making requests from individuals and event organizers accessible to you. 
@@ -39,6 +39,8 @@
 
         Eventpad Team
     </p>
+    <br><br><br>
+    <small>Read more  <a href="https://eventpad.ng/about_us">here</a></small>
 </div>
 
 
