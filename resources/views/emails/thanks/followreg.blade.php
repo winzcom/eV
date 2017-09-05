@@ -5,11 +5,15 @@
 <div id="freg_div">
     <h4>Dear, {{ $company_name }}</h4><br>
     <p>
-        Thank you for registering your business on eventpad.ng. By taking this initial step, 
+        Thank you for registering your business on <a href="https://eventpad.ng">eventpad.ng</a>  By taking this initial step, 
         you are already well on your way to getting more customers to your business.
+    </p>
+    <p>
         For our users,
         Eventpad makes requests from individuals and event organizers accessible to you, You can then decide to respond to them provided you are interested in making them your customers.
-        Please let us know how we can help you by emailing us at eventpadinfo@gmail.com
+    </p>
+    <p>
+        Please let us know how we can help you by emailing us at info@eventpad.ng
         <!-- This works by making requests from individuals and event organizers accessible to you. 
         You can then decide to respond to them provided you are interested in making them your customers.
 
