@@ -118,7 +118,7 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
     public function getUserQuery($category,$state,$vicinity) {
       return $this->getModel()->whereHas('categories',function($q) use ($category){
                     $q->where('categories.id',$category['category']);
-                })->StateVicinity($state,$vicinity);
+                })->where('bounced',0)->StateVicinity($state,$vicinity);
     }
 
     public function getRequest($id){
@@ -157,6 +157,10 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
         return  $this->getRequests()->filter(function($value,$key){
              return $value->rid == null;
          });
+    }
+
+    public function getUsersWithPasswordWithNoState() {
+        return $this->model->where('password','!=','')->where('state','')->get();
     }
     
 }

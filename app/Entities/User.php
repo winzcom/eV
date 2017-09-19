@@ -186,4 +186,8 @@ class User extends Authenticatable
     public function bay_average(){
         return $this->hasOne('App\Entities\BaysianAverage','review_for');
     }
+
+    public function templates() {
+        return $this->hasMany('App\Entites\Template','company_id');
+    }
 }
