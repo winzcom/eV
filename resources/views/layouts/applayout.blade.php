@@ -5,6 +5,17 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
 <head>
 
+	<!-- Global Site Tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107501187-1"></script>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments)};
+	gtag('js', new Date());
+
+	gtag('config', 'UA-107501187-1');
+	</script>
+
+
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title>eventpad</title>
@@ -12,7 +23,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
 	<link rel="shortcut icon" type="image/x-icon" href="favicon-32x32">
-@yield('style')
+	@yield('style')
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" type="" href="{{asset('vendor/css/nouislider.min.css')}}">
 	<!-- style.css is main stylesheet and all other sylesheets are being
