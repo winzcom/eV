@@ -324,6 +324,15 @@ class GuestController extends Controller
             });
         }
     }
+
+    public function SendMailToUsersWithPasswordWithNoState() {
+        $users =  User::where('password','!=','')->where('state','')->get();
+        if($users->isNotEmpty()) {
+            $users->each(function($user) {
+                Mail::to($user->email)->send(new PleaseUpdateProfile($user->name));
+            });
+        }
+    }
 }
 
 ?>
