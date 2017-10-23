@@ -36,7 +36,7 @@ var CateringAdditionals = [
                             {name:'Waiting Staffs',value:'Waiting Staffs',type:'checkbox',formname:'extra[]'},
                             {name:'Bar Service',value:'Bar Service',type:'checkbox',formname:'extra[]'},
                             //{name:'Rental/Setup',value:'Rental/Setup',type:'checkbox',formname:'extra[]'},
-                            //{name:'Chair Covers',value:'Chair Covers',type:'checkbox',formname:'extra[]'}
+                            {name:'Chair Covers',value:'Chair Covers',type:'checkbox',formname:'extra[]'}
                             
 ]
 
@@ -96,11 +96,12 @@ var CateringExtras = [
                         {name:'Chinese',value:'Chinese'},
                         {name:'Continental',value:'Continental'},
                        
+                    ]},
+
+                    {name:'Is kitchen available',type:'select',formname:'kitchen_available',children:[
+                        {name:'No',value:'No'},
+                        {name:'Yes',value:'Yes'}
                     ]}
-                    // {name:'Do you want caterer to buy Items',attach:'next',type:'select',formname:'do_you_want_caterer_to_buy_items',children:[
-                    //     {name:'No',value:'No'},
-                    //     {name:'Yes',value:'Yes'}
-                    // ]}
                         //{name:'Allergies we need to know about',value:'',type:'text',formname:'allergies'}
 ]
 

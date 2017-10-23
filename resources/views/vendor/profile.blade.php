@@ -57,6 +57,9 @@
                                 
                             </div>
                             <div class="content">
+                            @if($errors->count() > 0)
+                                <p style="color:red;">One or more fields are required</p>
+                            @endif
                                 {{Form::model($user,['url'=>"profile/edit",'id'=>'profile_form','enctype'=>"multipart/form-data"])}}
                         {{ csrf_field() }}
                         <div id="accordion">

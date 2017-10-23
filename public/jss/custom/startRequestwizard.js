@@ -235,6 +235,7 @@ $(document).ready(function() {
                     },
                     error: function(err) {
                         console.log(err.error);
+                        var html = "<p style='color:red;'>Error sending this request</p>"+err
                         $('.message').html(html);
                         alertify.log('An Error occurred request can not be sent at the moment');
                         finish.html('finish');
