@@ -32,7 +32,7 @@ var MargueeExtras = [
 var CateringAdditionals = [
                             
                             //{name:'Catering Equipment',value:'Catering Equipment',type:'checkbox',formname:'extra[]',label:'Do you need this additional service'},
-                            {name:'TableWare',value:'Catering Equipment',type:'checkbox',formname:'extra[]'},
+                            {name:'TableWare',value:'TableWare',type:'checkbox',formname:'extra[]'},
                             {name:'Waiting Staffs',value:'Waiting Staffs',type:'checkbox',formname:'extra[]'},
                             {name:'Bar Service',value:'Bar Service',type:'checkbox',formname:'extra[]'},
                             //{name:'Rental/Setup',value:'Rental/Setup',type:'checkbox',formname:'extra[]'},

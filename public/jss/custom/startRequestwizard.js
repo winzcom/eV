@@ -57,13 +57,13 @@ $(document).ready(function() {
         
         var reg = $('.email');
         var register = $('#register') || $('a[href="#finish"]');
-        if(reg !== undefined) {
-            console.log(register)
+        // if(reg !== undefined) {
+        //     console.log(register)
             
-            //register.attr('disabled', true);
+        //     //register.attr('disabled', true);
 
-            //validateEmail(reg);
-        }
+        //     //validateEmail(reg);
+        // }
 
           function validation_in_progress() {
                 $('#status').html("Validating email....");
@@ -214,7 +214,7 @@ $(document).ready(function() {
                             } else {
                                
                                 var html = "<p style='color:green;'>Success: " + d.message + "</p>"
-                                // alertify.closeLogOnClick(true).success(html);
+                                alertify.closeLogOnClick(true).success(html);
                                 $('#myWizard')[0].reset();
                                 $('.message').html(html);
                             }
@@ -222,7 +222,7 @@ $(document).ready(function() {
                              var html = "<p style='color:green;'>Message: Request Sent</p>"
                             $('.message').html(html);
                             $('#myWizard')[0].reset();
-                            //alertify.success('Request Sent');
+                            alertify.success('Request Sent');
                         }
 
                         setTimeout(function() {
@@ -349,7 +349,7 @@ $(document).ready(function() {
 
             }
 
-            validateEmail($('#request_email'));
+            //validateEmail($('#request_email'));
 
             if (button.data('state') !== undefined && button.data('state') !== '') {
             	
