@@ -25,7 +25,7 @@
 		<section class="section half-section-right">
 			
 			<div class="container">
-				<div class="btn btn-success btn-xs" id="sb" onclick="subscribeToPush()">Subscribe to push</div>
+				<div class="btn btn-success btn-xs" id="sb" onclick="subscribeToPush()">Subscribe to reeceive push notifications</div>
 				<div class="work-process style1">
 						<div class="process-wrap">
 							<div class="icon-wrap">

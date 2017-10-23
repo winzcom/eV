@@ -174,7 +174,6 @@ class GuestController extends Controller
             }
 
             else{
-
                 
                 return response()->json([
                     'message'=>'No Vendors Available'
