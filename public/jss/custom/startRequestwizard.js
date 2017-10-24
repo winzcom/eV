@@ -200,9 +200,9 @@ $(document).ready(function() {
                     success: function(data) {
                         console.log(data);
                         
-                        try {
+                        //try {
 
-                            var d = JSON.parse(data);
+                            var d = Object.assign({},data);
                             if (d.error) {
                                 var html = "<p>Error: " + d.error + "</p>"
                                 // alertify.closeLogOnClick(true).error(html, function(ev) {
@@ -218,17 +218,17 @@ $(document).ready(function() {
                                 $('#myWizard')[0].reset();
                                 $('.message').html(html);
                             }
-                        } catch (e) {
-                             var html = "<p style='color:green;'>Message: Request Sent</p>"
-                            $('.message').html(html);
-                            $('#myWizard')[0].reset();
-                            alertify.success('Request Sent');
-                        }
+                        // //} catch (e) {
+                        //      var html = "<p style='color:green;'>Message: Request Sent</p>"
+                        //     $('.message').html(html);
+                        //     $('#myWizard')[0].reset();
+                        //     alertify.success('Request Sent');
+                        // }
 
                         setTimeout(function() {
                             $('.message').html('');
                             $('.vendor_available').html('');
-                        }, 200);
+                        }, 2000);
 
                         finish.html('finish');
                         finish.removeClass('disabled');
