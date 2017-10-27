@@ -249,7 +249,7 @@ class UserController extends Controller
         } else {
             return response()->json([
                 'status' => 'Reply could not be sent'
-            ], 402);
+            ], 422);
         }
         // DB::transaction(function() use ($request,$id){
         //     $request_data = $this->user_repo->getRequest($request->rid);
@@ -317,7 +317,7 @@ class UserController extends Controller
 
          return response()->json([
              'Bad request'
-         ],401);
+         ],400);
     }
 
     private function canViewOthersQuote() {

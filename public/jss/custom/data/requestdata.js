@@ -127,6 +127,10 @@ var CakeAdditional = [
         
 ]
 
+var usheringServicesExtra = [
+    {name:"Number of ushers needed", type:'number',formname:'number_of_ushers_needed'}
+]
+
 var cakeExtras = [
     {name:'Cake Shape',type:'select',formname:'cake_shape',children:[
         {name:'Round',value:'Round'},
@@ -240,7 +244,7 @@ var eventPlanning = ['EventPlanner','WeddingPlanner']; var cateringPlaceholder =
                    },
         'Transport':{
 
-                        extras:[
+                        extra:[
 
                                 {
                                   name:'Pick-up Location',formname:'pickuplocation',type:'text'
@@ -253,6 +257,9 @@ var eventPlanning = ['EventPlanner','WeddingPlanner']; var cateringPlaceholder =
                     },
           'Event Planner':{
 
+          },
+          'UsheringServices':{
+              extra:usheringServicesExtra
           }
     }
 
