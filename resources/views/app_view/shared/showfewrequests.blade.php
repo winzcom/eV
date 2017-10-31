@@ -88,6 +88,11 @@ if(count($all_requests) > 0){
                                         $service->currencyFormatter($lower).'- &#8358;'.$service->currencyFormatter($higher);
 
                              }
+                             elseif($key == 'budget') {
+                                echo str_replace('_',' ',title_case($key));
+                                echo ': &#8358;'.$service->currencyFormatter($value);
+                                echo '<br><hr>';
+                            }
                             else
                                 echo str_replace('_',' ',title_case($key)).':'.$value;
                 }else{

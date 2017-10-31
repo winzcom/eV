@@ -106,7 +106,7 @@
                             
                     </div>
                     <div id="normalbudget">
-                        <p>
+                        <!-- <p>
                             <span style="text-align:center; color:green;">Price range:</span>
                             <div class="row">
                                 <div class="col-sm-6">
@@ -131,9 +131,24 @@
                             </div>
                             
                             
-                        </p>
+                        </p> -->
+                        <!--single budget input -->
+                        <div id="single_budget">
+                            <label for="budget">Your Budget (&#8358)</label>
+                            <div class="input-group">
+                            <span class="input-group-btn">
+                             &#8358
+                            </span>
+                            <input type="number" class="form-control" name ="budget" >
+                            </div>
+                        </div>
+                        <!--end of single budget -->
                         <div id="slider-range"></div>
 
+                    </div>
+                    <div class="caterer_budget">
+                        <label for="">Budget Per Head(#100 per guest)</label>
+                        <input type="number" class="form-control price_budget" name ="budget_per_head" id="max_amount">
                     </div>
 
                     <div id="publicbudget">
@@ -141,7 +156,7 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="budget" id="optionsRadios2" value="We will pay vendors"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="_budget" id="optionsRadios2" value="We will pay vendors"><ins class="iCheck-helper"></ins>
                                 </div>
                             We will pay vendors
                             </label>
@@ -149,7 +164,7 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="budget" id="optionsRadios2" value="free to attend and send to guests"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="_budget" id="optionsRadios2" value="free to attend and send to guests"><ins class="iCheck-helper"></ins>
                                 </div>
                                 Free to attend and sell to guests
                             </label>
@@ -157,7 +172,7 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="budget" id="optionsRadios2" value="free to attend"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="_budget" id="optionsRadios2" value="free to attend"><ins class="iCheck-helper"></ins>
                                 </div>
                             Free to attend and sell to Guest
                             </label>
@@ -165,7 +180,7 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="budget" id="optionsRadios2" value="there is a fee to attend"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="_budget" id="optionsRadios2" value="there is a fee to attend"><ins class="iCheck-helper"></ins>
                                 </div>
                             There is a fee to attend
                             </label>
@@ -173,7 +188,7 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="budget" id="optionsRadios2" value="we are open to how it will work"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="_budget" id="optionsRadios2" value="we are open to how it will work"><ins class="iCheck-helper"></ins>
                                 </div>
                             We are open to how this will work
                             </label>

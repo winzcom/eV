@@ -100,7 +100,7 @@
                                         </div>
                                         <h3>&#8358 {{$service->currencyFormatter($quote->first()->cost)}} </h3>
                                         <h5>@if($down_payment !== null) DownPayment: &#8358 {{$service->currencyFormatter($down_payment)}}@endif</h5>
-                                        <textarea rows="" cols="" class="form-control" disabled>{{$quote->first()->message}}</textarea>
+                                        <textarea rows="5" cols="" class="form-control" disabled>{{$quote->first()->message}}</textarea>
                                         <!--<button class="btn btn-primary btn-sm" data-toggle="modal" 
                                              
                                         >

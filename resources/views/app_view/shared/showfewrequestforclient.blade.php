@@ -39,14 +39,22 @@
                                 foreach($obj as $key=>$value){
                                     if(is_array($value)){
                                         if($key == 'my_budget'){
-                                            echo str_replace('_',' ',title_case($key));
-                                            echo ': &#8358;'.$service->currencyFormatter($value[0]).'- &#8358;'.$service->currencyFormatter($value[1]);
+                                            if($value[0] !== '' && $value[0] !== 0) {
+                                                echo str_replace('_',' ',title_case($key));
+                                                echo ': &#8358;'.$service->currencyFormatter($value[0]).'- &#8358;'.$service->currencyFormatter($value[1]);
+                                            }
+                                            
                                         }else {
                                             echo $key == 'extra'? 'Extras: (': ucwords($key).': (';
                                             echo implode(",",$value);
                                             echo ' )';
                                         }
-                                        
+                                       echo '<br><hr>'; 
+                                    }
+                                    elseif($key == 'budget') {
+                                        echo str_replace('_',' ',title_case($key));
+                                        echo ': &#8358;'.$service->currencyFormatter($value);
+                                        echo '<br><hr>';
                                     }
                                     elseif($key == 'date'){
                                         $dt = null;
