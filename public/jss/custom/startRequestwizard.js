@@ -228,7 +228,7 @@ $(document).ready(function() {
                         setTimeout(function() {
                             $('.message').html('');
                             $('.vendor_available').html('');
-                        }, 2000);
+                        }, 3000);
 
                         finish.html('finish');
                         finish.removeClass('disabled');
@@ -485,6 +485,13 @@ $(document).ready(function() {
             var category = $('#category option:selected').text();
             category = category.replace(/\s+/g, '');
 
+            if(category === 'Caterers') {
+                $('#normalbudget').hide();
+                $('.caterer_budget').show();
+            } else {
+                $('#normalbudget').show();
+                $('.caterer_budget').hide();
+            }
 
             var state = $('#state').val() || $('.state').data('state');
             var locality = $('#vicinity').val() || $('.state').data('vicinity');

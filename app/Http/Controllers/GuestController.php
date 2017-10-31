@@ -167,7 +167,7 @@ class GuestController extends Controller
                     'customer'=>$customer
                 ];
 
-                // $n = event(new NewRequestSentEvent($data));
+                $n = event(new NewRequestSentEvent($data));
                 $mailer = Mail::to($data['users_data'])
                 ->send(new SendRequest($data));
 

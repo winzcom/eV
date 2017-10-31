@@ -23,7 +23,12 @@
                                         echo implode(",",$value);
                                         echo ' )';
                                     }
-                                    
+                                    echo '<br><hr>'; 
+                                }
+                                elseif($key == 'budget') {
+                                    echo str_replace('_',' ',title_case($key));
+                                    echo ': &#8358;'.$service->currencyFormatter($value);
+                                    echo '<br><hr>';
                                 }
                                 /*elseif($key == 'phone_no')
                                     continue;*/
