@@ -91,11 +91,11 @@
 	
 	<!-- section START Some Quotes-->
 
-		<section class="section">
+		<!-- <section class="section">
 		<div class="container">
 			@include('app_view.topvendors',['companies'=>$companies])
 		</div>
-		</section>
+		</section> -->
 	<!-- section END -->
 	<!-- section START flow -->
 		<section class="section">
@@ -110,9 +110,21 @@
 		</section>
 	<!-- section END -->
 	<!-- section START -->
-	<section class="section gray-bg" id="testimonials">
-		
-	</section>
+	<!-- <section class="section gray-bg" id="testimonials">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-4 col-md-4 col-xs-12">
+					Great service
+				</div>
+				<div class="col-sm-4 col-md-4 col-xs-12">
+					love the service
+				</div>
+				<div class="col-sm-4 col-md-4 col-xs-12">
+					how to 
+				</div>
+			</div>
+		</div>
+	</section> -->
 	<!-- section END -->
 	
 	<!-- section START -->
