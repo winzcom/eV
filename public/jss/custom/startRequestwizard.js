@@ -486,10 +486,10 @@ $(document).ready(function() {
             category = category.replace(/\s+/g, '');
 
             if(category === 'Caterers') {
-                $('#normalbudget').hide();
+                $('#single_budget').hide();
                 $('.caterer_budget').show();
             } else {
-                $('#normalbudget').show();
+                $('#single_budget').show();
                 $('.caterer_budget').hide();
             }
 
