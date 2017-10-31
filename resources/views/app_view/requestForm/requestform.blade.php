@@ -147,7 +147,7 @@
 
                     </div>
                     <div class="caterer_budget">
-                        <label for="">Budget Per Head(#100 per guest)</label>
+                        <label for="">Budget Per Head(e.g &#8358 100 per guest)</label>
                         <input type="number" class="form-control price_budget" name ="budget_per_head" id="max_amount">
                     </div>
 
