@@ -53,7 +53,7 @@ var SmallChopsAdditional = [
 ]
 
 var SmallChopsExtra = [
-    {name:'Or you can tell us the items and number', value:'',type:'text'}
+    {name:'Or you can tell us the items and number', value:'',type:'text',formname:"additional_details"}
 ]
 
 var eventPlannerAdditional = [

@@ -109,7 +109,7 @@
                                 <div class="controls">
                                     <select name="delivery_option" class="form-control">
                                         <option value="No" selected>No</option>
-                                        <option value="No">Yes</option>
+                                        <option value="Yes">Yes</option>
                                     </select>
                                 </div>
                             </div>

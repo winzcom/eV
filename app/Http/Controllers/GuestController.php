@@ -171,9 +171,9 @@ class GuestController extends Controller
                 $mailer = Mail::to($data['users_data'])
                 ->send(new SendRequest($data));
 
-                return response()->json([
-                    'message'=>'Request Sent'
-                ]);
+                // return response()->json([
+                //     'message'=>'Request Sent'
+                // ]);
 
                 echo json_encode(['message'=>'Request Sent']);
                 return;
