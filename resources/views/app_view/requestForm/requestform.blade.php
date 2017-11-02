@@ -16,14 +16,24 @@
                                 <select class="form-control input-lg select2" required name="event" id="event" placeholder="pick the type of event">
                                     
                                     @foreach($events as $event)
-                                        <option>{{$event->name}}</option>
+                                        <option value="{{$event->name}}">{{$event->name}}</option>
                                     @endforeach
-                                    
+                                    <option value="-">Other</option>
                                 </select>
                             </div>
-                            <small>popular events <i>Birthday | Party | Wedding | Conferences | Concert</i></small>
-                    </div>
-
+                            
+                      </div>
+                      <!-- Specify Other event -->
+                      <div class="control-group" id="other_event">
+                        <label class="control-label" for="inputCity">
+                        Specify Type of Event 
+                        </label>
+                            <div class="controls">
+                                <input type="text" name="event_type" id="" class="form-control input-lg">
+                            </div>
+                      </div>
+                      <!-- End Other event-->
+                      <small>popular events <i>Birthday | Party | Wedding | Conferences | Concert</i></small>
                  </section>
                 <h3>Step 1</h3>
                 <section class="currentSection">
@@ -99,7 +109,7 @@
                                 <div class="controls">
                                     <select name="delivery_option" class="form-control">
                                         <option value="No" selected>No</option>
-                                        <option value="No">Yes</option>
+                                        <option value="Yes">Yes</option>
                                     </select>
                                 </div>
                             </div>

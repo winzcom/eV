@@ -390,16 +390,24 @@ $(document).ready(function() {
 
 
         /*** Start of event Change operation */
+        $("#other_event").hide();
+        $("#other_event").val(''); 
 
         $('#event').change(function() {
             var self = $(this);
-
             //$('.themecolor').remove();
             $('.pP').remove();
 
             var event = $('#event option:selected').text();
-
+            console.log(event)
             var exists = eventType[event] || null;
+
+            if(event == "Other") {
+                $("#other_event").show();
+            } else {
+                $("#other_event").hide();
+                $("#other_event").val('');   
+            }
 
             //var category = $('#category option:selected').text().replace(/\s+/g, '');
 
