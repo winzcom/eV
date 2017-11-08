@@ -99,7 +99,6 @@ class GuestController extends Controller
         },ARRAY_FILTER_USE_BOTH);
 
         DB::transaction(function() use ($request,$client,$category,$state,$vicinity){
-
             $users = $this->getUserQuery($category,$state,$vicinity)->get();
             $customer = null;
             

@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-
+        $('#novtst').hide();
         /*if (document.getElementById('user_state').length > 0) {
             var user_state = document.getElementById('user_state').dataset.userState;
             //alert(user_state);
@@ -145,7 +145,7 @@ $(document).ready(function() {
                 console.log(event)
                 if (currentIndex > newIndex)
                 {
-                    disableNextButton();
+                    disableNextButton(false);
                     return true;
                 }
                 else if(currentIndex == 1 && $('#category').val() == ''){
@@ -157,15 +157,15 @@ $(document).ready(function() {
                 form.validate().settings.ignore = ":disabled,:hidden";
                 return form.valid();
             },
-            onFinishing: function (event, currentIndex)
-            {
-                console.log('finishing')
-                form.validate().settings.ignore = ":disabled";
-                return form.valid();
-            },
+            // onFinishing: function (event, currentIndex)
+            // {
+            //     console.log('finishing')
+            //     form.validate().settings.ignore = ":disabled";
+            //     return form.valid();
+            // },
             onFinished: function (event, currentIndex)
             {
-                //addStateLocality();
+                //addStateLocality(null,null);
                 /*alertify.delay(0).log("Request is been sent...").maxLogItems(1);
                 
                 //var formData = $('#myWizard').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});*/
@@ -363,7 +363,7 @@ $(document).ready(function() {
                 //checkVendorAvailability($('#category').val(),state,vicinity_id);
                 addStateLocality(state, vicinity_id);
             } else {
-                 addStateLocality();
+                 addStateLocality(null,null);
                 if ($('#category').val() !== '') {
                      $("#category").trigger("change");
                 }else {
@@ -383,7 +383,7 @@ $(document).ready(function() {
         /***Start of Category event Operation */
         $('#category').on('change', function() {
 
-            //disableNextButton();
+            //disableNextButton(false);
             $('.themecolor').remove()
             categoryChange($(this));
         }) /***End of Category event Operation */
@@ -399,14 +399,15 @@ $(document).ready(function() {
             $('.pP').remove();
 
             var event = $('#event option:selected').text();
-            console.log(event)
             var exists = eventType[event] || null;
 
             if(event == "Other") {
                 $("#other_event").show();
+                $("#other_event_input").attr('required',true);
             } else {
                 $("#other_event").hide();
-                $("#other_event").val('');   
+                $('#other_event_input').val('');
+                $("#other_event_input").attr('required',false);  
             }
 
             //var category = $('#category option:selected').text().replace(/\s+/g, '');
@@ -420,7 +421,7 @@ $(document).ready(function() {
             var cat = $(this).val(); var state = $('#state').val();
             if (!isNaN(cat))
                 window.location.href = myUrl + 'browse_vendors/' + cat+'/'+state;
-        })
+        });
 
 
         $('#start_request').submit(function(e) {
@@ -433,7 +434,7 @@ $(document).ready(function() {
 
         /***Start of vanilla functions */
 
-        function disableNextButton(disable = false) {
+        function disableNextButton(disable) {
             /*d_orientations = $('.js-btn-step');
             d_orientations.each(function(i, v) {
                 if (v.dataset.orientation == 'next')
@@ -446,7 +447,7 @@ $(document).ready(function() {
 
 
 
-        function checkVendorAvailability(cat_id, state = null, locality = null) {
+        function checkVendorAvailability(cat_id, state, locality) {
 
             if (state == null || locality == null) {
                 state = $('#start').data('state') || $('#state').val();
@@ -457,6 +458,8 @@ $(document).ready(function() {
             }
             var vendor_available_span = $('.vendor_available');
             var data = { 'state': state, 'locality': locality, 'category': cat_id };
+            // var novtst = $('#novtst');
+            // var nots = $('#number_of_vendor_to_send_to');
             console.log(data);
             vendor_available_span.css('color', 'blue');
             vendor_available_span.text('Checking vendors available...')
@@ -472,13 +475,18 @@ $(document).ready(function() {
                         console.log(data.available)
                         v_available = false;
                         vendor_available_span.css('color', 'red')
-                        vendor_available_span.text('no vendors available')
+                        vendor_available_span.text('no vendors available');
+                        // nots.val('');
+                        // novtst.hide();
                         disableNextButton(true);
                     } else {
 
                         vendor_available_span.css('color', 'green')
-                        vendor_available_span.text(data.available + ' vendor(s) available')
-                        disableNextButton();
+                        vendor_available_span.text(data.available + ' vendor(s) available');
+                        // nots.val(data.available);
+                        // nots.attr('max',data.available);
+                        // novtst.show();
+                        disableNextButton(false);
                     }
                 }
             })
@@ -523,12 +531,9 @@ $(document).ready(function() {
                 addTransportInputs();
                 $('#venue').hide();
             }
-
-
-
         }
 
-        function addStateLocality(state1 = null, vicinity_id = null) {
+        function addStateLocality(state1, vicinity_id) {
 
             var state, locality, stateInput, localityInput, inputs;
 

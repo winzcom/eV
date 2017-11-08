@@ -29,7 +29,7 @@
                         Specify Type of Event 
                         </label>
                             <div class="controls">
-                                <input type="text" name="event_type" id="" class="form-control input-lg">
+                                <input type="text" name="event_type" required id="other_event_input" class="form-control input-lg">
                             </div>
                       </div>
                       <!-- End Other event-->
@@ -41,7 +41,13 @@
                     <label class="control-label" for="inputCity">
                          Please select a category you want from the options? <small style="color:red">*</small>
                          <span ><i class="vendor_available"></i></span>
-                    </label>
+                    </label><br>
+                    <!-- select the number to send to -->
+                    <!-- <div id="novtst">
+                        <label for="">How many vendors would you like to send to</label>
+                        <input type="number" min="1" id="number_of_vendor_to_send_to" name="novtst" />
+                    </div><br> -->
+                    <!-- end -->
                         <div class="controls">
                             <select class="form-control input-lg select2" required name="category" id="category" placeholder="select a category">
                                 <option></option>
@@ -78,7 +84,7 @@
 
                         <label class="control-label" for="inputCity">Start Time <small style="color:red">*</small></label>
                             <div class="controls">
-                                <input type="time"id="start_time" required name="start_time" class="form-control input-lg"/>
+                                <input type="time" id="start_time" required name="start_time" class="form-control input-lg"/>
                             </div>
                         <label class="control-label" for="inputCity">Duration in hours</label>
                             <div class="controls">
