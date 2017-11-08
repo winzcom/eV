@@ -27,13 +27,14 @@ class FirebasePushNotification implements PI{
                         'data'=>[
                             
                                 'title'=> 'New Quote',
-                                'body'=>'A new Quotes from '.$vendor->name.' For '.$category.' Has Been Sent to Your Inbox'
+                                'body'=>'A new Quotes from '.$vendor->name.' For '.$category.' Has Been Sent to Your Inbox',
+                                'click_action'=>'https://eventpad.ng/culogin'
                             
                         ],
                         'notification'=>[
                             'title'=>'New Quote for '.$category,
                             'body'=>$vendor->name.' as replied with a quote',
-                            'click_action'=>'localhost/eventing/public/culogin'                ]
+                            'click_action'=>'https://eventpad.ng/culogin'                ]
                     ]
                 ]); 
             }catch(\Exception $e){

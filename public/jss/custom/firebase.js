@@ -10,21 +10,22 @@ window.onload = function(){
 }
 
 const messaging = firebase.messaging();
-navigator.serviceWorker
-           .register(customerUrl+'sw.js')
-           .then(function(reg){
-               messaging.useServiceWorker(reg);
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker
+  .register(customerUrl+'sw.js')
+  .then(function(reg){
+      messaging.useServiceWorker(reg);
 
-               if(checkNotificationPermission() == 'granted'){
-                  messaging.getToken().then(function(token){
-                   setServerToken(token);
-                   console.log(token);
-                 }).catch(function(err){
-                   console.error('token could not be generated');
-                 }) 
-               }
-           })       
-
+      if(checkNotificationPermission() == 'granted'){
+         messaging.getToken().then(function(token){
+          setServerToken(token);
+          console.log(token);
+        }).catch(function(err){
+          console.error('token could not be generated');
+        }) 
+      }
+  })       
+}
 messaging.onTokenRefresh(function() {
   messaging.getToken()
   .then(function(refreshedToken) {
@@ -113,6 +114,8 @@ function subscribeToPush(){
 
 
 function checkNotificationPermission(){
-
-   return Notification.permission
+  if("Notification" in window) {
+    return Notification.permission
+  }
+  return 'denied';
 }

@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 if(document.getElementById('state') !== null)
-    changeVicinitySelect(document.getElementById('state'));
+    changeVicinitySelect(document.getElementById('state'),null);
 
 $('#state').change(function(e){
     changeVicinitySelect(this,'change');
@@ -9,7 +9,7 @@ $('#state').change(function(e){
 
 
 
-function changeVicinitySelect(e,oc = null){
+function changeVicinitySelect(e,oc){
         
         var v = document.getElementById('vicinity');
         if(oc !== null){
@@ -46,7 +46,7 @@ function changeVicinitySelect(e,oc = null){
 
     }
 
-    function toggleDisplayForVicinity(display = false,state = 'all'){
+    function toggleDisplayForVicinity(display,state){
     
         if(!display || state == 'all'){
             document.getElementById('vicinity').disabled = !display;

@@ -38,7 +38,7 @@
 
 	<!--<link rel="stylesheet" href="{{asset('vendor/css/eazy.css')}}">-->
 	<!--<link rel="stylesheet" href="{{asset('css/material-bootstrap-wizard.css')}}">-->
-	<link red <link rel="shortcut icon" href="favicon-32x32.png" type="image/png">
+	<link rel="shortcut icon" href="favicon-32x32.png" type="image/png">
 	
 
 	<script src="{{asset('js/vendor/modernizr-2.8.3-respond-1.4.2.min.js')}}"></script>

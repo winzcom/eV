@@ -41,7 +41,7 @@
             </div>-->
             
             <div class="col-md-2">
-                <button type="submit" 
+                <button type="button" 
                     class="btn btn-primary btn-lg btn-block start"
                     data-toggle="modal" data-target="#myModal"
                 >
