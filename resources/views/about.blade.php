@@ -108,8 +108,8 @@
 								</ol>
 
     					<p>The request may also contain some additional information pertaining to the service the client selects.</p>
-						<p>A sample request is shown below.</p><br>
-						<img src="https://eventpad.ng/img/sample_request.JPG" alt="">
+						<!-- <p>A sample request is shown below.</p><br>
+						<img src="https://eventpad.ng/img/sample_request.JPG" alt=""> -->
 
 					</div>
 					</div>

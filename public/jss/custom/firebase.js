@@ -25,6 +25,8 @@ if ('serviceWorker' in navigator) {
         }) 
       }
   })       
+} else {
+  document.getElementById('sb').style.display = 'none';
 }
 messaging.onTokenRefresh(function() {
   messaging.getToken()
