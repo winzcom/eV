@@ -1,7 +1,7 @@
 <div class="form-wrapper">
     <form id = "start_request">
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-8">
                 <div class="form-group">
                     <select class="form-control input-lg" id="state" name="state" placeholder="State"
                         required >
@@ -19,7 +19,7 @@
                     <!--<input type="text" class="form-control input-lg" id="yourName" placeholder="State" name="state" >-->
                 </div>
             </div>
-            <div class="col-md-5">
+            <!-- <div class="col-md-5">
                 <div class="form-group">
                     <select class="form-control input-lg" id="vicinity" name="vicinity_id" placeholder="Vicinity">
                         <option value="all">All</option>
@@ -28,7 +28,7 @@
                         @endforeach
                     </select>
                 </div>
-            </div>
+            </div> -->
             <!--<div class="col-md-3">
                 <div class="form-group">
                     <input type="text" class="form-control input-lg" id="yourProfession" placeholder="Category">

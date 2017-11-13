@@ -140,7 +140,7 @@ class GuestController extends Controller
                             }
                             
                     }
-                    if($vicinity == 'all' || $vicinity == '') $vicinity = 0;
+                    if($vicinity == 'all' || $vicinity == '' || $vicinity == null) $vicinity = 0;
 
                     try{
                             $req = QuotesRequest::create([
