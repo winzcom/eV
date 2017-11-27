@@ -31,7 +31,7 @@ Route::group(['middleware'=>'auth'],function(){
 
     Route::get('/gallery/publish','UserController@publish');
 
-    Route::post('/add/offdays','UserController@addOffDays');
+    Route::get('/add/offday/{from_date}/{to_date}','UserController@addOffDay');
 
     Route::get('/requests','UserController@showRequests');
 
@@ -48,6 +48,8 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('/company_profile','UserController@uploadCompanyProfile');
 
     Route::get('/show_quotes/{rid}', 'UserController@getQuotesFromOthers');
+
+    Route::get('/update_availability/{availability}','UserController@updateAvailability');
 });// end of middleware=>auth grouping
 
 ?>

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\RegisterFormRequest;
 use App\Repo\Interfaces\UserRepoInterface as UPI;
 
+use Carbon\Carbon;
+
 use App\Entities\User;
 use App\Service\Service;
 use App\Interfaces\GalleryInterface;
@@ -136,7 +138,7 @@ class UserController extends Controller
             ]);
     }
 
-    public function addOffDays(Request $request){
+    public function addOffDay(Request $request){
         $from_date = date("Y-m-d",strtotime($request->from_date));
 
         if($request->to_date == null || $request->to_date == '' || empty($request->to_date)){
@@ -145,10 +147,13 @@ class UserController extends Controller
         else 
             $to_date = date("Y-m-d",strtotime($request->to_date));
 
-        $offdays =  OffDays::create(['from_date'=>$from_date,
+        $offday =  OffDays::updateOrCreate(
+                        [
+                            'from_date'=>$from_date,
                             'to_date'=>$to_date,
-                            'user_id'=>Auth::id()
-                        ]);
+                            'user_id'=>request()->user()->id
+                        ]
+                    );
         
         if($request->ajax()){
                 return json_encode(array('from_date'=>$offdays->from_date->format('l jS \\of F Y'),
@@ -171,6 +176,16 @@ class UserController extends Controller
         }
         return back();
        
+    }
+
+    public function updateAvailability($availability) {
+        request()->user()->forceFill([
+            'available' => (int) $availability,
+            'availability_set_date' => date('Y-m-d H-i-s')
+        ])->save();
+        return response()->json([
+            'status'=>'Availability set'
+        ]);
     }
 
     public function reply(Request $request){
@@ -242,10 +257,16 @@ class UserController extends Controller
       
         if($quote !== null ) {
             $request_data = $this->user_repo->getRequest($request->rid);
-            event(new NewQuoteSent($request_data,Auth::user(),$quote));
-                    return response()->json([
-                        'status'=>'Quotes Sent Successfully to '.$request_data->first_name.' '.$request_data->last_name
-                    ]);
+            try{
+                event(new NewQuoteSent($request_data,Auth::user(),$quote));
+                return response()->json([
+                    'status'=>'Quotes Sent Successfully to '.$request_data->first_name.' '.$request_data->last_name
+                ]);
+            } catch(\Exception $e) {
+                return response()->json([
+                    'status'=>'Your Quotes Could not be sent at this time '
+                ]);
+            }
         } else {
             return response()->json([
                 'status' => 'Reply could not be sent'

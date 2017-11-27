@@ -165,10 +165,18 @@ class GuestController extends Controller
                     'category'=>$category['category'],
                     'customer'=>$customer
                 ];
-
-                $n = event(new NewRequestSentEvent($data));
-                $mailer = Mail::to($data['users_data'])
-                ->send(new SendRequest($data));
+                try {
+                    event(new NewRequestSentEvent($data));
+                    // $mailer = Mail::to($data['users_data'])
+                    // ->send(new SendRequest($data));
+                } catch(\Exception $e) {
+                    echo json_encode([
+                        'status'=>'failed',
+                        'message'=>'Notifications could not be sent at this time'
+                    ]);
+                    return;
+                }
+                
 
                 // return response()->json([
                 //     'message'=>'Request Sent'

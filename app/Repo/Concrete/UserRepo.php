@@ -114,12 +114,13 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
         ),array('vendor_id'=>Auth::id()));
 
         return collect($d);
+        //return request()->user()->requests();
     }
 
     public function getUserQuery($category,$state,$vicinity) {
       return $this->getModel()->whereHas('categories',function($q) use ($category){
                     $q->where('categories.id',$category['category']);
-                })->where('bounced',0)->StateVicinity($state,$vicinity);
+                })->where('bounced',0)->StateVicinity($state,$vicinity)->Available();
     }
 
     public function getRequest($id){

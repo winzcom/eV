@@ -118,11 +118,13 @@ var CateringExtras = [
 ]*/
 
 var CakeAdditional = [
-                    {name:'Sugar',value:'Sugar',type:'checkbox',formname:'flavours[]',label:'Please select your flavour from the list'},
+                    {name:'Coconut',value:'Coconut',type:'checkbox',formname:'flavours[]',label:'Please select your flavour from the list'},
                     {name:'Chocolate',value:'Chocolate',type:'checkbox',formname:'flavours[]'},
                     {name:'Vanilla',value:'Vanilla',type:'checkbox',formname:'flavours[]'},
                     {name:'Butter',value:'Butter',type:'checkbox',formname:'flavours[]'},
                     {name:'Cocoa',value:'Cocoa',type:'checkbox',formname:'flavours[]'},
+                    {name:'Lemon',value:'Lemon',type:'checkbox',formname:'flavours[]'},
+                    {name:'Banana',value:'Banana',type:'checkbox',formname:'flavours[]'},
                     {name:'Other(flavour)',value:'',type:'text',formname:'flavours_i_want_included'}
         
 ]

@@ -328,4 +328,24 @@ $(document).ready(function(){
             quote_file = file;
         }
     }
+
+    /** Handle availablity */
+    $('#availability').change(function (event) {
+        var value = +$(this).val();
+        $(this).attr('disabled',true);
+        $.ajax({
+            url :myUrl+'add/offday/'+value,
+            method: 'get',
+            data:value,
+            status:{
+                500: function() {
+                    alert('something went wrong')
+                }
+            },
+            success : function(data) {
+                alert('availability updated')
+                $(this).attr('disabled',false);
+            }
+        })
+    })
 })
