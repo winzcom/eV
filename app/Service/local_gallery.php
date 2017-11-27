@@ -49,8 +49,7 @@ class LocalGallery implements GalleryInterface{
         $list  = array();
         if(is_array($paths)){
             foreach($paths as $path){
-                File::delete(public_path().'/galleries'.$path);
-               
+                Storage::disk('my_public')->delete('galleries/'.$path);   
             }  
            // $prefixed_array = preg_filter('/^/', $name_slug, $paths);
             //array_walk($paths, function(&$item) use ($name_slug){ $item *= $name_slug; });
@@ -58,7 +57,7 @@ class LocalGallery implements GalleryInterface{
             return ;
         }
         else{
-                File::delete(public_path().'/galleries'.$paths);
+            Storage::disk('my_public')->delete('galleries/'.$path); 
                 return;
         }
         
