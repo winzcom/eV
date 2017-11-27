@@ -13,10 +13,10 @@ class LocalGallery implements GalleryInterface{
 
     public function __construct(){
 
-        config(['filesystems.default'=>'local']);
+        config(['filesystems.default'=>'my_public']);
     }
 
-    public function uploadPhotos(array $files,array $captions = null,string $name_slug= null,int $user_id){
+    public function uploadPhotos(array $files,array $captions = null, $name_slug= null){
 
     
         $names = [];
@@ -27,8 +27,8 @@ class LocalGallery implements GalleryInterface{
 
                 try{
                     
-                    if($file->storeAs('public/images',$names[$key][0])){
-                        Gallery::create(['image_name'=>$names[$key][0],'user_id'=>$user_id,'caption'=>htmlentities($captions[$i])]);
+                    if($file->storeAs('galleries',$names[$key][0])){
+                        Gallery::create(['image_name'=>$names[$key][0],'user_id'=>Auth::id(),'caption'=>htmlentities($captions[$i])]);
 
                     }
                 }   
@@ -44,21 +44,21 @@ class LocalGallery implements GalleryInterface{
     }
 }
 
-    public function deletePhotos(array $paths,int $user_id){
+    public function deletePhotos(array $paths){
 
         $list  = array();
         if(is_array($paths)){
             foreach($paths as $path){
-                File::delete(public_path().'/storage/images/'.$path);
+                File::delete(public_path().'/galleries'.$path);
                
             }  
            // $prefixed_array = preg_filter('/^/', $name_slug, $paths);
             //array_walk($paths, function(&$item) use ($name_slug){ $item *= $name_slug; });
-             Gallery::whereIn('image_name',$paths)->where('user_id',$user_id)->delete();
+             Gallery::whereIn('image_name',$paths)->where('user_id',Auth::id())->delete();
             return ;
         }
         else{
-                File::delete(public_path().'/storage/images/'.$paths);
+                File::delete(public_path().'/galleries'.$paths);
                 return;
         }
         
@@ -66,7 +66,7 @@ class LocalGallery implements GalleryInterface{
     }
 
     public function directoryPath(){
-        return asset('public/images');
+        return asset('galleries');
     }
 
 }

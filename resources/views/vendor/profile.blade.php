@@ -169,7 +169,7 @@
                             <div class="image">
                                 
                                 @if($user->company_image != null)
-                                    <img src="{{asset('storage/images')}}/{{$user->company_image}}" width="500"/>
+                                    <img src="{{asset('company_images')}}/{{$user->company_image}}" width="500"/>
                                 @else
                                     <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
                                 @endif

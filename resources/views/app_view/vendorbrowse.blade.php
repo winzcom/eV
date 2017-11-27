@@ -28,7 +28,7 @@
     <!--<h3 class="pull-left">Featured Items</h3>-->
     <div id="filters-container" class="cbp-l-filters-dropdown">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <div class="cbp-l-filters-dropdownWrap">
                     <p><b>Select State</b></p>
                     <div class="outPopUp">
@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <div class="cbp-l-filters-dropdownWrap">
                     <p><b>Select a Category</b></p>
                     <div class="outPopUp">
@@ -71,6 +71,11 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-2">
+               
+                    <input type="button" value="Search" class="form-control btn btn-primary" id="search_button">
+            </div>
+
         </div>
     </div>
         
@@ -118,7 +123,7 @@
                                                 @elseif($company->company_image !== '')
                                                     <div class="item">
 
-                                                    <img src="{{asset('storage/images')}}/{{$company->company_image}}" alt="" style="width:100%; max-height:250px;"/>
+                                                    <img src="{{asset('company_images')}}/{{$company->company_image}}" alt="" style="width:100%; max-height:250px;"/>
                                                     </div>
                                                 @else
                                                     <div class="item">

@@ -55,7 +55,7 @@ class UserController extends Controller
         $filtered['password'] = bcrypt($filtered['password']);
         if( $file !== null && $file->isValid() ){
             $filtered['company_image'] = Auth::user()->name.$file->getClientOriginalName();
-            $file->storeAs('storage/images',$filtered['company_image'],'public');
+            $file->storeAs('company_images',$filtered['company_image'],'my_public');
         }
         
         

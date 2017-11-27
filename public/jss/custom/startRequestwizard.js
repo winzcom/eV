@@ -417,11 +417,16 @@ $(document).ready(function() {
 
         }) /***End of event Change Event operation */
 
-        $('#browsevendor').change(function() {
+        $('#browsevendor').change(function(e) {
             var cat = $(this).val(); var state = $('#state').val();
             if (!isNaN(cat))
                 window.location.href = myUrl + 'browse_vendors/' + cat+'/'+state;
         });
+
+        $('#search_button').click(function(e){
+            if($('#browsevendor').val() != '' && $('#state').val() != '')
+                $('#browsevendor').trigger('change');
+        })
 
 
         $('#start_request').submit(function(e) {
