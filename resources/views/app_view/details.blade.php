@@ -77,7 +77,7 @@
 								
 									@foreach($company->galleries->take(3) as $gallery)
 										<div class="kr-sky" data-duration="5000">
-											<img class="sky-background" src="{{$path}}/{{$gallery->image_name}}" alt="product title">								
+											<img class="sky-background" src="{{$path}}/galleries/{{$gallery->image_name}}" alt="product title">								
 										</div>
 									@endforeach
 									
