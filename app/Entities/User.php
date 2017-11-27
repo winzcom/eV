@@ -20,6 +20,13 @@ class User extends Authenticatable
      */
 
     protected $table = "companies";
+
+    protected $withs = ['offday'];
+
+    protected $casts = ['available'=>'boolean'];
+
+    protected $date = ['created_at','updated_at','availability_set_date'];
+
     protected $fillable = [
         'name','email','password','first_name','last_name',
         'category','state',
@@ -132,11 +139,12 @@ class User extends Authenticatable
 
     public function dismissedRequest() {
         $request_model = app('App\Entities\QuotesRequest');
-        return $request_model
-            ->with('quote','client')
-            ->join('dismiss',$request_model->getTable().'.id','dismiss.rid')
-            ->where('dismiss.uid',$this->id)
-            ->get();
+        // return $request_model
+        //     ->with('quote','client')
+        //     ->join('dismiss',$request_model->getTable().'.id','dismiss.rid')
+        //     ->where('dismiss.uid',$this->id)
+        //     ->get();
+        return $this->hasMany('App\Entities\DismissedRequest','uid');
     }
 
     public function galleries(){
@@ -157,8 +165,8 @@ class User extends Authenticatable
         return $this->belongsTo('App\Entities\Vicinity','vicinity_id');
     }
 
-    public function offdays(){
-        return $this->hasMany('App\Entities\OffDays','user_id');
+    public function offday(){
+        return $this->hasOne('App\Entities\OffDays','user_id');
     }
 
     public function getRouteKeyName(){
@@ -167,6 +175,10 @@ class User extends Authenticatable
 
     public function hasGalleries(){
         return $this->galleries()->count() > 0;
+    }
+
+    public function scopeAvailable($query) {
+        return $query->where('available',1);
     }
 
     public function scopeStateVicinity($query,$state = null,$vicinity = null){

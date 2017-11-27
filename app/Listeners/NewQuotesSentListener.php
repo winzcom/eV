@@ -40,8 +40,12 @@ class NewQuotesSentListener
        if($client_firebase_endpoint !== null)
             $this->push_message->pushMessage($client_firebase_endpoint,$event->vendor,$event->request->name);
         else {
-            $mailer = Mail::to($event->request->email);
-               $mailer->send(new SendQuote($event->request,$event->vendor,$event->cost,$event->message, $event->attachment));
+            try {
+                $mailer = Mail::to($event->request->email);
+                $mailer->send(new SendQuote($event->request,$event->vendor,$event->cost,$event->message, $event->attachment));
+            } catch(\Exception $e) {
+                throw $e; 
+            } 
         }
     }
 }

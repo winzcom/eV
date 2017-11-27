@@ -30,13 +30,10 @@ class NewRequestSentListener
     {
         
         try{
-            // Mail::to($event->data['users_data'])
-            //     ->send(new SendRequest($event->data));
-            return;
+            Mail::to($event->data['users_data'])
+                ->send(new SendRequest($event->data));
         } catch(\Exception $e) {
-            return response()->json([
-                'error'=>'Request has been saved but some mail could not be sent at this time'
-            ],500);
+            throw $e;
         }
        
     }

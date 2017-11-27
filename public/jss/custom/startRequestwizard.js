@@ -498,6 +498,9 @@ $(document).ready(function() {
                 $('.divContainer').remove();
             }
 
+            if($('.menu')) 
+                $('.menu').remove();
+
             var category = $('#category option:selected').text();
             category = category.replace(/\s+/g, '');
 
@@ -568,8 +571,8 @@ $(document).ready(function() {
         function addAdditionalService(data, ele,category) {
 
             var divContainer = $('<div class="control-group divContainer" style="padding-left:10px;"></div>');
-            var menu = $('.menu')
-            menu.remove();
+            // var menu = $('.menu')
+            // menu.remove();
             $('select2-selection').parents('select2').remove();
 
             if(data.hasOwnProperty('additional')){

@@ -9,15 +9,19 @@
 
 <!-- page content START -->
 <div class="content" id="content">
-	@if(!is_null(session('message')))
+	<!-- @if(!is_null(session('message')))
 		<div id = "profile_update_message"></div>
-	@endif
+	@endif -->
+	
 	@include('vendor.profile_update_snippet')
+		
 	<!-- section START -->
 		<section class="section half-section-right">
 			
 			<div class="container">
-
+				<!-- <label for="">I am not Available from --- to</label>
+				<input type="date" name="from_date" id="from_date">&nbsp; <input type="date" name="to_date" id="to_date">
+				<input type="button" value="set date" class="btn btn-success" id="set_offday_button"> -->
 				<div class="work-process style1" >
 						<div class="process-wrap">
 							<div class="icon-wrap">
