@@ -17,7 +17,8 @@ class DetailsController extends Controller
 
     public function __construct(Request $request,UPI $user_repo){
         $this->request = $request;
-       $this->path = Storage::url('my_public');
+       $this->path = Storage::disk('my_public')->url('galleries');
+       dd($this->path);
     }
 
     public function details($slug,$id=null){
