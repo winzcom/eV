@@ -9,15 +9,16 @@ use Illuminate\Support\Facades\Storage;
 use App\Entities\User;
 use App\Service\Service;
 use App\Repo\Interfaces\UserRepoInterface as UPI;
+use App\Interfaces\GalleryInterface as GI;
 
 class DetailsController extends Controller
 {
     //
     public $request;
 
-    public function __construct(Request $request,UPI $user_repo){
+    public function __construct(Request $request,UPI $user_repo,GI $gi){
         $this->request = $request;
-       $this->path = Storage::disk('my_public')->url('galleries');
+       $this->path = $gi->directoryPath();
     }
 
     public function details($slug,$id=null){
