@@ -202,4 +202,8 @@ class User extends Authenticatable
     public function templates() {
         return $this->hasMany('App\Entites\Template','company_id');
     }
+
+    public function medianScore() {
+        return $this->reviews()->get()->median('rating');
+    }
 }
