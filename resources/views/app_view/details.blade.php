@@ -73,9 +73,9 @@
 						
 						<div class="product-images">
 							<div id="cloudslider" class="product-gallery">
-								@if($company->galleries->count() > 0)
+								@if($company->hasGalleries())
 								
-									@foreach($company->galleries->take(2) as $gallery)
+									@foreach($company->galleries->take(3) as $gallery)
 										<div class="kr-sky" data-duration="5000">
 											<img class="sky-background" src="{{$path}}/{{$gallery->image_name}}" alt="product title">								
 										</div>
