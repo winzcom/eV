@@ -9,9 +9,9 @@
 
 <!-- page content START -->
 <div class="content" id="content">
-	<!-- @if(!is_null(session('message')))
+	@if(!is_null(session('message')))
 		<div id = "profile_update_message"></div>
-	@endif -->
+	@endif
 	
 	@include('vendor.profile_update_snippet')
 		
