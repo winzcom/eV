@@ -48,7 +48,7 @@ body{
 
 <!-- HTML heavily inspired by http://blueimp.github.io/jQuery-File-Upload/ -->
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-2 col-sm-12">
             <div class="table table-striped" class="files" id="previews">
 
             <div id="template" class="file-row">
@@ -84,7 +84,7 @@ body{
 
             </div><!-- Preview Table-table-striped -->
         </div><!--col-4 -->
-        <div class="col-md-8">
+        <div class="col-md-10 col-sm-12">
             @if(count($galleries) == 0)
                 <div class="alert alert-success">No Galleries</div>
             @else

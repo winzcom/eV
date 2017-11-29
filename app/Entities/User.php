@@ -178,7 +178,10 @@ class User extends Authenticatable
     }
 
     public function scopeAvailable($query) {
-        return $query->where('available',1);
+
+        return $query->leftJoin('offdays','offdays.user_id','=',$this->getTable().'.'.$this->getKeyName())
+                ->whereDate('offdays.to_date','<',date('Y-m-d'))
+                ->orWhereNull('offdays.to_date');
     }
 
     public function scopeStateVicinity($query,$state = null,$vicinity = null){
