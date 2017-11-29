@@ -120,7 +120,7 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
     public function getUserQuery($category,$state,$vicinity) {
       return $this->getModel()->whereHas('categories',function($q) use ($category){
                     $q->where('categories.id',$category['category']);
-                })->where('bounced',0)->StateVicinity($state,$vicinity)->Available();
+                })->where('bounced',0)->StateVicinity($state,$vicinity);
     }
 
     public function getRequest($id){

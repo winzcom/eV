@@ -36,7 +36,7 @@ class DetailsController extends Controller
         $category_name = ''; $cat_id = null;
 
         $similars = User::whereHas('categories',function($q) use ($user){
-            $q->whereIn('categories.id',$user->categories()->pluck('categories.id'));
+            $q->whereIn('categories.id',$user->categories()->get(['categories.id']));
         })->where('id','!=',$user->id)->orderBy('id','desc')->take(3)->get();
 
         if(!is_null($id)){
@@ -54,7 +54,7 @@ class DetailsController extends Controller
         //$files = Service::getImages($directory);
         return view('app_view.details')->with(['company'=>$user,'path'=>$this->path,
                     'events'=>Service::getEvents(),
-                    'similars'=>$similars,
+                    //'similars'=>$similars,
                     'request'=>$this->request,
                     'cat_id'=>isset($cat_id) ? $cat_id : '',
                     'avg'=>$user->reviews->pluck('rating')->avg(),

@@ -12,6 +12,7 @@ use App\Repo\Interfaces\UserRepoInterface as UPI;
 use Carbon\Carbon;
 
 use App\Entities\User;
+use App\Entities\Review;
 use App\Service\Service;
 use App\Interfaces\GalleryInterface;
 
@@ -134,7 +135,7 @@ class UserController extends Controller
                 'pagination'=>$pagination,
                 'page'=>$request->query('page'),
                 'total'=>$total_avg[0]->total,
-                'avg'=>$total_avg[0]->avg
+                'avg'=>$reviews->median('rating')
             ]);
     }
 

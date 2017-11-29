@@ -72,7 +72,7 @@ class GuestController extends Controller
         $data = $request->except(['_token']);
         $data['reviewers_id'] = Auth::guard('client')->id();
         Review::create($data);
-        return redirect(back().'#horizontalTab12');
+        return redirect()->back();
     }
 
     public function testLoad(){
