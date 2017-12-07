@@ -223,7 +223,9 @@ $(document).ready(function(){
                         setTimeout(function() {
                             location.href = location.href+'#messages';
                             location.reload(true);
-                        }, 100);
+                        }, 500);
+                        var objda = Object.create(data);
+                        console.log(objda.status)
                         alertify.log('Reply Sent');
                     },
                     error:function(err){

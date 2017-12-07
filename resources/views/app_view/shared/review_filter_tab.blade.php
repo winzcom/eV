@@ -45,7 +45,6 @@
                    <span class="glyphicon glyphicon-stats">  
                     AverageRating {{number_format($avg,1)}}/5 
                     TotalReviews {{$total}} 
-                    MedianRating 3
                 </span>
                      
 </ul>
