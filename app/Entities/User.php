@@ -134,6 +134,8 @@ class User extends Authenticatable
         )
             ->where('state',$this->state)
             ->whereIn('vicinity_id',[0,$this->vicinity_id])
+            ->leftJoin('dismiss','quotes_request.id','dismiss.rid')
+            ->whereNull('dismiss.id')
             ->get();
     }
 
@@ -184,11 +186,7 @@ class User extends Authenticatable
                 ->orWhereNull('offdays.to_date');
     }
 
-    public function scopeStateVicinity($query,$state = null,$vicinity = null){
-
-        /*return $state !== 'all' && $vicinity !== 'all' ? $query->where(['state'=>$state,
-            'vicinity'=>$vicinity
-        ]) : $query;*/
+    public function scopeStateVicinity($query,$state = null,$vicinity = null) {
 
         if($state !== 'all'){
             if(($vicinity !== null) && ($vicinity !== 'all') && ($vicinity != 0))

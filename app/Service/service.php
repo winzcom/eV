@@ -68,7 +68,7 @@ class Service{
 
        return DB::table('states')
                     ->select('*')
-                    ->whereIn('state',['Lagos'])
+                    ->whereIn('state',['Lagos','Rivers','Abuja'])
                     ->OrderBy('state')
                     ->get();
     }
@@ -116,9 +116,10 @@ class Service{
     }
 
     public static function getVicinities(){
-        return Cache::remember('vicinities',1440,function(){
-                 return Vicinity::OrderBy('name')->get();
-            });
+        // return Cache::remember('vicinities',1440,function(){
+        //          return Vicinity::OrderBy('name')->get();
+        //     });
+        return Vicinity::OrderBy('name')->get();
     }
 
     public static function paginate($data,$per_page){
