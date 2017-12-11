@@ -30,6 +30,6 @@ class MailToUsersWithoutPassword extends Mailable
      */
     public function build()
     {
-        return $this->from('eventpadTeam@eventpad.ng')->Subject('Create a password for your account')->view('emails.nopassword.nopassword');
+        return $this->from('eventpadTeam@eventpad.ng')->subject('Create a password for your account')->view('emails.nopassword.nopassword');
     }
 }
