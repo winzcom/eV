@@ -24,18 +24,18 @@ Route::get('/load_request','GuestController@testLoad');
 
 Route::get('/aws_sns_message','GuestController@amazonSnS');
 
-Route::get('/testmail',function(Request $request){
+// Route::get('/testmail',function(Request $request){
     
-    Mail::to('sholak@cedarviewng.com')->send(new OrderMail());
-});
+//     Mail::to('sholak@cedarviewng.com')->send(new OrderMail());
+// });
 
-Route::get('/start',function(){
-    return view('app_view.start');
-});
+// Route::get('/start',function(){
+//     return view('app_view.start');
+// });
 
-Route::get('/d_eb',function() {
-    return response()->download(public_path().'/file/Eventpad_Project.docx');
-});
+// Route::get('/d_eb',function() {
+//     return response()->download(public_path().'/file/Eventpad_Project.docx');
+// });
 
 Route::get('/send_follow_up_thanks', 'GuestController@sendFollowUpThanksMail');
 
