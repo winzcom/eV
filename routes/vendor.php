@@ -15,7 +15,7 @@ use  Illuminate\Http\Request;
 
 Route::group(['middleware'=>'auth'],function(){
 
-    Route::get('/home','UserController@home');
+    Route::get('/home','UserController@home')->name('home');
 
     Route::get('/profile','UserController@showProfileForm');
 

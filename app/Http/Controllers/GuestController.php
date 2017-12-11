@@ -256,7 +256,7 @@ class GuestController extends Controller
     }
 
     public function showPasswordCreate(Request $request) {
-        if(!$request->has('s'))
+        if(! $request->query('s') )
             return redirect('/login');
         return view('app_view.showpasswordcreate')->with('email',$request->s);
     }
@@ -267,16 +267,21 @@ class GuestController extends Controller
             'password' => 'required|confirmed',
         ]);
 
-        $model = $user->uRepo->findFirstByWhere(['email','=',$request->email]);
-        //$model = $this->uRepo->getModel()->where('email',$request->email)->first();
-        $model->name_slug = str_slug($model->name,'_');
-        $model->password = bcrypt($request->password);
-        $model->confirmed = 1;
-        $model->save();
-        if(Auth::attempt(['email'=>$request->email,'password'=>$request->password,'confirmed'=>1])) {
-            return redirect('home');
+        try {
+            $model = User::where('email','=',$request->email)->firstOrFail();
+            $model->name_slug = str_slug($model->name,'_');
+            $model->password = bcrypt($request->password);
+            $model->confirmed = 1;
+            $model->save();
+            if(Auth::attempt(['email'=>$request->email,'password'=>$request->password,'confirmed'=>1])) {
+                return redirect('home');
+            }
+            return redirect('login');
+        } catch(\Exception $e) {
+            return redirect('login')->withErrors([
+                'email' => 'Email does not exist'
+            ]);
         }
-        return redirect('login');
     }
 
     public function setFirebaseNotificationEndPoint(Request $request){
