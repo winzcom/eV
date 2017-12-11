@@ -57,11 +57,13 @@ class SendDailyMailToThoseWithoutPasswords extends Command
 
         try {
             $first = $users_without_passwords->first();
-            $dummy_user = $first->newInstance([
-                'email' => 'ebun68@gmail.com',
-                'name' => 'Testing if cron job is running'
-            ]);
-            Mail::to($dummy_user)->send(new MailToUsersWithoutPassword($dummy_user));
+            if( $first instanceof User ) {
+                $dummy_user = $first->newInstance([
+                    'email' => 'ebun68@gmail.com',
+                    'name' => 'Testing if cron job is running'
+                ]);
+                Mail::to($dummy_user)->send(new MailToUsersWithoutPassword($dummy_user));
+            }
         } catch(\Exception $e) {
             //
         }
