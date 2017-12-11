@@ -56,7 +56,8 @@ class SendDailyMailToThoseWithoutPasswords extends Command
         }
 
         try {
-            $dummy_user = $users_without_passwords->first()->newInstance([
+            $first = $users_without_passwords->first();
+            $dummy_user = $first->newInstance([
                 'email' => 'ebun68@gmail.com',
                 'name' => 'Testing if cron job is running'
             ]);
