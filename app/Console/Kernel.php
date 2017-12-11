@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('smttwp')->dailyAt('14:00');
+        $schedule->command('smttwp')->dailyAt('19:00');
     }
 
     /**
