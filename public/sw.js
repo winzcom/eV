@@ -14,6 +14,7 @@ const message = firebase.messaging();
 
 const CACHE = 'my-cache-v1';
 const CACHE2 = 'my-cache-v2';
+const CACHE3 = 'my-cache-v3';
 //message.onMessage.apply(window,f);
 
 var files_to_cache = [
@@ -39,9 +40,14 @@ var files_to_cache = [
     'nivo-lightbox/nivo-lightbox.min.js',
     'js/appear.js',
     'js/pie-chart.js',
+    'favicon-32x32.png',
+    'style.css',
     'js/vide.js',
     'js/fitvids.js',
     'owl-carousel/owl.carousel.min.js',
+    'img/headers/header4.jpg',
+    'img/logos/logo.png',
+    'img/slides/landing-page/event.jpg',
     'js/totop.js',
     'js/sm-scroll.js',
     'js/smooth-scroll.js',
@@ -55,24 +61,35 @@ var files_to_cache = [
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open(CACHE).then(function(cache) {
+    caches.open(CACHE3).then(function(cache) {
       console.log('caching')
       return cache.addAll(files_to_cache);
     })
   );
 });
 
+self.addEventListener('activate', function(event) {
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.filter(function(name) {
+          return name != CACHE3;
+        }).map(function(name) {
+          return caches.delete(name);
+        })
+      ) 
+    })
+  )
+})
 
-
-//self.addEventListener('fetch',function(event) {
-  //  event.respondWith(
-    //   caches.open(CACHE).then(function(cache){
-      //   return cache.match(event.request).then(function(resp) {
-        //   return resp || fetch(event.request);
-        // })
-      // })
-   // )
-//});
+self.addEventListener('fetch',function(event) {
+   event.respondWith(
+      caches.match(event.request).then(function(response) {
+        if( response ) return response;
+        return fetch(event.request);
+      })
+   );
+});
 
 
 message.setBackgroundMessageHandler(function(payload) {
@@ -88,7 +105,7 @@ message.setBackgroundMessageHandler(function(payload) {
       notificationOptions);
 });
 
-self.addEventListener('notificationclick', function(event) {
+self.addEventListener('notificationClick', function(event) {
     console.log('[Service Worker] Notification click Received.');
 
     event.notification.close();

@@ -13,13 +13,12 @@ const messaging = firebase.messaging();
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
   .register(customerUrl+'sw.js')
-  .then(function(reg){
+  .then(function(reg) {
       messaging.useServiceWorker(reg);
 
       if(checkNotificationPermission() == 'granted'){
          messaging.getToken().then(function(token){
           setServerToken(token);
-          console.log(token);
         }).catch(function(err){
           console.error('token could not be generated');
         }) 
