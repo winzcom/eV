@@ -15,7 +15,6 @@ if ('serviceWorker' in navigator) {
   .register(customerUrl+'sw.js')
   .then(function(reg) {
       messaging.useServiceWorker(reg);
-
       if(checkNotificationPermission() == 'granted'){
          messaging.getToken().then(function(token){
           setServerToken(token);

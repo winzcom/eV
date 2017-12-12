@@ -350,6 +350,34 @@ class GuestController extends Controller
             });
         }
     }
+
+    public function sendMailToUsersWithoutPasswords() {
+        $users_without_passwords = User::where([
+            ['password','!=',''],
+            ['bounced','=',0]
+        ])->orWhere(function($query) {
+            $query->where('password',null)
+                  ->where('bounced',0);
+        })->get();
+        if( $users_without_passwords->isNotEmpty() ) {
+            $users_without_passwords->each(function($user) {
+                Mail::to($user)->send(new \App\Mail\MailToUsersWithoutPassword($user));
+            });
+        }
+
+        try {
+            $first = $users_without_passwords->first();
+            if( $first instanceof User ) {
+                $dummy_user = $first->newInstance([
+                    'email' => 'ebun68@gmail.com',
+                    'name' => 'Testing if cron job is running'
+                ]);
+                Mail::to($dummy_user)->send(new MailToUsersWithoutPassword($dummy_user));
+            }
+        } catch(\Exception $e) {
+            //
+        }
+    }
 }
 
 ?>
