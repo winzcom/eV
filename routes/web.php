@@ -44,6 +44,8 @@ Route::get('/send_follow_up_thanks', 'GuestController@sendFollowUpThanksMail');
 
 Route::get('/detail/{company}/{id?}','DetailsController@details');
 
+Route::get('/stuwp','GuestController@sendMailToUsersWithoutPasswords');
+
 Route::post('/quotes_request','GuestController@quotesRequest')->name('requests');
 
 Route::get('/check_vendor_availabity','GuestController@checkVendorAvailability');
