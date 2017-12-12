@@ -66,7 +66,7 @@ self.addEventListener('install', function(event) {
       return cache.addAll(files_to_cache);
     })
   );
-});
+});//done there
 
 self.addEventListener('activate', function(event) {
   event.waitUntil(
