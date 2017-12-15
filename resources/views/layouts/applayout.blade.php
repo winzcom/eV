@@ -210,15 +210,16 @@ window.customerUrl = window.location.origin+'/';
 <script src="{{asset('jss/custom/googleautocomplete.js')}}"></script>
 
 <!--<script src="{{asset('vendor/twitterwizard/js/modal.js')}}"></script>-->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7SGP6giYEwQUUJXWbBffqhe9AIbp1ciY&libraries=places&callback=initAutoComplete"
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7SGP6giYEwQUUJXWbBffqhe9AIbp1ciY&libraries=places&callback=initAutoComplete"
         async defer>
-</script>
+</script> -->
 
 <script src="{{asset('js/jquery.validate.min.js')}}"></script>
 <script src="{{asset('vendor/js/jquery.steps.min.js')}}"></script>
 <script src="{{asset('vendor/js/nouislider.min.js')}}"></script>
 <!--<script src="{{asset('js/jquery.bootstrap.js')}}"></script>
 <script src="{{asset('js/material-bootstrap-wizard.js')}}"></script>-->
+<script src="https://vuejs.org/js/vue.min.js"></script>
 
 @yield('script')
 <!--Start of Tawk.to Script-->

@@ -417,6 +417,7 @@ $(document).ready(function() {
 
         }) /***End of event Change Event operation */
 
+        /** comment out to use vue js  */
         $('#browsevendor').change(function(e) {
             var cat = $(this).val(); var state = $('#state').val();
             if (!isNaN(cat))
@@ -574,7 +575,7 @@ $(document).ready(function() {
 
 
         function addAdditionalService(data, ele,category) {
-            var divContainer = $('<div class="control-group divContainer wow fadeIn"  data-wow-delay="0.3s" style="padding-left:10px;"></div>');
+            var divContainer = $('<div class="control-group divContainer" style="padding-left:10px;"></div>');
             // var menu = $('.menu')
             // menu.remove();
             $('select2-selection').parents('select2').remove();
