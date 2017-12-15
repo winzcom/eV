@@ -39,7 +39,7 @@ class SearchController extends Controller
     }
 
     private function getVendors($cat,$state = ''){
-        $companies = User::with('reviews','galleries','bay_average')->whereHas('categories',function($q) use ($cat){
+        $companies = User::with('reviews','galleries','bay_average','categories')->whereHas('categories',function($q) use ($cat){
             $q->where('categories.id',$cat);
         });
         $state !== '' ? $companies = $companies->StateVicinity($state,'') : $companies;
@@ -56,17 +56,20 @@ class SearchController extends Controller
             $companies = $this->getVendors($category,$state);
 
             if(count($companies) > 0){
-                return view('app_view.vendorbrowse')->with([
+                
+                return !request()->ajax() ? view('app_view.vendorbrowse')->with([
                     'companies'=>$companies,
                     'category_id'=>$category,
                     'path'=>$this->path,
                     'cat_name'=>$companies->first()->categories->find($category)->name,
                     'cur_state'=> $state
-                ]);
+                ]) : $companies;
             }
             //return view('app_view.vendorbrowse')->with('category_id',$category);
         }
-        return view('app_view.vendorbrowse')->with(['category_id'=>$category,'cur_state'=> $state]);   
+        return !request()->ajax() ? view('app_view.vendorbrowse')->with(['category_id'=>$category,'cur_state'=> $state]) : response()->json([
+            'message' => 'Please Pick a category'
+        ]);   
         
     }
 
