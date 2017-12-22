@@ -44,7 +44,9 @@
                                                 echo ': &#8358;'.$service->currencyFormatter($value[0]).'- &#8358;'.$service->currencyFormatter($value[1]);
                                             }
                                             
-                                        }else {
+                                        } elseif($key == 'request_photo') {
+                                        }
+                                        else {
                                             echo $key == 'extra'? 'Extras: (': ucwords($key).': (';
                                             echo implode(",",$value);
                                             echo ' )';
@@ -80,6 +82,10 @@
                             }
                             else{
                                 echo $request->request;
+                            }
+                            if(count($request->file_paths) > 0) {
+                                $filePath = json_decode($request->file_paths);
+                                echo "<img src='$filePath[0]' width='300' height='auto'>";
                             }
                         @endphp
                     </div><!-- panel-body-->

@@ -32,7 +32,7 @@ class DetailsController extends Controller
                 'galleries'
             ]
         )->where('name_slug',$slug)->first();
-
+       
         $category_name = ''; $cat_id = null;
 
         $similars = User::whereHas('categories',function($q) use ($user){

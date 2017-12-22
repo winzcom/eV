@@ -22,6 +22,8 @@ Route::get('/type_search','SearchController@search_by_typing');
 
 Route::get('/load_request','GuestController@testLoad');
 
+Route::get('set_name_slug','GuestController@setNameSlug');
+
 Route::get('/aws_sns_message','GuestController@amazonSnS');
 
 // Route::get('/testmail',function(Request $request){

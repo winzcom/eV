@@ -15,6 +15,8 @@ use App\Entities\User;
 use App\Entities\Review;
 use App\Service\Service;
 use App\Interfaces\GalleryInterface;
+use Illuminate\Filesystem\FilesystemManager;
+use Aws\S3\S3Client;
 
 use App\Entities\Category;
 use App\Entities\QuotesRequest;
@@ -27,7 +29,9 @@ class UserController extends Controller
 
     private $gallery;
    
-    public function __construct(GalleryInterface $gi,UPI $user_repo){
+    public function __construct(GalleryInterface $gi,UPI $user_repo, FilesystemManager $laraelStorage,S3Client $s3Client){
+
+        parent::__constructor($laraelStorage,$s3Client);
 
         $this->gallery = $gi;
         $this->user_repo = $user_repo;
@@ -56,7 +60,8 @@ class UserController extends Controller
         $filtered['password'] = bcrypt($filtered['password']);
         if( $file !== null && $file->isValid() ){
             $filtered['company_image'] = Auth::user()->name.$file->getClientOriginalName();
-            $file->storeAs('company_images',$filtered['company_image'],'my_public');
+            $filtered['company_image'] = $this->uploadFiles('s3',[$file],'public/company_image', $filtered['company_image'])[0];
+            //$file->storeAs('company_images',$filtered['company_image'],'my_public');
         }
         
         
@@ -82,17 +87,16 @@ class UserController extends Controller
     public function showProfileForm(Request $request){
         
         return view('vendor.profile')->with([
-            
-                            'user'=>Auth::user(),
-                            'formInputs'=>User::getFormInputs(),
-                        ]);
+                'user'=>Auth::user(),
+                'formInputs'=>User::getFormInputs(),
+            ]);
     }
 
 
 
     public function showGallery(){
         $galleries = $this->user_repo->getImages(['user_id','=',Auth::id()]);
-        return view('vendor.user_gallery')->with(['galleries'=>$galleries,'path'=>$this->path]);
+        return view('vendor.user_gallery')->with(['galleries'=>$galleries,'path'=>asset('galleries')]);
     }
 
 
@@ -104,9 +108,15 @@ class UserController extends Controller
             'size'=>'5000'
         ],['size'=>'size must be less than 5MB']);
 
-        $names = Service::uploadPhotos($this->gallery,$request->photo,$request->caption,Auth::user()->name_slug,Auth::id());
+        $filePaths = collect($this->uploadFiles('s3',$request->photo,'public/galleries'))
+                    ->map(function($path) {
+                        return ['image_name' => $path];
+                    })->toArray();
+
+        request()->user()->galleries()->createMany($filePaths);
+        //$names = Service::uploadPhotos($this->gallery,$request->photo,$request->caption,Auth::user()->name_slug,Auth::id());
         if($request->ajax()){
-            return json_encode(array('status'=>'Success','paths'=>$names));
+            return json_encode(array('status'=>'Success','paths'=>$filePaths));
         }
         
         return back();
@@ -115,8 +125,15 @@ class UserController extends Controller
     public function deletePhotos(Request $request){
 
         if(count($request->images) > 0)
-            Service::deletePhotos($this->gallery,$request->images,Auth::id());
-        
+            
+            $bucket_name = env('AWS_BUCKET');
+            //Service::deletePhotos($this->gallery,$request->images,Auth::id());
+           try {
+             $this->deleteFiles($request->images,$bucket_name);
+             request()->user()->galleries()->whereIn('image_name',$request->images)->delete();
+           } catch(\Exception $e) {
+               return back()->with('message','error deleting some images');
+           }
         return back();
     }
 

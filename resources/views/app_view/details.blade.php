@@ -77,7 +77,11 @@
 								
 									@foreach($company->galleries->take(3) as $gallery)
 										<div class="kr-sky" data-duration="5000">
-											<img class="sky-background" src="{{$path}}/{{$gallery->image_name}}" alt="product title">								
+	   										@if($gallery->is_s3_path)
+											   <img class="sky-background" src="{{$gallery->image_name}}" alt="product title">
+											@else
+												<img class="sky-background" src="{{$path}}/{{$gallery->image_name}}" alt="product title">
+											@endif
 										</div>
 									@endforeach
 									
@@ -222,6 +226,7 @@
         async defer>
 </script>
 <script src="{{asset('jss/custom/map.js')}}"></script>
+<script src="{{ asset('jss/review.js') }}"></script>
 <script>
 $(document).ready(function(){
 

@@ -29,7 +29,7 @@ class MySqlCustRepo extends BaseRepo implements CustRepoInterface{
     public function getRequests($cust_id){
         $d = DB::select(DB::raw(
             "select DISTINCT(quotes_request.id),count(distinct(quotes.id)) as replies,
-            count_available_vendors as total_vendors,
+            count_available_vendors as total_vendors,file_paths,
             companies.state as state, vicinities.name as vicinity,
             categories.name as cat_name,quotes.rid as rid,
             quotes_request.created_at,quotes_request.updated_at,

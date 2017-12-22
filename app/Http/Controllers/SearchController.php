@@ -30,7 +30,7 @@ class SearchController extends Controller
         $categories = implode(',',$request->query('category'));
         $companies = User::with('reviews')->whereHas('categories',function($q) use ($request){
             $q->whereIn('categories.id',$request->input('category'));
-        })->StateVicinity($request->state,$request->vicinity)->where('name','!=','null')->paginate(15);
+        })->StateVicinity($request->state,$request->vicinity)->where('name','!=',null)->paginate(15);
        /*return view('app_view.browsevendors')->with(['companies'=>$companies,'request'=>$request,
                     'categories'=>$categories,
         'events'=>Service::getEvents()
@@ -38,21 +38,17 @@ class SearchController extends Controller
        return $companies;
     }
 
-    private function getVendors($cat,$state = ''){
+    private function getVendors($cat,$state = null){
         $companies = User::with('reviews','galleries','bay_average','categories')->whereHas('categories',function($q) use ($cat){
             $q->where('categories.id',$cat);
         });
-        $state !== '' ? $companies = $companies->StateVicinity($state,'') : $companies;
-        $companies = $companies->where('password','!=','')->where('password','!=',null)->paginate(15);
-       return $companies;
+        $state !== null ? $companies = $companies->StateVicinity($state,'') : $companies;
+        //$companies = $companies->where('password','!=','')->where('password','!=',null)->paginate(15);
+       return $companies->where('bounced',0)->where('name_slug','!=',null)->paginate(15);
     }
 
     public function browseByCategory($category = null, $state = '', Request $request){
         if($category){
-            // $companies = Cache::remember(url()->current(),1440,function() use ($category){
-            //                 return $this->getVendors($category);
-            //             });
-            
             $companies = $this->getVendors($category,$state);
 
             if(count($companies) > 0){
@@ -75,8 +71,22 @@ class SearchController extends Controller
 
 
     public function search_by_typing(Request $request){
-        $name = $request->name;
-        $companies = User::with('categories','reviews')->where('name','like',$name."%")->paginate(10);
+        $name = $request->term;
+        $companies = User::with('categories','reviews')->where('name','like',$name."%");
+        if($request->ajax()) 
+            return $companies->get()->filter(function($company) {
+                $name_slug = $company->name_slug;
+                $count = count($company->categories);
+                if($name_slug !== null && $name_slug !== '' && $count > 0)
+                    return true;
+            })->map(function($company) {
+                return [
+                        'value' => $company->name,'label' => $company->name,
+                        'slug' => $company->name_slug,
+                        'cat_id' => $company->categories->first()->id 
+                    ];
+                });
+        $companies = $companies->paginate(10);
         return view('app_view.display_list')->with(['companies'=>$companies,'request'=>$request,
             'events'=>Service::getEvents()
         ]);

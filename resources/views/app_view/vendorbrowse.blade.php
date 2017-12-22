@@ -32,7 +32,7 @@
                 <div class="cbp-l-filters-dropdownWrap">
                     <p><b>Select State</b></p>
                     <div class="outPopUp">
-                        <select class="form-control input-lg " name="state" id="state">
+                        <select class="form-control input-lg states" name="state" id="state">
                             <option value="">...</option>
                             @foreach ($states as $state)
                             
@@ -99,39 +99,36 @@
                         <div class="row">
                         
                             @foreach($comps as $company)
-                                <div class="col-sm-4">
+                                <div class="col-sm-6 col-md-4 col-lg-4 col-xs-12">
                                     <div class="thumbnail style1">
                                         <div class="thumb-wrapper">
-                                            
-                                            
-                                                @if(count($company->galleries) > 1)
-                                                    <div class="thumbs-carousel">
-                                                    @php
-                                                        $file_name = $company->galleries->pluck('image_name')->take(3); 
-                                                    @endphp
-                                                    @foreach($file_name as $key=>$value)
-                                                        <div class="item">
-                                                            <img src="{{$path}}/{{$value}}" alt="Thumbnail" style="width:100%;max-height:250px;">
-                                                        </div>
-                                                    @endforeach
-                                                    </div>
-                                                @elseif(count($company->galleries) == 1)
+                                            <div class="thumbs-carousel">
+                                            @if($company->hasGalleries())
+                                                @foreach($company->galleries()->take(3) as $gallery)
                                                     <div class="item">
-
-                                                    <img src="{{$path}}/{{$company->galleries->first()->image_name}}" alt="" style="width:100%;max-height:250px;"/>
+                                                        @if($gallery->is_s3_path)
+                                                            <img src="{{$gallery->image_name}}" alt="Thumbnail" style="width:100%;max-height:250px;">
+                                                        @else
+                                                            <img src="{{$path}}/{{$gallery->image_name}}" alt="Thumbnail" style="width:100%;max-height:250px;">
+                                                        @endif
                                                     </div>
-                                                @elseif($company->company_image !== '')
-                                                    <div class="item">
-
-                                                    <img src="{{asset('company_images')}}/{{$company->company_image}}" alt="" style="width:100%; max-height:250px;"/>
-                                                    </div>
+                                                @endforeach
+                                            @elseif($company->company_image !== '')
+                                                <div class="item">
+                                                @if($company->company_image_path_is_s3)
+                                                    <img src="{{$company->company_image}}" alt="" style="width:100%; max-height:250px;"/>
                                                 @else
-                                                    <div class="item">
+                                                    <img src="{{asset('company_images')}}/{{$company->company_image}}" alt="" style="width:100%; max-height:250px;"/>
+                                                @endif
+                                                </div>
+                                            @else
+                                                <div class="item">
 
                                                     <img src="{{ asset('/img/_7.jfif') }}" alt="" style="width:100%; max-height:250px;"/>
-                                                    </div>
-                                                @endif
+                                                </div>
+                                            @endif
                                             
+                                        </div>
                                         </div>
                                         <div class="caption">
                                             <h3>{{$company->name}}</h3>

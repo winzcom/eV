@@ -2,7 +2,7 @@
   <div class="modal-dialog">
    <div class="modal-content">
     <div class="modal-body my-space">
-        <form id="myWizard" type="get" action="{{url('/quotes_request')}}" class="form-horizontal" method="post">
+        <form id="myWizard" type="get" action="{{url('/quotes_request')}}" name="request_form" class="form-horizontal" method="post">
              {{ csrf_field() }}
              <!--<div>-->
              <!--<div class="row hide" data-step="1" data-title="This is the first step!">-->
@@ -167,12 +167,12 @@
                         <input type="number" class="form-control price_budget" name ="budget_per_head" id="max_amount">
                     </div>
 
-                    <div id="publicbudget">
+                    <!-- <div id="publicbudget">
                         <label>How do You Want to Work With Vendors? <small style="color:red">*</small></label>
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="_budget" id="optionsRadios2" value="We will pay vendors"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="_budget" value="We will pay vendors"><ins class="iCheck-helper"></ins>
                                 </div>
                             We will pay vendors
                             </label>
@@ -180,7 +180,7 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="_budget" id="optionsRadios2" value="free to attend and send to guests"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="_budget" value="free to attend and send to guests"><ins class="iCheck-helper"></ins>
                                 </div>
                                 Free to attend and sell to guests
                             </label>
@@ -188,7 +188,7 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="_budget" id="optionsRadios2" value="free to attend"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="_budget" value="free to attend"><ins class="iCheck-helper"></ins>
                                 </div>
                             Free to attend and sell to Guest
                             </label>
@@ -196,7 +196,7 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="_budget" id="optionsRadios2" value="there is a fee to attend"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="_budget" value="there is a fee to attend"><ins class="iCheck-helper"></ins>
                                 </div>
                             There is a fee to attend
                             </label>
@@ -204,12 +204,12 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="_budget" id="optionsRadios2" value="we are open to how it will work"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="_budget" value="we are open to how it will work"><ins class="iCheck-helper"></ins>
                                 </div>
                             We are open to how this will work
                             </label>
                         </div>
-                    </div><!-- id publicbudget-->
+                    </div>id publicbudget -->
                 </section>
             <!--</div>--><!--step-3-->
 
@@ -222,7 +222,7 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio"  name="what_stage" id="optionsRadios2" value="Need to book asap"><ins class="iCheck-helper"></ins>
+                                    <input type="radio"  name="what_stage"  value="Need to book asap"><ins class="iCheck-helper"></ins>
                                 </div>
                             Need to book asap
                             </label>
@@ -230,7 +230,7 @@
                         <div class="radio">
                             <label class="">
                                 <div class="iradio_square">
-                                    <input type="radio" name="what_stage" id="optionsRadios2" value="Just need Quotes"><ins class="iCheck-helper"></ins>
+                                    <input type="radio" name="what_stage" value="Just need Quotes"><ins class="iCheck-helper"></ins>
                                 </div>
                         Just interested in quotes
                             </label>
@@ -239,10 +239,18 @@
                     <!--personal message-->
                     <div class="control-group" id="personalmessagae">
                         <label class="control-label" for="inputCity">Tell us more about your needs </label>
-                            <div class="controls">
-                                <textarea name="personal_message" class="form-control" id="personalmessage"  rows="5" placeholder="tell us more about the your event needs include key details e.g type of meal(fried rice, small chops, jollof rice) it a standing event, customer are going to pay" ></textarea>
-                            </div>
-                     </div><!--personal message end -->
+                        <div class="controls">
+                            <textarea name="personal_message" class="form-control" id="personalmessage"  rows="5" placeholder="tell us more about the your event needs include key details e.g type of meal(fried rice, small chops, jollof rice) it a standing event, customer are going to pay" ></textarea>
+                        </div>
+                    </div><!--personal message end -->
+                    <!-- files to upload -->
+                    <div>
+                        <label class="control-label" for="inputCity">Upload picture </label>
+                        <div class="controls">
+                            <input type="file" name="request_photo[]" id="request_files">
+                        </div>
+                    </div>
+                    <!-- end of files to upload -->
                 </section>
                 
         <!-- </div>--> <!--step-4-->
@@ -277,18 +285,18 @@
                         <span id="status"></span>
                     </div>
 
-                    <label class="control-label" for="inputCity" id="step5password">Password</label>
+                    <label class="control-label" for="inputCity">Password</label>
                     <div class="controls">
-                        <input name="password" class="form-control" type="password" id="step5password" required/>
+                        <input name="password" class="form-control" type="password" required/>
                     </div>
-                    <label class="control-label" for="inputCity" id="step5password">Phone Number</label>
+                    <label class="control-label" for="inputCity">Phone Number</label>
                     <div class="controls">
-                        <input name="phone_no" min="0" class="form-control" type="number" id="step5password" required/>
+                        <input name="phone_no" min="0" class="form-control" type="number" required/>
                     </div>
                 </section>
 
 
-        <!--<label class="control-label" for="inputCity" id="step5password">Confirm Password</label>
+        <!--<label class="control-label" for="inputCity">Confirm Password</label>
         <div class="controls">
             <input name="confirm_password" class="form-control" type="password" id="step5confirm_password" required/>
         </div>-->

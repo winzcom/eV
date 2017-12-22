@@ -15,10 +15,12 @@ const message = firebase.messaging();
 const CACHE = 'my-cache-v1';
 const CACHE2 = 'my-cache-v2';
 const CACHE3 = 'my-cache-v3';
+const CACHE4 = 'my-cache-v4';
+const CACHE5 = 'my-cache-v5';
+const CACHE6 = 'my-cache-v5';
 //message.onMessage.apply(window,f);
 
 var files_to_cache = [
-
     'js/vendor/jquery.js',
     'js/vendor/bootstrap.js',
     'js/easing.js',
@@ -54,6 +56,11 @@ var files_to_cache = [
     'js/contact.js',
     'js/tempo.js',
     'customcss/all.css',
+    //'https://www.gstatic.com/firebasejs/3.6.9/firebase.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js',
+    'https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
+    'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'
 ]
 
 //window.onMessage.apply(message,f);
@@ -61,11 +68,12 @@ var files_to_cache = [
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open(CACHE3).then(function(cache) {
+    caches.open(CACHE6).then(function(cache) {
       console.log('caching')
       return cache.addAll(files_to_cache);
     })
   );
+  self.skipWaiting();
 });//done there
 
 self.addEventListener('activate', function(event) {
@@ -73,20 +81,23 @@ self.addEventListener('activate', function(event) {
     caches.keys().then(function(cacheNames) {
       return Promise.all(
         cacheNames.filter(function(name) {
-          return name != CACHE3;
+          return name != CACHE6;
         }).map(function(name) {
           return caches.delete(name);
         })
       ) 
     })
-  )
+  );
+  return self.clients.claim();
 })
 
 self.addEventListener('fetch',function(event) {
    event.respondWith(
       caches.match(event.request).then(function(response) {
         if( response ) return response;
-        return fetch(event.request)
+        return fetch(event.request).then(function(response) {
+          return response;
+        })
       })
    );
 });

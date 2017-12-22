@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Filesystem\FilesystemManager;
+use Aws\S3\S3Client;
 
 use Aws\Sns\SnsClient;
 use App\Service\Service;
@@ -32,9 +34,9 @@ class GuestController extends Controller
 
      private $uRepo;
 
-    public function __construct(UPI $uRepo)
+    public function __construct(UPI $uRepo,FilesystemManager $laravelStorage, S3Client $s3Client)
     {
-        
+        parent::__constructor($laravelStorage,$s3Client);
         $this->uRepo = $uRepo;
     }
 
@@ -69,9 +71,16 @@ class GuestController extends Controller
 
     public function writeReview(Request $request){
         
-        $data = $request->except(['_token']);
+        $data = $request->except(['_token','review_pictures']);
         $data['reviewers_id'] = Auth::guard('client')->id();
-        Review::create($data);
+        if( $request->hasFile('review_pictures') ) {
+            $filePaths = $this->uploadFiles('', $request->review_pictures, 'public/review_images');
+            $data['review_image'] = json_encode($filePaths);
+        }
+           
+        Review::forceCreate($data);
+        if($request->ajax())
+            return $this->success(['status' => 'success']);
         return redirect()->back();
     }
 
@@ -86,19 +95,19 @@ class GuestController extends Controller
     }
 
     public function quotesRequest(Request $request){
-
         $users = null; $customer= null;
         $state = $request->state;
         $vicinity = $request->vicinity;
         $client = $request->only(['first_name','last_name','email','password','phone_no']);
         $category = $request->only(['category']);
+        $files = $request->hasFile('request_photo')  ? $request->request_photo : null;
         $request = $request->except(['category','firstname','','lastname','email','password','_token','state','vicinity']);
         
         $request = array_filter($request,function($val,$key){
             return $val !== '' && $val !== null && !empty($val) && $val !== '-';
         },ARRAY_FILTER_USE_BOTH);
 
-        DB::transaction(function() use ($request,$client,$category,$state,$vicinity){
+        DB::transaction(function() use ($request,$client,$category,$state,$vicinity,$files){
             $users = $this->getUserQuery($category,$state,$vicinity)->get();
             $customer = null;
             
@@ -125,7 +134,7 @@ class GuestController extends Controller
                                     $customer->save();
                                     
                                 } else {
-                                    $customer = Customer::firstOrCreate([
+                                    $customer = Customer::create([
                                             'first_name'=>$client['first_name'],
                                             'last_name'=>$client['last_name'],
                                             'email'=>$client['email'],
@@ -143,6 +152,7 @@ class GuestController extends Controller
                     if($vicinity == 'all' || $vicinity == '' || $vicinity == null) $vicinity = 0;
 
                     try{
+
                             $req = QuotesRequest::create([
                             'category_id'=>$category['category'],
                             'client_id'=>$id !== null ? $id:$customer->id,
@@ -151,9 +161,16 @@ class GuestController extends Controller
                             'vicinity_id'=>$vicinity,
                             'request'=>json_encode($request)
                         ]);
+                        if(!is_null($files)) {
+                            if( $filePaths = $this->uploadFiles('s3',$files,'public/request_pictures') ) {            
+                                $req->file_paths = json_encode($filePaths);
+                                $req->save();  
+                            }
+                        }
                     }catch(\Exception $e){
-                        //$customer->delete();
-                        echo json_encode(['error'=>'An error occured in creating your request. Please try again']);
+                        //$req->delete();
+                        
+                        echo json_encode(['error'=>$e->getMessage()]);
                         return;
                     }
                     
@@ -238,11 +255,6 @@ class GuestController extends Controller
     }
 
     public function sendEmailTypeVerificationMail() {
-        
-        // $users = $this->uRepo->getUsers(
-        //         ['confirmed','=',0],['email','!=',''],
-        //         ['bounced','!=',1],['email','like','%@gmail.com']
-        //     );
         $users = User::where([
             ['confirmed','=',0],['email','!=',''],
             ['bounced','=',0],['email','like','%@gmail.com']
@@ -377,6 +389,16 @@ class GuestController extends Controller
         } catch(\Exception $e) {
             //
         }
+    }
+
+    public function setNameSlug() {
+        User::where('name_slug','')->orWhere('name_slug',null)
+            ->chunk(250,function($users) {
+                $users->each(function($user){
+                    $user->name_slug = str_slug($user->name,'-');
+                    $user->save();
+                });
+            });
     }
 }
 

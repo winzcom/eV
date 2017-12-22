@@ -73,7 +73,9 @@ if(count($all_requests) > 0){
                                     if($key == 'my_budget'){
                                         echo str_replace('_',' ',title_case($key));
                                         echo ': &#8358;'.$service->currencyFormatter($value[0]).'- &#8358;'.$service->currencyFormatter($value[1]);
-                                    }else {
+                                    
+                                    } elseif($key == 'request_photo') {}
+                                    else {
                                         echo $key == 'extra'? 'Extras: (': ucwords($key).': (';
                                         echo implode(",",$value);
                                         echo ' )';
@@ -104,6 +106,10 @@ if(count($all_requests) > 0){
                 echo $pm.'</div>';
             }
             else echo $request->request;
+            if($request->file_paths !== null) {
+                    $filePath = json_decode($request->file_paths);
+                    echo "<h5>Request Picture</h5><img src='$filePath[0]' width='300' height='auto'><hr>";
+                }
         }
         
     }

@@ -142,11 +142,10 @@ $(document).ready(function() {
             },
             onStepChanging: function (event, currentIndex, newIndex)
             {
-                console.log(event)
+                
                 if (currentIndex > newIndex)
                 {
                     disableNextButton(false);
-                    return true;
                 }
                 else if(currentIndex == 1 && $('#category').val() == ''){
                     disableNextButton(true);
@@ -170,77 +169,81 @@ $(document).ready(function() {
                 
                 //var formData = $('#myWizard').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});*/
                 var formData = $('#myWizard').serialize();
-                console.log(formData);
                 var finish =  $('a[href="#finish"]'); 
-                finish.html('sending request...');
-                finish.addClass('disabled');
+                var fm = new FormData(document.forms['myWizard']);
+                if( form.valid() ) {
+                    finish.html('sending request...');
+                    finish.addClass('disabled');
+                        $.ajax({
+                        url: request_url,
+                        type: 'POST',
+                        processData:false,
+                        contentType:false,
+                        data: fm,
+                        dataType:"json",
+                        headers: {
+                            'X-CSRF-TOKEN': Laravel.csrfToken,
+                        },
+                        statusCode:{
+                            500: function() {
+                                var html = "<p style='color:red;'>Message: Request could not be sent an error occured</p>"
+                                $('.message').html(html);
+                                //alertify.log('An error occurred request can not be sent at the moment');
+                                finish.html('finish');
+                                finish.removeClass('disabled');
+                            },
+                            401:function() {
+                                alert('session has expired, please login again');
+                                finish.html('finish');
+                                finish.removeClass('disabled');
+                            }
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            
+                            //try {
 
-                $.ajax({
-                    url: request_url,
-                    type: 'POST',
-                    data: formData,
-                    dataType:"json",
-                    headers: {
-                        'X-CSRF-TOKEN': Laravel.csrfToken,
-                    },
-                    statusCode:{
-                        500: function() {
-                            var html = "<p style='color:red;'>Message: Request could not be sent an error occured</p>"
-                            $('.message').html(html);
-                            //alertify.log('An error occurred request can not be sent at the moment');
+                                var d = Object.assign({},data);
+                                if (d.error) {
+                                    var html = "<p>Error: " + d.error + "</p>"
+                                    // alertify.closeLogOnClick(true).error(html, function(ev) {
+                                    //     $('.message').html(html);
+                                    //     $('#myModal').modal('show');
+                                    // });
+                                        $('.message').html(html);
+                                    //   $('#myModal').modal('show');  
+                                } else {
+                                    
+                                    var html = "<p style='color:green;'>Success: " + d.message + "</p>"
+                                    alertify.closeLogOnClick(true).success(html);
+                                    $('#myWizard')[0].reset();
+                                    $('.message').html(html);
+                                }
+                            // //} catch (e) {
+                            //      var html = "<p style='color:green;'>Message: Request Sent</p>"
+                            //     $('.message').html(html);
+                            //     $('#myWizard')[0].reset();
+                            //     alertify.success('Request Sent');
+                            // }
+
+                            setTimeout(function() {
+                                $('.message').html('');
+                                $('.vendor_available').html('');
+                            }, 3000);
+
                             finish.html('finish');
                             finish.removeClass('disabled');
                         },
-                        401:function() {
-                            alert('session has expired, please login again');
+                        error: function(err) {
+                            console.log(err.error);
+                            var html = "<p style='color:red;'>Error sending this request</p>"+err
+                            $('.message').html(html);
+                            alertify.log('An Error occurred request can not be sent at the moment');
                             finish.html('finish');
                             finish.removeClass('disabled');
                         }
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        
-                        //try {
-
-                            var d = Object.assign({},data);
-                            if (d.error) {
-                                var html = "<p>Error: " + d.error + "</p>"
-                                // alertify.closeLogOnClick(true).error(html, function(ev) {
-                                //     $('.message').html(html);
-                                //     $('#myModal').modal('show');
-                                // });
-                                  $('.message').html(html);
-                                //   $('#myModal').modal('show');  
-                            } else {
-                               
-                                var html = "<p style='color:green;'>Success: " + d.message + "</p>"
-                                alertify.closeLogOnClick(true).success(html);
-                                $('#myWizard')[0].reset();
-                                $('.message').html(html);
-                            }
-                        // //} catch (e) {
-                        //      var html = "<p style='color:green;'>Message: Request Sent</p>"
-                        //     $('.message').html(html);
-                        //     $('#myWizard')[0].reset();
-                        //     alertify.success('Request Sent');
-                        // }
-
-                        setTimeout(function() {
-                            $('.message').html('');
-                            $('.vendor_available').html('');
-                        }, 3000);
-
-                        finish.html('finish');
-                        finish.removeClass('disabled');
-                    },
-                    error: function(err) {
-                        console.log(err.error);
-                        var html = "<p style='color:red;'>Error sending this request</p>"+err
-                        $('.message').html(html);
-                        alertify.log('An Error occurred request can not be sent at the moment');
-                        finish.html('finish');
-                    }
-                })
+                    })
+                }
                 
             }//onFinished
             
@@ -316,32 +319,6 @@ $(document).ready(function() {
             var modal = $(this);
             button = $(event.relatedTarget);
 
-            
-        //     var slider_ranger = document.getElementById('slider-range'), amount = document.getElementById('amount');
-            
-        //     if(noUISliderCreated === false) {
-        //         noUiSlider.create(slider_ranger, {
-        //             start: [ 250000, 450000],
-        //             connect: true,
-        //             step:1000,
-        //             range: {
-        //                 'min': 1000,
-        //                 'max': 500000
-        //             }
-        //         });
-        //         noUISliderCreated = true;
-        //     }
-            
-
-        //     slider_ranger.noUiSlider.on('update', function( values, handle ) {
-        //         var value = values[handle];
-        //         var low = (+values[0]).toFixed(0), high = (+values[1]).toFixed(0);
-        //         if(high == 700000) {
-        //             high = high+'+';
-        //         }else high = high;
-        //         amount.value = low+'-'+high;
-        // });
-            
             try{
             $( "#datepicker" ).datepicker({
                 minDate:new Date(new Date().setDate(new Date().getDate()+1))
@@ -418,15 +395,25 @@ $(document).ready(function() {
         }) /***End of event Change Event operation */
 
         /** comment out to use vue js  */
+        var states = '';
         $('#browsevendor').change(function(e) {
             var cat = $(this).val(); var state = $('#state').val();
             if (!isNaN(cat))
                 window.location.href = myUrl + 'browse_vendors/' + cat+'/'+state;
         });
 
+        $('.states').change(function(e) {
+            states = $(this).val();
+        })
+
         $('#search_button').click(function(e){
-            if($('#browsevendor').val() != '' && $('#state').val() != '')
-                $('#browsevendor').trigger('change');
+           
+            if($('#browsevendor').val() != '' && $('#state').val() != '') {
+                var cat = $('#browsevendor').val(); var state = $('#state').val();
+                if (!isNaN(cat))
+                    window.location.href = myUrl + 'browse_vendors/' + cat+'/'+states;
+            }
+           
         })
 
 
@@ -850,6 +837,15 @@ $(document).ready(function() {
 
         function addTransportInputs() {}
 
-
+        $( "#search" ).autocomplete({
+            source: window.location.origin+'/type_search',
+            minLength:2,
+            autoFocus:true,
+            select: function( event, ui ) {
+              var url = window.location.origin+'/detail/'+ui.item.slug+'/'+ui.item.cat_id;
+              url = encodeURI(url);
+              window.location.href = url;
+            }
+          });
 
     }) //doument.ready

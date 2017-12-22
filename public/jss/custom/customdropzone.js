@@ -4,6 +4,17 @@ var previewTemplate = previewNode.parentNode.innerHTML;
 previewNode.parentNode.removeChild(previewNode);
 
 var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+  init:function() {
+    this.on('successmultiple',function(files,response) {
+        if(response.status === 'success')
+          alert('Upload Done');
+          setTimeout(function() {
+            window.location.reload();
+          }, 1000);
+    })
+  },
+  maxFiles:2,
+  acceptFile:'image/*',
   url: "gallery_upload", // Set the url
   thumbnailWidth: 100,
   thumbnailHeight: 100,
