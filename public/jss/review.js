@@ -25,7 +25,7 @@ $(document).ready(function(){
       var review_id =  $('#review_id').val();
       var content = $('#content').val();
       
-      var uri = "/eWeb/public/reply_review";
+      var uri = window.myUrl+'/reply_review';
       $.ajax({
             url:uri,
             beforeSend:function(request){
@@ -51,8 +51,56 @@ $(document).ready(function(){
             
             }
         });
+     return false;
+ });
 
-        return false;
+ $('.close_review_modal').click(function() {
+     document.forms['send_request_form'].reset();
+ })
+
+ $('#review_pictures').on('change', function(event) {
+    var imageType = /^image\//
+    $('#send_quote').attr('disabled',false);
+    $('#error_message').html('');
+     if( event.target.files.length > 4 ) {
+         $('#send_quote').attr('disabled',true);
+         var html = `<p style="color:red;">you can only upload four pictures</p>`
+         $('#error_message').html(html);
+     } 
+     Array.prototype.forEach.call( event.target.files, function(file) {
+         if( !imageType.test(file.type)) {
+            $('#send_quote').attr('disabled',true);
+            var html = `<p style="color:red;">Only images are allowed</p>`
+            $('#error_message').html(html);
+         }
+     })
+ });
+
+ $('#send_request_form').submit(function(event) {
+     event.preventDefault();
+     event.stopPropagation();
+     var url = window.location.origin+'/write_review';
+     var fd = new FormData(this);
+     $('#send_quote').attr('disabled',true).html('sending...');
+     $.ajax({
+        url:url,
+        method:'POST',
+        data:fd,
+        processData:false,
+        contentType:false,
+        dataType:'json',
+        headers:{
+            'X-CSRF-TOKEN':$("meta[name='csrf-token']").attr("content")
+        },
+        success:function(data) {
+            if(data['status'] === 'success') {
+                alert('Review created successfully');
+                setTimeout(function() {
+                    window.location.reload(true);
+                }, 2000);
+            }
+        }
+     })
  })
 
 });// document ready

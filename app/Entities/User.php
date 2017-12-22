@@ -27,6 +27,8 @@ class User extends Authenticatable
 
     protected $date = ['created_at','updated_at','availability_set_date'];
 
+    protected $appends = ['company_image_path_is_s3'];
+
     protected $fillable = [
         'name','email','password','first_name','last_name',
         'category','state',
@@ -157,6 +159,10 @@ class User extends Authenticatable
     public function getDescriptionAttribute($value){
 
         return  html_entity_decode($value);
+    }
+
+    public function getCompanyImagePathIsS3Attribute() {
+        return str_contains($this->company_image,['http','https']);
     }
 
     public function reviews(){

@@ -40,6 +40,16 @@
                             
                     ?></span> &nbsp;@if($review->created_at !== null){{$review->created_at->toFormattedDateString()}}@endif
                         <p>{{$review->review}}</p>
+                            
+                            @php
+                                if(!is_null($review->review_pictures)) {
+                                    echo "<div class='row' style='margin-left:0;margin-right:0'>";
+                                    foreach($review->review_pictures as $picture) {
+                                        echo "<div class='col-sm-3' style='padding-left:0;padding-right:0' ><img src='$picture' width='200' height='auto'></div>";
+                                    }
+                                    echo "</div>";
+                                }
+                            @endphp
                             @if($review->reply !== null)
                                 
                                     @if($review->reply !== '')

@@ -101,8 +101,8 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
         $d = DB::select(DB::raw(
             "select quotes_request.*,users.first_name as client_name,quotes.rid as rid,quotes.cost as cost,
             quotes.message as message, quotes.down_payment as dp,b.ma as max_cost,b.mi as min_cost,b.cost_avg as avg_cost,
-            company_category.company_id, company_category.category_id,b.crid
-            from quotes_request 
+            company_category.company_id, company_category.category_id,b.crid,file_paths
+            from quotes_request
             inner join company_category on company_category.category_id = quotes_request.category_id 
             inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 
             and (companies.vicinity_id = quotes_request.vicinity_id or quotes_request.vicinity_id = 0 )

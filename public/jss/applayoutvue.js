@@ -1,5 +1,5 @@
 var vm = new Vue({
-    el:"#vendor_vue",
+    el:"#reviews",
     data:{
         paginatedData:{},
         items:[],
@@ -9,20 +9,16 @@ var vm = new Vue({
         showLoader:false
     },
     methods:{
-        getVendors: function() {
-            this.showLoader = true;
-            var category = document.getElementById('browsevendor');
-            var state = document.getElementById('state');
-                if( state.value === '' ) return;
-                var url = window.location.href+'/'+category.value+'/'+state.value;
+        getReviews: function() {
+                var url = window.location.origin;
                 $.ajax({
                     url:url,
                     success:function(response) {
                         this.paginatedData = response;
                         this.items = typeof this.paginatedData.data !== 'undefined' ? this.paginatedData.data.map(function(item) {
-                            item.url = window.location.origin+'/detail/'+item.name_slug+'/'+item.categories[0].id;
-                            item.currentState = state.value;
-                            item.currentCategory = category.value;
+                            //item.url = window.location.origin+'/detail/'+item.name_slug+'/'+item.categories[0].id;
+                            //item.currentState = state.value;
+                            //item.currentCategory = category.value;
                             return item;
                         }) : [];
 
@@ -35,7 +31,7 @@ var vm = new Vue({
         goToDetail: function(url) {
             window.location.href = url;
         },
-        getMoreVendor: function(entries, observer) {
+        getMoreReviews: function(entries, observer) {
             Array.prototype.forEach.call(entries,function(entry) {
                 if( entry.intersectionRatio > 0 ) {
                     /** Load more vendors to view */
@@ -45,12 +41,12 @@ var vm = new Vue({
                         this.loadImage(entry.target);
                     }
                     else
-                        this.loadVendors();
+                        this.loadReviews();
                     //document.querySelector('#vendor').insertAdjacentElement('beforeend',document.querySelector('#sentel'));
                 }
             }.bind(this));
         },
-        loadVendors: function() {
+        loadReviews: function() {
             var self = this;
             if( this.paginatedData.next_page_url !== null && typeof this.paginatedData.next_page_url !== 'undefined' ) {
                 $.ajax({

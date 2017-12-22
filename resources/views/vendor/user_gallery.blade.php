@@ -48,7 +48,7 @@ body{
 
 <!-- HTML heavily inspired by http://blueimp.github.io/jQuery-File-Upload/ -->
     <div class="row">
-        <div class="col-md-2 col-sm-12">
+        <div class="col-md-4 col-sm-12">
             <div class="table table-striped" class="files" id="previews">
 
             <div id="template" class="file-row">
@@ -84,7 +84,7 @@ body{
 
             </div><!-- Preview Table-table-striped -->
         </div><!--col-4 -->
-        <div class="col-md-10 col-sm-12">
+        <div class="col-md-8 col-sm-12">
             @if(count($galleries) == 0)
                 <div class="alert alert-success">No Galleries</div>
             @else
@@ -94,11 +94,14 @@ body{
                 <div  class="cbp cbp-l-grid-team gallery1">
                     <div class="row">
                         @foreach($galleries as $gallery)
-                            <div class="col-4">
+                            <div class="col-md-6 col-sm-6">
                                 <div class="cbp-item graphics-design">
-                                    <a href="{{$path}}/{{$gallery->image_name}}" class="cbp-caption nivo-lightbox" data-lightbox-gallery="gallery1">
+                                    @php
+                                        $image_path = $gallery->is_s3_path ? $gallery->image_name : $path.'/'.$gallery->image_name;
+                                    @endphp
+                                    <a href="{{$image_path}}" class="cbp-caption nivo-lightbox" data-lightbox-gallery="gallery1">
                                         <div class="cbp-caption-defaultWrap">
-                                            <img src="{{$path}}/{{$gallery->image_name}}" alt="" style="max-width:350px;">
+                                            <img src="{{$image_path}}" alt="" style="max-width:350px;">
                                         </div>
                                         <div class="cbp-caption-activeWrap">
                                             <div class="cbp-l-caption-alignCenter">

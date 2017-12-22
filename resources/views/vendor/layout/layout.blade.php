@@ -85,7 +85,7 @@
 		</div>		
 		
 		<ul class="nav navbar-nav navbar-right search-cart">
-				<li class="dropdown search">
+				<!-- <li class="dropdown search">
 					<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="ion-ios-search-strong"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class="clearfix">
@@ -97,7 +97,7 @@
 							</form>
 						</li>
 					</ul>
-				</li>
+				</li> -->
 				<li class="dropdown cart">
 					<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 						<i class="ion-bell"></i>

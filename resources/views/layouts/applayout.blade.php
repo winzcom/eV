@@ -136,6 +136,9 @@ window.customerUrl = window.location.origin+'/';
 						</ul>
 				</li>
 				@endif 
+				<li>
+					@include('app_view.shared.search')
+				</li>
 			</ul>
 		</div><!-- /.navbar-collapse -->
 		
@@ -156,7 +159,7 @@ window.customerUrl = window.location.origin+'/';
 <!-- jQuery plugins -->
 <script src="{{asset('js/vendor/jquery.js')}}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+<!-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script> -->
 <script src="{{asset('js/vendor/bootstrap.js')}}"></script>
 <script src="{{asset('js/easing.js')}}"></script>
 <script src="{{asset('js/scrollbar.js')}}"></script>
