@@ -1,6 +1,6 @@
 
 <div class="w3-margin">
-  <form method = "get" action="{{url('/type_search')}}">
+  <form method = "get" action="">
       {{ csrf_field() }}
       <div class="input-group input-group-sm ui-widget">
       <label for="search"> </label>

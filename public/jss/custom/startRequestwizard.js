@@ -846,6 +846,6 @@ $(document).ready(function() {
               url = encodeURI(url);
               window.location.href = url;
             }
-          });
+        });
 
     }) //doument.ready
