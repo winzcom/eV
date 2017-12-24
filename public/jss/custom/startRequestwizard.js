@@ -848,4 +848,7 @@ $(document).ready(function() {
             }
         });
 
+
+        $('#start_time').timepicker();
+
     }) //doument.ready

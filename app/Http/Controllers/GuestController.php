@@ -72,7 +72,8 @@ class GuestController extends Controller
     public function writeReview(Request $request){
         
         $data = $request->except(['_token','review_pictures']);
-        $data['reviewers_id'] = Auth::guard('client')->id();
+        // $data['reviewers_id'] = Auth::guard('client')->id();
+        $data['reviewers_id'] = $request->user('client')->id();
         if( $request->hasFile('review_pictures') ) {
             $filePaths = $this->uploadFiles('', $request->review_pictures, 'public/review_images');
             $data['review_image'] = json_encode($filePaths);
@@ -95,6 +96,7 @@ class GuestController extends Controller
     }
 
     public function quotesRequest(Request $request){
+        ob_start();
         $users = null; $customer= null;
         $state = $request->state;
         $vicinity = $request->vicinity;
@@ -120,6 +122,7 @@ class GuestController extends Controller
                     }
                     else{
                             if(!Service::isValid($client)){
+                               // return $this->error(['error'=>'Please fill your personal details']);
                                    echo json_encode(['error'=>'Please fill your personal details']);  
                                    return;
                             }
@@ -144,6 +147,7 @@ class GuestController extends Controller
                                 }
 
                             }catch(\Exception $e){
+                                //return $this->error(['error' => 'An error occured. Please try again']);
                                 echo json_encode(['error'=>'An error occured. Please try again']);
                                 return;
                             }
@@ -152,7 +156,6 @@ class GuestController extends Controller
                     if($vicinity == 'all' || $vicinity == '' || $vicinity == null) $vicinity = 0;
 
                     try{
-
                             $req = QuotesRequest::create([
                             'category_id'=>$category['category'],
                             'client_id'=>$id !== null ? $id:$customer->id,
@@ -168,15 +171,14 @@ class GuestController extends Controller
                             }
                         }
                     }catch(\Exception $e){
-                        //$req->delete();
-                        
+                        //return $this->error(['error' => $e->getMessage()]);
+                        $req->delete();
                         echo json_encode(['error'=>$e->getMessage()]);
                         return;
                     }
                     
 
                 $data = [
-
                     'users_data'=>$users,
                     'request'=>json_decode($req->request),
                     'category'=>$category['category'],
@@ -187,14 +189,16 @@ class GuestController extends Controller
                     // $mailer = Mail::to($data['users_data'])
                     // ->send(new SendRequest($data));
                 } catch(\Exception $e) {
+                    // return $this->error([
+                    //         'status'=>'failed',
+                    //         'message'=>'Notifications could not be sent at this time'
+                    //     ]);
                     echo json_encode([
                         'status'=>'failed',
                         'message'=>'Notifications could not be sent at this time'
                     ]);
                     return;
                 }
-                
-
                 // return response()->json([
                 //     'message'=>'Request Sent'
                 // ]);
@@ -204,14 +208,13 @@ class GuestController extends Controller
             }
 
             else{
-                
                 return response()->json([
                     'message'=>'No Vendors Available'
                 ]);
             }
             
       });
-    
+      ob_end_flush();
     }
 
     public function checkVendorAvailability(Request $request){
@@ -228,9 +231,7 @@ class GuestController extends Controller
                  $this->uRepo->setNoLogVendorsNotAvailable();                
             }
         }
-        return response()->json([
-            'available'=>$available
-        ]);
+        return $this->success(['available'=>$available]);
     }
 
     public function logout(){
@@ -250,8 +251,7 @@ class GuestController extends Controller
             $randomString = str_random(40);
             return redirect("password/create?s=".$randomString)->with('email',$email);
         }*/
-        $randomString = str_random(40);
-        return redirect("password/show?s=".$randomString)->with('email','ebudare@yahoo.com');
+        return redirect("password/show?s=".$randomString)->with('email','');
     }
 
     public function sendEmailTypeVerificationMail() {
@@ -281,30 +281,30 @@ class GuestController extends Controller
 
         try {
             $model = User::where('email','=',$request->email)->firstOrFail();
-            $model->name_slug = str_slug($model->name,'_');
+            $model->name_slug = str_slug($model->name,'-');
             $model->password = bcrypt($request->password);
             $model->confirmed = 1;
             $model->save();
             if(Auth::attempt(['email'=>$request->email,'password'=>$request->password,'confirmed'=>1])) {
                 return redirect('home');
             }
-            return redirect('login');
+            return redirect('login')->withErrors(['email' => 'Email does not exist'])->onlyInput('email');
         } catch(\Exception $e) {
-            return redirect('login')->withErrors([
-                'email' => 'Email does not exist'
-            ]);
+            return redirect('login')->withErrors(['email' => 'Email does not exist'])->onlyInput('email');
         }
     }
 
     public function setFirebaseNotificationEndPoint(Request $request){
         $model = null;
-        if(Auth::check()){
+        if( $request->user() ){
             //$model = $this->uRepo->getModel();
-            User::where('id',Auth::id())->update(['firebase_endpoint'=>$request->token]);
+            $request->user()->update(['firebase_endpoint'=>$request->token]);
+            //User::where('id',Auth::id())->update(['firebase_endpoint'=>$request->token]);
         }
-        elseif(Auth::guard('client')->check()){
+        elseif( $request->user('client') ){
             //$model = $this->uRepo->createModel('customer');
-            Customer::where('id',Auth::guard('client')->id())->update(['firebase_endpoint'=>$request->token]);
+            $request->user('client')->update(['firebase_endpoint'=>$request->token]);
+            //Customer::where('id',Auth::guard('client')->id())->update(['firebase_endpoint'=>$request->token]);
         }
     }
 
@@ -321,8 +321,8 @@ class GuestController extends Controller
             if(isset($json->Type)){
                 if($json->Type === 'SubscriptionConfirmation'){
                     $client = new Client();
-                    $res = $client->request('GET',$json->SubscribeURL);
-                    // $result = $sns_client->confirmSubscription(['Token'=>$json->Token,'TopicArn'=>$json->TopicArn]);
+                    //$res = $client->request('GET',$json->SubscribeURL);
+                    $result = $sns_client->confirmSubscription(['Token'=>$json->Token,'TopicArn'=>$json->TopicArn]);
                 }elseif($json->Type === 'Notification'){
 
                 }

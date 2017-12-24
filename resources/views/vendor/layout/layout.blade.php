@@ -123,7 +123,7 @@
 													On @if(isset($ur->created_at))
 														{{date('d M Y H:i:s',strtotime($ur->created_at))}}
 														for @php 
-															 echo ((json_decode($ur->request)->event))
+														 //echo ((json_decode($ur->request)->event))
 														  @endphp
 													@endif
 												</span>

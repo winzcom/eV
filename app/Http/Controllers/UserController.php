@@ -71,8 +71,9 @@ class UserController extends Controller
       try{
 
          
-          $user = $this->user_repo->findFirstByWhere(['id','=',Auth::id()]);
-          $user->update($filtered);
+          //$user = $this->user_repo->findFirstByWhere(['id','=',Auth::id()]);
+          $user = request()->user();
+         $user->update($filtered);
           
           $user->categories()->sync($request->category);
 
@@ -201,9 +202,9 @@ class UserController extends Controller
             'available' => (int) $availability,
             'availability_set_date' => date('Y-m-d H-i-s')
         ])->save();
-        return response()->json([
-            'status'=>'Availability set'
-        ]);
+        // return response()->json([
+        //     'status'=>'Availability set'
+        // ]);
     }
 
     public function reply(Request $request){
@@ -214,9 +215,9 @@ class UserController extends Controller
                  Review::where('id','=',$id)->update(['reply'=>$reply]);
 
         if($request->ajax()){
-                 /*** Send email to reviewer */
-                return json_encode(array('status'=>'Reply Posted'));
-            }
+                //return json_encode(array('status'=>'Reply Posted'));
+            return $this->success(['status'=>'Reply Posted']);
+        }
             return back();
         }
     }
@@ -277,7 +278,10 @@ class UserController extends Controller
             $request_data = $this->user_repo->getRequest($request->rid);
             try{
                 event(new NewQuoteSent($request_data,Auth::user(),$quote));
-                return response()->json([
+                // return response()->json([
+                //     'status'=>'Quotes Sent Successfully to '.$request_data->first_name.' '.$request_data->last_name
+                // ]);
+                return $this->success([
                     'status'=>'Quotes Sent Successfully to '.$request_data->first_name.' '.$request_data->last_name
                 ]);
             } catch(\Exception $e) {
@@ -286,9 +290,10 @@ class UserController extends Controller
                 ]);
             }
         } else {
-            return response()->json([
-                'status' => 'Reply could not be sent'
-            ], 422);
+            // return response()->json([
+            //     'status' => 'Reply could not be sent'
+            // ], 422);
+            $this->error(['status' =>'Reply could not be sent']);
         }
         // DB::transaction(function() use ($request,$id){
         //     $request_data = $this->user_repo->getRequest($request->rid);
@@ -367,23 +372,35 @@ class UserController extends Controller
         if($this->canViewOthersQuote()) {
             if(!is_null(request()->rid)) {
                 $data = QuotesRequest::with('quote')->where('id', request()->rid)->first();
-                return response()->json($data);
+                //return response()->json($data);
+                return $this->success($data);
             } else {
-                return response()->json([
-                    'error'=>[
-                        'message'=>'Bad Request',
-                        'code'=>400
-                    ]
-                ],400);
+                // return response()->json([
+                //     'error'=>[
+                //         'message'=>'Bad Request',
+                //         'code'=>400
+                //     ]
+                // ],400);
+                return $this->error([
+                        'error'=>[
+                            'message'=>'Bad Request',
+                            'code'=>400
+                        ]
+                    ],400);
             }    
             
         }
-        return response()->json([
-            'error'=>[
+        // return response()->json([
+        //     'error'=>[
+        //         'message'=>'You are not allowed to view others quotes',
+        //         'code'=>422
+        //     ]
+        // ]);
+        return $this->error(['error'=>[
                 'message'=>'You are not allowed to view others quotes',
                 'code'=>422
             ]
-        ],422);
+        ]);
     }
 
     function templateRendering() {
