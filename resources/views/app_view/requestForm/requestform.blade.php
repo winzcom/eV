@@ -84,7 +84,7 @@
 
                         <label class="control-label" for="inputCity">Start Time <small style="color:red">*</small></label>
                             <div class="controls">
-                                <input type="time" id="start_time" required name="start_time" class="form-control input-lg"/>
+                                <input type="text" id="start_time" required name="start_time" class="form-control input-lg"/>
                             </div>
                         <label class="control-label" for="inputCity">Duration in hours</label>
                             <div class="controls">

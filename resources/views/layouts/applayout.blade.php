@@ -31,7 +31,8 @@
 		 <!-- Latest compiled and minified CSS -->
 		 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/timepicker@1.11.12/jquery.timepicker.min.css">
+	<!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css"> -->
 
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />	
 	<link rel="stylesheet" href="{{asset('customcss/all.css')}}">
@@ -43,9 +44,7 @@
 
 	<script src="{{asset('js/vendor/modernizr-2.8.3-respond-1.4.2.min.js')}}"></script>
 	<!--<script src="{{asset('jss/custom/googleautocomplete.js')}}"></script>-->
-	
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <style>
 body {
 	overflow-x:hidden !important;
@@ -198,6 +197,8 @@ window.customerUrl = window.location.origin+'/';
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <!--<script src="{{asset('vendor/js/dropzone/dropzone.js')}}"></script>-->
 <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/timepicker@1.11.12/jquery.timepicker.min.js"></script>
 <!--<script src="{{asset('js/app/app.js')}}"></script>-->
 <script src="{{ asset('js/mailgun_validator.js') }}"></script>
 <script src="{{asset('jss/custom/data/requestdata.js')}}"></script>
@@ -227,15 +228,15 @@ window.customerUrl = window.location.origin+'/';
 @yield('script')
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/599d6c3cb6e907673de090b5/default';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
+// var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+// (function(){
+// var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+// s1.async=true;
+// s1.src='https://embed.tawk.to/599d6c3cb6e907673de090b5/default';
+// s1.charset='UTF-8';
+// s1.setAttribute('crossorigin','*');
+// s0.parentNode.insertBefore(s1,s0);
+// })();
 </script>
 <!--End of Tawk.to Script-->
 </body>
