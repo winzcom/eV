@@ -2,9 +2,9 @@
 
 @section('content')
          <h5>Quote Received From {{$vendor->name}} For {{$request->name}}</h5> 
-       <p><h5> Cost:</h5> {{$cost}}</p> <br>
+       <p>Cost: {{$cost}}</p> <br><br>
        <label>Message:</label> 
-       <textarea rows="5" cols="30">{{$message}}</textarea>
+       <textarea rows="5" cols="30" readonly>{{$message}}</textarea>
     <br>
        <hr>
        <h5>Your request:</h5><br>

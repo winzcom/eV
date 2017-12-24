@@ -181,11 +181,12 @@ class Service{
     public function showPopOverImages($galleries,$path){
 
         $title = "<div class='slick'>";
-
+        
         foreach($galleries as $gallery){
+            $path = str_contains($gallery,['http','https']) ? $gallery : $path.'/'.$gallery;
             $title .= "<img ";
             $title .= "src='";
-            $title .= $path."/".$gallery."'";
+            $title .= $path."'";
             $title .= "style='width:100%'";
             $title .= "/>";
         }
