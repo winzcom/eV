@@ -72,8 +72,7 @@ class GuestController extends Controller
     public function writeReview(Request $request){
         
         $data = $request->except(['_token','review_pictures']);
-        // $data['reviewers_id'] = Auth::guard('client')->id();
-        $data['reviewers_id'] = $request->user('client')->id();
+        $data['reviewers_id'] = $request->user('client')->id;
         if( $request->hasFile('review_pictures') ) {
             $filePaths = $this->uploadFiles('', $request->review_pictures, 'public/review_images');
             $data['review_image'] = json_encode($filePaths);
