@@ -99,6 +99,10 @@ $(document).ready(function(){
                     window.location.reload(true);
                 }, 2000);
             }
+        },
+        error:function(err) {
+            console.log(err);
+            $('#send_quote').attr('disabled',false).html('send');
         }
      })
  })
