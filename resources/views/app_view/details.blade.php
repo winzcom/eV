@@ -13,15 +13,11 @@
 	   }
 
     </style>
- @include('app_view.requestForm.requestform',['category_id'=>$cat_id])
+ {{--@include('app_view.requestForm.requestform',['category_id'=>$cat_id])--}}
+ {!! $request_form !!}
  
  @if(Auth::guard('client')->check())
-	@include('app_view.requestForm.review_form',
-				['reviewers_name'=>Auth::guard('client')->user()->first_name.Auth::guard('client')->user()->last_name,
-				'reviewers_email'=>Auth::guard('client')->user()->email,
-				'review_for'=>$company->id
-				]
-		)
+		{!! $review_form !!}
  @endif
  <div id="start_request">
  	<input type="hidden" value="{{$company->state}}"/>

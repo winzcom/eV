@@ -38,10 +38,10 @@
                 <h3>Step 1</h3>
                 <section class="currentSection">
                      <div class="control-group" >
-                    <label class="control-label" for="inputCity">
-                         Please select a category you want from the options? <small style="color:red">*</small>
-                         <span ><i class="vendor_available"></i></span>
-                    </label><br>
+                        <label class="control-label" for="inputCity">
+                            Please select a category you want from the options? <small style="color:red">*</small>
+                            <span ><i class="vendor_available"></i></span>
+                        </label><br>
                     <!-- select the number to send to -->
                     <!-- <div id="novtst">
                         <label for="">How many vendors would you like to send to</label>
@@ -69,7 +69,19 @@
                             </select>
                             <small>popular categories: <i>Cake | SmallChops | Caterers | Decoration | CupCakes</i></small>
                         </div>
-                                
+                       {{-- @if(isset($show_only_this_vendor_option) && $show_only_this_vendor_option)
+                        <label for="">Send to only this vendor</label>
+                        <div class="controls">
+                            <div class="iradio_square">
+                                <select name="only_this_vendor" id="">
+                                    <option value="{{$user_id}}">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        @endif--}}
+                    </div>          
                 </section>
                
             <!--</div>--><!-- data-step="1" -->
