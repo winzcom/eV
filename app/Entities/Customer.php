@@ -25,9 +25,15 @@ class Customer extends Authenticatable
         'phone_no'
     ];
 
+    protected $aapends = ['full_name'];
+
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ClientResetPassword($token));
+    }
+
+    public function getFullNameAttribute() {
+        return $this->first_name.' '.$this->last_name;
     }
 
 }

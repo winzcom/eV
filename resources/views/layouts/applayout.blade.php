@@ -22,7 +22,7 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
-	<link rel="shortcut icon" type="image/x-icon" href="favicon-32x32">
+	<link rel="shortcut icon" type="image/x-icon" href="{{asset('favicon-32x32')}}">
 	@yield('style')
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" type="" href="{{asset('vendor/css/nouislider.min.css')}}">

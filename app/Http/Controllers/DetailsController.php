@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 
 use App\Entities\User;
@@ -48,17 +49,27 @@ class DetailsController extends Controller
             $category_name = $category->name;
             $cat_id = $category->id;
         }
-            
-        
-       // $directory = public_path("storage".DIRECTORY_SEPARATOR."images");
-        //$files = Service::getImages($directory);
-        return view('app_view.details')->with(['company'=>$user,'path'=>$this->path,
-                    'events'=>Service::getEvents(),
+
+        $data = [ 
+                    'company'=>$user,'path'=>$this->path,
+                   'events'=>Service::getEvents(),
                     //'similars'=>$similars,
                     'request'=>$this->request,
                     'cat_id'=>isset($cat_id) ? $cat_id : '',
                     'avg'=>$user->reviews->pluck('rating')->avg(),
                     'category_name'=>$category_name
-                ]);
+                ];
+        $review_form_data = [
+            'reviewers_name'=>request()->user('client') !== null ? request()->user('client')->full_name : '',
+            'reviewers_email'=>request()->user('client') !== null ? request()->user('client')->email : '',
+            'review_for'=>$user->id
+        ];
+        
+       // $directory = public_path("storage".DIRECTORY_SEPARATOR."images");
+        //$files = Service::getImages($directory);
+        return view('app_view.details')->with($data)
+                    ->nest('request_form','app_view.requestForm.requestform',
+                        ['category_id'=>$cat_id,'show_only_this_vendor_option' => true,'user_id' => $user->id]
+                    )->nest('review_form','app_view.requestForm.review_form',$review_form_data);
     }
 }

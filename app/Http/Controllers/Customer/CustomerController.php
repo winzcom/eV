@@ -31,10 +31,9 @@ class CustomerController extends Controller
     public function __construct(CRI $cust_repo,GI $gi,URI $user_repo){
 
         $this->auth = Auth::guard('client');
-        //$this->amazon_path = Storage::url('public/images');
         $this->cust_repo = $cust_repo;
         $this->user_repo = $user_repo;
-        $this->amazon_path = $gi->directoryPath();
+        $this->path = $gi->directoryPath();
     }
 
     public function home(){
@@ -76,7 +75,7 @@ class CustomerController extends Controller
         $quotes = $d->paginate($d->data,10);
         $cost_avg = $d->data->first()->pluck('cost_avg')->first();
         return view('customer.cuquote')->with(['quotes'=>$quotes,
-                                                'amazon_path'=>$this->amazon_path,
+                                                'amazon_path'=>$this->path,
                                                 'cost_avg'=>$cost_avg,
                                                 'cats'=>Category::all(),
                                             ]);

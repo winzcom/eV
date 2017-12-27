@@ -104,7 +104,7 @@
                                         <div class="thumb-wrapper">
                                             <div class="thumbs-carousel">
                                             @if($company->hasGalleries())
-                                                @foreach($company->galleries()->take(3) as $gallery)
+                                                @foreach($company->galleries->take(3) as $gallery)
                                                     <div class="item">
                                                         @if($gallery->is_s3_path)
                                                             <img src="{{$gallery->image_name}}" alt="Thumbnail" style="width:100%;max-height:250px;">

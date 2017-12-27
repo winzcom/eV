@@ -1,6 +1,6 @@
 
 <div class="w3-margin">
-  <form method = "get" action="">
+  <form method = "get" action="" autocomplete="off">
       {{ csrf_field() }}
       <div class="input-group input-group-sm ui-widget">
       <label for="search"> </label>
