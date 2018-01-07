@@ -10,7 +10,7 @@ var vm = new Vue({
     },
     methods:{
         getReviews: function() {
-                var url = window.location.origin;
+                var url = window.location.origin+'/reviews/for-vendor';
                 $.ajax({
                     url:url,
                     success:function(response) {
@@ -36,11 +36,11 @@ var vm = new Vue({
                 if( entry.intersectionRatio > 0 ) {
                     /** Load more vendors to view */
                     //bus.$emit('loadVendors');
-                    if(entry.target.tagName == 'IMG') {
-                        entry.target.src = '/img/defaultRequest.jpg';
-                        this.loadImage(entry.target);
-                    }
-                    else
+                    // if(entry.target.tagName == 'IMG') {
+                    //     entry.target.src = '/img/defaultRequest.jpg';
+                    //     this.loadImage(entry.target);
+                    // }
+                    // else
                         this.loadReviews();
                     //document.querySelector('#vendor').insertAdjacentElement('beforeend',document.querySelector('#sentel'));
                 }
@@ -65,6 +65,8 @@ var vm = new Vue({
                         self.dataAvailable = self.items.length > 0 ? true : false;
                     }
                 })
+            } else {
+                this.getReviews();
             }
         },
         loadImage: function(img) {
@@ -78,7 +80,7 @@ var vm = new Vue({
             rootMargin: '0px',
             threshold: 1.0
           }
-          this.observer = new IntersectionObserver(this.getMoreVendor, options);
+          this.observer = new IntersectionObserver(this.getMoreReviews, options);
           this.observer.observe(document.querySelector('#sentel'));
           //observer.observe(document.querySelectorAll('.vendor-img'));
           //bus.$on('loadVendors', this.loadVendors);

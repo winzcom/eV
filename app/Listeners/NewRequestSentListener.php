@@ -30,8 +30,10 @@ class NewRequestSentListener
     {
         
         try{
-            Mail::to($event->data['users_data'])
+            if($event->data['request_exists']) {
+                Mail::to($event->data['users_data'])
                 ->send(new SendRequest($event->data));
+            }
         } catch(\Exception $e) {
             throw $e;
         }

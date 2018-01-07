@@ -21,7 +21,6 @@
                                     <option value="-">Other</option>
                                 </select>
                             </div>
-                            
                       </div>
                       <!-- Specify Other event -->
                       <div class="control-group" id="other_event">
@@ -69,18 +68,15 @@
                             </select>
                             <small>popular categories: <i>Cake | SmallChops | Caterers | Decoration | CupCakes</i></small>
                         </div>
-                       {{-- @if(isset($show_only_this_vendor_option) && $show_only_this_vendor_option)
+                       @if(isset($show_only_this_vendor_option) && $show_only_this_vendor_option)
                         <label for="">Send to only this vendor</label>
-                        <div class="controls">
-                            <div class="iradio_square">
+                        <div class="">
                                 <select name="only_this_vendor" id="">
                                     <option value="{{$user_id}}">Yes</option>
                                     <option value="No">No</option>
                                 </select>
-                            </div>
                         </div>
-                        
-                        @endif--}}
+                        @endif
                     </div>          
                 </section>
                
@@ -248,6 +244,7 @@
                             </label>
                         </div>
                     </div><!--whatstage-->
+                    
                     <!--personal message-->
                     <div class="control-group" id="personalmessagae">
                         <label class="control-label" for="inputCity">Tell us more about your needs </label>

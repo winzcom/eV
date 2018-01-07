@@ -30,12 +30,13 @@ class DetailsController extends Controller
                     $q->orderBy('id','desc');
                 },
                 'categories',
-                'galleries'
+                'galleries' => function($q) {
+                    $q->orderBy('id','desc');
+                }
             ]
         )->where('name_slug',$slug)->first();
        
         $category_name = ''; $cat_id = null;
-
         $similars = User::whereHas('categories',function($q) use ($user){
             $q->whereIn('categories.id',$user->categories()->get(['categories.id']));
         })->where('id','!=',$user->id)->orderBy('id','desc')->take(3)->get();
@@ -64,12 +65,14 @@ class DetailsController extends Controller
             'reviewers_email'=>request()->user('client') !== null ? request()->user('client')->email : '',
             'review_for'=>$user->id
         ];
-        
-       // $directory = public_path("storage".DIRECTORY_SEPARATOR."images");
-        //$files = Service::getImages($directory);
         return view('app_view.details')->with($data)
                     ->nest('request_form','app_view.requestForm.requestform',
                         ['category_id'=>$cat_id,'show_only_this_vendor_option' => true,'user_id' => $user->id]
                     )->nest('review_form','app_view.requestForm.review_form',$review_form_data);
+    }
+
+    public function reviews() {
+      $nameslug = request()->nameslug;
+      return User::where('name_slug',$nameslug)->firstOrFail()->reviews()->paginate(20);
     }
 }

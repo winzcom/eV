@@ -40,12 +40,9 @@ class UserController extends Controller
     }
 
     public function home(){
-        
-        $user = $this->user_repo->findWith(Auth::id(),['galleries','categories']);
-        //dd($user->requests());
         list($total_avg,$reviews) = $this->getFiveReviews();
         return view('vendor.home')->with([
-                'user'=>$user,'path'=>$this->path,
+                'user'=>request()->user(),'path'=>$this->path,
                 'reviews'=>$reviews,
                 'avg'=>$total_avg[0]->avg,
                 'cats'=>Service::getCategories()
@@ -130,12 +127,16 @@ class UserController extends Controller
             $bucket_name = env('AWS_BUCKET');
             //Service::deletePhotos($this->gallery,$request->images,Auth::id());
            try {
-             $this->deleteFiles($request->images,$bucket_name);
-             request()->user()->galleries()->whereIn('image_name',$request->images)->delete();
+             $galleries = request()->user()->galleries()->whereIn('galleries.id',$request->images)->get();
+             $galleries->each(function($gallery) {
+                 $gallery->delete();
+             });
+             $filePaths = $galleries->pluck('image_name')->all();
+             $this->deleteFiles($filePaths,$bucket_name);
            } catch(\Exception $e) {
-               return back()->with('message','error deleting some images');
+               return back()->with('message',$e->getMessage());
            }
-        return back();
+        return back()->with('message','Image deleted successfully');
     }
 
     public function getFiveReviews(){
@@ -191,7 +192,7 @@ class UserController extends Controller
 
         if($request->ajax()){
              
-            return json_encode(array('status'=>'Date Deleted'));
+            return $this->success(array('status'=>'Date Deleted'));
         }
         return back();
        
@@ -212,8 +213,7 @@ class UserController extends Controller
         $id = $request->review_id;
         $reply = $request->reply;
         if($id !== '' && $reply !== ''){
-                 Review::where('id','=',$id)->update(['reply'=>$reply]);
-
+            Review::where('id','=',$id)->update(['reply'=>$reply]);
         if($request->ajax()){
                 //return json_encode(array('status'=>'Reply Posted'));
             return $this->success(['status'=>'Reply Posted']);
@@ -271,30 +271,49 @@ class UserController extends Controller
             $content = array_merge($content, ['file_name' => $file->getClientOriginalName()]);
             $file->storeAs('file_quote',$file->getClientOriginalName(),'my_public');
         }
-
-        $quote = Quote::create($content);
-      
-        if($quote !== null ) {
-            $request_data = $this->user_repo->getRequest($request->rid);
-            try{
-                event(new NewQuoteSent($request_data,Auth::user(),$quote));
-                // return response()->json([
-                //     'status'=>'Quotes Sent Successfully to '.$request_data->first_name.' '.$request_data->last_name
-                // ]);
-                return $this->success([
-                    'status'=>'Quotes Sent Successfully to '.$request_data->first_name.' '.$request_data->last_name
-                ]);
-            } catch(\Exception $e) {
-                return response()->json([
-                    'status'=>'Your Quotes Could not be sent at this time '
-                ]);
-            }
+        $quote = null;
+        if($request->has('editing')) {
+            $quote = Quote::where('rid',$request->rid)->where('uid',$request->user()->id)->with('requests.client')->first();
+            $quote->fill($content)->save();
+            //check event date is greater than a week from now
+            $date = @json_decode($quote->requests->request)->date;
+            if(strtotime($date) > strtotime('+1 week'))
+                try{
+                    $quote->requests->client->notify(new \App\Notifications\QuoteEdited($quote));
+                    return $this->success([
+                        'status' => 200,
+                        'message'=>'Quote Edited and customer '.$quote->requests->client->full_name.' will be notified',
+                        'client' => $quote->requests->client
+                    ]);
+                } catch(\Exception $e) {
+                    return $this->success([
+                        'status' => 441,
+                        'message'=>'Mail could not be sent at this time to '.$quote->requests->client->full_name,
+                        'client' => $quote->requests->client
+                    ]);
+                }
         } else {
-            // return response()->json([
-            //     'status' => 'Reply could not be sent'
-            // ], 422);
-            $this->error(['status' =>'Reply could not be sent']);
+            $quote = Quote::create($content);
+            if($quote !== null ) {
+                $request_data = $this->user_repo->getRequest($request->rid);
+                try{
+                    event(new NewQuoteSent($request_data,Auth::user(),$quote));
+                    return $this->success([
+                        'status'=>'Quotes Sent Successfully to '.$request_data->first_name.' '.$request_data->last_name,
+                        'client' => $quote->requests->client
+                    ]);
+                } catch(\Exception $e) {
+                    return $this->error([
+                        'status'=>'Your Quotes Could not be sent at this time ',
+                        'message'=>$e->getMessage()
+                    ]);
+                }
+            } else {
+                $this->error(['status' =>'Reply could not be sent']);
+            }
         }
+       //$quote = Quote::create($content);
+      
         // DB::transaction(function() use ($request,$id){
         //     $request_data = $this->user_repo->getRequest($request->rid);
             

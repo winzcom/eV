@@ -55,6 +55,7 @@ if(count($all_requests) > 0){
                     echo "<button class='btn btn-success btn-xs request' id='reply' data-toggle='modal'
                         data-target='#reply_request' data-message = '$request->message'
                         data-cost ='$cost' data-uid = '$vendor_id' data-dp='$request->dp'
+                        data-rid = '$request->id' data-cid = '$request->client_id'
                     >
                         Show Quote
                     </button>

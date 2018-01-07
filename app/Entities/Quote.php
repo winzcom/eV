@@ -13,6 +13,8 @@ class Quote extends Model
         'rid','uid','cost','message','contact','client_id','file_name'
     ];
 
+    protected $dates = [ 'created_at', 'updated_at'];
+
     public function requests() {
         return $this->belongsTo('App\Entities\QuotesRequest','rid');
     }

@@ -100,7 +100,7 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
         $d = DB::select(DB::raw(
             "select quotes_request.*,users.first_name as client_name,quotes.rid as rid,quotes.cost as cost,
             quotes.message as message, quotes.down_payment as dp,b.ma as max_cost,b.mi as min_cost,b.cost_avg as avg_cost,
-            company_category.company_id, company_category.category_id,b.crid,file_paths
+            company_category.company_id, company_category.category_id,b.crid,file_paths,only_to
             from quotes_request
             inner join company_category on company_category.category_id = quotes_request.category_id 
             inner join companies on companies.id = company_category.company_id and companies.state = quotes_request.state 
@@ -114,6 +114,15 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
             and companies.id =:vendor_id 
             group by quotes_request.id,quotes_request.category_id order by quotes_request.id desc"
         ),array('vendor_id'=>Auth::id()));
+        return collect($d)->filter(function($request) {
+            if(is_null($request->only_to)) return true;
+            else {
+                $only_tos = (array)json_decode($request->only_to);
+                $searched = array_search(Auth::id(),$only_tos);
+                
+                return $searched === false ? false : true;
+            }
+        });
         return collect($d);
         //return request()->user()->requests();
     }

@@ -9,6 +9,7 @@ use App\Service\LocalGallery;
 use App\Service\Service;
 
 use Aws\Sns\SnsClient;
+use Aws\Rekognition\RekognitionClient;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        //SNSCLient
         $this->app->bind(SnsClient::class,function($app){
             return new SnsClient(
                             ['region'=>env('AWS_REGION'),'version'=>'2010-03-31',
@@ -41,6 +42,28 @@ class AppServiceProvider extends ServiceProvider
                                 'key'=>env('AWS_KEY'),
                             ]
                 ]
+            );
+        });
+
+        $this->rekognitionClient();
+
+    }
+
+    private function rekognitionClient() {
+        //RekognitionClient
+        $this->app->bind(RekognitionClient::class,function($app){
+            return new RekognitionClient(
+                [
+                    'region'  => env('AWS_REGION'),
+                    'version' =>'2016-06-27',
+                    'credentials' => [
+                        'secret' => env('AWS_SECRET'),
+                        'key' => env('AWS_KEY'),
+                    ],
+                    'http'    => [
+                        'verify' => false
+                    ]
+                ] 
             );
         });
     }

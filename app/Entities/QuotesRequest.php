@@ -27,17 +27,21 @@ class QuotesRequest extends Model
     ];
 
     public function category(){
-        return $this->belongsTo('App\Entities\Category');
+        return $this->belongsTo(Category::class);
     }
 
     public function quote(){
-        return $this->hasMany('App\Entities\Quote','rid')->with(['vendor'=>function($query){
+        return $this->hasMany(Quote::class,'rid')->with(['vendor'=>function($query){
             $query->where('companies.id','!=',request()->user()->id);
         }]);
     }
 
     public function publicQuote() {
         return $this->quote()->where('public','yes');
+    }
+
+    public function dismissed() {
+        return $this->hasMany(DismissedRequest::class,'rid');
     }
 
     public function privateQuote() {

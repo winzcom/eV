@@ -71,7 +71,7 @@
 							<div id="cloudslider" class="product-gallery">
 								@if($company->hasGalleries())
 								
-									@foreach($company->galleries->take(3) as $gallery)
+									@foreach($company->galleries as $gallery)
 										<div class="kr-sky" data-duration="5000">
 	   										@if($gallery->is_s3_path)
 											   <img class="sky-background" src="{{$gallery->image_name}}" alt="product title">

@@ -120,7 +120,10 @@ class User extends Authenticatable
     private function manyThrough($related,$through,$foreign_key_in_related,$foreign_key_in_through,$withs = []) {
         $requests = new $related; $through = new $through;
         $pivot_table = $through->getTable(); $table = $requests->getTable();
-        count($withs) != 0 ?: $requests = $requests->with(implode(',',$withs));
+
+        if(count($withs) > 0 ) {
+            $requests->with($withs);
+        }
         return $requests
                     ->join($pivot_table,$pivot_table.'.'.$foreign_key_in_related,'=',$table.'.'.$foreign_key_in_related)
                     ->where($foreign_key_in_through,$this->id);
@@ -130,24 +133,28 @@ class User extends Authenticatable
     }
 
     public function requests() {
-        return $this->manyThrough(
-            'App\Entities\QuotesRequest','App\Entities\CategoryCompany','category_id','company_id',
-            ['quote','client','category']
-        )
+        $categories = $this->categories()->get(['categories.id'])->pluck('id')->all();
+        $self = $this;
+        $requests = QuotesRequest::with(['quote','client','category.companies'])
+            ->whereDoesntHave('dismissed',function($query) use ($self) {
+                $query->where('uid','=',$self->id);
+            })
+            ->whereIn('category_id',$categories)
             ->where('state',$this->state)
             ->whereIn('vicinity_id',[0,$this->vicinity_id])
-            ->leftJoin('dismiss','quotes_request.id','dismiss.rid')
-            ->whereNull('dismiss.id')
             ->get();
+        
+        return $requests->filter(function($request) use ($self) {
+            if($request->only_to === null ) 
+                return true;
+            $only_to = (array)json_decode($request->only_to);
+            $search = array_search($self->id,$only_to);
+            return $search !== false ? true : false;
+        });
     }
 
     public function dismissedRequest() {
         $request_model = app('App\Entities\QuotesRequest');
-        // return $request_model
-        //     ->with('quote','client')
-        //     ->join('dismiss',$request_model->getTable().'.id','dismiss.rid')
-        //     ->where('dismiss.uid',$this->id)
-        //     ->get();
         return $this->hasMany('App\Entities\DismissedRequest','uid');
     }
 

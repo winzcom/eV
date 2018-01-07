@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Filesystem\FilesystemManager;
 use Aws\S3\S3Client;
+use Aws\Rekognition\RekognitionClient;
 
 use Aws\Sns\SnsClient;
 use App\Service\Service;
@@ -31,10 +32,11 @@ class GuestController extends Controller
      *
      * @return void
      */
-
      private $uRepo;
 
-    public function __construct(UPI $uRepo,FilesystemManager $laravelStorage, S3Client $s3Client)
+    public function __construct(UPI $uRepo,FilesystemManager $laravelStorage, 
+                                 S3Client $s3Client
+                                )
     {
         parent::__constructor($laravelStorage,$s3Client);
         $this->uRepo = $uRepo;
@@ -81,7 +83,7 @@ class GuestController extends Controller
         Review::forceCreate($data);
         if($request->ajax())
             return $this->success(['status' => 'success']);
-        return redirect()->back();
+        return back();
     }
 
     public function testLoad(){
@@ -97,19 +99,25 @@ class GuestController extends Controller
     public function quotesRequest(Request $request){
         ob_start();
         $users = null; $customer= null;
+        $requestClone = clone $request;
         $state = $request->state;
         $vicinity = $request->vicinity;
         $client = $request->only(['first_name','last_name','email','password','phone_no']);
         $category = $request->only(['category']);
+        $only_vendor = $request->has('only_this_vendor') ? $request->only_this_vendor : null;
         $files = $request->hasFile('request_photo')  ? $request->request_photo : null;
-        $request = $request->except(['category','firstname','','lastname','email','password','_token','state','vicinity']);
+        $request = $request->except(['category','only_this_vendor','firstname','','lastname','email','password','_token','state','vicinity']);
         
         $request = array_filter($request,function($val,$key){
             return $val !== '' && $val !== null && !empty($val) && $val !== '-';
         },ARRAY_FILTER_USE_BOTH);
 
-        DB::transaction(function() use ($request,$client,$category,$state,$vicinity,$files){
-            $users = $this->getUserQuery($category,$state,$vicinity)->get();
+        DB::transaction(function() use ($request,$client,$category,$state,$vicinity,$files,$only_vendor){
+            $uq = $this->getUserQuery($category,$state,$vicinity); $users = collect([]);
+
+            if(!is_null($only_vendor) && $only_vendor !== 'No') {
+                $users = $uq->where('companies.id',$only_vendor)->get();
+            } else $users = $uq->get();
             $customer = null;
             
             if(!empty($users)){
@@ -163,10 +171,17 @@ class GuestController extends Controller
                             'vicinity_id'=>$vicinity,
                             'request'=>json_encode($request)
                         ]);
+                        if(!is_null($only_vendor) && $only_vendor !== 'No') {
+                            $req->only_to = json_encode([$only_vendor]);
+                            $req->save();
+                        }
+
                         if(!is_null($files)) {
-                            if( $filePaths = $this->uploadFiles('s3',$files,'public/request_pictures') ) {            
+                            if( $filePaths = $this->uploadFiles('s3',$files,'public/request_pictures') ) {         
                                 $req->file_paths = json_encode($filePaths);
-                                $req->save();  
+                                $req->save();
+                                // Check the image uploaded using amazon rekognition  
+                                $this->checkQuoteImage($filePaths, $req);
                             }
                         }
                     }catch(\Exception $e){
@@ -181,28 +196,19 @@ class GuestController extends Controller
                     'users_data'=>$users,
                     'request'=>json_decode($req->request),
                     'category'=>$category['category'],
-                    'customer'=>$customer
+                    'customer'=>$customer,
+                    'request_exists'=> $req->exists
                 ];
                 try {
                     event(new NewRequestSentEvent($data));
-                    // $mailer = Mail::to($data['users_data'])
-                    // ->send(new SendRequest($data));
                 } catch(\Exception $e) {
-                    // return $this->error([
-                    //         'status'=>'failed',
-                    //         'message'=>'Notifications could not be sent at this time'
-                    //     ]);
                     echo json_encode([
                         'status'=>'failed',
-                        'message'=>'Notifications could not be sent at this time'
+                        'message'=>$e->getMessage()
                     ]);
                     return;
                 }
-                // return response()->json([
-                //     'message'=>'Request Sent'
-                // ]);
-
-                echo json_encode(['message'=>'Request Sent']);
+                echo json_encode(['message'=> $req->exists ?'Request Sent' : 'Inappropriate request,failed to send']);
                 return;
             }
 
@@ -213,6 +219,7 @@ class GuestController extends Controller
             }
             
       });
+      ob_flush();
       ob_end_flush();
     }
 
@@ -397,7 +404,7 @@ class GuestController extends Controller
                     $user->name_slug = str_slug($user->name,'-');
                     $user->save();
                 });
-            });
+        });
     }
 }
 

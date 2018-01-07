@@ -17,6 +17,9 @@ body{
 }
 </style>
 @include('vendor.profile_update_snippet')
+@if(session('message') !== null )
+<div class="">{{ session('message') }}</div>
+@endif
 <div id="actions" class="row">
 
       <div class="col-lg-7">
@@ -114,7 +117,7 @@ body{
 
                                     <div class="checkbox">
                                         <label class="">
-                                            <div class="icheckbox_square"><input type="checkbox" value="{{$gallery->image_name}}" name="images[]" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                            <div class="icheckbox_square"><input type="checkbox" value="{{$gallery->id}}" name="images[]" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
                                         </label>
                                     </div>
 

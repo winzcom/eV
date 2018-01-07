@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Mail;
 
 
 Route::match(['post','get'],'/search','SearchController@search');
+Route::get('review-name/{nameslug}','DetailsController@reviews');
 
 Route::get('/type_search','SearchController@search_by_typing');
 
@@ -25,19 +26,6 @@ Route::get('/load_request','GuestController@testLoad');
 Route::get('set_name_slug','GuestController@setNameSlug');
 
 Route::get('/aws_sns_message','GuestController@amazonSnS');
-
-// Route::get('/testmail',function(Request $request){
-    
-//     Mail::to('sholak@cedarviewng.com')->send(new OrderMail());
-// });
-
-// Route::get('/start',function(){
-//     return view('app_view.start');
-// });
-
-// Route::get('/d_eb',function() {
-//     return response()->download(public_path().'/file/Eventpad_Project.docx');
-// });
 
 Route::get('/send_follow_up_thanks', 'GuestController@sendFollowUpThanksMail');
 
@@ -48,7 +36,7 @@ Route::get('/detail/{company}/{id?}','DetailsController@details');
 
 Route::get('/stuwp','GuestController@sendMailToUsersWithoutPasswords');
 
-Route::post('/quotes_request','GuestController@quotesRequest')->name('requests');
+Route::post('/quotes_request','GuestController@quotesRequest')->name('requests')->middleware('check.image.moderation');
 
 Route::get('/check_vendor_availabity','GuestController@checkVendorAvailability');
 
@@ -83,6 +71,7 @@ Route::get('/', 'GuestController@index')->middleware('web');
 Route::get('/set_firebase_token','GuestController@setFirebaseNotificationEndPoint');
 
 Route::get('/logout','GuestController@logout');
+
 
 Auth::routes();
 

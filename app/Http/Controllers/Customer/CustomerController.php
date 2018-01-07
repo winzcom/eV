@@ -74,6 +74,7 @@ class CustomerController extends Controller
         $d = $this->getRequestQuotes($request_id);
         $quotes = $d->paginate($d->data,10);
         $cost_avg = $d->data->first()->pluck('cost_avg')->first();
+        //$users = $d->data->
         return view('customer.cuquote')->with(['quotes'=>$quotes,
                                                 'amazon_path'=>$this->path,
                                                 'cost_avg'=>$cost_avg,

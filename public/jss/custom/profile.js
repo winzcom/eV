@@ -1,19 +1,18 @@
 $(document).ready(function(){
 
+    var editing, button,valid = true, url = 'reply_request', self = null;
     var file_quote = document.querySelector('#quote_file');
     if(file_quote !== null && file_quote !== undefined) {
         file_quote.addEventListener('change', handleFiles, false);
         var quote_file = null;
     }
-    $('#reply_request').on('show.bs.modal',function(event){
 
-         var button = $(event.relatedTarget);
+    $('#reply_request').on('show.bs.modal',function(event){
+         button = $(event.relatedTarget);
          if(button.data('message') !== undefined && button.data('message') !== ''){
              var message = button.data('message');
              var cost = button.data('cost');
              var dp = button.data('dp');
-             console.log(button);
-             console.log(cost);
              var cost_input = $('#cost');
              var down_payment = $('#down_payment');
              var message_textarea =  $('#message')
@@ -36,11 +35,13 @@ $(document).ready(function(){
 
              message_textarea.val(message);
 
-             $('#send_quote').hide();
+             $('#send_quote').text('Edit');
+             //$('#send_quote').prop('disabled',true);
+             editing = true;
          }
          else{
 
-             $('#send_quote').show();
+             $('#send_quote').text('Send Quote').prop('disabled',false);
              var cost = $('#cost');
              var down_payment = $('#down_payment');
 
@@ -62,56 +63,66 @@ $(document).ready(function(){
              message_textarea.val('')
 
 
-            var rid = button.data('rid');
-            var client_id = button.data('cid');
+            // var rid = button.data('rid');
+            // var client_id = button.data('cid');
             //var vendor_id = button.data('uid');
             //alert(vendor_id);
-            console.log(rid+' '+client_id)
-            var url = 'reply_request'
+            // console.log(rid+' '+client_id)
             console.log(url)
 
-            var self = $(this);
-            var valid = true;
+            self = $(this);
+            $('#send_quote').text('Send Quote');
+            editing = false;
          }
-
-         $('#send_quote').click(function(){
-             
-             var form = $('#send_request_form');
-             var inputs = form.find('.quo');
-        
-             inputs.each(function(i,v){
-                 if($(this).val() == '' && ( $(this).attr('name') !== 'quote_file' && $(this).attr('name') !== 'down_payment') ){
-                     this.focus();
-                     $(this).css('border-bottom','solid 1px red');
-                     valid = false;
-                 }
-                 else{
-                     valid = true;
-                 }
-             },self,valid)
-
-             if(valid){
-                var fd = new FormData(form);
-
-                inputs.each(function(i,v){
-
-                    fd.append($(this).attr('name'),$(this).val());
-                })
-
-
-                fd.append('rid',rid);
-                fd.append('client_id',client_id);
-                if(quote_file !== null )
-                    fd.append('quote_file', quote_file);
-                //fd.append('uid',vendor_id);
-                var data = fd;
-                submitRequest(data,self,url,button);
-                $(this).html('sending quote..');
-                $(this).attr('disabled',true);
-             }             
-             //self.modal('hide');
-         })
     });// shown.bs.modal ends
+
+
+    $('#send_quote').click(function(){
+        var form = $('#send_request_form');
+        var inputs = form.find('.quo');
+        var rid = button.data('rid');
+        var client_id = button.data('cid');
+
+         if($(this).text() === 'Edit') {
+             $(this).text('Send Quote');
+             $('.quo').each(function(element,index) {
+                $(this).attr('disabled',false);
+             });
+             return;
+         }
+    
+         inputs.each(function(i,v){
+             if($(this).val() == '' && ( $(this).attr('name') !== 'quote_file' && $(this).attr('name') !== 'down_payment') ){
+                 this.focus();
+                 $(this).css('border-bottom','solid 1px red');
+                 valid = false;
+             }
+             else{
+                 valid = true;
+             }
+         },self,valid)
+
+         if(valid){
+            var fd = new FormData(form);
+            if(editing) fd.append('editing',true);
+            inputs.each(function(i,v){
+
+                fd.append($(this).attr('name'),$(this).val());
+            })
+
+
+            fd.append('rid',rid);
+            fd.append('client_id',client_id);
+            if(quote_file !== null )
+                fd.append('quote_file', quote_file);
+            //fd.append('uid',vendor_id);
+            var data = fd;
+            submitRequest(data,self,url,button);
+            $(this).html('sending quote..');
+            $(this).attr('disabled',true);
+         }             
+         //self.modal('hide');
+     })
 
 
     /*** Reply Review Modal/ Submission */
@@ -221,15 +232,17 @@ $(document).ready(function(){
                         var italic = $('<i>').attr('class','fa fa-check-circle-o');
                         $('cbp-caption-defaultWrap').prepend(italic);
                         setTimeout(function() {
-                            location.href = location.href+'#messages';
+                            location.href = location.href;
                             location.reload(true);
-                        }, 500);
+                        }, 5000);
                         var objda = Object.create(data);
-                        console.log(objda.status)
-                        alertify.log('Reply Sent');
+                        if(typeof objda.message !== undefined) {
+                            console.log(objda.status);
+                            alertify.log(objda.message);
+                        } 
                     },
                     error:function(err){
-                        alertify.alert('An error occured, quote could not be sent ');
+                        //alertify.alert('An error occured, quote could not be sent ');
                         console.log(err)
                     }
 				})

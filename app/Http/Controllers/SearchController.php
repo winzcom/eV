@@ -39,7 +39,14 @@ class SearchController extends Controller
     }
 
     private function getVendors($cat,$state = null){
-        $companies = User::with('reviews','galleries','bay_average','categories')->whereHas('categories',function($q) use ($cat){
+        $companies = User::with(
+                [
+                    'reviews','galleries'=>function($q) {
+                        $q->orderBy('id','desc');
+                    },
+                    'bay_average','categories'
+                ]
+            )->whereHas('categories',function($q) use ($cat){
             $q->where('categories.id',$cat);
         });
         $state !== null ? $companies = $companies->StateVicinity($state,'') : $companies;

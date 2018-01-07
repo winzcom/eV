@@ -41,7 +41,10 @@ class SendDailyMailToThoseWithoutPasswords extends Command
      */
     public function handle()
     {
-        
+        $this->sendDailyMail();
+    }
+
+    private function sendDailyMail() {
         $users_without_passwords = User::where([
             ['password','!=',''],
             ['bounced','=',0]
@@ -67,11 +70,5 @@ class SendDailyMailToThoseWithoutPasswords extends Command
         } catch(\Exception $e) {
             //
         }
-       
-        // $user = User::where([
-        //     ['email','=','reangulara@gmail.com'],
-        //     ['bounced','=',0]
-        // ])->first();
-        // Mail::to($user)->send(new MailToUsersWithoutPassword($user));
     }
 }

@@ -18,7 +18,8 @@
                                     if($key == 'my_budget'){
                                         echo str_replace('_',' ',title_case($key));
                                         echo ': &#8358;'.$service->currencyFormatter($value[0]).'- &#8358;'.$service->currencyFormatter($value[1]);
-                                    }else {
+                                    }elseif($key == 'request_photo') continue;
+                                    else {
                                         echo $key == 'extra'? 'Extras: (': ucwords($key).': (';
                                         echo implode(",",$value);
                                         echo ' )';
@@ -29,7 +30,7 @@
                                     echo str_replace('_',' ',title_case($key));
                                     echo ': &#8358;'.$service->currencyFormatter($value);
                                     echo '<br><hr>';
-                                }
+                                } elseif($key == 'request_photo') continue;
                                 /*elseif($key == 'phone_no')
                                     continue;*/
                                 elseif($key == 'date'){
