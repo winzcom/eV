@@ -43,7 +43,7 @@ class SendDailyMailToThoseWithoutPasswords extends Command
     {
         
         $users_without_passwords = User::where([
-            ['password','!=',''],
+            ['password','=',''],
             ['bounced','=',0]
         ])->orWhere(function($query) {
             $query->where('password',null)
