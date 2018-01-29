@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\RegisterFormRequest;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
@@ -98,11 +99,18 @@ abstract class BaseRepo {
         }
     }
 
+    public function __call($name,$paramter = null ) {
+        if(array_key_exists(Str::lower($name),$this->$models)) {
+            return app($this->models[$name]);
+        }
+        throw new \Exception('Model does not exist');
+    }
+
     public function paginate($data,$per_page){
 
         $current_page = LengthAwarePaginator::resolveCurrentPage();
-        $sliced_data = $data->slice(($current_page-1)*$per_page,$per_page);
-        $paginator = new LengthAwarePaginator($sliced_data,count($data),$per_page,$current_page);
+        $sliced_data = /*$data->slice(($current_page-1)*$per_page,$per_page);*/ $data->forPage($current_page,$per_page);
+        $paginator = new LengthAwarePaginator($sliced_data,$data->count(),$per_page,$current_page);
         return $paginator;
        
     }
@@ -132,6 +140,15 @@ abstract class BaseRepo {
         //     ->where('companies.state',$state)
         //     ->take(5)->orderBy('bayesian_average.bay_average','desc')->get();
         return $this->model->with(['reviews','galleries','bay_average'])->get()->sortByDesc('bay_average');
+    }
+
+    public function topCategories($state = null) {
+        return $this->createModel('category')->withCount(['requests'=>function($query) use ($state){
+            if($state)
+              $query->where('state',$state);
+        }])
+        ->orderBy('requests_count','desc')
+        ->take(5)->get();
     }
 
     protected function returnWhereArrays(array $args){

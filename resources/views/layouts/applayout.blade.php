@@ -224,6 +224,7 @@ window.customerUrl = window.location.origin+'/';
 <!--<script src="{{asset('js/jquery.bootstrap.js')}}"></script>
 <script src="{{asset('js/material-bootstrap-wizard.js')}}"></script>-->
 <script src="https://vuejs.org/js/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 
 @yield('script')
 <!--Start of Tawk.to Script-->

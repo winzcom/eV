@@ -48,7 +48,7 @@
                     </div><br> -->
                     <!-- end -->
                         <div class="controls">
-                            <select class="form-control input-lg select2" required name="category" id="category" placeholder="select a category">
+                            <select class="form-control input-lg select2" required name="category[]" id="category" placeholder="select a category">
                                 <option></option>
                                 @foreach ($categories as $cate)
                                     @if(isset($category_id))
@@ -157,7 +157,7 @@
                             
                         </p> -->
                         <!--single budget input -->
-                        <div id="single_budget">
+                        <!-- <div id="single_budget">
                             <label for="budget">Your Budget (&#8358)</label>
                             <div class="input-group">
                             <span class="input-group-btn">
@@ -165,14 +165,13 @@
                             </span>
                             <input type="number" class="form-control" name ="budget" >
                             </div>
-                        </div>
+                        </div> -->
                         <!--end of single budget -->
                         <div id="slider-range"></div>
-
-                    </div>
-                    <div class="caterer_budget">
-                        <label for="">Budget Per Head(e.g &#8358 100 per guest)</label>
-                        <input type="number" class="form-control price_budget" name ="budget_per_head" id="max_amount">
+                        <!-- <div class="caterer_budget">
+                            <label for="">Budget Per Head(e.g &#8358 100 per guest)</label>
+                            <input type="number" class="form-control price_budget" name ="budget_per_head" id="max_amount">
+                        </div> -->
                     </div>
 
                     <!-- <div id="publicbudget">

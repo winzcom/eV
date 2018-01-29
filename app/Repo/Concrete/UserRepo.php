@@ -121,7 +121,7 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
                 $only_tos = (array)json_decode($request->only_to);
                 $searched = array_search(Auth::id(),$only_tos);
                 
-                return $searched === false ? false : true;
+                return $searched !== false ? true : false;
             }
         });
         return collect($d);
@@ -130,7 +130,7 @@ class MySqlUserRepo extends BaseRepo implements UserRepoInterface{
 
     public function getUserQuery($category,$state,$vicinity) {
       return $this->getModel()->whereHas('categories',function($q) use ($category){
-                    $q->where('categories.id',$category['category']);
+                    $q->whereIn('categories.id',(array)$category['category']);
                 })->where('bounced',0)->StateVicinity($state,$vicinity);
     }
 

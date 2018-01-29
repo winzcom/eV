@@ -99,14 +99,33 @@
 	<!-- section END -->
 	<!-- section START flow -->
 		<section class="section">
-			<!--<div class="row">
+			<!-- <div class="row">
 				<div class="col-sm-12 col-md-4">
 					<img src="{{asset('img/our_services.jpg')}}" width="300" height="300" alt="">
 				</div>
 				<div class="col-sm-12 col-md-4">
 					<img src="https://static.pexels.com/photos/263024/pexels-photo-263024.jpeg" alt="" width="300" height="300">
 				</div>
-			</div>-->
+			</div> -->
+			<!-- Top Categories -->
+			{{--@foreach($top_category->chunk(4) as $top_categories)
+			   <div class="row">
+			     @foreach($top_categories as $category)
+				 <div class="col-sm-4">
+						<div class="thumbnail style1">
+							<div class="thumb-wrapper">
+								<img src="img/thumbnails/thumb1.jpg" alt="Thumbnail">
+							</div>
+							<div class="caption">
+								<h3>Thumbnail label</h3>
+								<p>Suspendisse potenti fusce rutrum none fringilla dictum. Praesent nant tincidunt polars feugiat non rutrum eget libero.</p>
+								<a href="javascript:void(0);" class="btn btn-primary btn-sm" title="Thumbnail link">Read More</a>
+							</div>
+						</div>
+					</div>  
+				 @endforeach
+			   </div>
+			@endforeach--}}
 		</section>
 	<!-- section END -->
 	<!-- section START -->

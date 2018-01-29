@@ -69,7 +69,6 @@
                     <hr> 
 
                     <div class="row">
-            
                     
                        @foreach($quotes as $quote)
                         

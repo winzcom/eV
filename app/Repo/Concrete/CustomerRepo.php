@@ -83,7 +83,7 @@ class MySqlCustRepo extends BaseRepo implements CustRepoInterface{
                 ->leftJoin('reviews','reviews.review_for','=','companies.id')
                 ->leftJoin('galleries','galleries.user_id','=','quotes.uid')
                 ->select('quotes.*','quotes_request.request as qrequest','categories.name as cat_name',
-                          (DB::raw("(select avg(q.cost) from quotes q where q.rid = $request_id) as cost_avg")),
+                          (DB::raw("(select avg(q.cost) from quotes q where q.rid = $request_id and q.client_id= $cust_id) as cost_avg")),
                         'reviews.review','reviews.reply','reviewers_name','rating','image_name',
                          'companies.*',(DB::raw("(select avg(r.rating) from reviews r where r.review_for = companies.id) as avg")),
                          (DB::raw("(select count(r.rating) from reviews r where r.review_for = companies.id) as count")

@@ -10,6 +10,8 @@ class QuotesRequest extends Model
 
     protected $table = 'quotes_request';
 
+    protected $casts = [];
+
     protected $fillable = [
         'category_id',
         'client_id',

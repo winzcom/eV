@@ -44,6 +44,7 @@ class UserController extends Controller
         return view('vendor.home')->with([
                 'user'=>request()->user(),'path'=>$this->path,
                 'reviews'=>$reviews,
+                //'categories_count' => request()->user()->categoryRequestCount(),
                 'avg'=>$total_avg[0]->avg,
                 'cats'=>Service::getCategories()
             ]);
@@ -362,15 +363,15 @@ class UserController extends Controller
             ]);
 
                 if(!is_null($id)){
-                    return response()->json([
-                    'rid'=>$rid,
-                    'uid'=>Auth::id(),
-                    'client_id'=>$client_id
-                ]);
+                    return $this->success([
+                        'rid'=>$rid,
+                        'uid'=>Auth::id(),
+                        'client_id'=>$client_id
+                    ]);
             }
             else{
 
-                return json_encode([
+                return $this->error([
                     'status'=>'Error Performing Operation'
                 ]);
             }
@@ -378,51 +379,47 @@ class UserController extends Controller
             
         }
 
-         return response()->json([
-             'Bad request'
-         ],400);
+         return $this->error([
+            'message' => 'Bad request'
+        ],400);
     }
 
     private function canViewOthersQuote() {
-        return true;
+        try {
+            return $this->authorize('others_quotes',\App\Entities\User::class);
+        }catch(\Exception $e) {
+            return false;
+        }
     }
 
     public function getQuotesFromOthers() {
         if($this->canViewOthersQuote()) {
             if(!is_null(request()->rid)) {
                 $data = QuotesRequest::with('quote')->where('id', request()->rid)->first();
-                //return response()->json($data);
+                //$data = App\Entities\Quote::with('vendor')->where('rid',request()->rid)->get();
                 return $this->success($data);
             } else {
-                // return response()->json([
-                //     'error'=>[
-                //         'message'=>'Bad Request',
-                //         'code'=>400
-                //     ]
-                // ],400);
-                return $this->error([
-                        'error'=>[
-                            'message'=>'Bad Request',
-                            'code'=>400
+                return $this->success([
+                        'message'=>[
+                            'message'=>'No Data Available',
+                            'code'=>200
                         ]
-                    ],400);
+                    ]);
             }    
             
         }
-        // return response()->json([
-        //     'error'=>[
-        //         'message'=>'You are not allowed to view others quotes',
-        //         'code'=>422
-        //     ]
-        // ]);
         return $this->error(['error'=>[
                 'message'=>'You are not allowed to view others quotes',
-                'code'=>422
+                'code'=>401
             ]
-        ]);
+        ],401);
     }
 
-    function templateRendering() {
+    public function last6MonthsBudgetAverage(){
+
+    }
+
+    public function templateRendering() {
 
     }
 }

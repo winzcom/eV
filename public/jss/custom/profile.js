@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    var editing, button,valid = true, url = 'reply_request', self = null;
+    var editing = false, button,valid = true, url = 'reply_request', self = null;
     var file_quote = document.querySelector('#quote_file');
     if(file_quote !== null && file_quote !== undefined) {
         file_quote.addEventListener('change', handleFiles, false);
@@ -35,9 +35,9 @@ $(document).ready(function(){
 
              message_textarea.val(message);
 
-             $('#send_quote').text('Edit');
-             //$('#send_quote').prop('disabled',true);
-             editing = true;
+             //$('#send_quote').text('Edit');
+             $('#send_quote').prop('disabled',true);
+             //editing = true;
          }
          else{
 
@@ -71,8 +71,8 @@ $(document).ready(function(){
             console.log(url)
 
             self = $(this);
-            $('#send_quote').text('Send Quote');
-            editing = false;
+            //$('#send_quote').text('Send Quote');
+            //editing = false;
          }
     });// shown.bs.modal ends
 

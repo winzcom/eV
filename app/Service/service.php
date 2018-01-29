@@ -159,7 +159,8 @@ class Service{
         return $formatter;*/
         /** add service.php**/
        setlocale(LC_MONETARY, 'en_US');
-	   return number_format($cost);
+       $cost = implode('',explode(',',$cost));
+	   return function_exists('number_format') ? number_format($cost) : $cost;
     }
 
     public function showPopOverReviews($review,$reviewers_name,$reply,$rating){

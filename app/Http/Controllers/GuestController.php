@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Filesystem\FilesystemManager;
 use Aws\S3\S3Client;
 use Aws\Rekognition\RekognitionClient;
 
 use Aws\Sns\SnsClient;
+use App\MyCollection;
 use App\Service\Service;
 use GuzzleHttp\Client;
 use App\Mail\SendVerificationMail;
@@ -53,22 +55,22 @@ class GuestController extends Controller
         
         if(session('user_state') == null){
             try {
-                // $client = new Client(['base_uri'=>'http://freegeoip.net']);
+                // $client = new Client(['base_uri'=>'http://ipinfo.io/'.request()->ip().'/region']);
                 // $response = $client->request('GET','json');
                 // $state = json_decode($response->getBody()->getContents())->region_name;
                 // session(['user_state'=>$state]);
                 // $companies = $this->uRepo->getTopVendors($state);
             }catch(Exception $e) {
                 $companies = [];
-            }
-                
-            return view('landing')->with(['companies'=>$companies,'state'=>$state]);
-            
-        }
+            }    
+            //return view('landing')->with(['companies'=>$companies,'state'=>$state]);  
+        } else {
             $state = session('user_state');
             $companies = $this->uRepo->getTopVendors($state);
-            return view('landing')->with(['companies'=>$companies,'state'=>$state]);
-        //$some_quotes = $this->uRepo->getSomeRequestsAndAverage($state)
+        }
+        return view('landing')->with(
+            ['companies'=>$companies,'state'=>$state,'top_category'=>$this->uRepo->topCategories()]
+        );
     }
 
     public function writeReview(Request $request){
@@ -99,11 +101,14 @@ class GuestController extends Controller
     public function quotesRequest(Request $request){
         ob_start();
         $users = null; $customer= null;
+
         $requestClone = clone $request;
         $state = $request->state;
         $vicinity = $request->vicinity;
         $client = $request->only(['first_name','last_name','email','password','phone_no']);
         $category = $request->only(['category']);
+        //var_dump($category);
+        //die();
         $only_vendor = $request->has('only_this_vendor') ? $request->only_this_vendor : null;
         $files = $request->hasFile('request_photo')  ? $request->request_photo : null;
         $request = $request->except(['category','only_this_vendor','firstname','','lastname','email','password','_token','state','vicinity']);
@@ -129,9 +134,8 @@ class GuestController extends Controller
                     }
                     else{
                             if(!Service::isValid($client)){
-                               // return $this->error(['error'=>'Please fill your personal details']);
-                                   echo json_encode(['error'=>'Please fill your personal details']);  
-                                   return;
+                                echo json_encode(['error'=>'Please fill your personal details']);  
+                                return;
                             }
                                 
                             try{
@@ -154,7 +158,6 @@ class GuestController extends Controller
                                 }
 
                             }catch(\Exception $e){
-                                //return $this->error(['error' => 'An error occured. Please try again']);
                                 echo json_encode(['error'=>'An error occured. Please try again']);
                                 return;
                             }
@@ -163,14 +166,31 @@ class GuestController extends Controller
                     if($vicinity == 'all' || $vicinity == '' || $vicinity == null) $vicinity = 0;
 
                     try{
-                            $req = QuotesRequest::create([
-                            'category_id'=>$category['category'],
-                            'client_id'=>$id !== null ? $id:$customer->id,
-                            'count_available_vendors'=>count($users),
-                            'state'=>$state,
-                            'vicinity_id'=>$vicinity,
-                            'request'=>json_encode($request)
-                        ]);
+
+                            $requestCollection = new MyCollection($request);
+
+                            list($addServices,$normal) = $requestCollection->partition(function($item,$key){
+                                return (int)strstr($key,'_',true);
+                            });
+                            $req = null;
+                            foreach ($this->getMergedRequestData($normal,$addServices,$category['category']) as $key => $jsoned_request) {
+                                $req = QuotesRequest::forceCreate([
+                                    'category_id'=>is_array($category['category']) ? $category['category'][$key] : $category['category'],
+                                    'client_id'=>$id !== null ? $id:$customer->id,
+                                    'count_available_vendors'=>count($users),
+                                    'state'=>$state,
+                                    'vicinity_id'=>$vicinity,
+                                    'request'=>$jsoned_request
+                                ]);
+                            }
+                        // $req = QuotesRequest::create([
+                        //     'category_id'=>$category['category'],
+                        //     'client_id'=>$id !== null ? $id:$customer->id,
+                        //     'count_available_vendors'=>count($users),
+                        //     'state'=>$state,
+                        //     'vicinity_id'=>$vicinity,
+                        //     'request'=>json_encode($request)
+                        // ]);
                         if(!is_null($only_vendor) && $only_vendor !== 'No') {
                             $req->only_to = json_encode([$only_vendor]);
                             $req->save();
@@ -181,11 +201,10 @@ class GuestController extends Controller
                                 $req->file_paths = json_encode($filePaths);
                                 $req->save();
                                 // Check the image uploaded using amazon rekognition  
-                                $this->checkQuoteImage($filePaths, $req);
+                                //$this->checkQuoteImage($filePaths, $req);
                             }
                         }
                     }catch(\Exception $e){
-                        //return $this->error(['error' => $e->getMessage()]);
                         $req->delete();
                         echo json_encode(['error'=>$e->getMessage()]);
                         return;
@@ -221,6 +240,18 @@ class GuestController extends Controller
       });
       ob_flush();
       ob_end_flush();
+    }
+
+    private function getMergedRequestData($normal,$addServices,$category) {
+       $category = is_array($category) ? $category : (array)$category;
+       foreach ($category as $key => $value) {
+            $as = $addServices->filter(function($item,$key) use ($value) {
+                return Str::contains($key,$value);
+            })->map(function($item,$key) {
+                return [explode('_',$key,2)[1] => $item];
+            })->flatmap(function($item){ return $item; });
+            yield json_encode($normal->merge($as)->toArray());
+        }
     }
 
     public function checkVendorAvailability(Request $request){
@@ -261,13 +292,13 @@ class GuestController extends Controller
     }
 
     public function sendEmailTypeVerificationMail() {
-        $users = User::where([
-            ['confirmed','=',0],['email','!=',''],
-            ['bounced','=',0],['email','like','%@gmail.com']
-        ])->orWhere([
-            ['confirmed','=',0],['email','!=',''],
-            ['bounced','=',0],['email','like','%@yahoo.com']
-        ]);
+        
+    $users = User::where([
+        ['confirmed','=',0],['email','!=',''],
+        ['bounced','=',0]])->where(function($q){
+            $q->where('email','like','%@yahoo.com')
+            ->orWhere('email','like','%@gmail.com');
+        })->get();
         $users->each(function($user,$key) {
            Mail::to($user->email)->send(new EmailTypeVerification($user->name));
         });
@@ -296,7 +327,7 @@ class GuestController extends Controller
             }
             return redirect('login')->withErrors(['email' => 'Email does not exist'])->onlyInput('email');
         } catch(\Exception $e) {
-            return redirect('login')->withErrors(['email' => 'Email does not exist'])->onlyInput('email');
+            return redirect('login')->withErrors(['email' => 'User with this email does not exist'])->onlyInput('email');
         }
     }
 

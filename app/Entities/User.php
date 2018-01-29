@@ -132,7 +132,7 @@ class User extends Authenticatable
         
     }
 
-    public function requests() {
+    public function requests($from = null,$to=null) {
         $categories = $this->categories()->get(['categories.id'])->pluck('id')->all();
         $self = $this;
         $requests = QuotesRequest::with(['quote','client','category.companies'])
@@ -141,8 +141,10 @@ class User extends Authenticatable
             })
             ->whereIn('category_id',$categories)
             ->where('state',$this->state)
-            ->whereIn('vicinity_id',[0,$this->vicinity_id])
-            ->get();
+            ->whereIn('vicinity_id',[0,$this->vicinity_id]);
+            if(!is_null($from) && !is_null($to))
+                $requests->whereBetween('created_at',[$from,$to]);
+            $requests = $requests->get();
         
         return $requests->filter(function($request) use ($self) {
             if($request->only_to === null ) 
@@ -151,6 +153,60 @@ class User extends Authenticatable
             $search = array_search($self->id,$only_to);
             return $search !== false ? true : false;
         });
+    }
+
+    public function clientBudgetAverageLast6Months() {
+        $from = \Carbon\Carbon::today()->subMonths(6)->toDateTimeString();
+        $to = \Carbon\Carbon::today()->toDateTimeString();
+        return $this->requests($from,$to)->groupBy(function($item,$key){
+            return $item['created_at']->format('M').'_'.$item['created_at']->format('Y').'_'.$item->category->name; 
+        })->map(function($item,$key){
+            return [$key => [
+                    'category' => $item->pluck('category')->first()->name,
+                    'request' => $item->pluck('request')
+                ]
+            ];
+        })->flatmap(function($item){
+            return $item;
+        });
+    }
+
+    public function categoryRequestCount() {
+        return $this->categories()->with(['requests'=>function($query) {
+            $query->where('state',$this->state)->whereIn('vicinity_id',[0,$this->vicinity_id])
+            ->where('created_at','>',$this->created_at)
+            ->with(['dismissed'=>function($query){
+                $query->where('uid',$this->id);
+            }]);
+        }])->get()->map(function($item,$key){
+            return [$item->name => [
+                  'total requests' => $item->requests->filter(function($request){
+                      $dimissed_count = $request->dismissed->count();
+                      if(is_null($request->only_to) && $dimissed_count === 0)
+                        return true;
+                      elseif(!is_null($request->only_to)) {
+                        $only_tos = (array)json_decode($request->only_to);
+                        $searched = array_search($this->id,$only_tos);
+                        return $searched !== false && $dimissed_count === 0 ? true : false;
+                      }
+                  })->count(),
+                  'answered requests' => $item->requests->filter(function($request){
+                     if(is_null($request->only_to) && $request->quote->count() > 0)
+                      return true;
+                     elseif(!is_null($request->only_to)) {
+                       $only_tos = (array)json_decode($request->only_to);
+                       $searched = array_search($this->id,$only_tos);
+                       return $searched !== false && $request->dismissed->count() === 0 && $request->quote->count() > 0 ? true : false;
+                    }
+                  })->count(),
+                  'Dismissed' => $item->requests->reject(function($request){
+                    return $request->dismissed->count() === 0;
+                  })->count()
+                ]
+            ];
+        })->flatMap(function($item) {
+            return $item;
+        })->toArray();
     }
 
     public function dismissedRequest() {

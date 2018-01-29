@@ -124,7 +124,7 @@
                                             @else
                                                 <div class="item">
 
-                                                    <img src="{{ asset('/img/_7.jfif') }}" alt="" style="width:100%; max-height:250px;"/>
+                                                    <img src="{{ asset('/img/category_default.jpg') }}" alt="" style="width:100%; max-height:250px;"/>
                                                 </div>
                                             @endif
                                             

@@ -152,7 +152,7 @@ var cakeExtras = [
             {name:'20"inches',value:'20"inches'},
         ]
     },
-    {name:'Cake Flavour',value:'',type:'select',formname:'cake_size',children:[
+    {name:'Cake Flavour',value:'',type:'select',formname:'cake_flavour',children:[
             {name:'Sugar',value:'Sugar'},
             {name:'Chocolate',value:'Chocolate'},
             {name:'Vanilla',value:'Vanilla'},

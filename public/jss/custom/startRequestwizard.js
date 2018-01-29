@@ -34,10 +34,23 @@ $(document).ready(function() {
         // )
         /** end of mutationobserver */
 
+        //Check if we are on the origin page
+        //Then add select plugin to the category select element
+        if( window.location.pathname === '/') 
+            //add select plugin to select element.
+            //$('#category').prop('multiple','multiple');
+            // $('#category').select2({
+            //     multiple:true,
+            //     dropdownParent: $('#myModal'),
+            //     allowClear:true,
+            //     maximumSelectionLength:5
+            // });
+
         function numberFormat(n) {
-           return n.toFixed(2).replace(/./g,function(c,i,a){
-                return i && c!=="." && ((a.length - i) % 3 === 0) ? ',' + c : c;
-            })
+        //    return Number.prototype.toFixed(n,2).replace(/./g,function(c,i,a){
+        //         return i && c!=="." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+        //     });
+            return Number.prototype.toLocaleString.call(+n);
         }
 
         function validateEmail(selector) {
@@ -100,14 +113,8 @@ $(document).ready(function() {
         var v_available = false, noUISliderCreated = false;
         statee = null;
 
-        $(".price_budget").keyup(function(){
-            console.log('na waa');
-        })
-
         $('#state').change(function() {
-
             v_available = true;
-            
             statee = $(this).val();
         })
 
@@ -445,7 +452,7 @@ $(document).ready(function() {
             if (state == null || locality == null) {
                 state = $('#start').data('state') || $('#state').val();
                 locality = $('#start').data('vicinity') || $('#vicinity').val() || 0;
-                cat_id = $('#category').val();
+                //cat_id = $('#category').val();
                 if (locality == 'all')
                 	locality = 0;
             }
@@ -454,8 +461,7 @@ $(document).ready(function() {
             // var novtst = $('#novtst');
             // var nots = $('#number_of_vendor_to_send_to');
             console.log(data);
-            vendor_available_span.css('color', 'blue');
-            vendor_available_span.text('Checking vendors available...')
+            vendor_available_span.css('color', 'blue').text('Checking vendors available...')
                 //alertify.log("Checking if vendors are available").maxLogItems(1);
 
             $.ajax({
@@ -487,46 +493,74 @@ $(document).ready(function() {
 
         function categoryChange(self) {
 
-            if ($('.divContainer')) {
-                $('.divContainer').remove();
-            }
+            // if ($('.divContainer')) {
+            //     $('.divContainer').remove();
+            // }
 
-            if($('.menu')) 
+             if(document.querySelector('.ui-accordion') != undefined)
+                var accordions = $('.ui-accordion');
+
+            var category = $('#category option:selected');
+            var length = $('#category option:selected').length;
+                if($('.menu')) 
                 $('.menu').remove();
-
-            var category = $('#category option:selected').text();
-            category = category.replace(/\s+/g, '');
-
-            if(category === 'Caterers') {
-                $('#single_budget').hide();
-                $('.caterer_budget').show();
-            } else {
-                $('#single_budget').show();
-                $('.caterer_budget').hide();
+            //if($('#service.accordion') === undefined)
+            swapBudgetField(category,length);
+            if(length == 1) {
+                accordions !== undefined ? accordions.each(function(index,acc) {
+                    if($(acc).attr('id') !== category.val()+'_')
+                        $(acc).remove();
+                }) : null;
+                displayService(category,getAccordionDiv());
             }
-
-            var state = $('#state').val() || $('.state').data('state');
-            var locality = $('#vicinity').val() || $('.state').data('vicinity');
-            checkVendorAvailability(self.val(), state, locality)
-
-
-
-            console.log(category)
-
-            var data = formElements[category] || null;
-            
-            console.log(data);
-            if (data) {
-            	if(data.placeholder !== undefined){
-            		$('#personalmessage').attr('placeholder',data.placeholder);
-            	}
-                addAdditionalService(data, self,category);
-            } else if ($.inArray(category, eventPlanning) != -1) {
-                //addThemeColorInputElements($('#div_event'));
-            } else if (category == 'Transport') {
-                addTransportInputs();
-                $('#venue').hide();
+            else if(length > 1) {
+                var accordion_ids = [].slice.call(accordions).map(function(accordion) {
+                    return parseInt($(accordion).attr('id'));
+                });
+                var category_val = [].slice.call(category).map(function(cat) {
+                    return parseInt($(cat).val());
+                });
+                var diff = _.difference(accordion_ids,category_val)
+                 _.forEach(diff,function(id) {
+                     $('#'+id+'_').remove();
+                 });
+                category.each(function(index,cat) {
+                    displayService(cat,getAccordionDiv());
+                })
             }
+            //displayService start
+            function displayService(cat,accordion) {
+                var category = $(cat).text().replace(/\s+/g, '');
+                var prefix = $(cat).val()+'_';
+                accordion.attr('id',prefix);
+                if(document.getElementById(accordion.attr('id')) == undefined) {
+                    accordion.insertAfter(self);
+                }
+                // if(category === 'Caterers') {
+                //     $('#single_budget').hide();
+                //     $('.caterer_budget').show();
+                // } else {
+                //     $('#single_budget').show();
+                //     $('.caterer_budget').hide();
+                // }
+                var state = $('#state').val() || $('.state').data('state');
+                var locality = $('#vicinity').val() || $('.state').data('vicinity');
+                _.defer(checkVendorAvailability.bind(null,$(cat).val(),state,locality));   
+
+                var data = formElements[category] || null;
+                
+                if (data) {
+                    if(typeof data.placeholder !== undefined){
+                        $('#personalmessage').attr('placeholder',data.placeholder);
+                    }
+                    addAdditionalService(data, self,category,prefix,accordion);
+                } else if ($.inArray(category, eventPlanning) != -1) {
+                    //addThemeColorInputElements($('#div_event'));
+                } else if (category == 'Transport') {
+                    addTransportInputs();
+                    $('#venue').hide();
+                }
+            }// end of function displayService
         }
 
         function addStateLocality(state1, vicinity_id) {
@@ -561,7 +595,7 @@ $(document).ready(function() {
         }
 
 
-        function addAdditionalService(data, ele,category) {
+        function addAdditionalService(data, ele,category,prefix = '',accordion = null) {
             var divContainer = $('<div class="control-group divContainer" style="padding-left:10px;"></div>');
             // var menu = $('.menu')
             // menu.remove();
@@ -581,7 +615,7 @@ $(document).ready(function() {
                 var divContent = $(`<div class="checkbox col-md-3 col-xs-6"></div>`);
                 var outerLabel = $('<label>');
                // var className = element.type === 'text' ? '':'';
-                var formInput = $('<input type="'+element.type+'" id="'+element.id+'"name="'+element.formname+'"  value="' + element.value + '">')
+                var formInput = $('<input type="'+element.type+'" id="'+element.id+'"name="'+prefix+element.formname+'"  value="' + element.value + '">')
                         // var formInput = $('<input type="checkbox" name="extra[]" class="" value="'+element.id+'">'+element.name+'</input>')
                     outerLabel.append(formInput)
                     outerLabel.append(element.name)
@@ -604,7 +638,7 @@ $(document).ready(function() {
                                 input.attr({
                                     type:'text',
                                     class:'form-control',
-                                    name:obj.formname,
+                                    name:prefix+obj.formname,
                                     id:obj.id
                                 })
                                 
@@ -620,11 +654,8 @@ $(document).ready(function() {
                             });
                         })(formInput);
 
-                        div.insertAfter(no_of_guest);
-                        
-                    }
-                    
-
+                        div.insertAfter(no_of_guest);  
+                    }  
                 }, this);
                 divContainer.append(outerDiv);
             }
@@ -643,7 +674,7 @@ $(document).ready(function() {
                     if(ele.hasOwnProperty('attach')) {
                         if(ele.hasOwnProperty('children')) {
                             innerDiv = $('<div class="menu">')
-                            input = $('<select class="form-control" id = "menu" multiple name="'+ele.formname+'">');
+                            input = $(`<select class="form-control" id = "menu" multiple name="${prefix+ele.formname}'">`);
                             ele.children.forEach(function(e){
                                 var option = $('<option>');
                                 option.attr({
@@ -655,10 +686,10 @@ $(document).ready(function() {
                         }
                         else {
                             innerDiv = $('<div class="menu">')
-                            input = $('<input class="form-control" name="'+ele.formname+'">');
+                            input = $('<input class="form-control" name="'+prefix+ele.formname+'">');
                         }
                         var label = $('<label>')
-                        label.html(ele.name);
+                        label.html(ele.name+` (${category})`);
                         var eventElement = document.querySelector('#date');
                         innerDiv.append(input);
                         innerDiv.insertBefore(eventElement);
@@ -669,7 +700,7 @@ $(document).ready(function() {
                     else if(ele.type === 'text'){
                          input = $('<input>');
                          input.attr({
-                            name: ele.formname,
+                            name: prefix+ele.formname,
                             class: 'form-control',
                             value: '',
                             placeholder:ele.placeholder || ''
@@ -680,7 +711,7 @@ $(document).ready(function() {
                          innerDiv.append(input);
                          oDiv.append(innerDiv);
                     } else if(ele.type === 'select' && ele.children.length > 0){
-                        input = $('<select class="form-control input-sm" name="'+ele.formname+'">');
+                        input = $('<select class="form-control input-sm" name="'+prefix+ele.formname+'">');
                         ele.children.forEach(function(e){
                             var option = $('<option>');
                             option.attr({
@@ -698,7 +729,7 @@ $(document).ready(function() {
                     }else{
                         input = $('<input>');
                          input.attr({
-                            name: ele.formname,
+                            name: prefix+ele.formname,
                             class: '',
                             value: ele.value,
                             type:ele.type
@@ -717,7 +748,10 @@ $(document).ready(function() {
                 var pmtextarea = $('#personalmessage');
                 pmtextarea.attr('placeholder',data.placeholder);
             }
-            divContainer.insertAfter(ele)
+            //divContainer.insertAfter(ele);
+            accordion.append(divContainer);
+            divContainer.before($(`<h4 class="${category}">Additional Service for ${category}</h4>`));
+            accordion.accordion( "refresh" );
         }
 
         function addThemeColorInputElements(element) {
@@ -837,6 +871,15 @@ $(document).ready(function() {
 
         function addTransportInputs() {}
 
+        function getAccordionDiv() {
+            return $('<div class="accordion"></div>').accordion({
+                active:false,
+                collapsible:true,
+                header:'h4',
+                heightStyle:'content'
+            });
+        }
+
         $( "#search" ).autocomplete({
             source: window.location.origin+'/type_search',
             minLength:2,
@@ -848,7 +891,76 @@ $(document).ready(function() {
             }
         });
 
+        function swapBudgetField(category,length) {
+            var cateringOPtions = ['Caterers','BusinessLunchCatering','Canapes'];
+            if(length > 1){
+                // var categories = [].map.call(category,function(value,index){
+                //     return $(value).text().replace(/\s+/g, '');
+                // });
+                // var catName;
+                // var catererIndex = _.findIndex(categories,function(val){
+                //    return cateringOPtions.forEach(function(option,index){
+                //         if(val === option)
+                //             return true;
+                //    })
+                // });
+                var intersection = _.intersectionWith(category,cateringOPtions,function(a,b){
+                    return $(a).text().replace(/\s/g,'') === b;
+                });
+                if(intersection.length > 0) {
+                    $('.single_budget').remove();
+                    $('.caterer_budget').remove();
+                    intersection.forEach(function(value){
+                        _addCatererOrNormalBudget('caterer',value);
+                    })
+                    // if(document.querySelectorAll('.caterer_budget').length == 0)
+                    //     _addCatererOrNormalBudget('caterer',$(intersection.slice(0,1)[0]).val());
+                } else {
+                    $('.caterer_budget').remove();
+                    if(document.querySelectorAll('.single_budget').length == 0)
+                        _addCatererOrNormalBudget('');
+                }
+            } else {
+                var index = cateringOPtions.indexOf($(category).text().replace(/\s+/g, ''));
+                if(index > -1) {
+                    $('.single_budget').remove();
+                    if(document.querySelectorAll('.caterer_budget').length == 0)
+                        _addCatererOrNormalBudget('caterer',category);
+                } else {
+                    $('.caterer_budget').remove();
+                    if(document.querySelectorAll('.single_budget').length == 0)
+                        _addCatererOrNormalBudget('');
+                }
+            }
+        }
 
+        function _addCatererOrNormalBudget(type,value=null) {
+            var callback = function() {
+                if($(this).find('input').val().length >= 4) {
+                    var number = $(this).find('input').val().split(',');
+                    number = [].join.call(number,'');
+                    $(this).find('input').val(numberFormat(number));
+                }
+            }
+            if(type == 'caterer')
+                 $(`<div class="caterer_budget">
+                    <label for="">Budget Per Head(e.g &#8358 100 per guest) for ${$(value).text()}</label>
+                    <input type="text" class="form-control price_budget" name ="${$(value).val()}_budget_per_head" id="max_amount">
+                </div>`
+                ).appendTo($('#normalbudget')).on('input',callback);
+            else {
+                $(`<div id="single_budget" class="single_budget">
+                        <label for="budget">Your Budget (&#8358)</label>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                            &#8358
+                            </span>
+                            <input type="text" class="form-control" name ="budget" >
+                        </div>
+                    </div>`
+                ).appendTo($('#normalbudget')).on('input',callback);
+            }
+        }    
         $('#start_time').timepicker();
 
     }) //doument.ready

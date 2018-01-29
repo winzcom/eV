@@ -18,6 +18,10 @@ class Controller extends BaseController
 
     protected $laravelStorage;
     protected $s3Client;
+    private $headers = [
+        "Content-Type" => 'application/json',
+        "X-Content-Type-Options" => 'nosniff'
+    ];
 
     protected function __constructor(FilesystemManager $laravelStorage, S3Client $s3Client) {
         $this->laravelStorage = $laravelStorage;
@@ -58,11 +62,11 @@ class Controller extends BaseController
     }
 
     protected function success($data = [], $status = 200) {
-        return response()->json($data,$status);
+        return response()->json($data,$status,$this->headers);
     }
 
     protected function error($message = [], $status = 421) {
-        return response()->json($message,$status);
+        return response()->json($message,$status,$this->headers);
     }
 
     private function contains($string, $needle = [] ) {
