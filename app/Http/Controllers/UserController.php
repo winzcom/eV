@@ -44,7 +44,7 @@ class UserController extends Controller
         return view('vendor.home')->with([
                 'user'=>request()->user(),'path'=>$this->path,
                 'reviews'=>$reviews,
-                //'categories_count' => request()->user()->categoryRequestCount(),
+                'categories_count' => request()->user()->categoryRequestCount(),
                 'avg'=>$total_avg[0]->avg,
                 'cats'=>Service::getCategories()
             ]);

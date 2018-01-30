@@ -51,25 +51,14 @@ class GuestController extends Controller
      */
     public function index(Request $request)
     {
-        $companies = []; $state = null;
-        
-        if(session('user_state') == null){
-            try {
-                // $client = new Client(['base_uri'=>'http://ipinfo.io/'.request()->ip().'/region']);
-                // $response = $client->request('GET','json');
-                // $state = json_decode($response->getBody()->getContents())->region_name;
-                // session(['user_state'=>$state]);
-                // $companies = $this->uRepo->getTopVendors($state);
-            }catch(Exception $e) {
-                $companies = [];
-            }    
-            //return view('landing')->with(['companies'=>$companies,'state'=>$state]);  
-        } else {
-            $state = session('user_state');
+        try{
+            $state = $this->getRegionFromIp();
             $companies = $this->uRepo->getTopVendors($state);
+        } catch(\Exception $e) {
+            $state = null; $companies = [];
         }
         return view('landing')->with(
-            ['companies'=>$companies,'state'=>$state,'top_category'=>$this->uRepo->topCategories()]
+            ['companies'=>$companies,'state'=>$state,'top_category'=>$this->uRepo->topCategories($state)]
         );
     }
 

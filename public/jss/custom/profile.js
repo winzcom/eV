@@ -238,7 +238,7 @@ $(document).ready(function(){
                         var objda = Object.create(data);
                         if(typeof objda.message !== undefined) {
                             console.log(objda.status);
-                            alertify.log(objda.message);
+                            alertify.log('Quote Sent');
                         } 
                     },
                     error:function(err){

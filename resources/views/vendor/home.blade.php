@@ -46,25 +46,43 @@
 						</div>
 
 				</div>
-						
-					<!-- tabs header START -->
-					
-					<ul class="nav nav-tabs" role="tablist">
-						<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Reviews</a></li>
-						<!--<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Quotes</a></li>-->
-						<li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Requests/Quotes</a></li>
-					</ul>
-					
-					<!-- Tab panes -->
-					<div class="tab-content">
-						<div role="tabpanel" class="tab-pane active" id="home">
-							@include('app_view.shared.display_review',['reviews'=>$reviews,'company_id'=>Auth::id()])
-						</div>
-						
-						<div role="tabpanel" class="tab-pane" id="messages">
-							@include('app_view.shared.showfewrequests',['all_requests'=>$requests->take(5),'requests_count'=>$requests->count(),'vendor_id'=>Auth::id()])
+				<!-- category requests details start-->
+				<!--<div class="row">
+					<div class="col-lg-3">
+						<div class="thumbnail style1">
+							<div class="thumb-wrapper">
+								<div class="thumbs-carousel">
+								{{--@foreach($categories_count as $key=>$cat_request)
+									<div class="item">
+										<h3>{{$key}} Requests Details</h3>
+									</div>
+								@endforeach--}}
+								</div>						
+							</div>
 						</div>
 					</div>
+					
+				</div>-->
+				
+				<!-- category requests details ends -->
+				<!-- tabs header START -->
+				
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Reviews</a></li>
+					<!--<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Quotes</a></li>-->
+					<li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Requests/Quotes</a></li>
+				</ul>
+				
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="home">
+						@include('app_view.shared.display_review',['reviews'=>$reviews,'company_id'=>Auth::id()])
+					</div>
+					
+					<div role="tabpanel" class="tab-pane" id="messages">
+						@include('app_view.shared.showfewrequests',['all_requests'=>$requests->take(5),'requests_count'=>$requests->count(),'vendor_id'=>Auth::id()])
+					</div>
+				</div>
 			</div>
 		</section>
 	</div>

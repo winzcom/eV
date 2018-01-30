@@ -51,6 +51,6 @@ class QuotesRequest extends Model
     }
 
     public function client() {
-        return $this->belongsTo('App\Entities\Customer','client_id');
+        return $this->belongsTo(Customer::class,'client_id');
     }
 }

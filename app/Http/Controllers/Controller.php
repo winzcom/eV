@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Filesystem\FilesystemManager;
 use Aws\S3\S3Client;
+use GuzzleHttp\Client;
 use Aws\Rekognition\RekognitionClient;
 use Illuminate\Http\Request;
 
@@ -99,5 +100,17 @@ class Controller extends BaseController
     private function getS3ObjectPrefixForPublicBucket($filename) {
        $explode = explode('public',$file_name);
        return 'public'.$explode[1];
+    }
+
+    protected function getRegionFromIp() {
+        if(session('user_state') == null){
+            $client = new Client(['base_uri'=>'http://ipinfo.io/json']);
+            $response = $client->request('GET','json');
+            $state = json_decode($response->getBody()->getContents())->region;
+            session(['user_state'=>$state]);
+            return $state;    
+        } else {
+            return session('user_state'); 
+        }
     }
 }
