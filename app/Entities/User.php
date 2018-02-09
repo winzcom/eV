@@ -229,15 +229,15 @@ class User extends Authenticatable
     }
 
     public function reviews(){
-        return $this->hasMany('App\Entities\Review','review_for');
+        return $this->hasMany(Review::class,'review_for');
     }
 
     public function vicinity(){
-        return $this->belongsTo('App\Entities\Vicinity','vicinity_id');
+        return $this->belongsTo(Vicinity::class,'vicinity_id');
     }
 
     public function offday(){
-        return $this->hasOne('App\Entities\OffDays','user_id');
+        return $this->hasOne(OffDays::class,'user_id');
     }
 
     public function getRouteKeyName(){
@@ -275,5 +275,25 @@ class User extends Authenticatable
 
     public function medianScore() {
         return $this->reviews()->get()->median('rating');
+    }
+
+    public function vendor_followers() {
+        return $this->belongsToMany(User::class,'follows','followed_id','followers_id');
+    }
+
+    public function followed_vendors() {
+        return $this->belongsToMany(User::class,'follows','followers_id','followed_id');
+    }
+
+    public function self_client_chat_channel() {
+        return $this->belongsToMany(Customer::class,'channel_urls','vendor_id','client_id')->withPivot(['channel_url']);
+    }
+
+    public function quotes() {
+        return $this->hasMany(Quote::class);
+    }
+
+    public function can_send_more_quotes() {
+        return $this->plan !== 'free' || $this->quotes()->whereMonth('created_at',date('m'))->count() < 3;
     }
 }

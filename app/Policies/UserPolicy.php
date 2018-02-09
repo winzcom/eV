@@ -23,4 +23,8 @@ class UserPolicy
         //Check user account
         return true;
     }
+
+    public function can_send_more_quotes_this_month(User $user) {
+        return $user->can_send_more_quotes();
+    }
 }

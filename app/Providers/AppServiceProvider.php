@@ -22,7 +22,8 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         View::share(['categories'=>\App\Service\Service::getCategories(),'states'=>\App\Service\Service::getStates(),
-            'vicinities'=>\App\Service\Service::getVicinities(),'events'=>\App\Service\Service::getEvents()
+            'vicinities'=>\App\Service\Service::getVicinities(),'events'=>\App\Service\Service::getEvents(),
+            'chat_vendor' => view('app_view.chat.open-chat')->render()
         ]);
     }
 

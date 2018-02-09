@@ -39,10 +39,10 @@ $(document).ready(function() {
         if( window.location.pathname === '/') 
             //add select plugin to select element.
             //$('#category').prop('multiple','multiple');
-            // $('#category').select2({
+            // $('#category').prop('class','').select2({
             //     multiple:true,
-            //     dropdownParent: $('#myModal'),
-            //     allowClear:true,
+            //     //dropdownParent: $('#myModal'),
+            //     //allowClear:true,
             //     maximumSelectionLength:5
             // });
 

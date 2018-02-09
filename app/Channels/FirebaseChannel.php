@@ -7,8 +7,10 @@ use Illuminate\Notifications\Notification;
 class FirebaseChannel {
 
 
-    public function send() {
-        
+    public function send($notifiable,$notification) {
+        if($notifiable->firebase_endpoint) {
+            return $notification->toFirebase($notifiable);
+        }
     }
 }
 

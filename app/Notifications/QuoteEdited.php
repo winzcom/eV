@@ -32,7 +32,7 @@ class QuoteEdited extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail',\App\Channels\FirebaseChannel::class];
     }
 
     /**
@@ -65,4 +65,34 @@ class QuoteEdited extends Notification
             ''
         ];
     }
+
+    public function toFirebase($notifiable) {
+        try{
+            $client = new Client();
+            return $response = $client->request('POST','https://fcm.googleapis.com/fcm/send',[
+            'headers'=>[
+                'Authorization'=>
+                'key='.env('GCM_KEY'),
+                'Content-Type'=>'application/json'
+
+            ],
+            'json'=>[
+                'to'=>$notifiable->firebase_endpoint,
+                'data'=>[
+                    
+                        'title'=> 'Quote Edited',
+                        'body'=>'The Quote from '.request()->user()->name.' For '.$this->data->requests->category->name.' has been Edited',
+                        'click_action'=>'https://eventpad.ng/culogin'
+                    
+                ],
+                'notification'=>[
+                    'title'=> 'Quote Edited',
+                    'body'=>'The Quote from '.request()->user()->name.' For '.$this->data->requests->category->name.' has been Edited',
+                    'click_action'=>'https://eventpad.ng/culogin'             ]
+            ]
+        ]); 
+        }catch(\Exception $e){
+            return 'Failed to Send';
+        }   
+    } 
 }

@@ -104,7 +104,7 @@ class Controller extends BaseController
 
     protected function getRegionFromIp() {
         if(session('user_state') == null){
-            $client = new Client(['base_uri'=>'http://ipinfo.io/json']);
+            $client = new Client(['base_uri'=>'http://ipinfo.io/'.request()->ip().'/json']);
             $response = $client->request('GET','json');
             $state = json_decode($response->getBody()->getContents())->region;
             session(['user_state'=>$state]);

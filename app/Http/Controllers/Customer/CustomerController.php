@@ -22,7 +22,6 @@ use App\Interfaces\GalleryInterface as GI;
 class CustomerController extends Controller
 {
     //
-
     private $auth;
     private $amazon_path;
     private $cust_repo;
@@ -75,11 +74,12 @@ class CustomerController extends Controller
         $quotes = $d->paginate($d->data,10);
         $cost_avg = $d->data->first()->pluck('cost_avg')->first();
         //$users = $d->data->
-        return view('customer.cuquote')->with(['quotes'=>$quotes,
-                                                'amazon_path'=>$this->path,
-                                                'cost_avg'=>$cost_avg,
-                                                'cats'=>Category::all(),
-                                            ]);
+        return view('customer.cuquote')
+                    ->with(['quotes'=>$quotes,
+                        'amazon_path'=>$this->path,
+                        'cost_avg'=>$cost_avg,
+                        'cats'=>Category::all(),
+                    ]);
     }
 
     public function showRequests(){
@@ -97,11 +97,33 @@ class CustomerController extends Controller
         $vendor = $this->user_repo->find($request->vendor_id);
         $message = $request->message;
         $request = $this->user_repo->getRequest($request->request_id);
-       event(new ContactVendorEvent($vendor,Auth::guard('client')->user(),$request,$message));
+       event(new ContactVendorEvent($vendor,request()->user('client'),$request,$message));
 
         return response()->json([
             'message'=>'Message Sent'
         ]);
     }
+
+    public function getUser() {
+        $user = request()->user('client')->load(['self_vendor_chat_channel']);
+        $data = [
+            'user' => ['id' => $user->id,'name'=>$user->first_name,'email'=>$user->email],
+            'vendor' => $user->self_vendor_chat_channel->map(function($item,$key){
+                return [
+                    'vendor_name' => $item->name,
+                    'vendor_id' => $item->id,
+                    'vendor_email' => $item->email,
+                    'channel_url' => $item->pivot->channel_url 
+                ];
+            }) 
+        ];
+        return $this->success($data);
+    }
     
+    public function addNewChannel($vendor_id,$channel_url) {
+        request()->user('client')->self_vendor_chat_channel()->sync([$vendor_id => ['channel_url' => $channel_url]],false); 
+        return $this->success([
+            'message' => 'added',
+        ]);
+    }
 }

@@ -30,6 +30,7 @@
 @section('content')
 @include('app_view.requestForm.showdetails')
 @include('app_view.requestForm.contact_vendor')
+{!! $chat_vendor !!}
 <!-- page title style6 START -->
 <section class="page-title style2 " data-path="{{asset('img/headers/header4.jpg')}}">
 	<div class="middle-align">
@@ -122,11 +123,23 @@
                                         </button>
                                         <!--@if($quote->first()->contact == 0)
                                             <button class="btn btn-default contact_vendor" data-target="#contact_vendor" data-toggle='modal' data-v-id="{{$quote->first()->id}}" data-r-id="{{$quote->first()->rid}}">
-                                                Contact
+                                                Contact Vendor
                                             </button>
                                         @endif-->
+                                        <!-- <button class='btn btn-success btn-xs open-chat' data-toggle='modal'
+                                            data-target='#chat-vendor' data-vendor-id = "{{$quote->first()->id}}"
+                                            data-vendor-name="{{$quote->first()->name}}" data-vendor-channel-url=""
+                                        >
+                                            Chat Vendor
+                                        </button> -->
+                                        <!-- <button class='btn btn-success btn-xs openchat'
+                                            data-vendor-id = "{{$quote->first()->id}}"
+                                            data-vendor-name="{{$quote->first()->name}}" data-vendor-channel-url=""
+                                        >
+                                            Chat Vendor
+                                        </button> -->
                                         @php 
-                                            echo 'contact vendor:';
+                                           
                                             if($quote->first()->phone_no){
                                                 $phones = explode(',',$quote->first()->phone_no);
                                                 foreach($phones as $phone){

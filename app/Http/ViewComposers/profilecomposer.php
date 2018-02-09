@@ -46,7 +46,7 @@ class ProfileComposer
 
         $view->with([
             'requests'=> $this->user_repo->getRequests(),
-            'profile_updated'=> $profile_updated
+            'profile_updated'=> $profile_updated,
         ]);
                     
                      /*'unreplied_request'=>$this->uc->getRequestNotYetAnswered(),

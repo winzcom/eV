@@ -50,6 +50,8 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/show_quotes/{rid}', 'UserController@getQuotesFromOthers');
 
     Route::get('/update_availability/{availability}','UserController@updateAvailability');
+
+    Route::get('user','UserController@getUser');
 });// end of middleware=>auth grouping
 
 ?>

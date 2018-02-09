@@ -271,6 +271,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script src="{{asset('vendor/js/dropzone/dropzone.js')}}"></script>
 <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
+<!-- <script src="{{asset('SendBird.min.js')}}"></script>
+<script src="{{asset('jss/vendor/load-vendor.js')}}"></script>
+<script src="{{asset('jss/vendor/client-chat.js')}}"></script> -->
 <!--<script src="{{asset('js/app/app.js')}}"></script>-->
 
 @yield('script')

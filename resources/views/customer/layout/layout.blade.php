@@ -26,6 +26,7 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
 	<link rel="stylesheet" type="text/css" href="{{asset('vendor/css/slick.css')}}"/>
 	<link rel="shortcut icon" href="favicon-32x32.png" type="image/png">
+	<link rel="stylesheet" href="{{asset('css/chat/chat.css')}}">
 	<!-- style.css is main stylesheet and all other sylesheets are being
 		 imported in this file. -->
 	<link rel="stylesheet" href="{{asset('customcss/all.css')}}">
@@ -221,6 +222,9 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
 <script src="{{asset('jss/custom/customer.js')}}"></script>
 <script src="{{asset('jss/custom/firebase.js')}}"></script>
+<!-- <script src="{{asset('SendBird.min.js')}}"></script>
+<script src="{{asset('jss/client/load-user.js')}}"></script>
+<script src="{{asset('jss/client/chat-vendor.js')}}"></script> -->
 	
 @yield('script')
 </body>

@@ -108,15 +108,11 @@
 @endsection
 
 @section('script')
-
-
-<!--<script>
-    
-    $(document).ready( function() {
-
-        
-    })
-
-</script>-->
+<!-- <script type="text/javascript">
+    _NBSettings = {
+        apiKey: 'public_63edb90c888448ff14ccfd1cca42f13d'
+    };
+</script>
+<script type="text/javascript" src="https://cdn.neverbounce.com/widget/dist/NeverBounce.js"></script> -->
 @endsection
 

@@ -58,7 +58,7 @@ class GuestController extends Controller
             $state = null; $companies = [];
         }
         return view('landing')->with(
-            ['companies'=>$companies,'state'=>$state,'top_category'=>$this->uRepo->topCategories($state)]
+                    ['companies'=>$companies,'state'=>$state,'top_category'=>$this->uRepo->topCategories($state)]
         );
     }
 

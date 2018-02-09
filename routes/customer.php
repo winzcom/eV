@@ -20,6 +20,8 @@ Route::group(['middleware'=>'auth.client:client'],function(){
     Route::get('/cuquote/{request_id?}','CustomerController@showQuotes');
     Route::post('/contact_vendor','CustomerController@contactVendor');
     Route::get('/curequest','CustomerController@showRequests');
+    Route::get('user/client','CustomerController@getUser');
+    Route::get('add-new-channel/{vendor_id}/{channel_url}','CustomerController@addNewChannel');
 });
 
 /* End of client route group */

@@ -49,8 +49,7 @@ class UserController extends Controller
                 'cats'=>Service::getCategories()
             ]);
     }
-
-
+    
     public function updateProfile(RegisterFormRequest $request){
         
         $file = $request->file('company_image');
@@ -413,6 +412,22 @@ class UserController extends Controller
                 'code'=>401
             ]
         ],401);
+    }
+
+    public function getUser() {
+        $user = request()->user()->load(['self_client_chat_channel']);
+        $data = [
+            'user' => ['id' => $user->id,'name'=>$user->name,'email'=>$user->email],
+            'client' => $user->self_client_chat_channel->map(function($item,$key){
+                return [
+                    'vendor_name' => $item->name,
+                    'vendor_id' => $item->id,
+                    'vendor_email' => $item->email,
+                    'channel_url' => $item->pivot->channel_url 
+                ];
+            }) 
+        ];
+        return $this->success($data);
     }
 
     public function last6MonthsBudgetAverage(){

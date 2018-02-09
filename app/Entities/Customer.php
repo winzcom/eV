@@ -35,4 +35,8 @@ class Customer extends Authenticatable
     public function getFullNameAttribute() {
         return $this->first_name.' '.$this->last_name;
     }
+
+    public function self_vendor_chat_channel() {
+        return $this->belongsToMany(User::class,'channel_urls','client_id','vendor_id')->withPivot(['channel_url']);
+    }
 }

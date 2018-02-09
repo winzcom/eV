@@ -107,9 +107,9 @@
                                                 @foreach($company->galleries->take(3) as $gallery)
                                                     <div class="item">
                                                         @if($gallery->is_s3_path)
-                                                            <img src="{{$gallery->image_name}}" alt="Thumbnail" style="width:100%;max-height:250px;">
+                                                            <img src="{{$gallery->image_name}}" alt="Thumbnail" style="width:100%;height:100px;">
                                                         @else
-                                                            <img src="{{$path}}/{{$gallery->image_name}}" alt="Thumbnail" style="width:100%;max-height:250px;">
+                                                            <img src="{{$path}}/{{$gallery->image_name}}" alt="Thumbnail" style="width:100%;height:100px;">
                                                         @endif
                                                     </div>
                                                 @endforeach
@@ -118,13 +118,13 @@
                                                 @if($company->company_image_path_is_s3)
                                                     <img src="{{$company->company_image}}" alt="" style="width:100%; max-height:250px;"/>
                                                 @else
-                                                    <img src="{{asset('company_images')}}/{{$company->company_image}}" alt="" style="width:100%; max-height:250px;"/>
+                                                    <img src="{{asset('company_images')}}/{{$company->company_image}}" alt="" style="width:100%;height:100px;"/>
                                                 @endif
                                                 </div>
                                             @else
                                                 <div class="item">
 
-                                                    <img src="{{ asset('/img/category_default.jpg') }}" alt="" style="width:100%; max-height:250px;"/>
+                                                    <img src="{{ asset('/img/category_default.jpg') }}" alt="" style="width:100%;" height=100/>
                                                 </div>
                                             @endif
                                             

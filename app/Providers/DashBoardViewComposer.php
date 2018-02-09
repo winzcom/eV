@@ -19,7 +19,6 @@ class DashBoardViewComposer extends ServiceProvider
         View::composer(
                         [
                             'vendor.*'
-                        
                         ],
                         'App\Http\ViewComposers\ProfileComposer'
                     );
