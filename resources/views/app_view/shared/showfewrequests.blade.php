@@ -3,10 +3,9 @@
 @php 
 
 if(count($all_requests) > 0){
-    echo '<div>';
     foreach($all_requests as $request){
         if(true) {
-
+            echo "<div id='$request->id'>";
             $rid = !is_null($request->rid) ? $request->rid : null;
             $ob = json_decode($request->request);
             $isobject =  is_object($ob) ? true :false;
@@ -17,7 +16,7 @@ if(count($all_requests) > 0){
             echo 'request from '.$request->client_name.' for '.$cats->where('id',$request->category_id)->first()->name.' on '.date('D jS M Y',strtotime($request->created_at)).'</h3>';
             echo (int)$request->count_available_vendors !== 0 ? '<h5><i>(sent to '.((int)$request->count_available_vendors-1).' other vendors)</i></h5>':'';
             $num = $rid ? ((int)$request->crid-1) : (int)$request->crid;
-            echo '<div>';
+            //echo '<div>';
             /*echo "<a href='show_quotes/$request->id'>
             <button type='' class='btn btn-info btn-sm show_others_quotes'>
                 Show Quotes from Others($num)
@@ -25,14 +24,14 @@ if(count($all_requests) > 0){
             if(is_null($rid) && !isset($customer)){
                 if($isobject){
                     if(strtotime($ob->date)>strtotime(date('Y-m-d'))){
-                    echo "<button class='btn btn-success btn-xs request' id='reply' data-toggle='modal'
-                        data-target='#reply_request' data-rid = '$request->id'
-                        data-cid = '$request->client_id'
-                    >
+                    echo "<button class='btn btn-success btn-xs request reply-$request->id' id='reply' data-toggle='modal'
+                            data-target='#reply_request' data-rid = '$request->id'
+                            data-cid = '$request->client_id'
+                        >
                         Reply
                         
                     </button>
-                    <button class='btn btn-danger btn-xs request dismiss' data-rid = '$request->id'
+                    <button class='btn btn-danger btn-xs request ignore-$request->id dismiss' data-rid = '$request->id'
                         data-cid = '$request->client_id'
                         
                     >
@@ -111,6 +110,7 @@ if(count($all_requests) > 0){
                     $filePath = json_decode($request->file_paths);
                     echo "<h5>Request Picture</h5><img src='$filePath[0]' width='300' height='auto'><hr>";
                 }
+            echo '</div>';
         }
         
     }

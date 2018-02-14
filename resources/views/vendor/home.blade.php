@@ -25,21 +25,21 @@
 				<div class="work-process style1" >
 						<div class="process-wrap">
 							<div class="icon-wrap">
-								<span class="step">{{count($requests->where('rid','!=',null))}}</span>
+								<span class="step" id="answered_requests">{{count($requests->where('rid','!=',null))}}</span>
 								<i class="icon icon-coffee"></i>
 							</div>
 							<h3 class="">Answered Requests</h3>
 						</div>
 						<div class="process-wrap">
 							<div class="icon-wrap">
-								<span class="step">{{count($requests->where('rid',null))}}</span>
+								<span class="step" id="unanswered_requests">{{count($requests->where('rid',null))}}</span>
 								<i class="icon icon-web text-info"></i>
 							</div>
 							<h3 class="">Unanswered Requests</h3>
 						</div>
 						<div class="process-wrap">
 							<div class="icon-wrap">
-								<span class="step">{{count($requests)}}</span>
+								<span class="step" id="total_requests">{{count($requests)}}</span>
 								<i class="icon icon-coding text-danger"></i>
 							</div>
 							<h3 class="">Total Requests</h3>

@@ -6,7 +6,7 @@
         <h4 class="modal-title" id="reply_header">Request Reply</h4>
       </div><!-- modal-header-->
       <div class="modal-body">
-        <form id="send_request_form">
+        <form id="send_request_form" name="send_request_form">
             <div class="control-group" id="date">
                 <label class="control-label" for="inputCity">Cost</label>
                     <div class="controls">

@@ -70,14 +70,22 @@ $(document).ready(function() {
         
         var reg = $('.email');
         var register = $('#register') || $('a[href="#finish"]');
-        // if(reg !== undefined) {
-        //     console.log(register)
-            
-        //     //register.attr('disabled', true);
+        var doubleEmailVerification = function() {
+            var cloned = reg.clone();
+            cloned.attr({
+                'name':'verify_email',
+                'required':true,
+            }).insertAfter(reg).blur(function(){
+                $(this).val() === reg.value ? register.attr('disabled',false) : register.attr('disabled',true);
+            }).bind('paste',function(e){
+                e.preventDefault();
+            }).before($(`<label>Verify Email</label>`));
+        }
 
-        //     //validateEmail(reg);
-        // }
-
+        if(reg !== undefined) { 
+            register.attr('disabled', true);
+            validateEmail(reg);
+        }
           function validation_in_progress() {
                 $('#status').html("Validating email....");
                 register.attr('disabled', true);

@@ -26,7 +26,7 @@
 .chat-body{
 	height: 355px;
 	width: inherit;
-	overflow: auto;
+	overflow: scroll;
 	margin-bottom: 45px;
 }
 .chat-text{

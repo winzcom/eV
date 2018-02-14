@@ -101,7 +101,7 @@
 				<li class="dropdown cart">
 					<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 						<i class="ion-bell"></i>
-						 <span class="glyphicon glyphicon-bell" aria-hidden="true">{{count($requests->where('rid',null))}}</span></a>
+						 <span class="glyphicon glyphicon-bell" id="notifcation_count_requests" aria-hidden="true">{{count($requests->where('rid',null))}}</span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li>
 							<div class="cart-wrap">
@@ -111,7 +111,7 @@
 											$unanswered = $requests->where('rid',null);
 										@endphp
                                         @foreach($unanswered as $ur)
-                                            <li>
+                                            <li class="{{ $ur->id }}">
                                                 <a href="javascript:void(0);" class="product" title="link title">
                                                     <img src="{{asset('img/defaultRequest.jpg')}}" 
 															alt="Product One"
@@ -123,7 +123,7 @@
 													On @if(isset($ur->created_at))
 														{{date('d M Y H:i:s',strtotime($ur->created_at))}}
 														for @php 
-														 //echo ((json_decode($ur->request)->event))
+														 echo $ur->cat_name
 														  @endphp
 													@endif
 												</span>

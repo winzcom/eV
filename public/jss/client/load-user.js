@@ -7,21 +7,30 @@ var userIds = [];
 var sb;
 var chatPops = [];
 var currentChannel;
+var audioSoundBuffer = null;
 
 (function(){
     /** LOAD ALL REQUIRED DATA */
-
+    var openchat = document.querySelector('.openchat');
+    openchat.length > 0 ? openchat.setAttribute('disabled',true) : null
     var SB = {
         getChannelBetweenClientAndVendor:getChannelBetweenClientAndVendor,
-        getChatPops:function() {
-            return chatPops;
-        },
         computeChatPop:computeChatPop
     }
 
     loadUserData(window.location.origin+'/user/client').then(function(){
         SendBirdAction();
+        openchat.length > 0 ? loadChatVendorScript() : null;
     });
+
+    function loadChatVendorScript() {
+        var script = document.createElement('script');
+        script.src = window.location.origin+'/jss/client/chat-vendor.js';
+        script.onload = function(openchat) {
+            $(openchat).attr('disabled',false);
+        }.bind(null,[openchat])
+        document.body.appendChild(script);
+    }
     
     function loadUserData(url) {
         return new Promise(function(resolve,reject){
@@ -45,58 +54,48 @@ var currentChannel;
             sb.updateCurrentUserInfo(currentuser['user']['name'], null, function(response, error) {
                 currentuser['nick_name'] = currentuser['user']['name'];
               });
-            // if(currentuser['vendor'].length > 0) {
-            //     Array.prototype.forEach.call(currentuser['vendor'],function(vendor){
-            //         if(vendor['channel_url'])
-            //         sb.GroupChannel.getChannel(vendor['channel_url'],function(channel,err){
-            //             if(err) {
-            //                 return;
-            //             } channels[vendor['channel_url']] = channel;
-            //             console.log(channel);
-            //         });
-            //     });
-            // }
         });
-    
+       var ConnectionHandler = new sb.ConnectionHandler();    
+       ConnectionHandler.onReconnectStarted = function(){
+           alertify.log('Network not available');
+           $(`.send-chat`).attr('disabled',true);
+       };
+       ConnectionHandler.onReconnectSucceeded = function(){
+        alertify.log('Network available');
+        $(`.send-chat`).attr('disabled',false);
+       }
+
        ChannelHandler = new sb.ChannelHandler();
-        console.log(ChannelHandler);
+        
         ChannelHandler.onMessageReceived = function(channel, message){
-            var message_container = $('<div class="message_container"></div>');
-            var message_div = $('<div class="message_div"></div>');
+            console.log(channel);
+            console.log(message);
             var msg = `<h3>${message._sender.nickname}</h3> 
                             <p>${message.message}</p>`;
-            var h5 = $(`<h5>${message._sender.nickname}</h5>`);
-            var p = $(`<p>${message.message}</p>`);
-            if($(message._sender.userId).length) {
-                //Just add message
-                // var img = $(`<img src="${message._sender.profileUrl}">`).width('100').height('auto');
-                // message_div.addClass('').append([h5,img,p]);
-                // message_container.append(message_div);
-                // message_container.appendTo($('.messages'));
-                computeChatPop(message._sender.userId);
+            if($(`#${message._sender.userId}`).length) {
+                var msg_insert = $(`#${message._sender.userId} .chat-box .chat-body .msg-insert`);
+                $(`<div class="msg-receive">${val}</div>`).appendTo(msg_insert);
             }
             else {
                     alertify.log(msg,function(e){
-                        e.preventDefault();
-                        currentUserId = message._sender.userId;
                         userIds.push(message._sender.userId);
                         computeChatPop(message._sender.userId);
-                        //$('#chat-vendor').modal('show');
                     });
                 }
         };
         sb.addChannelHandler('group-channel-handler', ChannelHandler);
     }
 
-    function computeChatPop(userId,name) {
+    function computeChatPop(userId,name,message = null) {
         var windowWidth = window.innerWidth;
-        if($(+'#'+userId).length) {
+        if($('#'+userId).length) {
             var msg_receive = $(`<div class="msg-receive"></div>`).appendTo($(`<div class="msg-insert"></div>`));
             $('#'+userId).find('.msg-insert').append(msg_receive);
         } else {
             if(windowWidth >= 540) {
                 if(chatPops.length < 5) {
                     displayPop(userId,name);
+                    chatPops.push(userId);
                 } else {
                     id_url = chatPops.shift();
                     $('#'+id_url).remove();
@@ -119,19 +118,35 @@ function getChannelBetweenClientAndVendor(vendor_id) {
                 console.error(error);
                 return;
             }
-            console.log(channelList);
-            currentChannel = channelList[0];
-            channels[vendor_id] = currentChannel;
-            return channelList[0];
+            if(channelList.length) {
+                currentChannel = channelList[0];
+                channels[vendor_id] = currentChannel;
+                return channelList[0];
+            }
+            createChannel([user['user']['id'],vendor_id]);
         });
     }      
+}
+
+function createChannel(ids = [],name = 'name') {
+    sb.GroupChannel.createChannelWithUserIds(ids,true,name,null,null,function(channel,err){
+        if(!err) {
+            currentChannel = channel;
+            channels[ids[1]] = channel;
+        }
+    });
 }
 
     function displayPop(userId,name) {
         var div = $(`<div class"wrapper" id="${userId}"></div>`).appendTo($('body'));
         var chat_box = $(`<div class="chat-box"></div>`).appendTo(div);
-        var chat_head = $(`<div class="chat-head"></div>`).append(`<h2>${name}</h2>`).appendTo(chat_box).css('color','white');
-        var chat_body = $(`<div class="chat-body"></div>`).appendTo(chat_box)
+        var chat_head = $(`<div class="chat-head"></div>`).append(`<h2>${name}</h2>`)
+                            .appendTo(chat_box).css({
+                                'color':'white',
+                                'textAlign':'center',
+                                'paddingBottom':'20px'
+                            });
+        var chat_body = $(`<div class="chat-body"></div>`).appendTo(chat_box);
         var msg_insert = $(`<div class="msg-insert"></div>`).appendTo(chat_body);
         var chat_text = $(`<div class="chat-text"></div>`).appendTo(chat_body);
         var send_text_area = $(`<textarea data-user-id ="${userId}" class="send-chat"></textarea>`).appendTo(chat_text);

@@ -93,11 +93,11 @@ body{
             @else
                  <form id="delete_gallery" method="post" action="{{url('/delete_gallery')}}">
                     {{csrf_field()}}
-                 <input type="submit" class="btn btn-default" value="Delete Selected"/>
+                 <input type="submit" id="delete-gallery" class="btn btn-default" value="Delete Selected"/>
                 <div  class="cbp cbp-l-grid-team gallery1">
-                    <div class="row">
+                    <div class="row" id="id-row">
                         @foreach($galleries as $gallery)
-                            <div class="col-md-6 col-sm-6">
+                            <div class="col-md-6 col-sm-6" id="{{$gallery->id}}">
                                 <div class="cbp-item graphics-design">
                                     @php
                                         $image_path = $gallery->is_s3_path ? $gallery->image_name : $path.'/'.$gallery->image_name;

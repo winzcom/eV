@@ -60,30 +60,23 @@ class UserController extends Controller
             $filtered['company_image'] = $this->uploadFiles('s3',[$file],'public/company_image', $filtered['company_image'])[0];
             //$file->storeAs('company_images',$filtered['company_image'],'my_public');
         }
-        
-        
         $filtered['name_slug'] = str_slug($filtered['name']);
         $filtered['vicinity_id'] = (int)$request->vicinity_id !== 0 ? (int)$request->vicinity_id:0 ;
 
       try{
-
-         
           //$user = $this->user_repo->findFirstByWhere(['id','=',Auth::id()]);
-          $user = request()->user();
+         $user = request()->user();
          $user->update($filtered);
           
           $user->categories()->sync($request->category);
-
           return redirect('home')->with('message','Profile Updated');    
       } 
-
       catch(Exception $e){
-          dd('Error Encountered ');
+          return back()->withError('message','An Error Occured');
       }
     }
 
     public function showProfileForm(Request $request){
-        
         return view('vendor.profile')->with([
                 'user'=>Auth::user(),
                 'formInputs'=>User::getFormInputs(),
@@ -105,18 +98,29 @@ class UserController extends Controller
             'photo.*'=>'mimes:jpeg,bmp,png,jfif,gif',
             'size'=>'5000'
         ],['size'=>'size must be less than 5MB']);
-
-        $filePaths = collect($this->uploadFiles('s3',$request->photo,'public/galleries'))
-                    ->map(function($path) {
-                        return ['image_name' => $path];
-                    })->toArray();
-
-        request()->user()->galleries()->createMany($filePaths);
-        //$names = Service::uploadPhotos($this->gallery,$request->photo,$request->caption,Auth::user()->name_slug,Auth::id());
-        if($request->ajax()){
-            return json_encode(array('status'=>'Success','paths'=>$filePaths));
+        try {
+            $filePaths = collect($this->uploadFiles('s3',$request->photo,'public/galleries'))
+            ->map(function($path) {
+                return ['image_name' => $path];
+            })->toArray();
+            $instances = $request->user()->galleries()->createMany($filePaths);
+            //$names = Service::uploadPhotos($this->gallery,$request->photo,$request->caption,Auth::user()->name_slug,Auth::id());
+            if($request->ajax()){
+                return $this->success([
+                    'status'=>'Success','paths'=>$filePaths,
+                    'galleries'=>$instances,'message'=>'Pictures Uploaded Successfully'
+                ]);
+            }
+            return back();
+        } catch(\Exception $e) {
+            if($request->ajax()){
+                return $this->error(array('status'=>'failed','message'=>'something happened'));
+            }
+            return back()->withErrors([
+                'status'=>'failed',
+                'message'=>'something happened'
+            ]);
         }
-        
         return back();
     }
 
@@ -127,15 +131,24 @@ class UserController extends Controller
             $bucket_name = env('AWS_BUCKET');
             //Service::deletePhotos($this->gallery,$request->images,Auth::id());
            try {
-             $galleries = request()->user()->galleries()->whereIn('galleries.id',$request->images)->get();
+             $galleries = $request->user()->galleries()->whereIn('galleries.id',$request->images)->get();
              $galleries->each(function($gallery) {
                  $gallery->delete();
              });
              $filePaths = $galleries->pluck('image_name')->all();
              $this->deleteFiles($filePaths,$bucket_name);
            } catch(\Exception $e) {
-               return back()->with('message',$e->getMessage());
+               if($request->ajax()) 
+                return $this->error([
+                    'status' =>'something something happened'
+                ]);
+               return back()->withError('message',$e->getMessage());
            }
+        if($request->ajax())
+           return $this->success([
+               'message' => 'Image(s) deleted successfully',
+               'ids' => $request->images
+           ]);
         return back()->with('message','Image deleted successfully');
     }
 
@@ -161,28 +174,29 @@ class UserController extends Controller
     public function addOffDay(Request $request){
         $from_date = date("Y-m-d",strtotime($request->from_date));
 
-        if($request->to_date == null || $request->to_date == '' || empty($request->to_date)){
+        if(!$request->has('to_date')){
             $to_date = $from_date;
         }
         else 
             $to_date = date("Y-m-d",strtotime($request->to_date));
 
-        $offday =  OffDays::updateOrCreate(
-                        [
-                            'from_date'=>$from_date,
-                            'to_date'=>$to_date,
-                            'user_id'=>request()->user()->id
-                        ]
-                    );
+            $offday =  OffDays::updateOrCreate(
+                            [
+                                'from_date'=>$from_date,
+                                'to_date'=>$to_date,
+                                'user_id'=>$request->user()->id
+                            ]
+                        );
         
         if($request->ajax()){
-                return json_encode(array('from_date'=>$offdays->from_date->format('l jS \\of F Y'),
-                                         'to_date'=>$offdays->to_date->format('l jS \\of F Y'),
-                                         'date_id'=>$offdays->id
-                ));
+                return $this->success(array('from_date'=>$offdays->from_date->format('l jS \\of F Y'),
+                        'to_date'=>$offdays->to_date->format('l jS \\of F Y'),
+                        'date_id'=>$offdays->id
+                    )
+                );
         }
         return back();
-    }//end of addOffDays
+    }
 
     public function removeOffDays(Request $request){
 
@@ -190,8 +204,7 @@ class UserController extends Controller
                         'user_id'=>Auth::id()
             ])->delete();
 
-        if($request->ajax()){
-             
+        if($request->ajax()){ 
             return $this->success(array('status'=>'Date Deleted'));
         }
         return back();
@@ -203,9 +216,9 @@ class UserController extends Controller
             'available' => (int) $availability,
             'availability_set_date' => date('Y-m-d H-i-s')
         ])->save();
-        // return response()->json([
-        //     'status'=>'Availability set'
-        // ]);
+        $this->success([
+                'status'=>'Availability set'
+            ]);
     }
 
     public function reply(Request $request){
@@ -215,7 +228,6 @@ class UserController extends Controller
         if($id !== '' && $reply !== ''){
             Review::where('id','=',$id)->update(['reply'=>$reply]);
         if($request->ajax()){
-                //return json_encode(array('status'=>'Reply Posted'));
             return $this->success(['status'=>'Reply Posted']);
         }
             return back();
@@ -286,11 +298,11 @@ class UserController extends Controller
                         'client' => $quote->requests->client
                     ]);
                 } catch(\Exception $e) {
-                    return $this->success([
-                        'status' => 441,
+                    return $this->error([
+                        'status' => $e->getCode(),
                         'message'=>'Mail could not be sent at this time to '.$quote->requests->client->full_name,
                         'client' => $quote->requests->client
-                    ]);
+                    ],422);
                 }
         } else {
             $quote = Quote::create($content);
@@ -300,13 +312,23 @@ class UserController extends Controller
                     event(new NewQuoteSent($request_data,Auth::user(),$quote));
                     return $this->success([
                         'status'=>'Quotes Sent Successfully to '.$request_data->first_name.' '.$request_data->last_name,
-                        'client' => $quote->requests->client
-                    ]);
+                        'client_id' => $quote->client_id,
+                        'vendor_id' =>Auth::id(),
+                        'rid' => $quote->rid,
+                        'data' => $quote->newQuery()
+                            ->select(DB::raw('avg(cost) as avg, max(cost) as max,min(cost) as min,count(uid) as count'))
+                            ->where('rid',$quote->rid)
+                            ->get()->push([
+                                'cost'=>$quote->cost,
+                                'message'=>$quote->message,
+                                'dp'=>$quote->dp,
+                            ])
+                        ]);
                 } catch(\Exception $e) {
                     return $this->error([
                         'status'=>'Your Quotes Could not be sent at this time ',
-                        'message'=>$e->getMessage()
-                    ]);
+                        'message'=>$e->getMessage(),
+                    ],422);
                 }
             } else {
                 $this->error(['status' =>'Reply could not be sent']);
@@ -355,27 +377,21 @@ class UserController extends Controller
     public function dismissRequest($rid,$client_id){
 
         if(!is_null($rid)){
-            $id = DB::table('dismiss')->insertGetId([
-                'rid'=>$rid,
-                'uid'=>Auth::id(),
-
-            ]);
-
-                if(!is_null($id)){
-                    return $this->success([
-                        'rid'=>$rid,
-                        'uid'=>Auth::id(),
-                        'client_id'=>$client_id
-                    ]);
-            }
-            else{
-
-                return $this->error([
-                    'status'=>'Error Performing Operation'
+            try {
+                $id = DB::table('dismiss')->insert([
+                    'rid'=>$rid,
+                    'uid'=>Auth::id(),
                 ]);
+                return $this->success([
+                    'rid'=>$rid,
+                    'uid'=>Auth::id(),
+                    'client_id'=>$client_id
+                ]);
+            }catch(\Exception $e) {
+                return $this->error([
+                    'message'=>$e->getMessage()
+                ],$e->getCode());
             }
-
-            
         }
 
          return $this->error([
@@ -383,18 +399,11 @@ class UserController extends Controller
         ],400);
     }
 
-    private function canViewOthersQuote() {
-        try {
-            return $this->authorize('others_quotes',\App\Entities\User::class);
-        }catch(\Exception $e) {
-            return false;
-        }
-    }
-
     public function getQuotesFromOthers() {
-        if($this->canViewOthersQuote()) {
+        try {
+            $this->authorize('others_quotes',\App\Entities\User::class);
             if(!is_null(request()->rid)) {
-                $data = QuotesRequest::with('quote')->where('id', request()->rid)->first();
+                $data = QuotesRequest::with('quote.vendor')->where('id', request()->rid)->first();
                 //$data = App\Entities\Quote::with('vendor')->where('rid',request()->rid)->get();
                 return $this->success($data);
             } else {
@@ -406,12 +415,13 @@ class UserController extends Controller
                     ]);
             }    
             
+        }catch(\Exception $e) {
+            return $this->error(['error'=>[
+                    'message'=>'You are not allowed to view others quotes',
+                    'code'=>$e->getCode()
+                ]
+            ],$e->getCode());
         }
-        return $this->error(['error'=>[
-                'message'=>'You are not allowed to view others quotes',
-                'code'=>401
-            ]
-        ],401);
     }
 
     public function getUser() {

@@ -7,83 +7,109 @@ $(document).ready(function(){
     //OnChatOpen();
     openChatWithVendor();
     OnChatClose();
-    function OnChatOpen() {
-        $('#chat-vendor').on('show.bs.modal',function(event) {
-           var button = $(event.relatedTarget);
-           var vendor_channel_url = button.data('vendorChannelUrl');
-           var vendor_id = button.data('vendorId') || currentUserId;
 
-            if(vendor_id) {
-                var channel = SB.getChannelBetweenClientAndVendor(vendor_id);           
-            }
-            else {
-                sb.GroupChannel.createChannelWithUserIds([currentuser['user']['id'],vendor_id],true,'name',null,null,function(channel,err){
-                    if(!err) {
-                        currentChannel = channel;
-                        channels[vendor_id] = channel;
-                        $(event.relatedTarget).data('vendorChannelUrl',channel.url);
-                        currentChannel.inviteWithUserIds([vendor_id],function(response,err){
-                            if(err)
-                                return;
-                        });
-                        sendChannelUrlToServer(channel.url,vendor_id);
-                    }
-                });
-            }
 
-            $('#send_chat_message').attr('disabled',true).html('getting channel ready..');
-            $('#chat-message').attr('disabled',true);
+    // function OnChatOpen() {
+    //     $('#chat-vendor').on('show.bs.modal',function(event) {
+    //        var button = $(event.relatedTarget);
+    //        var vendor_channel_url = button.data('vendorChannelUrl');
+    //        var vendor_id = button.data('vendorId') || currentUserId;
 
-          window.requestAnimationFrame(checkCurrentChannel);
+    //         if(vendor_id) {
+    //             var channel = SB.getChannelBetweenClientAndVendor(vendor_id);           
+    //         }
+    //         else {
+    //             sb.GroupChannel.createChannelWithUserIds([currentuser['user']['id'],vendor_id],true,'name',null,null,function(channel,err){
+    //                 if(!err) {
+    //                     currentChannel = channel;
+    //                     channels[vendor_id] = channel;
+    //                     $(event.relatedTarget).data('vendorChannelUrl',channel.url);
+    //                     // currentChannel.inviteWithUserIds([vendor_id],function(response,err){
+    //                     //     if(err)
+    //                     //         return;
+    //                     // });
+    //                     sendChannelUrlToServer(channel.url,vendor_id);
+    //                 }
+    //             });
+    //         }
 
-           var vendor_id = button.data('vendorId');
-           $('.modal-title').html('Chat with '+button.data('vendorName'));
-           $(this).find('.messages').css('height',200).css('overflow-y','scroll');
+    //         $('#send_chat_message').attr('disabled',true).html('getting channel ready..');
+    //         $('#chat-message').attr('disabled',true);
+
+                // setTimeout(function() {
+                //     checkCurrentChannel();
+                // });
+
+    //        var vendor_id = button.data('vendorId');
+    //        $('.modal-title').html('Chat with '+button.data('vendorName'));
+    //        $(this).find('.messages').css('height',200).css('overflow-y','scroll');
     
-           $(this).find('#send_chat_message').click(function(){
-               //currentChannel.sendMessage($('#chat-message').val());
-           });
-           $(this).find('#chat-message').keypress(function(event){
-               var self = this;
-               if(event.keyCode === 13 && this.value !== '') {
-                 currentChannel.sendUserMessage(this.value,null,null,function(message,err){
-                    if(err) {
-                        alertify.log('connection error message couldnt be sent');
-                        return;
-                    }
+    //        $(this).find('#send_chat_message').click(function(){
+    //            //currentChannel.sendMessage($('#chat-message').val());
+    //        });
+    //        $(this).find('#chat-message').keypress(function(event){
+    //            var self = this;
+    //            if(event.keyCode === 13 && this.value !== '') {
+    //              currentChannel.sendUserMessage(this.value,null,null,function(message,err){
+    //                 if(err) {
+    //                     alertify.log('connection error message couldnt be sent');
+    //                     return;
+    //                 }
                       
-                    else console.log(message);
-                    self.value = ''; 
-                 });
-               }
-           })
-        });
+    //                 else console.log(message);
+    //                 self.value = ''; 
+    //              });
+    //            }
+    //        })
+    //     });
    
-     }
+    //  }
 
      function openChatWithVendor() {
          $('.openchat').click(function() {
             var clicked = $(this);
             var vendor_id = clicked.data('vendorId');
             var callback = function(start_time) {
+                $(`#${vendor_id} .chat-box .chat-body .send-chat`).attr('disabled',true);
                 if(!channels[vendor_id]) {
-                    window.requestAnimationFrame(callback);
+                   setTimeout(callback);
                     return;
                 }
-                console.log(channels[vendor_id]);
-                SB.computeChatPop(vendor_id,clicked.data('vendorName'));
+                $(`#${vendor_id} .chat-box .chat-body .send-chat`).keypress(function(event){
+                    
+                    var self = this;
+                    var msg_insert = $(`#${vendor_id} .chat-box .chat-body .msg-insert`);
+                    var val = $(this).val();
+
+                    if(event.keyCode == 13 && val !== '') {
+                        $(`<div class="msg-send">${val}</div>`).appendTo(msg_insert);
+                        channels[$(this).data('userId')].sendUserMessage(val,null,null,function(message,err){
+                            if(err) {
+                                console.log(err);
+                                alertify.log('connection error message couldnt be sent');
+                                return;
+                            }
+                              
+                            else console.log(message);
+                         });
+                         self.value = ''; 
+                    }
+                }).attr('disabled',false);
                 loadPreviousMessage(channels[vendor_id],vendor_id);
             }
             if($(`#${vendor_id}`).length !== 0) return;
             SB.getChannelBetweenClientAndVendor(vendor_id);
-            window.requestAnimationFrame(callback);
+            SB.computeChatPop(vendor_id,clicked.data('vendorName'));
+            setTimeout(callback);
          });
      }
 
      function OnChatClose() {
-         $('#chat-vendor').on('hidden.bs.modal',function(event){
-            $(this).find('.messages').html('');
-         })
+        //  $('#chat-vendor').on('hidden.bs.modal',function(event){
+        //     $(this).find('.messages').html('');
+        //  });
+         $(`#${vendor_id} .chat-box .chat-body`).slideToggle(100);
+         $(`#${vendor_id}`).fadeOut().remove();
      }
 
      function loadPreviousMessage(currentChannel,vendor_id) {
@@ -94,7 +120,9 @@ $(document).ready(function(){
               return;
           }
           console.log(message_list)
-          displayPreviousMessages(message_list,vendor_id);
+          window.requestAnimationFrame(function(time){
+             displayPreviousMessages(message_list,vendor_id);
+          })
        });
      }
 
@@ -120,8 +148,9 @@ $(document).ready(function(){
             loadPreviousMessage(currentChannel);
             //clearInterval(interval);
             return;
-        } 
-        window.requestAnimationFrame(checkCurrentChannel);
+        }
+        setTimeout(checkCurrentChannel); 
+        //window.requestAnimationFrame(checkCurrentChannel);
     }
 
     function displayPreviousMessages(message_list,vendor_id) {
@@ -140,15 +169,18 @@ $(document).ready(function(){
         //     message_container.prepend(message_div);
         // });
         // message_container.appendTo($('.messages'));
-        var msg_insert = $('#'+vendor_id).length;
-        console.log(msg_insert);
-        [].forEach.call(message_list,function(message_object) {
-            if(message_object._sender.userId !== currentuser['user']['id']) {
-                $(`<div class="msg-send">${message_object.message}</div>`).appendTo(msg_insert);
+        var msg_insert = $(`#${vendor_id} .chat-box .chat-body .msg-insert`);
+        for (var index = message_list.length - 1; index >= 0 ; index--) {
+            if(index & 1) message_list[index]._sender.userId = 12;
+            if(message_list[index]._sender.userId == currentuser['user']['id']) {
+                $(`<div class="msg-send">${message_list[index].message}</div>`).appendTo(msg_insert);
             } else {
-                $(`<div class="msg-receive">${message_object.message}</div>`).appendTo(msg_insert);
+                $(`<div class="msg-receive">${message_list[index].message}</div>`).appendTo(msg_insert);
             } 
-        });
+        }
+        // [].forEach.call(message_list,function(message_object,index) {
+            
+        // });
     }
 
      window.onunload = function() {

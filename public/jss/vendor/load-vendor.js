@@ -55,6 +55,8 @@ var currentChannel;
        ChannelHandler = new sb.ChannelHandler();
         ChannelHandler.onMessageReceived = function(channel, message){
             // alertify.success(message._sender.nickname+'  '+message.message)
+            console.log(channel);
+            console.log(message);
             var msg = `<h3>${message._sender.nickname}</h3> 
                         <p>${message.message}</p>`;
             if($('#chat-vendor').hasClass('show')) {
