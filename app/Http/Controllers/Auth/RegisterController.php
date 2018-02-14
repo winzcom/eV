@@ -100,7 +100,9 @@ class RegisterController extends Controller
             Mail::to($user->email)
                 ->send(new SendVerificationMail($user,$token));
         }catch(\Swift_TransportException $e){
-
+            return back()->withErrors([
+                'error'=>'Mail could not be sent'
+            ]);
         }
     }
 
@@ -134,7 +136,7 @@ class RegisterController extends Controller
         $user->save();
         //return redirect('login')->with('message','Please Login');
         $this->guard()->login($user);
-        redirect($this->redirectPath());
+        return redirect($this->redirectPath());
     }
 
     public function messages()
