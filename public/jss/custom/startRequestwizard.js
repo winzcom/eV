@@ -82,10 +82,10 @@ $(document).ready(function() {
             }).before($(`<label>Verify Email</label>`));
         }
 
-        if(reg !== undefined) { 
-            register.attr('disabled', true);
-            validateEmail(reg);
-        }
+        // if(reg !== undefined) { 
+        //     register.attr('disabled', true);
+        //     validateEmail(reg);
+        // }
           function validation_in_progress() {
                 $('#status').html("Validating email....");
                 register.attr('disabled', true);
