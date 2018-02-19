@@ -447,4 +447,16 @@ class UserController extends Controller
     public function templateRendering() {
 
     }
+
+    public function chatNotification() {
+        try {
+            $client = \App\Entities\User::findOrFail(request()->vendor_id);
+            $client->notify(new \App\Notifications\ChatNotification());
+        }catch(\Exception $e) {
+            return $this->error([
+                'status' => 'failed',
+                'message' => $e->getMessage()
+            ],500);
+        }
+    }
 }

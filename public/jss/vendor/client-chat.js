@@ -6,7 +6,7 @@ $(document).ready(function(){
      **************/
     //OnChatOpen();
     openChatWithClient();
-    OnChatClose();
+    //OnChatClose();
 
 
     // function OnChatOpen() {
@@ -69,47 +69,29 @@ $(document).ready(function(){
          $('.openchat').click(function() {
             var clicked = $(this);
             var client_id = clicked.data('clientId');
+            var client_name = clicked.data('clientName');
             var callback = function(start_time) {
                 $(`#${client_id} .chat-box .chat-body .send-chat`).attr('disabled',true);
                 if(!channels[client_id]) {
                    setTimeout(callback);
                     return;
                 }
-                $(`#${client_id} .chat-box .chat-body .send-chat`).keypress(function(event){
-                    
-                    var self = this;
-                    var msg_insert = $(`#${client_id} .chat-box .chat-body .msg-insert`);
-                    var val = $(this).val();
-
-                    if(event.keyCode == 13 && val !== '') {
-                        $(`<div class="msg-send">${val}</div>`).appendTo(msg_insert);
-                        channels[$(this).data('userId')].sendUserMessage(val,null,null,function(message,err){
-                            if(err) {
-                                console.log(err);
-                                alertify.log('connection error message couldnt be sent');
-                                return;
-                            }
-                              
-                            else console.log(message);
-                         });
-                         self.value = ''; 
-                    }
-                }).attr('disabled',false);
-                loadPreviousMessage(channels[vendor_id],vendor_id);
+                SB.readySendInput(client_id);
+                SB.loadPreviousMessage(channels[client_id],client_id);
             }
             if($(`#${client_id}`).length !== 0) return;
             SB.getChannelBetweenClientAndVendor(client_id);
-            SB.computeChatPop(vendor_id,clicked.data('vendorName'));
+            SB.computeChatPop(client_id,client_name);
             setTimeout(callback);
          });
      }
 
-     function OnChatClose() {
+     function OnChatClose(client_id) {
         //  $('#chat-vendor').on('hidden.bs.modal',function(event){
         //     $(this).find('.messages').html('');
         //  });
-         $(`#${vendor_id} .chat-box .chat-body`).slideToggle(100);
-         $(`#${vendor_id}`).fadeOut().remove();
+         $(`#${client_id} .chat-box .chat-body`).slideToggle(100);
+         $(`#${client_id}`).fadeOut().remove();
      }
 
      function loadPreviousMessage(currentChannel,client_id) {

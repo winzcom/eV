@@ -126,4 +126,16 @@ class CustomerController extends Controller
             'message' => 'added',
         ]);
     }
+
+    public function chatNotification() {
+        try {
+            $client = \App\Entities\Customer::findOrFail(request()->client_id);
+            $client->notify(new \App\Notifications\ChatNotification());
+        }catch(\Exception $e) {
+            return $this->error([
+                'status' => 'failed',
+                'message' => $e->getMessage()
+            ],500);
+        }
+    }
 }

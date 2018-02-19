@@ -10,7 +10,7 @@ Route::get('/reset/client','ForgotPasswordController@showLinkRequestForm');
 Route::post('/password/client','ForgotPasswordController@sendResetLinkEmail');
 Route::get('/password/reset/client/{token}','ResetPasswordController@showResetForm')->name('reset.password.client');
 Route::post('/password/reset/client','ResetPasswordController@reset');
-
+Route::get('/chat-notification/client/{client_id}','CustomerController@chatNotification');
 
 /* Client route group */
 

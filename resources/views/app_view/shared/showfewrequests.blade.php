@@ -13,7 +13,8 @@ if(count($all_requests) > 0){
             if(!is_null($rid)){ 
                 echo '<i class="fa fa-check-circle-o"></i>&nbsp';
             }
-            echo 'request from '.$request->client_name.' for '.$cats->where('id',$request->category_id)->first()->name.' on '.date('D jS M Y',strtotime($request->created_at)).'</h3>';
+            echo 'request from '.$request->client_name.' for '.$cats->where('id',$request->category_id)->first()->name.' on '.date('D jS M Y',strtotime($request->created_at));
+            //echo " &nbsp;<button class='btn btn-info btn-xs openchat' data-client-id='$request->client_id' data-client-name='$request->client_name'>Chat With Client</button></h3>";
             echo (int)$request->count_available_vendors !== 0 ? '<h5><i>(sent to '.((int)$request->count_available_vendors-1).' other vendors)</i></h5>':'';
             $num = $rid ? ((int)$request->crid-1) : (int)$request->crid;
             //echo '<div>';

@@ -6,7 +6,7 @@ $(document).ready(function(){
      **************/
     //OnChatOpen();
     openChatWithVendor();
-    OnChatClose();
+    //OnChatClose();
 
 
     // function OnChatOpen() {
@@ -75,27 +75,7 @@ $(document).ready(function(){
                    setTimeout(callback);
                     return;
                 }
-                $(`#${vendor_id} .chat-box .chat-body .send-chat`).keypress(function(event){
-                    
-                    var self = this;
-                    var msg_insert = $(`#${vendor_id} .chat-box .chat-body .msg-insert`);
-                    var val = $(this).val();
-
-                    if(event.keyCode == 13 && val !== '') {
-                        $(`<div class="msg-send">${val}</div>`).appendTo(msg_insert);
-                        channels[$(this).data('userId')].sendUserMessage(val,null,null,function(message,err){
-                            if(err) {
-                                console.log(err);
-                                alertify.log('connection error message couldnt be sent');
-                                return;
-                            }
-                              
-                            else console.log(message);
-                         });
-                         self.value = ''; 
-                    }
-                }).attr('disabled',false);
-                loadPreviousMessage(channels[vendor_id],vendor_id);
+                SB.loadPreviousMessage(channels[vendor_id],vendor_id);
             }
             if($(`#${vendor_id}`).length !== 0) return;
             SB.getChannelBetweenClientAndVendor(vendor_id);

@@ -13,6 +13,8 @@
 
 use  Illuminate\Http\Request;
 
+Route::get('/chat-notification/vendor/{vendor_id}','UserController@chatNotification');
+
 Route::group(['middleware'=>'auth'],function(){
 
     Route::get('/home','UserController@home')->name('home');
