@@ -26,6 +26,7 @@ class Customer extends Authenticatable
     ];
 
     protected $appends = ['full_name'];
+    protected $casts = ['can_chat'=>'boolean'];
 
     public function sendPasswordResetNotification($token)
     {
@@ -34,6 +35,10 @@ class Customer extends Authenticatable
 
     public function getFullNameAttribute() {
         return $this->first_name.' '.$this->last_name;
+    }
+
+    public function canChat() {
+        $this->update(['can_chat'=>1]);
     }
 
     public function self_vendor_chat_channel() {

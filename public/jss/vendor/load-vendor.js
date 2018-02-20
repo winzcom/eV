@@ -66,6 +66,7 @@ var audioSoundBuffer = null;
                     })
                 }
             },10000);
+            canChat();
         });
        var ConnectionHandler = new sb.ConnectionHandler();    
        ConnectionHandler.onReconnectStarted = function(){
@@ -258,6 +259,13 @@ function NotifyUser(client_id,currentusername) {
     })
 }
 
+function canChat() {
+    $.get(window.location.origin+'/can-chat',function(response){
+        console.log(response);
+    }).fail(function(){
+
+    });
+}
 
 function sendMessage(message,data,callback) {
 

@@ -219,13 +219,15 @@ $(document).ready(function() {
                             //try {
 
                                 var d = Object.assign({},data);
-                                if (d.error) {
-                                    var html = "<p>Error: " + d.error + "</p>"
+                                if (d.status == 'failed') {
+                                    var html = "<p>Error: " + 'An Error occured' + "</p>"
                                     // alertify.closeLogOnClick(true).error(html, function(ev) {
                                     //     $('.message').html(html);
                                     //     $('#myModal').modal('show');
                                     // });
                                         $('.message').html(html);
+                                        $('a[href="#finish"]').attr('disabled',false).text('Send Request');
+                                        return;
                                     //   $('#myModal').modal('show');  
                                 } else {
                                     

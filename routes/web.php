@@ -46,6 +46,8 @@ Route::get('/browse_vendors/{category?}/{state?}','SearchController@browseByCate
 
 Route::get('/password/show', 'GuestController@showPasswordCreate');
 
+Route::get('can-chat','Controller@canChat');
+
 Route::post('/password/create', 'GuestController@createPassword');
 
 Route::get('/send_verification_mail', 'GuestController@sendEmailTypeVerificationMail');

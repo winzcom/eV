@@ -155,23 +155,22 @@ class GuestController extends Controller
                     if($vicinity == 'all' || $vicinity == '' || $vicinity == null) $vicinity = 0;
 
                     try{
+                        $requestCollection = new MyCollection($request);
 
-                            $requestCollection = new MyCollection($request);
-
-                            list($addServices,$normal) = $requestCollection->partition(function($item,$key){
-                                return (int)strstr($key,'_',true);
-                            });
-                            $req = null;
-                            foreach ($this->getMergedRequestData($normal,$addServices,$category['category']) as $key => $jsoned_request) {
-                                $req = QuotesRequest::forceCreate([
-                                    'category_id'=>is_array($category['category']) ? $category['category'][$key] : $category['category'],
-                                    'client_id'=>$id !== null ? $id:$customer->id,
-                                    'count_available_vendors'=>count($users),
-                                    'state'=>$state,
-                                    'vicinity_id'=>$vicinity,
-                                    'request'=>$jsoned_request
-                                ]);
-                            }
+                        list($addServices,$normal) = $requestCollection->partition(function($item,$key){
+                            return (int)strstr($key,'_',true);
+                        });
+                        $req = null;
+                        foreach ($this->getMergedRequestData($normal,$addServices,$category['category']) as $key => $jsoned_request) {
+                            $req = QuotesRequest::forceCreate([
+                                'category_id'=>is_array($category['category']) ? $category['category'][$key] : $category['category'],
+                                'client_id'=>$id !== null ? $id:$customer->id,
+                                'count_available_vendors'=>count($users),
+                                'state'=>$state,
+                                'vicinity_id'=>$vicinity,
+                                'request'=>$jsoned_request
+                            ]);
+                        }
                         // $req = QuotesRequest::create([
                         //     'category_id'=>$category['category'],
                         //     'client_id'=>$id !== null ? $id:$customer->id,

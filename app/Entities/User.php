@@ -23,7 +23,7 @@ class User extends Authenticatable
 
     protected $withs = ['offday'];
 
-    protected $casts = ['available'=>'boolean'];
+    protected $casts = ['available'=>'boolean','can_chat'=>'boolean'];
 
     protected $date = ['created_at','updated_at','availability_set_date'];
 
@@ -31,7 +31,7 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name','email','password','first_name','last_name',
-        'category','state',
+        'category','state', 'can_chat',
         'vicinity_id',
         'description',
         'summary',
@@ -283,6 +283,10 @@ class User extends Authenticatable
 
     public function followed_vendors() {
         return $this->belongsToMany(User::class,'follows','followers_id','followed_id');
+    }
+
+    public function canChat() {
+        $this->update(['can_chat'=>1]);
     }
 
     public function self_client_chat_channel() {

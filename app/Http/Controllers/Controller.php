@@ -113,4 +113,9 @@ class Controller extends BaseController
             return session('user_state'); 
         }
     }
+    public function canChat(Request $request) {
+        $model = $request->user() ? $request->user() : $request->user('client');
+        $model->canChat();
+        return $this->success($model->can_chat);
+    }
 }
