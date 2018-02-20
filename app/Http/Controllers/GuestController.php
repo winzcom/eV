@@ -52,8 +52,9 @@ class GuestController extends Controller
     public function index(Request $request)
     {
         try{
-            $state = $this->getRegionFromIp();
-            $companies = $this->uRepo->getTopVendors($state);
+            //$state = $this->getRegionFromIp();
+            $state = null; $companies = [];
+            //$companies = $this->uRepo->getTopVendors($state);
         } catch(\Exception $e) {
             $state = null; $companies = [];
         }
