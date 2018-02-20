@@ -211,7 +211,7 @@ window.customerUrl = window.location.origin+'/';
 <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
 <script src="{{asset('jss/firebase_config.js')}}"></script>
 <script src="{{asset('jss/custom/firebase.js')}}"></script>
-<script src="{{asset('jss/custom/googleautocomplete.js')}}"></script>
+<!-- <script src="{{asset('jss/custom/googleautocomplete.js')}}"></script> -->
 
 <!--<script src="{{asset('vendor/twitterwizard/js/modal.js')}}"></script>-->
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7SGP6giYEwQUUJXWbBffqhe9AIbp1ciY&libraries=places&callback=initAutoComplete"
@@ -223,7 +223,7 @@ window.customerUrl = window.location.origin+'/';
 <script src="{{asset('vendor/js/nouislider.min.js')}}"></script>
 <!--<script src="{{asset('js/jquery.bootstrap.js')}}"></script>
 <script src="{{asset('js/material-bootstrap-wizard.js')}}"></script>-->
-<script src="https://vuejs.org/js/vue.min.js"></script>
+<!-- <script src="https://vuejs.org/js/vue.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 
 @yield('script')
